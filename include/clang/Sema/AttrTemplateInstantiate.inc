@@ -481,6 +481,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<GuardedVarAttr>(At);
       return A->clone(C);
     }
+    case attr::HIPPinnedShadow: {
+      const auto *A = cast<HIPPinnedShadowAttr>(At);
+      return A->clone(C);
+    }
     case attr::Hot: {
       const auto *A = cast<HotAttr>(At);
       return A->clone(C);
@@ -558,8 +562,16 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<LoopHintAttr>(At);
       return A->clone(C);
     }
+    case attr::MIGServerRoutine: {
+      const auto *A = cast<MIGServerRoutineAttr>(At);
+      return A->clone(C);
+    }
     case attr::MSABI: {
       const auto *A = cast<MSABIAttr>(At);
+      return A->clone(C);
+    }
+    case attr::MSAllocator: {
+      const auto *A = cast<MSAllocatorAttr>(At);
       return A->clone(C);
     }
     case attr::MSInheritance: {
@@ -718,12 +730,20 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<NoThrowAttr>(At);
       return A->clone(C);
     }
+    case attr::NoUniqueAddress: {
+      const auto *A = cast<NoUniqueAddressAttr>(At);
+      return A->clone(C);
+    }
     case attr::NonNull: {
       const auto *A = cast<NonNullAttr>(At);
       return A->clone(C);
     }
     case attr::NotTailCalled: {
       const auto *A = cast<NotTailCalledAttr>(At);
+      return A->clone(C);
+    }
+    case attr::OMPAllocateDecl: {
+      const auto *A = cast<OMPAllocateDeclAttr>(At);
       return A->clone(C);
     }
     case attr::OMPCaptureKind: {
@@ -790,6 +810,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<ObjCBridgeRelatedAttr>(At);
       return A->clone(C);
     }
+    case attr::ObjCClassStub: {
+      const auto *A = cast<ObjCClassStubAttr>(At);
+      return A->clone(C);
+    }
     case attr::ObjCDesignatedInitializer: {
       const auto *A = cast<ObjCDesignatedInitializerAttr>(At);
       return A->clone(C);
@@ -828,6 +852,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::ObjCNSObject: {
       const auto *A = cast<ObjCNSObjectAttr>(At);
+      return A->clone(C);
+    }
+    case attr::ObjCNonLazyClass: {
+      const auto *A = cast<ObjCNonLazyClassAttr>(At);
       return A->clone(C);
     }
     case attr::ObjCOwnership: {
@@ -914,6 +942,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<OverrideAttr>(At);
       return A->clone(C);
     }
+    case attr::Owner: {
+      const auto *A = cast<OwnerAttr>(At);
+      return A->clone(C);
+    }
     case attr::Ownership: {
       const auto *A = cast<OwnershipAttr>(At);
       return A->clone(C);
@@ -936,6 +968,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::Pcs: {
       const auto *A = cast<PcsAttr>(At);
+      return A->clone(C);
+    }
+    case attr::Pointer: {
+      const auto *A = cast<PointerAttr>(At);
       return A->clone(C);
     }
     case attr::PragmaClangBSSSection: {
@@ -1574,6 +1610,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::GuardedVar: {
       return nullptr;
     }
+    case attr::HIPPinnedShadow: {
+      return nullptr;
+    }
     case attr::Hot: {
       return nullptr;
     }
@@ -1619,7 +1658,13 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::LoopHint: {
       return nullptr;
     }
+    case attr::MIGServerRoutine: {
+      return nullptr;
+    }
     case attr::MSABI: {
+      return nullptr;
+    }
+    case attr::MSAllocator: {
       return nullptr;
     }
     case attr::MSInheritance: {
@@ -1739,10 +1784,16 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::NoThrow: {
       return nullptr;
     }
+    case attr::NoUniqueAddress: {
+      return nullptr;
+    }
     case attr::NonNull: {
       return nullptr;
     }
     case attr::NotTailCalled: {
+      return nullptr;
+    }
+    case attr::OMPAllocateDecl: {
       return nullptr;
     }
     case attr::OMPCaptureKind: {
@@ -1793,6 +1844,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::ObjCBridgeRelated: {
       return nullptr;
     }
+    case attr::ObjCClassStub: {
+      return nullptr;
+    }
     case attr::ObjCDesignatedInitializer: {
       return nullptr;
     }
@@ -1821,6 +1875,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::ObjCNSObject: {
+      return nullptr;
+    }
+    case attr::ObjCNonLazyClass: {
       return nullptr;
     }
     case attr::ObjCOwnership: {
@@ -1886,6 +1943,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::Override: {
       return nullptr;
     }
+    case attr::Owner: {
+      return nullptr;
+    }
     case attr::Ownership: {
       return nullptr;
     }
@@ -1902,6 +1962,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::Pcs: {
+      return nullptr;
+    }
+    case attr::Pointer: {
       return nullptr;
     }
     case attr::PragmaClangBSSSection: {

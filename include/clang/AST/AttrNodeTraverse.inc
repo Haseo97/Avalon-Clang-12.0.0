@@ -6,6 +6,16 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
+  void VisitAMDGPUFlatWorkGroupSizeAttr(const AMDGPUFlatWorkGroupSizeAttr *A) {
+    const auto *SA = cast<AMDGPUFlatWorkGroupSizeAttr>(A); (void)SA;
+    Visit(SA->getMin());
+    Visit(SA->getMax());
+  }
+  void VisitAMDGPUWavesPerEUAttr(const AMDGPUWavesPerEUAttr *A) {
+    const auto *SA = cast<AMDGPUWavesPerEUAttr>(A); (void)SA;
+    Visit(SA->getMin());
+    Visit(SA->getMax());
+  }
   void VisitAcquireCapabilityAttr(const AcquireCapabilityAttr *A) {
     const auto *SA = cast<AcquireCapabilityAttr>(A); (void)SA;
     for (AcquireCapabilityAttr::args_iterator I = SA->args_begin(), E = SA->args_end(); I != E; ++I)
@@ -85,6 +95,10 @@
   void VisitLoopHintAttr(const LoopHintAttr *A) {
     const auto *SA = cast<LoopHintAttr>(A); (void)SA;
     Visit(SA->getValue());
+  }
+  void VisitOMPAllocateDeclAttr(const OMPAllocateDeclAttr *A) {
+    const auto *SA = cast<OMPAllocateDeclAttr>(A); (void)SA;
+    Visit(SA->getAllocator());
   }
   void VisitOMPDeclareSimdDeclAttr(const OMPDeclareSimdDeclAttr *A) {
     const auto *SA = cast<OMPDeclareSimdDeclAttr>(A); (void)SA;

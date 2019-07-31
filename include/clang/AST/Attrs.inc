@@ -34,20 +34,20 @@ public:
 };
 
 class AMDGPUFlatWorkGroupSizeAttr : public InheritableAttr {
-unsigned min;
+Expr * min;
 
-unsigned max;
+Expr * max;
 
 public:
-  static AMDGPUFlatWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, unsigned Min, unsigned Max, SourceRange Loc = SourceRange()) {
+  static AMDGPUFlatWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Loc = SourceRange()) {
     auto *A = new (Ctx) AMDGPUFlatWorkGroupSizeAttr(Loc, Ctx, Min, Max, 0);
     A->setImplicit(true);
     return A;
   }
 
   AMDGPUFlatWorkGroupSizeAttr(SourceRange R, ASTContext &Ctx
-              , unsigned Min
-              , unsigned Max
+              , Expr * Min
+              , Expr * Max
               , unsigned SI
              )
     : InheritableAttr(attr::AMDGPUFlatWorkGroupSize, R, SI, false, false)
@@ -60,11 +60,11 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
-  unsigned getMin() const {
+  Expr * getMin() const {
     return min;
   }
 
-  unsigned getMax() const {
+  Expr * getMax() const {
     return max;
   }
 
@@ -138,20 +138,20 @@ public:
 };
 
 class AMDGPUWavesPerEUAttr : public InheritableAttr {
-unsigned min;
+Expr * min;
 
-unsigned max;
+Expr * max;
 
 public:
-  static AMDGPUWavesPerEUAttr *CreateImplicit(ASTContext &Ctx, unsigned Min, unsigned Max, SourceRange Loc = SourceRange()) {
+  static AMDGPUWavesPerEUAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Loc = SourceRange()) {
     auto *A = new (Ctx) AMDGPUWavesPerEUAttr(Loc, Ctx, Min, Max, 0);
     A->setImplicit(true);
     return A;
   }
 
   AMDGPUWavesPerEUAttr(SourceRange R, ASTContext &Ctx
-              , unsigned Min
-              , unsigned Max
+              , Expr * Min
+              , Expr * Max
               , unsigned SI
              )
     : InheritableAttr(attr::AMDGPUWavesPerEU, R, SI, false, false)
@@ -161,7 +161,7 @@ public:
   }
 
   AMDGPUWavesPerEUAttr(SourceRange R, ASTContext &Ctx
-              , unsigned Min
+              , Expr * Min
               , unsigned SI
              )
     : InheritableAttr(attr::AMDGPUWavesPerEU, R, SI, false, false)
@@ -174,11 +174,11 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
-  unsigned getMin() const {
+  Expr * getMin() const {
     return min;
   }
 
-  unsigned getMax() const {
+  Expr * getMax() const {
     return max;
   }
 
@@ -3624,6 +3624,30 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::GuardedVar; }
 };
 
+class HIPPinnedShadowAttr : public InheritableAttr {
+public:
+  static HIPPinnedShadowAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) HIPPinnedShadowAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  HIPPinnedShadowAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::HIPPinnedShadow, R, SI, false, false)
+  {
+  }
+
+  HIPPinnedShadowAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::HIPPinnedShadow; }
+};
+
 class HotAttr : public InheritableAttr {
 public:
   static HotAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
@@ -4080,7 +4104,8 @@ public:
     UnrollAndJamCount,
     PipelineDisabled,
     PipelineInitiationInterval,
-    Distribute
+    Distribute,
+    VectorizePredicate
   };
 private:
   OptionType option;
@@ -4157,6 +4182,7 @@ public:
       .Case("pipeline", LoopHintAttr::PipelineDisabled)
       .Case("pipeline_initiation_interval", LoopHintAttr::PipelineInitiationInterval)
       .Case("distribute", LoopHintAttr::Distribute)
+      .Case("vectorize_predicate", LoopHintAttr::VectorizePredicate)
       .Default(Optional<OptionType>());
     if (R) {
       Out = *R;
@@ -4178,6 +4204,7 @@ public:
     case LoopHintAttr::PipelineDisabled: return "pipeline";
     case LoopHintAttr::PipelineInitiationInterval: return "pipeline_initiation_interval";
     case LoopHintAttr::Distribute: return "distribute";
+    case LoopHintAttr::VectorizePredicate: return "vectorize_predicate";
     }
     llvm_unreachable("No enumerator with that value");
   }
@@ -4228,6 +4255,7 @@ public:
     case PipelineDisabled: return "pipeline";
     case PipelineInitiationInterval: return "pipeline_initiation_interval";
     case Distribute: return "distribute";
+    case VectorizePredicate: return "vectorize_predicate";
     }
     llvm_unreachable("Unhandled LoopHint option.");
   }
@@ -4288,6 +4316,30 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::LoopHint; }
 };
 
+class MIGServerRoutineAttr : public InheritableAttr {
+public:
+  static MIGServerRoutineAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) MIGServerRoutineAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  MIGServerRoutineAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::MIGServerRoutine, R, SI, false, false)
+  {
+  }
+
+  MIGServerRoutineAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::MIGServerRoutine; }
+};
+
 class MSABIAttr : public InheritableAttr {
 public:
   static MSABIAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
@@ -4310,6 +4362,30 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::MSABI; }
+};
+
+class MSAllocatorAttr : public InheritableAttr {
+public:
+  static MSAllocatorAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) MSAllocatorAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  MSAllocatorAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::MSAllocator, R, SI, false, false)
+  {
+  }
+
+  MSAllocatorAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::MSAllocator; }
 };
 
 class MSInheritanceAttr : public InheritableAttr {
@@ -5350,7 +5426,7 @@ public:
 
 
     SanitizerMask getMask() const {
-      SanitizerMask Mask = 0;
+      SanitizerMask Mask;
       for (auto SanitizerName : sanitizers()) {
         SanitizerMask ParsedMask =
             parseSanitizerValue(SanitizerName, /*AllowGroups=*/true);
@@ -5483,6 +5559,30 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::NoThrow; }
 };
 
+class NoUniqueAddressAttr : public InheritableAttr {
+public:
+  static NoUniqueAddressAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) NoUniqueAddressAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  NoUniqueAddressAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::NoUniqueAddress, R, SI, false, false)
+  {
+  }
+
+  NoUniqueAddressAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::NoUniqueAddress; }
+};
+
 class NonNullAttr : public InheritableParamAttr {
   unsigned args_Size;
   ParamIdx *args_;
@@ -5558,6 +5658,92 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::NotTailCalled; }
+};
+
+class OMPAllocateDeclAttr : public InheritableAttr {
+public:
+  enum AllocatorTypeTy {
+    OMPDefaultMemAlloc,
+    OMPLargeCapMemAlloc,
+    OMPConstMemAlloc,
+    OMPHighBWMemAlloc,
+    OMPLowLatMemAlloc,
+    OMPCGroupMemAlloc,
+    OMPPTeamMemAlloc,
+    OMPThreadMemAlloc,
+    OMPUserDefinedMemAlloc
+  };
+private:
+  AllocatorTypeTy allocatorType;
+
+Expr * allocator;
+
+public:
+  static OMPAllocateDeclAttr *CreateImplicit(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) OMPAllocateDeclAttr(Loc, Ctx, AllocatorType, Allocator, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  OMPAllocateDeclAttr(SourceRange R, ASTContext &Ctx
+              , AllocatorTypeTy AllocatorType
+              , Expr * Allocator
+              , unsigned SI
+             )
+    : InheritableAttr(attr::OMPAllocateDecl, R, SI, false, false)
+              , allocatorType(AllocatorType)
+              , allocator(Allocator)
+  {
+  }
+
+  OMPAllocateDeclAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  AllocatorTypeTy getAllocatorType() const {
+    return allocatorType;
+  }
+
+  static bool ConvertStrToAllocatorTypeTy(StringRef Val, AllocatorTypeTy &Out) {
+    Optional<AllocatorTypeTy> R = llvm::StringSwitch<Optional<AllocatorTypeTy>>(Val)
+      .Case("omp_default_mem_alloc", OMPAllocateDeclAttr::OMPDefaultMemAlloc)
+      .Case("omp_large_cap_mem_alloc", OMPAllocateDeclAttr::OMPLargeCapMemAlloc)
+      .Case("omp_const_mem_alloc", OMPAllocateDeclAttr::OMPConstMemAlloc)
+      .Case("omp_high_bw_mem_alloc", OMPAllocateDeclAttr::OMPHighBWMemAlloc)
+      .Case("omp_low_lat_mem_alloc", OMPAllocateDeclAttr::OMPLowLatMemAlloc)
+      .Case("omp_cgroup_mem_alloc", OMPAllocateDeclAttr::OMPCGroupMemAlloc)
+      .Case("omp_pteam_mem_alloc", OMPAllocateDeclAttr::OMPPTeamMemAlloc)
+      .Case("omp_thread_mem_alloc", OMPAllocateDeclAttr::OMPThreadMemAlloc)
+      .Case("", OMPAllocateDeclAttr::OMPUserDefinedMemAlloc)
+      .Default(Optional<AllocatorTypeTy>());
+    if (R) {
+      Out = *R;
+      return true;
+    }
+    return false;
+  }
+
+  static const char *ConvertAllocatorTypeTyToStr(AllocatorTypeTy Val) {
+    switch(Val) {
+    case OMPAllocateDeclAttr::OMPDefaultMemAlloc: return "omp_default_mem_alloc";
+    case OMPAllocateDeclAttr::OMPLargeCapMemAlloc: return "omp_large_cap_mem_alloc";
+    case OMPAllocateDeclAttr::OMPConstMemAlloc: return "omp_const_mem_alloc";
+    case OMPAllocateDeclAttr::OMPHighBWMemAlloc: return "omp_high_bw_mem_alloc";
+    case OMPAllocateDeclAttr::OMPLowLatMemAlloc: return "omp_low_lat_mem_alloc";
+    case OMPAllocateDeclAttr::OMPCGroupMemAlloc: return "omp_cgroup_mem_alloc";
+    case OMPAllocateDeclAttr::OMPPTeamMemAlloc: return "omp_pteam_mem_alloc";
+    case OMPAllocateDeclAttr::OMPThreadMemAlloc: return "omp_thread_mem_alloc";
+    case OMPAllocateDeclAttr::OMPUserDefinedMemAlloc: return "";
+    }
+    llvm_unreachable("No enumerator with that value");
+  }
+  Expr * getAllocator() const {
+    return allocator;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::OMPAllocateDecl; }
 };
 
 class OMPCaptureKindAttr : public Attr {
@@ -6236,6 +6422,30 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::ObjCBridgeRelated; }
 };
 
+class ObjCClassStubAttr : public Attr {
+public:
+  static ObjCClassStubAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) ObjCClassStubAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  ObjCClassStubAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : Attr(attr::ObjCClassStub, R, SI, false)
+  {
+  }
+
+  ObjCClassStubAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ObjCClassStub; }
+};
+
 class ObjCDesignatedInitializerAttr : public Attr {
 public:
   static ObjCDesignatedInitializerAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
@@ -6527,6 +6737,30 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::ObjCNSObject; }
+};
+
+class ObjCNonLazyClassAttr : public Attr {
+public:
+  static ObjCNonLazyClassAttr *CreateImplicit(ASTContext &Ctx, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) ObjCNonLazyClassAttr(Loc, Ctx, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  ObjCNonLazyClassAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : Attr(attr::ObjCNonLazyClass, R, SI, false)
+  {
+  }
+
+  ObjCNonLazyClassAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ObjCNonLazyClass; }
 };
 
 class ObjCOwnershipAttr : public InheritableAttr {
@@ -7100,6 +7334,48 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::Override; }
 };
 
+class OwnerAttr : public InheritableAttr {
+TypeSourceInfo * derefType;
+
+public:
+  static OwnerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) OwnerAttr(Loc, Ctx, DerefType, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  OwnerAttr(SourceRange R, ASTContext &Ctx
+              , TypeSourceInfo * DerefType
+              , unsigned SI
+             )
+    : InheritableAttr(attr::Owner, R, SI, false, false)
+              , derefType(DerefType)
+  {
+  }
+
+  OwnerAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::Owner, R, SI, false, false)
+              , derefType()
+  {
+  }
+
+  OwnerAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  QualType getDerefType() const {
+    return derefType->getType();
+  }  TypeSourceInfo * getDerefTypeLoc() const {
+    return derefType;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Owner; }
+};
+
 class OwnershipAttr : public InheritableAttr {
 IdentifierInfo * module;
 
@@ -7309,8 +7585,17 @@ class PassObjectSizeAttr : public InheritableParamAttr {
 int type;
 
 public:
-  static PassObjectSizeAttr *CreateImplicit(ASTContext &Ctx, int Type, SourceRange Loc = SourceRange()) {
-    auto *A = new (Ctx) PassObjectSizeAttr(Loc, Ctx, Type, 0);
+  enum Spelling {
+    GNU_pass_object_size = 0,
+    CXX11_clang_pass_object_size = 1,
+    C2x_clang_pass_object_size = 2,
+    GNU_pass_dynamic_object_size = 3,
+    CXX11_clang_pass_dynamic_object_size = 4,
+    C2x_clang_pass_dynamic_object_size = 5
+  };
+
+  static PassObjectSizeAttr *CreateImplicit(ASTContext &Ctx, Spelling S, int Type, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) PassObjectSizeAttr(Loc, Ctx, Type, S);
     A->setImplicit(true);
     return A;
   }
@@ -7328,6 +7613,20 @@ public:
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
+  Spelling getSemanticSpelling() const {
+  switch (SpellingListIndex) {
+    default: llvm_unreachable("Unknown spelling list index");
+    case 0: return GNU_pass_object_size;
+    case 1: return CXX11_clang_pass_object_size;
+    case 2: return C2x_clang_pass_object_size;
+    case 3: return GNU_pass_dynamic_object_size;
+    case 4: return CXX11_clang_pass_dynamic_object_size;
+    case 5: return C2x_clang_pass_dynamic_object_size;
+  }
+  }
+  bool isDynamic() const { return SpellingListIndex == 3 ||
+    SpellingListIndex == 4 ||
+    SpellingListIndex == 5; }
   int getType() const {
     return type;
   }
@@ -7392,6 +7691,48 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::Pcs; }
+};
+
+class PointerAttr : public InheritableAttr {
+TypeSourceInfo * derefType;
+
+public:
+  static PointerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) PointerAttr(Loc, Ctx, DerefType, 0);
+    A->setImplicit(true);
+    return A;
+  }
+
+  PointerAttr(SourceRange R, ASTContext &Ctx
+              , TypeSourceInfo * DerefType
+              , unsigned SI
+             )
+    : InheritableAttr(attr::Pointer, R, SI, false, false)
+              , derefType(DerefType)
+  {
+  }
+
+  PointerAttr(SourceRange R, ASTContext &Ctx
+              , unsigned SI
+             )
+    : InheritableAttr(attr::Pointer, R, SI, false, false)
+              , derefType()
+  {
+  }
+
+  PointerAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  QualType getDerefType() const {
+    return derefType->getType();
+  }  TypeSourceInfo * getDerefTypeLoc() const {
+    return derefType;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Pointer; }
 };
 
 class PragmaClangBSSSectionAttr : public InheritableAttr {
@@ -9778,6 +10119,9 @@ public:
 };
 
 class WarnUnusedResultAttr : public InheritableAttr {
+unsigned messageLength;
+char *message;
+
 public:
   enum Spelling {
     CXX11_nodiscard = 0,
@@ -9787,16 +10131,28 @@ public:
     CXX11_gnu_warn_unused_result = 4
   };
 
-  static WarnUnusedResultAttr *CreateImplicit(ASTContext &Ctx, Spelling S, SourceRange Loc = SourceRange()) {
-    auto *A = new (Ctx) WarnUnusedResultAttr(Loc, Ctx, S);
+  static WarnUnusedResultAttr *CreateImplicit(ASTContext &Ctx, Spelling S, llvm::StringRef Message, SourceRange Loc = SourceRange()) {
+    auto *A = new (Ctx) WarnUnusedResultAttr(Loc, Ctx, Message, S);
     A->setImplicit(true);
     return A;
+  }
+
+  WarnUnusedResultAttr(SourceRange R, ASTContext &Ctx
+              , llvm::StringRef Message
+              , unsigned SI
+             )
+    : InheritableAttr(attr::WarnUnusedResult, R, SI, false, false)
+              , messageLength(Message.size()),message(new (Ctx, 1) char[messageLength])
+  {
+      if (!Message.empty())
+        std::memcpy(message, Message.data(), messageLength);
   }
 
   WarnUnusedResultAttr(SourceRange R, ASTContext &Ctx
               , unsigned SI
              )
     : InheritableAttr(attr::WarnUnusedResult, R, SI, false, false)
+              , messageLength(0),message(nullptr)
   {
   }
 
@@ -9814,7 +10170,26 @@ public:
     case 4: return CXX11_gnu_warn_unused_result;
   }
   }
+  llvm::StringRef getMessage() const {
+    return llvm::StringRef(message, messageLength);
+  }
+  unsigned getMessageLength() const {
+    return messageLength;
+  }
+  void setMessage(ASTContext &C, llvm::StringRef S) {
+    messageLength = S.size();
+    this->message = new (C, 1) char [messageLength];
+    if (!S.empty())
+      std::memcpy(this->message, S.data(), messageLength);
+  }
 
+
+    // Check whether this the C++11 nodiscard version, even in non C++11
+    // spellings.
+    bool IsCXX11NoDiscard() const {
+      return this->getSemanticSpelling() == CXX11_nodiscard;
+    }
+  
 
   static bool classof(const Attr *A) { return A->getKind() == attr::WarnUnusedResult; }
 };

@@ -66,7 +66,7 @@
 #define LLVM_USE_PERF 0
 
 /* Major version of the LLVM API */
-#define LLVM_VERSION_MAJOR 9
+#define LLVM_VERSION_MAJOR 10
 
 /* Minor version of the LLVM API */
 #define LLVM_VERSION_MINOR 0
@@ -75,7 +75,7 @@
 #define LLVM_VERSION_PATCH 0
 
 /* LLVM version string */
-#define LLVM_VERSION_STRING "9.0.0svn"
+#define LLVM_VERSION_STRING "10.0.0svn"
 
 /* Whether LLVM records statistics for use with GetStatistics(),
  * PrintStatistics() or PrintStatisticsJSON()

@@ -669,6 +669,13 @@
         return 1;
     break;
   }
+  case AT_HIPPinnedShadow: {
+    if (Name == "hip_pinned_shadow" && SyntaxUsed == 0 && Scope == "")
+        return 0;
+    if (Name == "__hip_pinned_shadow__" && SyntaxUsed == 3 && Scope == "")
+        return 1;
+    break;
+  }
   case AT_Hot: {
     if (Name == "hot" && SyntaxUsed == 0 && Scope == "")
         return 0;
@@ -782,11 +789,25 @@
         return 4;
     break;
   }
+  case AT_MIGServerRoutine: {
+    if (Name == "mig_server_routine" && SyntaxUsed == 0 && Scope == "")
+        return 0;
+    if (Name == "mig_server_routine" && SyntaxUsed == 1 && Scope == "clang")
+        return 1;
+    if (Name == "mig_server_routine" && SyntaxUsed == 2 && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_MSABI: {
     if (Name == "ms_abi" && SyntaxUsed == 0 && Scope == "")
         return 0;
     if (Name == "ms_abi" && SyntaxUsed == 1 && Scope == "gnu")
         return 1;
+    break;
+  }
+  case AT_MSAllocator: {
+    if (Name == "allocator" && SyntaxUsed == 3 && Scope == "")
+        return 0;
     break;
   }
   case AT_MSInheritance: {
@@ -1117,6 +1138,11 @@
         return 2;
     break;
   }
+  case AT_NoUniqueAddress: {
+    if (Name == "no_unique_address" && SyntaxUsed == 1 && Scope == "")
+        return 0;
+    break;
+  }
   case AT_NonNull: {
     if (Name == "nonnull" && SyntaxUsed == 0 && Scope == "")
         return 0;
@@ -1223,6 +1249,15 @@
         return 2;
     break;
   }
+  case AT_ObjCClassStub: {
+    if (Name == "objc_class_stub" && SyntaxUsed == 0 && Scope == "")
+        return 0;
+    if (Name == "objc_class_stub" && SyntaxUsed == 1 && Scope == "clang")
+        return 1;
+    if (Name == "objc_class_stub" && SyntaxUsed == 2 && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_ObjCDesignatedInitializer: {
     if (Name == "objc_designated_initializer" && SyntaxUsed == 0 && Scope == "")
         return 0;
@@ -1302,6 +1337,15 @@
     if (Name == "NSObject" && SyntaxUsed == 1 && Scope == "clang")
         return 1;
     if (Name == "NSObject" && SyntaxUsed == 2 && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ObjCNonLazyClass: {
+    if (Name == "objc_nonlazy_class" && SyntaxUsed == 0 && Scope == "")
+        return 0;
+    if (Name == "objc_nonlazy_class" && SyntaxUsed == 1 && Scope == "clang")
+        return 1;
+    if (Name == "objc_nonlazy_class" && SyntaxUsed == 2 && Scope == "clang")
         return 2;
     break;
   }
@@ -1476,6 +1520,11 @@
         return 2;
     break;
   }
+  case AT_Owner: {
+    if (Name == "Owner" && SyntaxUsed == 1 && Scope == "gsl")
+        return 0;
+    break;
+  }
   case AT_Ownership: {
     if (Name == "ownership_holds" && SyntaxUsed == 0 && Scope == "")
         return 0;
@@ -1531,6 +1580,12 @@
         return 1;
     if (Name == "pass_object_size" && SyntaxUsed == 2 && Scope == "clang")
         return 2;
+    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 0 && Scope == "")
+        return 3;
+    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 1 && Scope == "clang")
+        return 4;
+    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 2 && Scope == "clang")
+        return 5;
     break;
   }
   case AT_Pcs: {
@@ -1538,6 +1593,11 @@
         return 0;
     if (Name == "pcs" && SyntaxUsed == 1 && Scope == "gnu")
         return 1;
+    break;
+  }
+  case AT_Pointer: {
+    if (Name == "Pointer" && SyntaxUsed == 1 && Scope == "gsl")
+        return 0;
     break;
   }
   case AT_PragmaClangBSSSection: {

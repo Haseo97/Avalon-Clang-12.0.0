@@ -1,4 +1,4 @@
-//===-- CodeGen/MachineInstBundle.h - MI bundle utilities -------*- C++ -*-===//
+//===- llvm/CodeGen/MachineInstrBundle.h - MI bundle utilities --*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
@@ -61,7 +61,8 @@ inline MachineBasicBlock::instr_iterator getBundleEnd(
     MachineBasicBlock::instr_iterator I) {
   while (I->isBundledWithSucc())
     ++I;
-  return ++I;
+  ++I;
+  return I;
 }
 
 /// Returns an iterator pointing beyond the bundle containing \p I.
@@ -69,7 +70,8 @@ inline MachineBasicBlock::const_instr_iterator getBundleEnd(
     MachineBasicBlock::const_instr_iterator I) {
   while (I->isBundledWithSucc())
     ++I;
-  return ++I;
+  ++I;
+  return I;
 }
 
 //===----------------------------------------------------------------------===//

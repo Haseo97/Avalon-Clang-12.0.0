@@ -86,6 +86,8 @@
 
 #if defined(CLANG_ATTR_TYPE_ARG_LIST)
 .Case("iboutletcollection", true)
+.Case("Owner", true)
+.Case("Pointer", true)
 .Case("vec_type_hint", true)
 #endif // CLANG_ATTR_TYPE_ARG_LIST
 

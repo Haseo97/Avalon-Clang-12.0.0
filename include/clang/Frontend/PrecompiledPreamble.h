@@ -283,13 +283,16 @@ public:
   /// Creates wrapper class for PPCallbacks so we can also process information
   /// about includes that are inside of a preamble
   virtual std::unique_ptr<PPCallbacks> createPPCallbacks();
+  /// The returned CommentHandler will be added to the preprocessor if not null.
+  virtual CommentHandler *getCommentHandler();
 };
 
 enum class BuildPreambleError {
   CouldntCreateTempFile = 1,
   CouldntCreateTargetInfo,
   BeginSourceFileFailed,
-  CouldntEmitPCH
+  CouldntEmitPCH,
+  BadInputs
 };
 
 class BuildPreambleErrorCategory final : public std::error_category {

@@ -81,6 +81,8 @@
     experimental_constrained_floor,            // llvm.experimental.constrained.floor
     experimental_constrained_fma,              // llvm.experimental.constrained.fma
     experimental_constrained_fmul,             // llvm.experimental.constrained.fmul
+    experimental_constrained_fpext,            // llvm.experimental.constrained.fpext
+    experimental_constrained_fptrunc,          // llvm.experimental.constrained.fptrunc
     experimental_constrained_frem,             // llvm.experimental.constrained.frem
     experimental_constrained_fsub,             // llvm.experimental.constrained.fsub
     experimental_constrained_log,              // llvm.experimental.constrained.log
@@ -106,16 +108,16 @@
     experimental_stackmap,                     // llvm.experimental.stackmap
     experimental_vector_reduce_add,            // llvm.experimental.vector.reduce.add
     experimental_vector_reduce_and,            // llvm.experimental.vector.reduce.and
-    experimental_vector_reduce_fadd,           // llvm.experimental.vector.reduce.fadd
     experimental_vector_reduce_fmax,           // llvm.experimental.vector.reduce.fmax
     experimental_vector_reduce_fmin,           // llvm.experimental.vector.reduce.fmin
-    experimental_vector_reduce_fmul,           // llvm.experimental.vector.reduce.fmul
     experimental_vector_reduce_mul,            // llvm.experimental.vector.reduce.mul
     experimental_vector_reduce_or,             // llvm.experimental.vector.reduce.or
     experimental_vector_reduce_smax,           // llvm.experimental.vector.reduce.smax
     experimental_vector_reduce_smin,           // llvm.experimental.vector.reduce.smin
     experimental_vector_reduce_umax,           // llvm.experimental.vector.reduce.umax
     experimental_vector_reduce_umin,           // llvm.experimental.vector.reduce.umin
+    experimental_vector_reduce_v2_fadd,        // llvm.experimental.vector.reduce.v2.fadd
+    experimental_vector_reduce_v2_fmul,        // llvm.experimental.vector.reduce.v2.fmul
     experimental_vector_reduce_xor,            // llvm.experimental.vector.reduce.xor
     experimental_widenable_condition,          // llvm.experimental.widenable.condition
     fabs,                                      // llvm.fabs
@@ -142,6 +144,8 @@
     launder_invariant_group,                   // llvm.launder.invariant.group
     lifetime_end,                              // llvm.lifetime.end
     lifetime_start,                            // llvm.lifetime.start
+    llrint,                                    // llvm.llrint
+    llround,                                   // llvm.llround
     load_relative,                             // llvm.load.relative
     localaddress,                              // llvm.localaddress
     localescape,                               // llvm.localescape
@@ -150,6 +154,10 @@
     log10,                                     // llvm.log10
     log2,                                      // llvm.log2
     longjmp,                                   // llvm.longjmp
+    loop_decrement,                            // llvm.loop.decrement
+    loop_decrement_reg,                        // llvm.loop.decrement.reg
+    lrint,                                     // llvm.lrint
+    lround,                                    // llvm.lround
     masked_compressstore,                      // llvm.masked.compressstore
     masked_expandload,                         // llvm.masked.expandload
     masked_gather,                             // llvm.masked.gather
@@ -202,6 +210,9 @@
     pow,                                       // llvm.pow
     powi,                                      // llvm.powi
     prefetch,                                  // llvm.prefetch
+    preserve_array_access_index,               // llvm.preserve.array.access.index
+    preserve_struct_access_index,              // llvm.preserve.struct.access.index
+    preserve_union_access_index,               // llvm.preserve.union.access.index
     ptr_annotation,                            // llvm.ptr.annotation
     read_register,                             // llvm.read_register
     readcyclecounter,                          // llvm.readcyclecounter
@@ -210,12 +221,14 @@
     round,                                     // llvm.round
     sadd_sat,                                  // llvm.sadd.sat
     sadd_with_overflow,                        // llvm.sadd.with.overflow
+    set_loop_iterations,                       // llvm.set.loop.iterations
     setjmp,                                    // llvm.setjmp
     sideeffect,                                // llvm.sideeffect
     siglongjmp,                                // llvm.siglongjmp
     sigsetjmp,                                 // llvm.sigsetjmp
     sin,                                       // llvm.sin
     smul_fix,                                  // llvm.smul.fix
+    smul_fix_sat,                              // llvm.smul.fix.sat
     smul_with_overflow,                        // llvm.smul.with.overflow
     sponentry,                                 // llvm.sponentry
     sqrt,                                      // llvm.sqrt
@@ -227,6 +240,7 @@
     stackrestore,                              // llvm.stackrestore
     stacksave,                                 // llvm.stacksave
     strip_invariant_group,                     // llvm.strip.invariant.group
+    test_set_loop_iterations,                  // llvm.test.set.loop.iterations
     thread_pointer,                            // llvm.thread.pointer
     trap,                                      // llvm.trap
     trunc,                                     // llvm.trunc
@@ -234,6 +248,7 @@
     type_test,                                 // llvm.type.test
     uadd_sat,                                  // llvm.uadd.sat
     uadd_with_overflow,                        // llvm.uadd.with.overflow
+    umul_fix,                                  // llvm.umul.fix
     umul_with_overflow,                        // llvm.umul.with.overflow
     usub_sat,                                  // llvm.usub.sat
     usub_with_overflow,                        // llvm.usub.with.overflow
@@ -244,6 +259,7 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
+    aarch64_addg,                              // llvm.aarch64.addg
     aarch64_clrex,                             // llvm.aarch64.clrex
     aarch64_crc32b,                            // llvm.aarch64.crc32b
     aarch64_crc32cb,                           // llvm.aarch64.crc32cb
@@ -269,11 +285,16 @@
     aarch64_crypto_sha256su1,                  // llvm.aarch64.crypto.sha256su1
     aarch64_dmb,                               // llvm.aarch64.dmb
     aarch64_dsb,                               // llvm.aarch64.dsb
+    aarch64_fjcvtzs,                           // llvm.aarch64.fjcvtzs
     aarch64_get_fpcr,                          // llvm.aarch64.get.fpcr
+    aarch64_gmi,                               // llvm.aarch64.gmi
     aarch64_hint,                              // llvm.aarch64.hint
+    aarch64_irg,                               // llvm.aarch64.irg
+    aarch64_irg_sp,                            // llvm.aarch64.irg.sp
     aarch64_isb,                               // llvm.aarch64.isb
     aarch64_ldaxp,                             // llvm.aarch64.ldaxp
     aarch64_ldaxr,                             // llvm.aarch64.ldaxr
+    aarch64_ldg,                               // llvm.aarch64.ldg
     aarch64_ldxp,                              // llvm.aarch64.ldxp
     aarch64_ldxr,                              // llvm.aarch64.ldxr
     aarch64_neon_abs,                          // llvm.aarch64.neon.abs
@@ -283,6 +304,7 @@
     aarch64_neon_fabd,                         // llvm.aarch64.neon.fabd
     aarch64_neon_facge,                        // llvm.aarch64.neon.facge
     aarch64_neon_facgt,                        // llvm.aarch64.neon.facgt
+    aarch64_neon_faddp,                        // llvm.aarch64.neon.faddp
     aarch64_neon_faddv,                        // llvm.aarch64.neon.faddv
     aarch64_neon_fcvtas,                       // llvm.aarch64.neon.fcvtas
     aarch64_neon_fcvtau,                       // llvm.aarch64.neon.fcvtau
@@ -433,13 +455,19 @@
     aarch64_neon_vsli,                         // llvm.aarch64.neon.vsli
     aarch64_neon_vsri,                         // llvm.aarch64.neon.vsri
     aarch64_sdiv,                              // llvm.aarch64.sdiv
+    aarch64_settag,                            // llvm.aarch64.settag
+    aarch64_settag_zero,                       // llvm.aarch64.settag.zero
     aarch64_sisd_fabd,                         // llvm.aarch64.sisd.fabd
     aarch64_sisd_fcvtxn,                       // llvm.aarch64.sisd.fcvtxn
     aarch64_space,                             // llvm.aarch64.space
+    aarch64_stg,                               // llvm.aarch64.stg
+    aarch64_stgp,                              // llvm.aarch64.stgp
     aarch64_stlxp,                             // llvm.aarch64.stlxp
     aarch64_stlxr,                             // llvm.aarch64.stlxr
     aarch64_stxp,                              // llvm.aarch64.stxp
     aarch64_stxr,                              // llvm.aarch64.stxr
+    aarch64_subp,                              // llvm.aarch64.subp
+    aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_udiv,                              // llvm.aarch64.udiv
     amdgcn_alignbit,                           // llvm.amdgcn.alignbit
     amdgcn_alignbyte,                          // llvm.amdgcn.alignbyte
@@ -448,6 +476,7 @@
     amdgcn_buffer_atomic_add,                  // llvm.amdgcn.buffer.atomic.add
     amdgcn_buffer_atomic_and,                  // llvm.amdgcn.buffer.atomic.and
     amdgcn_buffer_atomic_cmpswap,              // llvm.amdgcn.buffer.atomic.cmpswap
+    amdgcn_buffer_atomic_fadd,                 // llvm.amdgcn.buffer.atomic.fadd
     amdgcn_buffer_atomic_or,                   // llvm.amdgcn.buffer.atomic.or
     amdgcn_buffer_atomic_smax,                 // llvm.amdgcn.buffer.atomic.smax
     amdgcn_buffer_atomic_smin,                 // llvm.amdgcn.buffer.atomic.smin
@@ -486,6 +515,12 @@
     amdgcn_ds_fadd,                            // llvm.amdgcn.ds.fadd
     amdgcn_ds_fmax,                            // llvm.amdgcn.ds.fmax
     amdgcn_ds_fmin,                            // llvm.amdgcn.ds.fmin
+    amdgcn_ds_gws_barrier,                     // llvm.amdgcn.ds.gws.barrier
+    amdgcn_ds_gws_init,                        // llvm.amdgcn.ds.gws.init
+    amdgcn_ds_gws_sema_br,                     // llvm.amdgcn.ds.gws.sema.br
+    amdgcn_ds_gws_sema_p,                      // llvm.amdgcn.ds.gws.sema.p
+    amdgcn_ds_gws_sema_release_all,            // llvm.amdgcn.ds.gws.sema.release.all
+    amdgcn_ds_gws_sema_v,                      // llvm.amdgcn.ds.gws.sema.v
     amdgcn_ds_ordered_add,                     // llvm.amdgcn.ds.ordered.add
     amdgcn_ds_ordered_swap,                    // llvm.amdgcn.ds.ordered.swap
     amdgcn_ds_permute,                         // llvm.amdgcn.ds.permute
@@ -503,6 +538,7 @@
     amdgcn_fract,                              // llvm.amdgcn.fract
     amdgcn_frexp_exp,                          // llvm.amdgcn.frexp.exp
     amdgcn_frexp_mant,                         // llvm.amdgcn.frexp.mant
+    amdgcn_global_atomic_fadd,                 // llvm.amdgcn.global.atomic.fadd
     amdgcn_groupstaticsize,                    // llvm.amdgcn.groupstaticsize
     amdgcn_icmp,                               // llvm.amdgcn.icmp
     amdgcn_if,                                 // llvm.amdgcn.if
@@ -982,10 +1018,35 @@
     amdgcn_loop,                               // llvm.amdgcn.loop
     amdgcn_mbcnt_hi,                           // llvm.amdgcn.mbcnt.hi
     amdgcn_mbcnt_lo,                           // llvm.amdgcn.mbcnt.lo
+    amdgcn_mfma_f32_16x16x16f16,               // llvm.amdgcn.mfma.f32.16x16x16f16
+    amdgcn_mfma_f32_16x16x1f32,                // llvm.amdgcn.mfma.f32.16x16x1f32
+    amdgcn_mfma_f32_16x16x2bf16,               // llvm.amdgcn.mfma.f32.16x16x2bf16
+    amdgcn_mfma_f32_16x16x4f16,                // llvm.amdgcn.mfma.f32.16x16x4f16
+    amdgcn_mfma_f32_16x16x4f32,                // llvm.amdgcn.mfma.f32.16x16x4f32
+    amdgcn_mfma_f32_16x16x8bf16,               // llvm.amdgcn.mfma.f32.16x16x8bf16
+    amdgcn_mfma_f32_32x32x1f32,                // llvm.amdgcn.mfma.f32.32x32x1f32
+    amdgcn_mfma_f32_32x32x2bf16,               // llvm.amdgcn.mfma.f32.32x32x2bf16
+    amdgcn_mfma_f32_32x32x2f32,                // llvm.amdgcn.mfma.f32.32x32x2f32
+    amdgcn_mfma_f32_32x32x4bf16,               // llvm.amdgcn.mfma.f32.32x32x4bf16
+    amdgcn_mfma_f32_32x32x4f16,                // llvm.amdgcn.mfma.f32.32x32x4f16
+    amdgcn_mfma_f32_32x32x8f16,                // llvm.amdgcn.mfma.f32.32x32x8f16
+    amdgcn_mfma_f32_4x4x1f32,                  // llvm.amdgcn.mfma.f32.4x4x1f32
+    amdgcn_mfma_f32_4x4x2bf16,                 // llvm.amdgcn.mfma.f32.4x4x2bf16
+    amdgcn_mfma_f32_4x4x4f16,                  // llvm.amdgcn.mfma.f32.4x4x4f16
+    amdgcn_mfma_i32_16x16x16i8,                // llvm.amdgcn.mfma.i32.16x16x16i8
+    amdgcn_mfma_i32_16x16x4i8,                 // llvm.amdgcn.mfma.i32.16x16x4i8
+    amdgcn_mfma_i32_32x32x4i8,                 // llvm.amdgcn.mfma.i32.32x32x4i8
+    amdgcn_mfma_i32_32x32x8i8,                 // llvm.amdgcn.mfma.i32.32x32x8i8
+    amdgcn_mfma_i32_4x4x4i8,                   // llvm.amdgcn.mfma.i32.4x4x4i8
     amdgcn_mov_dpp,                            // llvm.amdgcn.mov.dpp
+    amdgcn_mov_dpp8,                           // llvm.amdgcn.mov.dpp8
     amdgcn_mqsad_pk_u16_u8,                    // llvm.amdgcn.mqsad.pk.u16.u8
     amdgcn_mqsad_u32_u8,                       // llvm.amdgcn.mqsad.u32.u8
     amdgcn_msad_u8,                            // llvm.amdgcn.msad.u8
+    amdgcn_mul_i24,                            // llvm.amdgcn.mul.i24
+    amdgcn_mul_u24,                            // llvm.amdgcn.mul.u24
+    amdgcn_permlane16,                         // llvm.amdgcn.permlane16
+    amdgcn_permlanex16,                        // llvm.amdgcn.permlanex16
     amdgcn_ps_live,                            // llvm.amdgcn.ps.live
     amdgcn_qsad_pk_u16_u8,                     // llvm.amdgcn.qsad.pk.u16.u8
     amdgcn_queue_ptr,                          // llvm.amdgcn.queue.ptr
@@ -1020,6 +1081,7 @@
     amdgcn_s_dcache_wb,                        // llvm.amdgcn.s.dcache.wb
     amdgcn_s_dcache_wb_vol,                    // llvm.amdgcn.s.dcache.wb.vol
     amdgcn_s_decperflevel,                     // llvm.amdgcn.s.decperflevel
+    amdgcn_s_get_waveid_in_workgroup,          // llvm.amdgcn.s.get.waveid.in.workgroup
     amdgcn_s_getpc,                            // llvm.amdgcn.s.getpc
     amdgcn_s_getreg,                           // llvm.amdgcn.s.getreg
     amdgcn_s_incperflevel,                     // llvm.amdgcn.s.incperflevel
@@ -1039,6 +1101,7 @@
     amdgcn_set_inactive,                       // llvm.amdgcn.set.inactive
     amdgcn_sffbh,                              // llvm.amdgcn.sffbh
     amdgcn_sin,                                // llvm.amdgcn.sin
+    amdgcn_softwqm,                            // llvm.amdgcn.softwqm
     amdgcn_struct_buffer_atomic_add,           // llvm.amdgcn.struct.buffer.atomic.add
     amdgcn_struct_buffer_atomic_and,           // llvm.amdgcn.struct.buffer.atomic.and
     amdgcn_struct_buffer_atomic_cmpswap,       // llvm.amdgcn.struct.buffer.atomic.cmpswap
@@ -1066,6 +1129,7 @@
     amdgcn_unreachable,                        // llvm.amdgcn.unreachable
     amdgcn_update_dpp,                         // llvm.amdgcn.update.dpp
     amdgcn_wave_barrier,                       // llvm.amdgcn.wave.barrier
+    amdgcn_wavefrontsize,                      // llvm.amdgcn.wavefrontsize
     amdgcn_workgroup_id_x,                     // llvm.amdgcn.workgroup.id.x
     amdgcn_workgroup_id_y,                     // llvm.amdgcn.workgroup.id.y
     amdgcn_workgroup_id_z,                     // llvm.amdgcn.workgroup.id.z
@@ -1079,6 +1143,10 @@
     arm_cdp,                                   // llvm.arm.cdp
     arm_cdp2,                                  // llvm.arm.cdp2
     arm_clrex,                                 // llvm.arm.clrex
+    arm_cmse_tt,                               // llvm.arm.cmse.tt
+    arm_cmse_tta,                              // llvm.arm.cmse.tta
+    arm_cmse_ttat,                             // llvm.arm.cmse.ttat
+    arm_cmse_ttt,                              // llvm.arm.cmse.ttt
     arm_crc32b,                                // llvm.arm.crc32b
     arm_crc32cb,                               // llvm.arm.crc32cb
     arm_crc32ch,                               // llvm.arm.crc32ch
@@ -3790,8 +3858,6 @@
     nvvm_atomic_exch_gen_i_sys,                // llvm.nvvm.atomic.exch.gen.i.sys
     nvvm_atomic_inc_gen_i_cta,                 // llvm.nvvm.atomic.inc.gen.i.cta
     nvvm_atomic_inc_gen_i_sys,                 // llvm.nvvm.atomic.inc.gen.i.sys
-    nvvm_atomic_load_add_f32,                  // llvm.nvvm.atomic.load.add.f32
-    nvvm_atomic_load_add_f64,                  // llvm.nvvm.atomic.load.add.f64
     nvvm_atomic_load_dec_32,                   // llvm.nvvm.atomic.load.dec.32
     nvvm_atomic_load_inc_32,                   // llvm.nvvm.atomic.load.inc.32
     nvvm_atomic_max_gen_i_cta,                 // llvm.nvvm.atomic.max.gen.i.cta
@@ -4714,21 +4780,41 @@
     nvvm_vote_uni,                             // llvm.nvvm.vote.uni
     nvvm_vote_uni_sync,                        // llvm.nvvm.vote.uni.sync
     nvvm_wmma_m16n16k16_load_a_f16_col,        // llvm.nvvm.wmma.m16n16k16.load.a.col.f16
+    nvvm_wmma_m16n16k16_load_a_s8_col,         // llvm.nvvm.wmma.m16n16k16.load.a.col.s8
     nvvm_wmma_m16n16k16_load_a_f16_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.col.stride.f16
+    nvvm_wmma_m16n16k16_load_a_s8_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.col.stride.s8
+    nvvm_wmma_m16n16k16_load_a_u8_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.col.stride.u8
+    nvvm_wmma_m16n16k16_load_a_u8_col,         // llvm.nvvm.wmma.m16n16k16.load.a.col.u8
     nvvm_wmma_m16n16k16_load_a_f16_row,        // llvm.nvvm.wmma.m16n16k16.load.a.row.f16
+    nvvm_wmma_m16n16k16_load_a_s8_row,         // llvm.nvvm.wmma.m16n16k16.load.a.row.s8
     nvvm_wmma_m16n16k16_load_a_f16_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.row.stride.f16
+    nvvm_wmma_m16n16k16_load_a_s8_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.row.stride.s8
+    nvvm_wmma_m16n16k16_load_a_u8_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.a.row.stride.u8
+    nvvm_wmma_m16n16k16_load_a_u8_row,         // llvm.nvvm.wmma.m16n16k16.load.a.row.u8
     nvvm_wmma_m16n16k16_load_b_f16_col,        // llvm.nvvm.wmma.m16n16k16.load.b.col.f16
+    nvvm_wmma_m16n16k16_load_b_s8_col,         // llvm.nvvm.wmma.m16n16k16.load.b.col.s8
     nvvm_wmma_m16n16k16_load_b_f16_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.col.stride.f16
+    nvvm_wmma_m16n16k16_load_b_s8_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.col.stride.s8
+    nvvm_wmma_m16n16k16_load_b_u8_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.col.stride.u8
+    nvvm_wmma_m16n16k16_load_b_u8_col,         // llvm.nvvm.wmma.m16n16k16.load.b.col.u8
     nvvm_wmma_m16n16k16_load_b_f16_row,        // llvm.nvvm.wmma.m16n16k16.load.b.row.f16
+    nvvm_wmma_m16n16k16_load_b_s8_row,         // llvm.nvvm.wmma.m16n16k16.load.b.row.s8
     nvvm_wmma_m16n16k16_load_b_f16_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.row.stride.f16
+    nvvm_wmma_m16n16k16_load_b_s8_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.row.stride.s8
+    nvvm_wmma_m16n16k16_load_b_u8_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.b.row.stride.u8
+    nvvm_wmma_m16n16k16_load_b_u8_row,         // llvm.nvvm.wmma.m16n16k16.load.b.row.u8
     nvvm_wmma_m16n16k16_load_c_f16_col,        // llvm.nvvm.wmma.m16n16k16.load.c.col.f16
     nvvm_wmma_m16n16k16_load_c_f32_col,        // llvm.nvvm.wmma.m16n16k16.load.c.col.f32
+    nvvm_wmma_m16n16k16_load_c_s32_col,        // llvm.nvvm.wmma.m16n16k16.load.c.col.s32
     nvvm_wmma_m16n16k16_load_c_f16_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.col.stride.f16
     nvvm_wmma_m16n16k16_load_c_f32_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.col.stride.f32
+    nvvm_wmma_m16n16k16_load_c_s32_col_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.col.stride.s32
     nvvm_wmma_m16n16k16_load_c_f16_row,        // llvm.nvvm.wmma.m16n16k16.load.c.row.f16
     nvvm_wmma_m16n16k16_load_c_f32_row,        // llvm.nvvm.wmma.m16n16k16.load.c.row.f32
+    nvvm_wmma_m16n16k16_load_c_s32_row,        // llvm.nvvm.wmma.m16n16k16.load.c.row.s32
     nvvm_wmma_m16n16k16_load_c_f16_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.row.stride.f16
     nvvm_wmma_m16n16k16_load_c_f32_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.row.stride.f32
+    nvvm_wmma_m16n16k16_load_c_s32_row_stride,  // llvm.nvvm.wmma.m16n16k16.load.c.row.stride.s32
     nvvm_wmma_m16n16k16_mma_col_col_f16_f16,   // llvm.nvvm.wmma.m16n16k16.mma.col.col.f16.f16
     nvvm_wmma_m16n16k16_mma_col_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.col.f16.f16.satfinite
     nvvm_wmma_m16n16k16_mma_col_col_f16_f32,   // llvm.nvvm.wmma.m16n16k16.mma.col.col.f16.f32
@@ -4737,6 +4823,10 @@
     nvvm_wmma_m16n16k16_mma_col_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.col.f32.f16.satfinite
     nvvm_wmma_m16n16k16_mma_col_col_f32_f32,   // llvm.nvvm.wmma.m16n16k16.mma.col.col.f32.f32
     nvvm_wmma_m16n16k16_mma_col_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.col.f32.f32.satfinite
+    nvvm_wmma_m16n16k16_mma_col_col_s8,        // llvm.nvvm.wmma.m16n16k16.mma.col.col.s8
+    nvvm_wmma_m16n16k16_mma_col_col_s8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.col.s8.satfinite
+    nvvm_wmma_m16n16k16_mma_col_col_u8,        // llvm.nvvm.wmma.m16n16k16.mma.col.col.u8
+    nvvm_wmma_m16n16k16_mma_col_col_u8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.col.u8.satfinite
     nvvm_wmma_m16n16k16_mma_col_row_f16_f16,   // llvm.nvvm.wmma.m16n16k16.mma.col.row.f16.f16
     nvvm_wmma_m16n16k16_mma_col_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.row.f16.f16.satfinite
     nvvm_wmma_m16n16k16_mma_col_row_f16_f32,   // llvm.nvvm.wmma.m16n16k16.mma.col.row.f16.f32
@@ -4745,6 +4835,10 @@
     nvvm_wmma_m16n16k16_mma_col_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.row.f32.f16.satfinite
     nvvm_wmma_m16n16k16_mma_col_row_f32_f32,   // llvm.nvvm.wmma.m16n16k16.mma.col.row.f32.f32
     nvvm_wmma_m16n16k16_mma_col_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.row.f32.f32.satfinite
+    nvvm_wmma_m16n16k16_mma_col_row_s8,        // llvm.nvvm.wmma.m16n16k16.mma.col.row.s8
+    nvvm_wmma_m16n16k16_mma_col_row_s8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.row.s8.satfinite
+    nvvm_wmma_m16n16k16_mma_col_row_u8,        // llvm.nvvm.wmma.m16n16k16.mma.col.row.u8
+    nvvm_wmma_m16n16k16_mma_col_row_u8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.col.row.u8.satfinite
     nvvm_wmma_m16n16k16_mma_row_col_f16_f16,   // llvm.nvvm.wmma.m16n16k16.mma.row.col.f16.f16
     nvvm_wmma_m16n16k16_mma_row_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.col.f16.f16.satfinite
     nvvm_wmma_m16n16k16_mma_row_col_f16_f32,   // llvm.nvvm.wmma.m16n16k16.mma.row.col.f16.f32
@@ -4753,6 +4847,10 @@
     nvvm_wmma_m16n16k16_mma_row_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.col.f32.f16.satfinite
     nvvm_wmma_m16n16k16_mma_row_col_f32_f32,   // llvm.nvvm.wmma.m16n16k16.mma.row.col.f32.f32
     nvvm_wmma_m16n16k16_mma_row_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.col.f32.f32.satfinite
+    nvvm_wmma_m16n16k16_mma_row_col_s8,        // llvm.nvvm.wmma.m16n16k16.mma.row.col.s8
+    nvvm_wmma_m16n16k16_mma_row_col_s8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.col.s8.satfinite
+    nvvm_wmma_m16n16k16_mma_row_col_u8,        // llvm.nvvm.wmma.m16n16k16.mma.row.col.u8
+    nvvm_wmma_m16n16k16_mma_row_col_u8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.col.u8.satfinite
     nvvm_wmma_m16n16k16_mma_row_row_f16_f16,   // llvm.nvvm.wmma.m16n16k16.mma.row.row.f16.f16
     nvvm_wmma_m16n16k16_mma_row_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.row.f16.f16.satfinite
     nvvm_wmma_m16n16k16_mma_row_row_f16_f32,   // llvm.nvvm.wmma.m16n16k16.mma.row.row.f16.f32
@@ -4761,30 +4859,58 @@
     nvvm_wmma_m16n16k16_mma_row_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.row.f32.f16.satfinite
     nvvm_wmma_m16n16k16_mma_row_row_f32_f32,   // llvm.nvvm.wmma.m16n16k16.mma.row.row.f32.f32
     nvvm_wmma_m16n16k16_mma_row_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.row.f32.f32.satfinite
+    nvvm_wmma_m16n16k16_mma_row_row_s8,        // llvm.nvvm.wmma.m16n16k16.mma.row.row.s8
+    nvvm_wmma_m16n16k16_mma_row_row_s8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.row.s8.satfinite
+    nvvm_wmma_m16n16k16_mma_row_row_u8,        // llvm.nvvm.wmma.m16n16k16.mma.row.row.u8
+    nvvm_wmma_m16n16k16_mma_row_row_u8_satfinite,  // llvm.nvvm.wmma.m16n16k16.mma.row.row.u8.satfinite
     nvvm_wmma_m16n16k16_store_d_f16_col,       // llvm.nvvm.wmma.m16n16k16.store.d.col.f16
     nvvm_wmma_m16n16k16_store_d_f32_col,       // llvm.nvvm.wmma.m16n16k16.store.d.col.f32
+    nvvm_wmma_m16n16k16_store_d_s32_col,       // llvm.nvvm.wmma.m16n16k16.store.d.col.s32
     nvvm_wmma_m16n16k16_store_d_f16_col_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.col.stride.f16
     nvvm_wmma_m16n16k16_store_d_f32_col_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.col.stride.f32
+    nvvm_wmma_m16n16k16_store_d_s32_col_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.col.stride.s32
     nvvm_wmma_m16n16k16_store_d_f16_row,       // llvm.nvvm.wmma.m16n16k16.store.d.row.f16
     nvvm_wmma_m16n16k16_store_d_f32_row,       // llvm.nvvm.wmma.m16n16k16.store.d.row.f32
+    nvvm_wmma_m16n16k16_store_d_s32_row,       // llvm.nvvm.wmma.m16n16k16.store.d.row.s32
     nvvm_wmma_m16n16k16_store_d_f16_row_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.row.stride.f16
     nvvm_wmma_m16n16k16_store_d_f32_row_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.row.stride.f32
+    nvvm_wmma_m16n16k16_store_d_s32_row_stride,  // llvm.nvvm.wmma.m16n16k16.store.d.row.stride.s32
     nvvm_wmma_m32n8k16_load_a_f16_col,         // llvm.nvvm.wmma.m32n8k16.load.a.col.f16
+    nvvm_wmma_m32n8k16_load_a_s8_col,          // llvm.nvvm.wmma.m32n8k16.load.a.col.s8
     nvvm_wmma_m32n8k16_load_a_f16_col_stride,  // llvm.nvvm.wmma.m32n8k16.load.a.col.stride.f16
+    nvvm_wmma_m32n8k16_load_a_s8_col_stride,   // llvm.nvvm.wmma.m32n8k16.load.a.col.stride.s8
+    nvvm_wmma_m32n8k16_load_a_u8_col_stride,   // llvm.nvvm.wmma.m32n8k16.load.a.col.stride.u8
+    nvvm_wmma_m32n8k16_load_a_u8_col,          // llvm.nvvm.wmma.m32n8k16.load.a.col.u8
     nvvm_wmma_m32n8k16_load_a_f16_row,         // llvm.nvvm.wmma.m32n8k16.load.a.row.f16
+    nvvm_wmma_m32n8k16_load_a_s8_row,          // llvm.nvvm.wmma.m32n8k16.load.a.row.s8
     nvvm_wmma_m32n8k16_load_a_f16_row_stride,  // llvm.nvvm.wmma.m32n8k16.load.a.row.stride.f16
+    nvvm_wmma_m32n8k16_load_a_s8_row_stride,   // llvm.nvvm.wmma.m32n8k16.load.a.row.stride.s8
+    nvvm_wmma_m32n8k16_load_a_u8_row_stride,   // llvm.nvvm.wmma.m32n8k16.load.a.row.stride.u8
+    nvvm_wmma_m32n8k16_load_a_u8_row,          // llvm.nvvm.wmma.m32n8k16.load.a.row.u8
     nvvm_wmma_m32n8k16_load_b_f16_col,         // llvm.nvvm.wmma.m32n8k16.load.b.col.f16
+    nvvm_wmma_m32n8k16_load_b_s8_col,          // llvm.nvvm.wmma.m32n8k16.load.b.col.s8
     nvvm_wmma_m32n8k16_load_b_f16_col_stride,  // llvm.nvvm.wmma.m32n8k16.load.b.col.stride.f16
+    nvvm_wmma_m32n8k16_load_b_s8_col_stride,   // llvm.nvvm.wmma.m32n8k16.load.b.col.stride.s8
+    nvvm_wmma_m32n8k16_load_b_u8_col_stride,   // llvm.nvvm.wmma.m32n8k16.load.b.col.stride.u8
+    nvvm_wmma_m32n8k16_load_b_u8_col,          // llvm.nvvm.wmma.m32n8k16.load.b.col.u8
     nvvm_wmma_m32n8k16_load_b_f16_row,         // llvm.nvvm.wmma.m32n8k16.load.b.row.f16
+    nvvm_wmma_m32n8k16_load_b_s8_row,          // llvm.nvvm.wmma.m32n8k16.load.b.row.s8
     nvvm_wmma_m32n8k16_load_b_f16_row_stride,  // llvm.nvvm.wmma.m32n8k16.load.b.row.stride.f16
+    nvvm_wmma_m32n8k16_load_b_s8_row_stride,   // llvm.nvvm.wmma.m32n8k16.load.b.row.stride.s8
+    nvvm_wmma_m32n8k16_load_b_u8_row_stride,   // llvm.nvvm.wmma.m32n8k16.load.b.row.stride.u8
+    nvvm_wmma_m32n8k16_load_b_u8_row,          // llvm.nvvm.wmma.m32n8k16.load.b.row.u8
     nvvm_wmma_m32n8k16_load_c_f16_col,         // llvm.nvvm.wmma.m32n8k16.load.c.col.f16
     nvvm_wmma_m32n8k16_load_c_f32_col,         // llvm.nvvm.wmma.m32n8k16.load.c.col.f32
+    nvvm_wmma_m32n8k16_load_c_s32_col,         // llvm.nvvm.wmma.m32n8k16.load.c.col.s32
     nvvm_wmma_m32n8k16_load_c_f16_col_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.col.stride.f16
     nvvm_wmma_m32n8k16_load_c_f32_col_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.col.stride.f32
+    nvvm_wmma_m32n8k16_load_c_s32_col_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.col.stride.s32
     nvvm_wmma_m32n8k16_load_c_f16_row,         // llvm.nvvm.wmma.m32n8k16.load.c.row.f16
     nvvm_wmma_m32n8k16_load_c_f32_row,         // llvm.nvvm.wmma.m32n8k16.load.c.row.f32
+    nvvm_wmma_m32n8k16_load_c_s32_row,         // llvm.nvvm.wmma.m32n8k16.load.c.row.s32
     nvvm_wmma_m32n8k16_load_c_f16_row_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.row.stride.f16
     nvvm_wmma_m32n8k16_load_c_f32_row_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.row.stride.f32
+    nvvm_wmma_m32n8k16_load_c_s32_row_stride,  // llvm.nvvm.wmma.m32n8k16.load.c.row.stride.s32
     nvvm_wmma_m32n8k16_mma_col_col_f16_f16,    // llvm.nvvm.wmma.m32n8k16.mma.col.col.f16.f16
     nvvm_wmma_m32n8k16_mma_col_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.col.f16.f16.satfinite
     nvvm_wmma_m32n8k16_mma_col_col_f16_f32,    // llvm.nvvm.wmma.m32n8k16.mma.col.col.f16.f32
@@ -4793,6 +4919,10 @@
     nvvm_wmma_m32n8k16_mma_col_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.col.f32.f16.satfinite
     nvvm_wmma_m32n8k16_mma_col_col_f32_f32,    // llvm.nvvm.wmma.m32n8k16.mma.col.col.f32.f32
     nvvm_wmma_m32n8k16_mma_col_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.col.f32.f32.satfinite
+    nvvm_wmma_m32n8k16_mma_col_col_s8,         // llvm.nvvm.wmma.m32n8k16.mma.col.col.s8
+    nvvm_wmma_m32n8k16_mma_col_col_s8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.col.s8.satfinite
+    nvvm_wmma_m32n8k16_mma_col_col_u8,         // llvm.nvvm.wmma.m32n8k16.mma.col.col.u8
+    nvvm_wmma_m32n8k16_mma_col_col_u8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.col.u8.satfinite
     nvvm_wmma_m32n8k16_mma_col_row_f16_f16,    // llvm.nvvm.wmma.m32n8k16.mma.col.row.f16.f16
     nvvm_wmma_m32n8k16_mma_col_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.row.f16.f16.satfinite
     nvvm_wmma_m32n8k16_mma_col_row_f16_f32,    // llvm.nvvm.wmma.m32n8k16.mma.col.row.f16.f32
@@ -4801,6 +4931,10 @@
     nvvm_wmma_m32n8k16_mma_col_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.row.f32.f16.satfinite
     nvvm_wmma_m32n8k16_mma_col_row_f32_f32,    // llvm.nvvm.wmma.m32n8k16.mma.col.row.f32.f32
     nvvm_wmma_m32n8k16_mma_col_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.row.f32.f32.satfinite
+    nvvm_wmma_m32n8k16_mma_col_row_s8,         // llvm.nvvm.wmma.m32n8k16.mma.col.row.s8
+    nvvm_wmma_m32n8k16_mma_col_row_s8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.row.s8.satfinite
+    nvvm_wmma_m32n8k16_mma_col_row_u8,         // llvm.nvvm.wmma.m32n8k16.mma.col.row.u8
+    nvvm_wmma_m32n8k16_mma_col_row_u8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.col.row.u8.satfinite
     nvvm_wmma_m32n8k16_mma_row_col_f16_f16,    // llvm.nvvm.wmma.m32n8k16.mma.row.col.f16.f16
     nvvm_wmma_m32n8k16_mma_row_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.col.f16.f16.satfinite
     nvvm_wmma_m32n8k16_mma_row_col_f16_f32,    // llvm.nvvm.wmma.m32n8k16.mma.row.col.f16.f32
@@ -4809,6 +4943,10 @@
     nvvm_wmma_m32n8k16_mma_row_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.col.f32.f16.satfinite
     nvvm_wmma_m32n8k16_mma_row_col_f32_f32,    // llvm.nvvm.wmma.m32n8k16.mma.row.col.f32.f32
     nvvm_wmma_m32n8k16_mma_row_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.col.f32.f32.satfinite
+    nvvm_wmma_m32n8k16_mma_row_col_s8,         // llvm.nvvm.wmma.m32n8k16.mma.row.col.s8
+    nvvm_wmma_m32n8k16_mma_row_col_s8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.col.s8.satfinite
+    nvvm_wmma_m32n8k16_mma_row_col_u8,         // llvm.nvvm.wmma.m32n8k16.mma.row.col.u8
+    nvvm_wmma_m32n8k16_mma_row_col_u8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.col.u8.satfinite
     nvvm_wmma_m32n8k16_mma_row_row_f16_f16,    // llvm.nvvm.wmma.m32n8k16.mma.row.row.f16.f16
     nvvm_wmma_m32n8k16_mma_row_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.row.f16.f16.satfinite
     nvvm_wmma_m32n8k16_mma_row_row_f16_f32,    // llvm.nvvm.wmma.m32n8k16.mma.row.row.f16.f32
@@ -4817,30 +4955,58 @@
     nvvm_wmma_m32n8k16_mma_row_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.row.f32.f16.satfinite
     nvvm_wmma_m32n8k16_mma_row_row_f32_f32,    // llvm.nvvm.wmma.m32n8k16.mma.row.row.f32.f32
     nvvm_wmma_m32n8k16_mma_row_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.row.f32.f32.satfinite
+    nvvm_wmma_m32n8k16_mma_row_row_s8,         // llvm.nvvm.wmma.m32n8k16.mma.row.row.s8
+    nvvm_wmma_m32n8k16_mma_row_row_s8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.row.s8.satfinite
+    nvvm_wmma_m32n8k16_mma_row_row_u8,         // llvm.nvvm.wmma.m32n8k16.mma.row.row.u8
+    nvvm_wmma_m32n8k16_mma_row_row_u8_satfinite,  // llvm.nvvm.wmma.m32n8k16.mma.row.row.u8.satfinite
     nvvm_wmma_m32n8k16_store_d_f16_col,        // llvm.nvvm.wmma.m32n8k16.store.d.col.f16
     nvvm_wmma_m32n8k16_store_d_f32_col,        // llvm.nvvm.wmma.m32n8k16.store.d.col.f32
+    nvvm_wmma_m32n8k16_store_d_s32_col,        // llvm.nvvm.wmma.m32n8k16.store.d.col.s32
     nvvm_wmma_m32n8k16_store_d_f16_col_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.col.stride.f16
     nvvm_wmma_m32n8k16_store_d_f32_col_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.col.stride.f32
+    nvvm_wmma_m32n8k16_store_d_s32_col_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.col.stride.s32
     nvvm_wmma_m32n8k16_store_d_f16_row,        // llvm.nvvm.wmma.m32n8k16.store.d.row.f16
     nvvm_wmma_m32n8k16_store_d_f32_row,        // llvm.nvvm.wmma.m32n8k16.store.d.row.f32
+    nvvm_wmma_m32n8k16_store_d_s32_row,        // llvm.nvvm.wmma.m32n8k16.store.d.row.s32
     nvvm_wmma_m32n8k16_store_d_f16_row_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.row.stride.f16
     nvvm_wmma_m32n8k16_store_d_f32_row_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.row.stride.f32
+    nvvm_wmma_m32n8k16_store_d_s32_row_stride,  // llvm.nvvm.wmma.m32n8k16.store.d.row.stride.s32
     nvvm_wmma_m8n32k16_load_a_f16_col,         // llvm.nvvm.wmma.m8n32k16.load.a.col.f16
+    nvvm_wmma_m8n32k16_load_a_s8_col,          // llvm.nvvm.wmma.m8n32k16.load.a.col.s8
     nvvm_wmma_m8n32k16_load_a_f16_col_stride,  // llvm.nvvm.wmma.m8n32k16.load.a.col.stride.f16
+    nvvm_wmma_m8n32k16_load_a_s8_col_stride,   // llvm.nvvm.wmma.m8n32k16.load.a.col.stride.s8
+    nvvm_wmma_m8n32k16_load_a_u8_col_stride,   // llvm.nvvm.wmma.m8n32k16.load.a.col.stride.u8
+    nvvm_wmma_m8n32k16_load_a_u8_col,          // llvm.nvvm.wmma.m8n32k16.load.a.col.u8
     nvvm_wmma_m8n32k16_load_a_f16_row,         // llvm.nvvm.wmma.m8n32k16.load.a.row.f16
+    nvvm_wmma_m8n32k16_load_a_s8_row,          // llvm.nvvm.wmma.m8n32k16.load.a.row.s8
     nvvm_wmma_m8n32k16_load_a_f16_row_stride,  // llvm.nvvm.wmma.m8n32k16.load.a.row.stride.f16
+    nvvm_wmma_m8n32k16_load_a_s8_row_stride,   // llvm.nvvm.wmma.m8n32k16.load.a.row.stride.s8
+    nvvm_wmma_m8n32k16_load_a_u8_row_stride,   // llvm.nvvm.wmma.m8n32k16.load.a.row.stride.u8
+    nvvm_wmma_m8n32k16_load_a_u8_row,          // llvm.nvvm.wmma.m8n32k16.load.a.row.u8
     nvvm_wmma_m8n32k16_load_b_f16_col,         // llvm.nvvm.wmma.m8n32k16.load.b.col.f16
+    nvvm_wmma_m8n32k16_load_b_s8_col,          // llvm.nvvm.wmma.m8n32k16.load.b.col.s8
     nvvm_wmma_m8n32k16_load_b_f16_col_stride,  // llvm.nvvm.wmma.m8n32k16.load.b.col.stride.f16
+    nvvm_wmma_m8n32k16_load_b_s8_col_stride,   // llvm.nvvm.wmma.m8n32k16.load.b.col.stride.s8
+    nvvm_wmma_m8n32k16_load_b_u8_col_stride,   // llvm.nvvm.wmma.m8n32k16.load.b.col.stride.u8
+    nvvm_wmma_m8n32k16_load_b_u8_col,          // llvm.nvvm.wmma.m8n32k16.load.b.col.u8
     nvvm_wmma_m8n32k16_load_b_f16_row,         // llvm.nvvm.wmma.m8n32k16.load.b.row.f16
+    nvvm_wmma_m8n32k16_load_b_s8_row,          // llvm.nvvm.wmma.m8n32k16.load.b.row.s8
     nvvm_wmma_m8n32k16_load_b_f16_row_stride,  // llvm.nvvm.wmma.m8n32k16.load.b.row.stride.f16
+    nvvm_wmma_m8n32k16_load_b_s8_row_stride,   // llvm.nvvm.wmma.m8n32k16.load.b.row.stride.s8
+    nvvm_wmma_m8n32k16_load_b_u8_row_stride,   // llvm.nvvm.wmma.m8n32k16.load.b.row.stride.u8
+    nvvm_wmma_m8n32k16_load_b_u8_row,          // llvm.nvvm.wmma.m8n32k16.load.b.row.u8
     nvvm_wmma_m8n32k16_load_c_f16_col,         // llvm.nvvm.wmma.m8n32k16.load.c.col.f16
     nvvm_wmma_m8n32k16_load_c_f32_col,         // llvm.nvvm.wmma.m8n32k16.load.c.col.f32
+    nvvm_wmma_m8n32k16_load_c_s32_col,         // llvm.nvvm.wmma.m8n32k16.load.c.col.s32
     nvvm_wmma_m8n32k16_load_c_f16_col_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.col.stride.f16
     nvvm_wmma_m8n32k16_load_c_f32_col_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.col.stride.f32
+    nvvm_wmma_m8n32k16_load_c_s32_col_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.col.stride.s32
     nvvm_wmma_m8n32k16_load_c_f16_row,         // llvm.nvvm.wmma.m8n32k16.load.c.row.f16
     nvvm_wmma_m8n32k16_load_c_f32_row,         // llvm.nvvm.wmma.m8n32k16.load.c.row.f32
+    nvvm_wmma_m8n32k16_load_c_s32_row,         // llvm.nvvm.wmma.m8n32k16.load.c.row.s32
     nvvm_wmma_m8n32k16_load_c_f16_row_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.row.stride.f16
     nvvm_wmma_m8n32k16_load_c_f32_row_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.row.stride.f32
+    nvvm_wmma_m8n32k16_load_c_s32_row_stride,  // llvm.nvvm.wmma.m8n32k16.load.c.row.stride.s32
     nvvm_wmma_m8n32k16_mma_col_col_f16_f16,    // llvm.nvvm.wmma.m8n32k16.mma.col.col.f16.f16
     nvvm_wmma_m8n32k16_mma_col_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.col.f16.f16.satfinite
     nvvm_wmma_m8n32k16_mma_col_col_f16_f32,    // llvm.nvvm.wmma.m8n32k16.mma.col.col.f16.f32
@@ -4849,6 +5015,10 @@
     nvvm_wmma_m8n32k16_mma_col_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.col.f32.f16.satfinite
     nvvm_wmma_m8n32k16_mma_col_col_f32_f32,    // llvm.nvvm.wmma.m8n32k16.mma.col.col.f32.f32
     nvvm_wmma_m8n32k16_mma_col_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.col.f32.f32.satfinite
+    nvvm_wmma_m8n32k16_mma_col_col_s8,         // llvm.nvvm.wmma.m8n32k16.mma.col.col.s8
+    nvvm_wmma_m8n32k16_mma_col_col_s8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.col.s8.satfinite
+    nvvm_wmma_m8n32k16_mma_col_col_u8,         // llvm.nvvm.wmma.m8n32k16.mma.col.col.u8
+    nvvm_wmma_m8n32k16_mma_col_col_u8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.col.u8.satfinite
     nvvm_wmma_m8n32k16_mma_col_row_f16_f16,    // llvm.nvvm.wmma.m8n32k16.mma.col.row.f16.f16
     nvvm_wmma_m8n32k16_mma_col_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.row.f16.f16.satfinite
     nvvm_wmma_m8n32k16_mma_col_row_f16_f32,    // llvm.nvvm.wmma.m8n32k16.mma.col.row.f16.f32
@@ -4857,6 +5027,10 @@
     nvvm_wmma_m8n32k16_mma_col_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.row.f32.f16.satfinite
     nvvm_wmma_m8n32k16_mma_col_row_f32_f32,    // llvm.nvvm.wmma.m8n32k16.mma.col.row.f32.f32
     nvvm_wmma_m8n32k16_mma_col_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.row.f32.f32.satfinite
+    nvvm_wmma_m8n32k16_mma_col_row_s8,         // llvm.nvvm.wmma.m8n32k16.mma.col.row.s8
+    nvvm_wmma_m8n32k16_mma_col_row_s8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.row.s8.satfinite
+    nvvm_wmma_m8n32k16_mma_col_row_u8,         // llvm.nvvm.wmma.m8n32k16.mma.col.row.u8
+    nvvm_wmma_m8n32k16_mma_col_row_u8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.col.row.u8.satfinite
     nvvm_wmma_m8n32k16_mma_row_col_f16_f16,    // llvm.nvvm.wmma.m8n32k16.mma.row.col.f16.f16
     nvvm_wmma_m8n32k16_mma_row_col_f16_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.col.f16.f16.satfinite
     nvvm_wmma_m8n32k16_mma_row_col_f16_f32,    // llvm.nvvm.wmma.m8n32k16.mma.row.col.f16.f32
@@ -4865,6 +5039,10 @@
     nvvm_wmma_m8n32k16_mma_row_col_f32_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.col.f32.f16.satfinite
     nvvm_wmma_m8n32k16_mma_row_col_f32_f32,    // llvm.nvvm.wmma.m8n32k16.mma.row.col.f32.f32
     nvvm_wmma_m8n32k16_mma_row_col_f32_f32_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.col.f32.f32.satfinite
+    nvvm_wmma_m8n32k16_mma_row_col_s8,         // llvm.nvvm.wmma.m8n32k16.mma.row.col.s8
+    nvvm_wmma_m8n32k16_mma_row_col_s8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.col.s8.satfinite
+    nvvm_wmma_m8n32k16_mma_row_col_u8,         // llvm.nvvm.wmma.m8n32k16.mma.row.col.u8
+    nvvm_wmma_m8n32k16_mma_row_col_u8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.col.u8.satfinite
     nvvm_wmma_m8n32k16_mma_row_row_f16_f16,    // llvm.nvvm.wmma.m8n32k16.mma.row.row.f16.f16
     nvvm_wmma_m8n32k16_mma_row_row_f16_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.row.f16.f16.satfinite
     nvvm_wmma_m8n32k16_mma_row_row_f16_f32,    // llvm.nvvm.wmma.m8n32k16.mma.row.row.f16.f32
@@ -4873,14 +5051,55 @@
     nvvm_wmma_m8n32k16_mma_row_row_f32_f16_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.row.f32.f16.satfinite
     nvvm_wmma_m8n32k16_mma_row_row_f32_f32,    // llvm.nvvm.wmma.m8n32k16.mma.row.row.f32.f32
     nvvm_wmma_m8n32k16_mma_row_row_f32_f32_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.row.f32.f32.satfinite
+    nvvm_wmma_m8n32k16_mma_row_row_s8,         // llvm.nvvm.wmma.m8n32k16.mma.row.row.s8
+    nvvm_wmma_m8n32k16_mma_row_row_s8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.row.s8.satfinite
+    nvvm_wmma_m8n32k16_mma_row_row_u8,         // llvm.nvvm.wmma.m8n32k16.mma.row.row.u8
+    nvvm_wmma_m8n32k16_mma_row_row_u8_satfinite,  // llvm.nvvm.wmma.m8n32k16.mma.row.row.u8.satfinite
     nvvm_wmma_m8n32k16_store_d_f16_col,        // llvm.nvvm.wmma.m8n32k16.store.d.col.f16
     nvvm_wmma_m8n32k16_store_d_f32_col,        // llvm.nvvm.wmma.m8n32k16.store.d.col.f32
+    nvvm_wmma_m8n32k16_store_d_s32_col,        // llvm.nvvm.wmma.m8n32k16.store.d.col.s32
     nvvm_wmma_m8n32k16_store_d_f16_col_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.col.stride.f16
     nvvm_wmma_m8n32k16_store_d_f32_col_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.col.stride.f32
+    nvvm_wmma_m8n32k16_store_d_s32_col_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.col.stride.s32
     nvvm_wmma_m8n32k16_store_d_f16_row,        // llvm.nvvm.wmma.m8n32k16.store.d.row.f16
     nvvm_wmma_m8n32k16_store_d_f32_row,        // llvm.nvvm.wmma.m8n32k16.store.d.row.f32
+    nvvm_wmma_m8n32k16_store_d_s32_row,        // llvm.nvvm.wmma.m8n32k16.store.d.row.s32
     nvvm_wmma_m8n32k16_store_d_f16_row_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.row.stride.f16
     nvvm_wmma_m8n32k16_store_d_f32_row_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.row.stride.f32
+    nvvm_wmma_m8n32k16_store_d_s32_row_stride,  // llvm.nvvm.wmma.m8n32k16.store.d.row.stride.s32
+    nvvm_wmma_m8n8k128_load_a_b1_row,          // llvm.nvvm.wmma.m8n8k128.load.a.row.b1
+    nvvm_wmma_m8n8k128_load_a_b1_row_stride,   // llvm.nvvm.wmma.m8n8k128.load.a.row.stride.b1
+    nvvm_wmma_m8n8k128_load_b_b1_col,          // llvm.nvvm.wmma.m8n8k128.load.b.col.b1
+    nvvm_wmma_m8n8k128_load_b_b1_col_stride,   // llvm.nvvm.wmma.m8n8k128.load.b.col.stride.b1
+    nvvm_wmma_m8n8k128_load_c_s32_col,         // llvm.nvvm.wmma.m8n8k128.load.c.col.s32
+    nvvm_wmma_m8n8k128_load_c_s32_col_stride,  // llvm.nvvm.wmma.m8n8k128.load.c.col.stride.s32
+    nvvm_wmma_m8n8k128_load_c_s32_row,         // llvm.nvvm.wmma.m8n8k128.load.c.row.s32
+    nvvm_wmma_m8n8k128_load_c_s32_row_stride,  // llvm.nvvm.wmma.m8n8k128.load.c.row.stride.s32
+    nvvm_wmma_m8n8k128_mma_row_col_b1,         // llvm.nvvm.wmma.m8n8k128.mma.row.col.b1
+    nvvm_wmma_m8n8k128_store_d_s32_col,        // llvm.nvvm.wmma.m8n8k128.store.d.col.s32
+    nvvm_wmma_m8n8k128_store_d_s32_col_stride,  // llvm.nvvm.wmma.m8n8k128.store.d.col.stride.s32
+    nvvm_wmma_m8n8k128_store_d_s32_row,        // llvm.nvvm.wmma.m8n8k128.store.d.row.s32
+    nvvm_wmma_m8n8k128_store_d_s32_row_stride,  // llvm.nvvm.wmma.m8n8k128.store.d.row.stride.s32
+    nvvm_wmma_m8n8k32_load_a_s4_row,           // llvm.nvvm.wmma.m8n8k32.load.a.row.s4
+    nvvm_wmma_m8n8k32_load_a_s4_row_stride,    // llvm.nvvm.wmma.m8n8k32.load.a.row.stride.s4
+    nvvm_wmma_m8n8k32_load_a_u4_row_stride,    // llvm.nvvm.wmma.m8n8k32.load.a.row.stride.u4
+    nvvm_wmma_m8n8k32_load_a_u4_row,           // llvm.nvvm.wmma.m8n8k32.load.a.row.u4
+    nvvm_wmma_m8n8k32_load_b_s4_col,           // llvm.nvvm.wmma.m8n8k32.load.b.col.s4
+    nvvm_wmma_m8n8k32_load_b_s4_col_stride,    // llvm.nvvm.wmma.m8n8k32.load.b.col.stride.s4
+    nvvm_wmma_m8n8k32_load_b_u4_col_stride,    // llvm.nvvm.wmma.m8n8k32.load.b.col.stride.u4
+    nvvm_wmma_m8n8k32_load_b_u4_col,           // llvm.nvvm.wmma.m8n8k32.load.b.col.u4
+    nvvm_wmma_m8n8k32_load_c_s32_col,          // llvm.nvvm.wmma.m8n8k32.load.c.col.s32
+    nvvm_wmma_m8n8k32_load_c_s32_col_stride,   // llvm.nvvm.wmma.m8n8k32.load.c.col.stride.s32
+    nvvm_wmma_m8n8k32_load_c_s32_row,          // llvm.nvvm.wmma.m8n8k32.load.c.row.s32
+    nvvm_wmma_m8n8k32_load_c_s32_row_stride,   // llvm.nvvm.wmma.m8n8k32.load.c.row.stride.s32
+    nvvm_wmma_m8n8k32_mma_row_col_s4,          // llvm.nvvm.wmma.m8n8k32.mma.row.col.s4
+    nvvm_wmma_m8n8k32_mma_row_col_s4_satfinite,  // llvm.nvvm.wmma.m8n8k32.mma.row.col.s4.satfinite
+    nvvm_wmma_m8n8k32_mma_row_col_u4,          // llvm.nvvm.wmma.m8n8k32.mma.row.col.u4
+    nvvm_wmma_m8n8k32_mma_row_col_u4_satfinite,  // llvm.nvvm.wmma.m8n8k32.mma.row.col.u4.satfinite
+    nvvm_wmma_m8n8k32_store_d_s32_col,         // llvm.nvvm.wmma.m8n8k32.store.d.col.s32
+    nvvm_wmma_m8n8k32_store_d_s32_col_stride,  // llvm.nvvm.wmma.m8n8k32.store.d.col.stride.s32
+    nvvm_wmma_m8n8k32_store_d_s32_row,         // llvm.nvvm.wmma.m8n8k32.store.d.row.s32
+    nvvm_wmma_m8n8k32_store_d_s32_row_stride,  // llvm.nvvm.wmma.m8n8k32.store.d.row.stride.s32
     ppc_addf128_round_to_odd,                  // llvm.ppc.addf128.round.to.odd
     ppc_altivec_crypto_vcipher,                // llvm.ppc.altivec.crypto.vcipher
     ppc_altivec_crypto_vcipherlast,            // llvm.ppc.altivec.crypto.vcipherlast
@@ -5208,6 +5427,7 @@
     ppc_set_texasru,                           // llvm.ppc.set.texasru
     ppc_set_tfhar,                             // llvm.ppc.set.tfhar
     ppc_set_tfiar,                             // llvm.ppc.set.tfiar
+    ppc_setrnd,                                // llvm.ppc.setrnd
     ppc_sqrtf128_round_to_odd,                 // llvm.ppc.sqrtf128.round.to.odd
     ppc_subf128_round_to_odd,                  // llvm.ppc.subf128.round.to.odd
     ppc_sync,                                  // llvm.ppc.sync
@@ -5520,10 +5740,12 @@
     s390_vscbiq,                               // llvm.s390.vscbiq
     s390_vsl,                                  // llvm.s390.vsl
     s390_vslb,                                 // llvm.s390.vslb
+    s390_vsld,                                 // llvm.s390.vsld
     s390_vsldb,                                // llvm.s390.vsldb
     s390_vsq,                                  // llvm.s390.vsq
     s390_vsra,                                 // llvm.s390.vsra
     s390_vsrab,                                // llvm.s390.vsrab
+    s390_vsrd,                                 // llvm.s390.vsrd
     s390_vsrl,                                 // llvm.s390.vsrl
     s390_vsrlb,                                // llvm.s390.vsrlb
     s390_vstl,                                 // llvm.s390.vstl
@@ -5540,6 +5762,12 @@
     s390_vstrczh,                              // llvm.s390.vstrczh
     s390_vstrczhs,                             // llvm.s390.vstrczhs
     s390_vstrl,                                // llvm.s390.vstrl
+    s390_vstrsb,                               // llvm.s390.vstrsb
+    s390_vstrsf,                               // llvm.s390.vstrsf
+    s390_vstrsh,                               // llvm.s390.vstrsh
+    s390_vstrszb,                              // llvm.s390.vstrszb
+    s390_vstrszf,                              // llvm.s390.vstrszf
+    s390_vstrszh,                              // llvm.s390.vstrszh
     s390_vsumb,                                // llvm.s390.vsumb
     s390_vsumgf,                               // llvm.s390.vsumgf
     s390_vsumgh,                               // llvm.s390.vsumgh
@@ -5565,17 +5793,22 @@
     wasm_atomic_wait_i32,                      // llvm.wasm.atomic.wait.i32
     wasm_atomic_wait_i64,                      // llvm.wasm.atomic.wait.i64
     wasm_bitselect,                            // llvm.wasm.bitselect
+    wasm_data_drop,                            // llvm.wasm.data.drop
     wasm_extract_exception,                    // llvm.wasm.extract.exception
     wasm_get_ehselector,                       // llvm.wasm.get.ehselector
     wasm_get_exception,                        // llvm.wasm.get.exception
     wasm_landingpad_index,                     // llvm.wasm.landingpad.index
     wasm_lsda,                                 // llvm.wasm.lsda
     wasm_memory_grow,                          // llvm.wasm.memory.grow
+    wasm_memory_init,                          // llvm.wasm.memory.init
     wasm_memory_size,                          // llvm.wasm.memory.size
-    wasm_rethrow,                              // llvm.wasm.rethrow
+    wasm_rethrow_in_catch,                     // llvm.wasm.rethrow.in.catch
     wasm_sub_saturate_signed,                  // llvm.wasm.sub.saturate.signed
     wasm_sub_saturate_unsigned,                // llvm.wasm.sub.saturate.unsigned
     wasm_throw,                                // llvm.wasm.throw
+    wasm_tls_align,                            // llvm.wasm.tls.align
+    wasm_tls_base,                             // llvm.wasm.tls.base
+    wasm_tls_size,                             // llvm.wasm.tls.size
     wasm_trunc_saturate_signed,                // llvm.wasm.trunc.saturate.signed
     wasm_trunc_saturate_unsigned,              // llvm.wasm.trunc.saturate.unsigned
     x86_3dnow_pavgusb,                         // llvm.x86.3dnow.pavgusb
@@ -5703,6 +5936,8 @@
     x86_avx2_packsswb,                         // llvm.x86.avx2.packsswb
     x86_avx2_packusdw,                         // llvm.x86.avx2.packusdw
     x86_avx2_packuswb,                         // llvm.x86.avx2.packuswb
+    x86_avx2_pavg_b,                           // llvm.x86.avx2.pavg.b
+    x86_avx2_pavg_w,                           // llvm.x86.avx2.pavg.w
     x86_avx2_pblendvb,                         // llvm.x86.avx2.pblendvb
     x86_avx2_permd,                            // llvm.x86.avx2.permd
     x86_avx2_permps,                           // llvm.x86.avx2.permps
@@ -6139,6 +6374,8 @@
     x86_avx512_packsswb_512,                   // llvm.x86.avx512.packsswb.512
     x86_avx512_packusdw_512,                   // llvm.x86.avx512.packusdw.512
     x86_avx512_packuswb_512,                   // llvm.x86.avx512.packuswb.512
+    x86_avx512_pavg_b_512,                     // llvm.x86.avx512.pavg.b.512
+    x86_avx512_pavg_w_512,                     // llvm.x86.avx512.pavg.w.512
     x86_avx512_permvar_df_256,                 // llvm.x86.avx512.permvar.df.256
     x86_avx512_permvar_df_512,                 // llvm.x86.avx512.permvar.df.512
     x86_avx512_permvar_di_256,                 // llvm.x86.avx512.permvar.di.256
@@ -6280,6 +6517,12 @@
     x86_avx512_vfmadd_ps_512,                  // llvm.x86.avx512.vfmadd.ps.512
     x86_avx512_vfmaddsub_pd_512,               // llvm.x86.avx512.vfmaddsub.pd.512
     x86_avx512_vfmaddsub_ps_512,               // llvm.x86.avx512.vfmaddsub.ps.512
+    x86_avx512_vp2intersect_d_128,             // llvm.x86.avx512.vp2intersect.d.128
+    x86_avx512_vp2intersect_d_256,             // llvm.x86.avx512.vp2intersect.d.256
+    x86_avx512_vp2intersect_d_512,             // llvm.x86.avx512.vp2intersect.d.512
+    x86_avx512_vp2intersect_q_128,             // llvm.x86.avx512.vp2intersect.q.128
+    x86_avx512_vp2intersect_q_256,             // llvm.x86.avx512.vp2intersect.q.256
+    x86_avx512_vp2intersect_q_512,             // llvm.x86.avx512.vp2intersect.q.512
     x86_avx512_vpdpbusd_128,                   // llvm.x86.avx512.vpdpbusd.128
     x86_avx512_vpdpbusd_256,                   // llvm.x86.avx512.vpdpbusd.256
     x86_avx512_vpdpbusd_512,                   // llvm.x86.avx512.vpdpbusd.512
@@ -6321,6 +6564,15 @@
     x86_avx512_vpshufbitqmb_128,               // llvm.x86.avx512.vpshufbitqmb.128
     x86_avx512_vpshufbitqmb_256,               // llvm.x86.avx512.vpshufbitqmb.256
     x86_avx512_vpshufbitqmb_512,               // llvm.x86.avx512.vpshufbitqmb.512
+    x86_avx512bf16_cvtne2ps2bf16_128,          // llvm.x86.avx512bf16.cvtne2ps2bf16.128
+    x86_avx512bf16_cvtne2ps2bf16_256,          // llvm.x86.avx512bf16.cvtne2ps2bf16.256
+    x86_avx512bf16_cvtne2ps2bf16_512,          // llvm.x86.avx512bf16.cvtne2ps2bf16.512
+    x86_avx512bf16_cvtneps2bf16_256,           // llvm.x86.avx512bf16.cvtneps2bf16.256
+    x86_avx512bf16_cvtneps2bf16_512,           // llvm.x86.avx512bf16.cvtneps2bf16.512
+    x86_avx512bf16_dpbf16ps_128,               // llvm.x86.avx512bf16.dpbf16ps.128
+    x86_avx512bf16_dpbf16ps_256,               // llvm.x86.avx512bf16.dpbf16ps.256
+    x86_avx512bf16_dpbf16ps_512,               // llvm.x86.avx512bf16.dpbf16ps.512
+    x86_avx512bf16_mask_cvtneps2bf16_128,      // llvm.x86.avx512bf16.mask.cvtneps2bf16.128
     x86_bmi_bextr_32,                          // llvm.x86.bmi.bextr.32
     x86_bmi_bextr_64,                          // llvm.x86.bmi.bextr.64
     x86_bmi_bzhi_32,                           // llvm.x86.bmi.bzhi.32
@@ -6336,6 +6588,8 @@
     x86_clzero,                                // llvm.x86.clzero
     x86_directstore32,                         // llvm.x86.directstore32
     x86_directstore64,                         // llvm.x86.directstore64
+    x86_enqcmd,                                // llvm.x86.enqcmd
+    x86_enqcmds,                               // llvm.x86.enqcmds
     x86_flags_read_u32,                        // llvm.x86.flags.read.u32
     x86_flags_read_u64,                        // llvm.x86.flags.read.u64
     x86_flags_write_u32,                       // llvm.x86.flags.write.u32
@@ -6531,6 +6785,8 @@
     x86_sse2_packsswb_128,                     // llvm.x86.sse2.packsswb.128
     x86_sse2_packuswb_128,                     // llvm.x86.sse2.packuswb.128
     x86_sse2_pause,                            // llvm.x86.sse2.pause
+    x86_sse2_pavg_b,                           // llvm.x86.sse2.pavg.b
+    x86_sse2_pavg_w,                           // llvm.x86.sse2.pavg.w
     x86_sse2_pmadd_wd,                         // llvm.x86.sse2.pmadd.wd
     x86_sse2_pmovmskb_128,                     // llvm.x86.sse2.pmovmskb.128
     x86_sse2_pmulh_w,                          // llvm.x86.sse2.pmulh.w

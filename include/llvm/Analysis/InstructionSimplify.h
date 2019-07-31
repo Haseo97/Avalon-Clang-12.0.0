@@ -40,8 +40,8 @@ class Function;
 template <typename T, typename... TArgs> class AnalysisManager;
 template <class T> class ArrayRef;
 class AssumptionCache;
+class CallBase;
 class DominatorTree;
-class ImmutableCallSite;
 class DataLayout;
 class FastMathFlags;
 struct LoopStandardAnalysisResults;
@@ -116,6 +116,10 @@ struct SimplifyQuery {
 // NOTE: the explicit multiple argument versions of these functions are
 // deprecated.
 // Please use the SimplifyQuery versions in new code.
+
+/// Given operand for an FNeg, fold the result or return null.
+Value *SimplifyFNegInst(Value *Op, FastMathFlags FMF,
+                        const SimplifyQuery &Q);
 
 /// Given operands for an Add, fold the result or return null.
 Value *SimplifyAddInst(Value *LHS, Value *RHS, bool isNSW, bool isNUW,
@@ -227,27 +231,25 @@ Value *SimplifyShuffleVectorInst(Value *Op0, Value *Op1, Constant *Mask,
 Value *SimplifyCmpInst(unsigned Predicate, Value *LHS, Value *RHS,
                        const SimplifyQuery &Q);
 
+/// Given operand for a UnaryOperator, fold the result or return null.
+Value *SimplifyUnOp(unsigned Opcode, Value *Op, const SimplifyQuery &Q);
+
+/// Given operand for a UnaryOperator, fold the result or return null.
+/// Try to use FastMathFlags when folding the result.
+Value *SimplifyUnOp(unsigned Opcode, Value *Op, FastMathFlags FMF,
+                    const SimplifyQuery &Q);
+
 /// Given operands for a BinaryOperator, fold the result or return null.
 Value *SimplifyBinOp(unsigned Opcode, Value *LHS, Value *RHS,
                      const SimplifyQuery &Q);
 
-/// Given operands for an FP BinaryOperator, fold the result or return null.
-/// In contrast to SimplifyBinOp, try to use FastMathFlag when folding the
-/// result. In case we don't need FastMathFlags, simply fall to SimplifyBinOp.
-Value *SimplifyFPBinOp(unsigned Opcode, Value *LHS, Value *RHS,
-                       FastMathFlags FMF, const SimplifyQuery &Q);
+/// Given operands for a BinaryOperator, fold the result or return null.
+/// Try to use FastMathFlags when folding the result.
+Value *SimplifyBinOp(unsigned Opcode, Value *LHS, Value *RHS,
+                     FastMathFlags FMF, const SimplifyQuery &Q);
 
 /// Given a callsite, fold the result or return null.
-Value *SimplifyCall(ImmutableCallSite CS, const SimplifyQuery &Q);
-
-/// Given a function and iterators over arguments, fold the result or return
-/// null.
-Value *SimplifyCall(ImmutableCallSite CS, Value *V, User::op_iterator ArgBegin,
-                    User::op_iterator ArgEnd, const SimplifyQuery &Q);
-
-/// Given a function and set of arguments, fold the result or return null.
-Value *SimplifyCall(ImmutableCallSite CS, Value *V, ArrayRef<Value *> Args,
-                    const SimplifyQuery &Q);
+Value *SimplifyCall(CallBase *Call, const SimplifyQuery &Q);
 
 /// See if we can compute a simplified version of this instruction. If not,
 /// return null.

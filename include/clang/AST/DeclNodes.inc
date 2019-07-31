@@ -185,6 +185,12 @@ ABSTRACT_DECL(TEMPLATE(Template, NamedDecl))
 BUILTINTEMPLATE(BuiltinTemplate, TemplateDecl)
 #undef BUILTINTEMPLATE
 
+#ifndef CONCEPT
+#  define CONCEPT(Type, Base) TEMPLATE(Type, Base)
+#endif
+CONCEPT(Concept, TemplateDecl)
+#undef CONCEPT
+
 #ifndef REDECLARABLETEMPLATE
 #  define REDECLARABLETEMPLATE(Type, Base) TEMPLATE(Type, Base)
 #endif
@@ -522,6 +528,12 @@ DECL_RANGE(Value, Binding, UnresolvedUsingValue)
 DECL_RANGE(Named, Label, UnresolvedUsingValue)
 
 #undef NAMED
+
+#ifndef OMPALLOCATE
+#  define OMPALLOCATE(Type, Base) DECL(Type, Base)
+#endif
+OMPALLOCATE(OMPAllocate, Decl)
+#undef OMPALLOCATE
 
 #ifndef OMPREQUIRES
 #  define OMPREQUIRES(Type, Base) DECL(Type, Base)

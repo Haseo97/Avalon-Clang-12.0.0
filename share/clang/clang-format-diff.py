@@ -8,10 +8,7 @@
 #
 #===------------------------------------------------------------------------===#
 
-r"""
-ClangFormat Diff Reformatter
-============================
-
+"""
 This script reads input from a unified diff and reformats all the changed
 lines. This is useful to reformat all the lines touched by a specific patch.
 Example usage for git/svn users:
@@ -35,10 +32,9 @@ else:
 
 
 def main():
-  parser = argparse.ArgumentParser(description=
-                                   'Reformat changed lines in diff. Without -i '
-                                   'option just output the diff that would be '
-                                   'introduced.')
+  parser = argparse.ArgumentParser(description=__doc__,
+                                   formatter_class=
+                                           argparse.RawDescriptionHelpFormatter)
   parser.add_argument('-i', action='store_true', default=False,
                       help='apply edits to files instead of displaying a diff')
   parser.add_argument('-p', metavar='NUM', default=0,
@@ -66,7 +62,7 @@ def main():
   filename = None
   lines_by_file = {}
   for line in sys.stdin:
-    match = re.search('^\+\+\+\ (.*?/){%s}(\S*)' % args.p, line)
+    match = re.search(r'^\+\+\+\ (.*?/){%s}(\S*)' % args.p, line)
     if match:
       filename = match.group(2)
     if filename == None:
@@ -79,7 +75,7 @@ def main():
       if not re.match('^%s$' % args.iregex, filename, re.IGNORECASE):
         continue
 
-    match = re.search('^@@.*\+(\d+)(,(\d+))?', line)
+    match = re.search(r'^@@.*\+(\d+)(,(\d+))?', line)
     if match:
       start_line = int(match.group(1))
       line_count = 1

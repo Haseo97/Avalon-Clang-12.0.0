@@ -20,12 +20,11 @@
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/TinyPtrVector.h"
 #include "llvm/Analysis/AliasAnalysis.h"
+#include "llvm/Analysis/DomTreeUpdater.h"
 #include "llvm/Analysis/Utils/Local.h"
-#include "llvm/IR/CallSite.h"
 #include "llvm/IR/Constant.h"
 #include "llvm/IR/Constants.h"
 #include "llvm/IR/DataLayout.h"
-#include "llvm/IR/DomTreeUpdater.h"
 #include "llvm/IR/Dominators.h"
 #include "llvm/IR/GetElementPtrTypeIterator.h"
 #include "llvm/IR/Operator.h"
@@ -232,7 +231,8 @@ bool FlattenCFG(BasicBlock *BB, AliasAnalysis *AA = nullptr);
 /// If this basic block is ONLY a setcc and a branch, and if a predecessor
 /// branches to us and one of our successors, fold the setcc into the
 /// predecessor and use logical operations to pick the right destination.
-bool FoldBranchToCommonDest(BranchInst *BI, unsigned BonusInstThreshold = 1);
+bool FoldBranchToCommonDest(BranchInst *BI, MemorySSAUpdater *MSSAU = nullptr,
+                            unsigned BonusInstThreshold = 1);
 
 /// This function takes a virtual register computed by an Instruction and
 /// replaces it with a slot in the stack frame, allocated via alloca.
@@ -270,6 +270,9 @@ inline unsigned getKnownAlignment(Value *V, const DataLayout &DL,
                                   const DominatorTree *DT = nullptr) {
   return getOrEnforceKnownAlignment(V, 0, DL, CxtI, AC, DT);
 }
+
+/// This function converts the specified invoek into a normall call.
+void changeToCall(InvokeInst *II, DomTreeUpdater *DTU = nullptr);
 
 ///===---------------------------------------------------------------------===//
 ///  Dbg Intrinsic utilities
@@ -316,7 +319,7 @@ void findDbgUsers(SmallVectorImpl<DbgVariableIntrinsic *> &DbgInsts, Value *V);
 /// (between the optional Deref operations). Offset can be negative.
 bool replaceDbgDeclare(Value *Address, Value *NewAddress,
                        Instruction *InsertBefore, DIBuilder &Builder,
-                       bool DerefBefore, int Offset, bool DerefAfter);
+                       uint8_t DIExprFlags, int Offset);
 
 /// Replaces llvm.dbg.declare instruction when the alloca it describes
 /// is replaced with a new value. If Deref is true, an additional
@@ -325,8 +328,8 @@ bool replaceDbgDeclare(Value *Address, Value *NewAddress,
 /// optional Deref operations). Offset can be negative. The new
 /// llvm.dbg.declare is inserted immediately after AI.
 bool replaceDbgDeclareForAlloca(AllocaInst *AI, Value *NewAllocaAddress,
-                                DIBuilder &Builder, bool DerefBefore,
-                                int Offset, bool DerefAfter);
+                                DIBuilder &Builder, uint8_t DIExprFlags,
+                                int Offset);
 
 /// Replaces multiple llvm.dbg.value instructions when the alloca it describes
 /// is replaced with a new value. If Offset is non-zero, a constant displacement
@@ -336,10 +339,26 @@ bool replaceDbgDeclareForAlloca(AllocaInst *AI, Value *NewAllocaAddress,
 void replaceDbgValueForAlloca(AllocaInst *AI, Value *NewAllocaAddress,
                               DIBuilder &Builder, int Offset = 0);
 
+/// Finds alloca where the value comes from.
+AllocaInst *findAllocaForValue(Value *V,
+                               DenseMap<Value *, AllocaInst *> &AllocaForValue);
+
 /// Assuming the instruction \p I is going to be deleted, attempt to salvage
 /// debug users of \p I by writing the effect of \p I in a DIExpression.
 /// Returns true if any debug users were updated.
 bool salvageDebugInfo(Instruction &I);
+
+/// Implementation of salvageDebugInfo, applying only to instructions in
+/// \p Insns, rather than all debug users of \p I.
+bool salvageDebugInfoForDbgValues(Instruction &I,
+                                  ArrayRef<DbgVariableIntrinsic *> Insns);
+
+/// Given an instruction \p I and DIExpression \p DIExpr operating on it, write
+/// the effects of \p I into the returned DIExpression, or return nullptr if
+/// it cannot be salvaged. \p StackVal: whether DW_OP_stack_value should be
+/// appended to the expression.
+DIExpression *salvageDebugInfoImpl(Instruction &I, DIExpression *DIExpr,
+                                   bool StackVal);
 
 /// Point debug users of \p From to \p To or salvage them. Use this function
 /// only when replacing all uses of \p From with \p To, with a guarantee that
@@ -366,7 +385,8 @@ unsigned removeAllNonTerminatorAndEHPadInstructions(BasicBlock *BB);
 /// instruction, making it and the rest of the code in the block dead.
 unsigned changeToUnreachable(Instruction *I, bool UseLLVMTrap,
                              bool PreserveLCSSA = false,
-                             DomTreeUpdater *DTU = nullptr);
+                             DomTreeUpdater *DTU = nullptr,
+                             MemorySSAUpdater *MSSAU = nullptr);
 
 /// Convert the CallInst to InvokeInst with the specified unwind edge basic
 /// block.  This also splits the basic block where CI is located, because
@@ -407,6 +427,10 @@ void combineMetadata(Instruction *K, const Instruction *J,
 void combineMetadataForCSE(Instruction *K, const Instruction *J,
                            bool DoesKMove);
 
+/// Copy the metadata from the source instruction to the destination (the
+/// replacement for the source instruction).
+void copyMetadataForLoad(LoadInst &Dest, const LoadInst &Source);
+
 /// Patch the replacement so that it is not more restrictive than the value
 /// being replaced. It assumes that the replacement does not get moved from
 /// its original position.
@@ -425,7 +449,7 @@ unsigned replaceDominatedUsesWith(Value *From, Value *To, DominatorTree &DT,
 unsigned replaceDominatedUsesWith(Value *From, Value *To, DominatorTree &DT,
                                   const BasicBlock *BB);
 
-/// Return true if the CallSite CS calls a gc leaf function.
+/// Return true if this call calls a gc leaf function.
 ///
 /// A leaf function is a function that does not safepoint the thread during its
 /// execution.  During a call or invoke to such a function, the callers stack
@@ -433,7 +457,7 @@ unsigned replaceDominatedUsesWith(Value *From, Value *To, DominatorTree &DT,
 ///
 /// Most passes can and should ignore this information, and it is only used
 /// during lowering by the GC infrastructure.
-bool callsGCLeafFunction(ImmutableCallSite CS, const TargetLibraryInfo &TLI);
+bool callsGCLeafFunction(const CallBase *Call, const TargetLibraryInfo &TLI);
 
 /// Copy a nonnull metadata node to a new load instruction.
 ///
@@ -455,8 +479,7 @@ void dropDebugUsers(Instruction &I);
 /// \p DomBlock, by moving its instructions to the insertion point \p InsertPt.
 ///
 /// The moved instructions receive the insertion point debug location values
-/// (DILocations) and their debug intrinsic instructions (dbg.values) are
-/// removed.
+/// (DILocations) and their debug intrinsic instructions are removed.
 void hoistAllInstructionsInto(BasicBlock *DomBlock, Instruction *InsertPt,
                               BasicBlock *BB);
 

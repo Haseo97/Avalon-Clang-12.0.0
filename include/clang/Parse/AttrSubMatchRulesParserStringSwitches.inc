@@ -59,6 +59,7 @@ std::pair<Optional<attr::SubjectMatchRule>, Optional<attr::SubjectMatchRule> (*)
   Case("function", std::make_pair(attr::SubjectMatchRule_function, isAttributeSubjectMatchSubRuleFor_function)).
   Case("namespace", std::make_pair(attr::SubjectMatchRule_namespace, defaultIsAttributeSubjectMatchSubRuleFor)).
   Case("objc_category", std::make_pair(attr::SubjectMatchRule_objc_category, defaultIsAttributeSubjectMatchSubRuleFor)).
+  Case("objc_implementation", std::make_pair(attr::SubjectMatchRule_objc_implementation, defaultIsAttributeSubjectMatchSubRuleFor)).
   Case("objc_interface", std::make_pair(attr::SubjectMatchRule_objc_interface, defaultIsAttributeSubjectMatchSubRuleFor)).
   Case("objc_method", std::make_pair(attr::SubjectMatchRule_objc_method, isAttributeSubjectMatchSubRuleFor_objc_method)).
   Case("objc_property", std::make_pair(attr::SubjectMatchRule_objc_property, defaultIsAttributeSubjectMatchSubRuleFor)).

@@ -10,6 +10,7 @@ Cold,
 Convergent,
 Dereferenceable,
 DereferenceableOrNull,
+ImmArg,
 InAlloca,
 InReg,
 InaccessibleMemOnly,
@@ -24,11 +25,13 @@ NoBuiltin,
 NoCapture,
 NoCfCheck,
 NoDuplicate,
+NoFree,
 NoImplicitFloat,
 NoInline,
 NoRecurse,
 NoRedZone,
 NoReturn,
+NoSync,
 NoUnwind,
 NonLazyBind,
 NonNull,
@@ -43,6 +46,7 @@ SExt,
 SafeStack,
 SanitizeAddress,
 SanitizeHWAddress,
+SanitizeMemTag,
 SanitizeMemory,
 SanitizeThread,
 ShadowCallStack,
@@ -57,6 +61,7 @@ StructRet,
 SwiftError,
 SwiftSelf,
 UWTable,
+WillReturn,
 WriteOnly,
 ZExt,
 #endif
@@ -74,6 +79,7 @@ static Attribute::AttrKind getAttrKindFromName(StringRef AttrName) {
     .Case("convergent", Attribute::Convergent)
     .Case("dereferenceable", Attribute::Dereferenceable)
     .Case("dereferenceable_or_null", Attribute::DereferenceableOrNull)
+    .Case("immarg", Attribute::ImmArg)
     .Case("inalloca", Attribute::InAlloca)
     .Case("inreg", Attribute::InReg)
     .Case("inaccessiblememonly", Attribute::InaccessibleMemOnly)
@@ -88,11 +94,13 @@ static Attribute::AttrKind getAttrKindFromName(StringRef AttrName) {
     .Case("nocapture", Attribute::NoCapture)
     .Case("nocf_check", Attribute::NoCfCheck)
     .Case("noduplicate", Attribute::NoDuplicate)
+    .Case("nofree", Attribute::NoFree)
     .Case("noimplicitfloat", Attribute::NoImplicitFloat)
     .Case("noinline", Attribute::NoInline)
     .Case("norecurse", Attribute::NoRecurse)
     .Case("noredzone", Attribute::NoRedZone)
     .Case("noreturn", Attribute::NoReturn)
+    .Case("nosync", Attribute::NoSync)
     .Case("nounwind", Attribute::NoUnwind)
     .Case("nonlazybind", Attribute::NonLazyBind)
     .Case("nonnull", Attribute::NonNull)
@@ -107,6 +115,7 @@ static Attribute::AttrKind getAttrKindFromName(StringRef AttrName) {
     .Case("safestack", Attribute::SafeStack)
     .Case("sanitize_address", Attribute::SanitizeAddress)
     .Case("sanitize_hwaddress", Attribute::SanitizeHWAddress)
+    .Case("sanitize_memtag", Attribute::SanitizeMemTag)
     .Case("sanitize_memory", Attribute::SanitizeMemory)
     .Case("sanitize_thread", Attribute::SanitizeThread)
     .Case("shadowcallstack", Attribute::ShadowCallStack)
@@ -121,6 +130,7 @@ static Attribute::AttrKind getAttrKindFromName(StringRef AttrName) {
     .Case("swifterror", Attribute::SwiftError)
     .Case("swiftself", Attribute::SwiftSelf)
     .Case("uwtable", Attribute::UWTable)
+    .Case("willreturn", Attribute::WillReturn)
     .Case("writeonly", Attribute::WriteOnly)
     .Case("zeroext", Attribute::ZExt)
     .Default(Attribute::None);
@@ -208,6 +218,11 @@ struct DereferenceableOrNullAttr : EnumAttr {
     return llvm::Attribute::DereferenceableOrNull;
   }
 };
+struct ImmArgAttr : EnumAttr {
+  static enum Attribute::AttrKind getKind() {
+    return llvm::Attribute::ImmArg;
+  }
+};
 struct InAllocaAttr : EnumAttr {
   static enum Attribute::AttrKind getKind() {
     return llvm::Attribute::InAlloca;
@@ -278,6 +293,11 @@ struct NoDuplicateAttr : EnumAttr {
     return llvm::Attribute::NoDuplicate;
   }
 };
+struct NoFreeAttr : EnumAttr {
+  static enum Attribute::AttrKind getKind() {
+    return llvm::Attribute::NoFree;
+  }
+};
 struct NoImplicitFloatAttr : EnumAttr {
   static enum Attribute::AttrKind getKind() {
     return llvm::Attribute::NoImplicitFloat;
@@ -301,6 +321,11 @@ struct NoRedZoneAttr : EnumAttr {
 struct NoReturnAttr : EnumAttr {
   static enum Attribute::AttrKind getKind() {
     return llvm::Attribute::NoReturn;
+  }
+};
+struct NoSyncAttr : EnumAttr {
+  static enum Attribute::AttrKind getKind() {
+    return llvm::Attribute::NoSync;
   }
 };
 struct NoUnwindAttr : EnumAttr {
@@ -373,6 +398,11 @@ struct SanitizeHWAddressAttr : EnumAttr {
     return llvm::Attribute::SanitizeHWAddress;
   }
 };
+struct SanitizeMemTagAttr : EnumAttr {
+  static enum Attribute::AttrKind getKind() {
+    return llvm::Attribute::SanitizeMemTag;
+  }
+};
 struct SanitizeMemoryAttr : EnumAttr {
   static enum Attribute::AttrKind getKind() {
     return llvm::Attribute::SanitizeMemory;
@@ -443,6 +473,11 @@ struct UWTableAttr : EnumAttr {
     return llvm::Attribute::UWTable;
   }
 };
+struct WillReturnAttr : EnumAttr {
+  static enum Attribute::AttrKind getKind() {
+    return llvm::Attribute::WillReturn;
+  }
+};
 struct WriteOnlyAttr : EnumAttr {
   static enum Attribute::AttrKind getKind() {
     return llvm::Attribute::WriteOnly;
@@ -494,6 +529,7 @@ static inline bool hasCompatibleFnAttrs(const Function &Caller,
   Ret &= isEqual<SanitizeThreadAttr>(Caller, Callee);
   Ret &= isEqual<SanitizeMemoryAttr>(Caller, Callee);
   Ret &= isEqual<SanitizeHWAddressAttr>(Caller, Callee);
+  Ret &= isEqual<SanitizeMemTagAttr>(Caller, Callee);
   Ret &= isEqual<SafeStackAttr>(Caller, Callee);
   Ret &= isEqual<ShadowCallStackAttr>(Caller, Callee);
 
@@ -502,6 +538,7 @@ static inline bool hasCompatibleFnAttrs(const Function &Caller,
 
 static inline void mergeFnAttrs(Function &Caller,
                                 const Function &Callee) {
+  setAND<UnsafeFPMathAttr>(Caller, Callee);
   setOR<NoImplicitFloatAttr>(Caller, Callee);
   setOR<NoJumpTablesAttr>(Caller, Callee);
   setOR<ProfileSampleAccurateAttr>(Caller, Callee);
@@ -514,7 +551,6 @@ static inline void mergeFnAttrs(Function &Caller,
   setAND<LessPreciseFPMADAttr>(Caller, Callee);
   setAND<NoInfsFPMathAttr>(Caller, Callee);
   setAND<NoNansFPMathAttr>(Caller, Callee);
-  setAND<UnsafeFPMathAttr>(Caller, Callee);
 }
 
 #endif

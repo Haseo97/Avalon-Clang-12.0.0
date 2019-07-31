@@ -111,8 +111,30 @@ public:
     return getScalarSizeInBits() * getNumElements();
   }
 
+  /// Returns the total size of the type in bytes, i.e. number of whole bytes
+  /// needed to represent the size in bits. Must only be called on sized types.
+  unsigned getSizeInBytes() const {
+    return (getSizeInBits() + 7) / 8;
+  }
+
   LLT getScalarType() const {
     return isVector() ? getElementType() : *this;
+  }
+
+  /// If this type is a vector, return a vector with the same number of elements
+  /// but the new element type. Otherwise, return the new element type.
+  LLT changeElementType(LLT NewEltTy) const {
+    return isVector() ? LLT::vector(getNumElements(), NewEltTy) : NewEltTy;
+  }
+
+  /// If this type is a vector, return a vector with the same number of elements
+  /// but the new element size. Otherwise, return the new element type. Invalid
+  /// for pointer types. For pointer types, use changeElementType.
+  LLT changeElementSize(unsigned NewEltSize) const {
+    assert(!getScalarType().isPointer() &&
+           "invalid to directly change element size for pointers");
+    return isVector() ? LLT::vector(getNumElements(), NewEltSize)
+                      : LLT::scalar(NewEltSize);
   }
 
   unsigned getScalarSizeInBits() const {

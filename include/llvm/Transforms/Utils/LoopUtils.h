@@ -40,6 +40,7 @@ class BasicBlock;
 class DataLayout;
 class Loop;
 class LoopInfo;
+class MemoryAccess;
 class MemorySSAUpdater;
 class OptimizationRemarkEmitter;
 class PredicatedScalarEvolution;
@@ -50,7 +51,7 @@ class TargetLibraryInfo;
 class TargetTransformInfo;
 
 BasicBlock *InsertPreheaderForLoop(Loop *L, DominatorTree *DT, LoopInfo *LI,
-                                   bool PreserveLCSSA);
+                                   MemorySSAUpdater *MSSAU, bool PreserveLCSSA);
 
 /// Ensure that all exit blocks of the loop are dedicated exits.
 ///
@@ -58,7 +59,7 @@ BasicBlock *InsertPreheaderForLoop(Loop *L, DominatorTree *DT, LoopInfo *LI,
 /// predecessors to use a dedicated loop exit block. We update the dominator
 /// tree and loop info if provided, and will preserve LCSSA if requested.
 bool formDedicatedExitBlocks(Loop *L, DominatorTree *DT, LoopInfo *LI,
-                             bool PreserveLCSSA);
+                             MemorySSAUpdater *MSSAU, bool PreserveLCSSA);
 
 /// Ensures LCSSA form for every instruction from the Worklist in the scope of
 /// innermost containing loop.
@@ -100,6 +101,14 @@ bool formLCSSA(Loop &L, DominatorTree &DT, LoopInfo *LI, ScalarEvolution *SE);
 bool formLCSSARecursively(Loop &L, DominatorTree &DT, LoopInfo *LI,
                           ScalarEvolution *SE);
 
+struct SinkAndHoistLICMFlags {
+  bool NoOfMemAccTooLarge;
+  unsigned LicmMssaOptCounter;
+  unsigned LicmMssaOptCap;
+  unsigned LicmMssaNoAccForPromotionCap;
+  bool IsSink;
+};
+
 /// Walk the specified region of the CFG (defined by all blocks
 /// dominated by the specified block, and that are in the current loop) in
 /// reverse depth first order w.r.t the DominatorTree. This allows us to visit
@@ -111,7 +120,7 @@ bool formLCSSARecursively(Loop &L, DominatorTree &DT, LoopInfo *LI,
 bool sinkRegion(DomTreeNode *, AliasAnalysis *, LoopInfo *, DominatorTree *,
                 TargetLibraryInfo *, TargetTransformInfo *, Loop *,
                 AliasSetTracker *, MemorySSAUpdater *, ICFLoopSafetyInfo *,
-                OptimizationRemarkEmitter *ORE);
+                SinkAndHoistLICMFlags &, OptimizationRemarkEmitter *);
 
 /// Walk the specified region of the CFG (defined by all blocks
 /// dominated by the specified block, and that are in the current loop) in depth
@@ -124,7 +133,7 @@ bool sinkRegion(DomTreeNode *, AliasAnalysis *, LoopInfo *, DominatorTree *,
 bool hoistRegion(DomTreeNode *, AliasAnalysis *, LoopInfo *, DominatorTree *,
                  TargetLibraryInfo *, Loop *, AliasSetTracker *,
                  MemorySSAUpdater *, ICFLoopSafetyInfo *,
-                 OptimizationRemarkEmitter *ORE);
+                 SinkAndHoistLICMFlags &, OptimizationRemarkEmitter *);
 
 /// This function deletes dead loops. The caller of this function needs to
 /// guarantee that the loop is infact dead.
@@ -148,14 +157,12 @@ void deleteDeadLoop(Loop *L, DominatorTree *DT, ScalarEvolution *SE,
 /// LoopInfo, DominatorTree, Loop, AliasSet information for all instructions
 /// of the loop and loop safety information as arguments.
 /// Diagnostics is emitted via \p ORE. It returns changed status.
-bool promoteLoopAccessesToScalars(const SmallSetVector<Value *, 8> &,
-                                  SmallVectorImpl<BasicBlock *> &,
-                                  SmallVectorImpl<Instruction *> &,
-                                  PredIteratorCache &, LoopInfo *,
-                                  DominatorTree *, const TargetLibraryInfo *,
-                                  Loop *, AliasSetTracker *,
-                                  ICFLoopSafetyInfo *,
-                                  OptimizationRemarkEmitter *);
+bool promoteLoopAccessesToScalars(
+    const SmallSetVector<Value *, 8> &, SmallVectorImpl<BasicBlock *> &,
+    SmallVectorImpl<Instruction *> &, SmallVectorImpl<MemoryAccess *> &,
+    PredIteratorCache &, LoopInfo *, DominatorTree *, const TargetLibraryInfo *,
+    Loop *, AliasSetTracker *, MemorySSAUpdater *, ICFLoopSafetyInfo *,
+    OptimizationRemarkEmitter *);
 
 /// Does a BFS from a given node to all of its children inside a given loop.
 /// The returned vector of nodes includes the starting point.
@@ -245,6 +252,8 @@ TransformationMode hasLICMVersioningTransformation(Loop *L);
 /// @}
 
 /// Set input string into loop metadata by keeping other values intact.
+/// If the string is already in loop metadata update value if it is
+/// different.
 void addStringMetadataToLoop(Loop *TheLoop, const char *MDString,
                              unsigned V = 0);
 
@@ -277,6 +286,7 @@ void getLoopAnalysisUsage(AnalysisUsage &AU);
 bool canSinkOrHoistInst(Instruction &I, AAResults *AA, DominatorTree *DT,
                         Loop *CurLoop, AliasSetTracker *CurAST,
                         MemorySSAUpdater *MSSAU, bool TargetExecutesOncePerLoop,
+                        SinkAndHoistLICMFlags *LICMFlags = nullptr,
                         OptimizationRemarkEmitter *ORE = nullptr);
 
 /// Returns a Min/Max operation corresponding to MinMaxRecurrenceKind.
@@ -292,6 +302,7 @@ getOrderedReduction(IRBuilder<> &Builder, Value *Acc, Value *Src, unsigned Op,
                     ArrayRef<Value *> RedOps = None);
 
 /// Generates a vector reduction using shufflevectors to reduce the value.
+/// Fast-math-flags are propagated using the IRBuilder's setting.
 Value *getShuffleReduction(IRBuilder<> &Builder, Value *Src, unsigned Op,
                            RecurrenceDescriptor::MinMaxRecurrenceKind
                                MinMaxKind = RecurrenceDescriptor::MRK_Invalid,
@@ -302,6 +313,7 @@ Value *getShuffleReduction(IRBuilder<> &Builder, Value *Src, unsigned Op,
 /// additional information supplied in \p Flags.
 /// The target is queried to determine if intrinsics or shuffle sequences are
 /// required to implement the reduction.
+/// Fast-math-flags are propagated using the IRBuilder's setting.
 Value *createSimpleTargetReduction(IRBuilder<> &B,
                                    const TargetTransformInfo *TTI,
                                    unsigned Opcode, Value *Src,
@@ -312,6 +324,7 @@ Value *createSimpleTargetReduction(IRBuilder<> &B,
 /// Create a generic target reduction using a recurrence descriptor \p Desc
 /// The target is queried to determine if intrinsics or shuffle sequences are
 /// required to implement the reduction.
+/// Fast-math-flags are propagated using the RecurrenceDescriptor.
 Value *createTargetReduction(IRBuilder<> &B, const TargetTransformInfo *TTI,
                              RecurrenceDescriptor &Desc, Value *Src,
                              bool NoNaN = false);

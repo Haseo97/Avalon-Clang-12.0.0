@@ -6,11 +6,6 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-  void VisitAMDGPUFlatWorkGroupSizeAttr(const AMDGPUFlatWorkGroupSizeAttr *A) {
-    const auto *SA = cast<AMDGPUFlatWorkGroupSizeAttr>(A); (void)SA;
-    OS << " " << SA->getMin();
-    OS << " " << SA->getMax();
-  }
   void VisitAMDGPUNumSGPRAttr(const AMDGPUNumSGPRAttr *A) {
     const auto *SA = cast<AMDGPUNumSGPRAttr>(A); (void)SA;
     OS << " " << SA->getNumSGPR();
@@ -18,11 +13,6 @@
   void VisitAMDGPUNumVGPRAttr(const AMDGPUNumVGPRAttr *A) {
     const auto *SA = cast<AMDGPUNumVGPRAttr>(A); (void)SA;
     OS << " " << SA->getNumVGPR();
-  }
-  void VisitAMDGPUWavesPerEUAttr(const AMDGPUWavesPerEUAttr *A) {
-    const auto *SA = cast<AMDGPUWavesPerEUAttr>(A); (void)SA;
-    OS << " " << SA->getMin();
-    OS << " " << SA->getMax();
   }
   void VisitARMInterruptAttr(const ARMInterruptAttr *A) {
     const auto *SA = cast<ARMInterruptAttr>(A); (void)SA;
@@ -249,7 +239,7 @@
   }
   void VisitIBOutletCollectionAttr(const IBOutletCollectionAttr *A) {
     const auto *SA = cast<IBOutletCollectionAttr>(A); (void)SA;
-    OS << " " << SA->getInterface().getAsString();
+    if (SA->getInterfaceLoc())    OS << " " << SA->getInterface().getAsString();
   }
   void VisitIFuncAttr(const IFuncAttr *A) {
     const auto *SA = cast<IFuncAttr>(A); (void)SA;
@@ -303,6 +293,9 @@
       break;
     case LoopHintAttr::Distribute:
       OS << " Distribute";
+      break;
+    case LoopHintAttr::VectorizePredicate:
+      OS << " VectorizePredicate";
       break;
     }
     switch(SA->getState()) {
@@ -396,6 +389,38 @@
     const auto *SA = cast<NonNullAttr>(A); (void)SA;
     for (const auto &Val : SA->args())
       OS << " " << Val.getSourceIndex();
+  }
+  void VisitOMPAllocateDeclAttr(const OMPAllocateDeclAttr *A) {
+    const auto *SA = cast<OMPAllocateDeclAttr>(A); (void)SA;
+    switch(SA->getAllocatorType()) {
+    case OMPAllocateDeclAttr::OMPDefaultMemAlloc:
+      OS << " OMPDefaultMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPLargeCapMemAlloc:
+      OS << " OMPLargeCapMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPConstMemAlloc:
+      OS << " OMPConstMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPHighBWMemAlloc:
+      OS << " OMPHighBWMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPLowLatMemAlloc:
+      OS << " OMPLowLatMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPCGroupMemAlloc:
+      OS << " OMPCGroupMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPPTeamMemAlloc:
+      OS << " OMPPTeamMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPThreadMemAlloc:
+      OS << " OMPThreadMemAlloc";
+      break;
+    case OMPAllocateDeclAttr::OMPUserDefinedMemAlloc:
+      OS << " OMPUserDefinedMemAlloc";
+      break;
+    }
   }
   void VisitOMPCaptureKindAttr(const OMPCaptureKindAttr *A) {
     const auto *SA = cast<OMPCaptureKindAttr>(A); (void)SA;
@@ -495,6 +520,10 @@
     const auto *SA = cast<OpenCLUnrollHintAttr>(A); (void)SA;
     OS << " " << SA->getUnrollHint();
   }
+  void VisitOwnerAttr(const OwnerAttr *A) {
+    const auto *SA = cast<OwnerAttr>(A); (void)SA;
+    if (SA->getDerefTypeLoc())    OS << " " << SA->getDerefType().getAsString();
+  }
   void VisitOwnershipAttr(const OwnershipAttr *A) {
     const auto *SA = cast<OwnershipAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
@@ -519,6 +548,7 @@
   }
   void VisitPassObjectSizeAttr(const PassObjectSizeAttr *A) {
     const auto *SA = cast<PassObjectSizeAttr>(A); (void)SA;
+    OS << " " << A->getSpelling();
     OS << " " << SA->getType();
   }
   void VisitPcsAttr(const PcsAttr *A) {
@@ -531,6 +561,10 @@
       OS << " AAPCS_VFP";
       break;
     }
+  }
+  void VisitPointerAttr(const PointerAttr *A) {
+    const auto *SA = cast<PointerAttr>(A); (void)SA;
+    if (SA->getDerefTypeLoc())    OS << " " << SA->getDerefType().getAsString();
   }
   void VisitPragmaClangBSSSectionAttr(const PragmaClangBSSSectionAttr *A) {
     const auto *SA = cast<PragmaClangBSSSectionAttr>(A); (void)SA;
@@ -717,7 +751,9 @@
     }
   }
   void VisitWarnUnusedResultAttr(const WarnUnusedResultAttr *A) {
+    const auto *SA = cast<WarnUnusedResultAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
+    OS << " \"" << SA->getMessage() << "\"";
   }
   void VisitWeakRefAttr(const WeakRefAttr *A) {
     const auto *SA = cast<WeakRefAttr>(A); (void)SA;

@@ -19,8 +19,8 @@
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
-    Record.push_back(SA->getMin());
-    Record.push_back(SA->getMax());
+    Record.AddStmt(SA->getMin());
+    Record.AddStmt(SA->getMax());
     break;
   }
   case attr::AMDGPUNumSGPR: {
@@ -44,8 +44,8 @@
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
-    Record.push_back(SA->getMin());
-    Record.push_back(SA->getMax());
+    Record.AddStmt(SA->getMin());
+    Record.AddStmt(SA->getMax());
     break;
   }
   case attr::ARMInterrupt: {
@@ -744,6 +744,13 @@ Record.push_back(SA->getExtensibility());
     Record.push_back(A->getSpellingListIndex());
     break;
   }
+  case attr::HIPPinnedShadow: {
+    const auto *SA = cast<HIPPinnedShadowAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
   case attr::Hot: {
     const auto *SA = cast<HotAttr>(A);
     Record.push_back(SA->isInherited());
@@ -858,8 +865,22 @@ Record.push_back(SA->getState());
     Record.AddStmt(SA->getValue());
     break;
   }
+  case attr::MIGServerRoutine: {
+    const auto *SA = cast<MIGServerRoutineAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
   case attr::MSABI: {
     const auto *SA = cast<MSABIAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::MSAllocator: {
+    const auto *SA = cast<MSAllocatorAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
@@ -1143,6 +1164,13 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->getSpellingListIndex());
     break;
   }
+  case attr::NoUniqueAddress: {
+    const auto *SA = cast<NoUniqueAddressAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
   case attr::NonNull: {
     const auto *SA = cast<NonNullAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1158,6 +1186,15 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::OMPAllocateDecl: {
+    const auto *SA = cast<OMPAllocateDeclAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+Record.push_back(SA->getAllocatorType());
+    Record.AddStmt(SA->getAllocator());
     break;
   }
   case attr::OMPCaptureKind: {
@@ -1295,6 +1332,11 @@ Record.push_back(SA->getMapType());
     Record.AddIdentifierRef(SA->getInstanceMethod());
     break;
   }
+  case attr::ObjCClassStub: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
   case attr::ObjCDesignatedInitializer: {
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
@@ -1356,6 +1398,11 @@ Record.push_back(SA->getFamily());
   case attr::ObjCNSObject: {
     const auto *SA = cast<ObjCNSObjectAttr>(A);
     Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::ObjCNonLazyClass: {
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
     break;
@@ -1494,6 +1541,14 @@ Record.push_back(SA->getFamily());
     Record.push_back(A->getSpellingListIndex());
     break;
   }
+  case attr::Owner: {
+    const auto *SA = cast<OwnerAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    Record.AddTypeSourceInfo(SA->getDerefTypeLoc());
+    break;
+  }
   case attr::Ownership: {
     const auto *SA = cast<OwnershipAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1541,6 +1596,14 @@ Record.push_back(SA->getParamState());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getPCS());
+    break;
+  }
+  case attr::Pointer: {
+    const auto *SA = cast<PointerAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->getSpellingListIndex());
+    Record.AddTypeSourceInfo(SA->getDerefTypeLoc());
     break;
   }
   case attr::PragmaClangBSSSection: {
@@ -2007,6 +2070,7 @@ Record.push_back(SA->getVisibility());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->getSpellingListIndex());
+    Record.AddString(SA->getMessage());
     break;
   }
   case attr::Weak: {

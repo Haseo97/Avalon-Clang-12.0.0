@@ -64,6 +64,10 @@ public:
 
   virtual ~MCInstPrinter();
 
+  /// Customize the printer according to a command line option.
+  /// @return true if the option is recognized and applied.
+  virtual bool applyTargetSpecificCLOption(StringRef Opt) { return false; }
+
   /// Specify a stream to emit comments to.
   void setCommentStream(raw_ostream &OS) { CommentStream = &OS; }
 
@@ -83,12 +87,10 @@ public:
 
   /// Utility functions to make adding mark ups simpler.
   StringRef markup(StringRef s) const;
-  StringRef markup(StringRef a, StringRef b) const;
 
   bool getPrintImmHex() const { return PrintImmHex; }
   void setPrintImmHex(bool Value) { PrintImmHex = Value; }
 
-  HexStyle::Style getPrintHexStyle() const { return PrintHexStyle; }
   void setPrintHexStyle(HexStyle::Style Value) { PrintHexStyle = Value; }
 
   /// Utility function to print immediates in decimal or hex.

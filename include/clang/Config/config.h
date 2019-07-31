@@ -23,6 +23,9 @@
 /* Default runtime library to use. */
 #define CLANG_DEFAULT_RTLIB ""
 
+/* Default unwind library to use. */
+#define CLANG_DEFAULT_UNWINDLIB ""
+
 /* Default objcopy to use */
 #define CLANG_DEFAULT_OBJCOPY "objcopy"
 
@@ -54,14 +57,11 @@
 /* Define if we have libxml2 */
 /* #undef CLANG_HAVE_LIBXML */
 
-/* Define if we have z3 and want to build it */
-/* #undef CLANG_ANALYZER_WITH_Z3 */
-
 /* Define if we have sys/resource.h (rlimits) */
 #define CLANG_HAVE_RLIMITS 1
 
 /* The LLVM product name and version */
-#define BACKEND_PACKAGE_STRING "LLVM 9.0.0svn"
+#define BACKEND_PACKAGE_STRING "LLVM 10.0.0svn"
 
 /* Linker version detected at compile time. */
 /* #undef HOST_LINK_VERSION */
@@ -76,8 +76,8 @@
 #define ENABLE_EXPERIMENTAL_NEW_PASS_MANAGER 0
 
 /* Enable each functionality of modules */
-#define CLANG_ENABLE_ARCMT 1
-#define CLANG_ENABLE_OBJC_REWRITER 1
-#define CLANG_ENABLE_STATIC_ANALYZER 1
+#define CLANG_ENABLE_ARCMT 0
+#define CLANG_ENABLE_OBJC_REWRITER 0
+#define CLANG_ENABLE_STATIC_ANALYZER 0
 
 #endif
