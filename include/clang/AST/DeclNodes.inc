@@ -83,6 +83,12 @@ FRIENDTEMPLATE(FriendTemplate, Decl)
 IMPORT(Import, Decl)
 #undef IMPORT
 
+#ifndef LIFETIMEEXTENDEDTEMPORARY
+#  define LIFETIMEEXTENDEDTEMPORARY(Type, Base) DECL(Type, Base)
+#endif
+LIFETIMEEXTENDEDTEMPORARY(LifetimeExtendedTemporary, Decl)
+#undef LIFETIMEEXTENDEDTEMPORARY
+
 #ifndef LINKAGESPEC
 #  define LINKAGESPEC(Type, Base) DECL(Type, Base)
 #endif
@@ -565,6 +571,12 @@ PRAGMACOMMENT(PragmaComment, Decl)
 PRAGMADETECTMISMATCH(PragmaDetectMismatch, Decl)
 #undef PRAGMADETECTMISMATCH
 
+#ifndef REQUIRESEXPRBODY
+#  define REQUIRESEXPRBODY(Type, Base) DECL(Type, Base)
+#endif
+REQUIRESEXPRBODY(RequiresExprBody, Decl)
+#undef REQUIRESEXPRBODY
+
 #ifndef STATICASSERT
 #  define STATICASSERT(Type, Base) DECL(Type, Base)
 #endif
@@ -609,6 +621,7 @@ DECL_CONTEXT(Namespace)
 DECL_CONTEXT(OMPDeclareMapper)
 DECL_CONTEXT(OMPDeclareReduction)
 DECL_CONTEXT(ObjCMethod)
+DECL_CONTEXT(RequiresExprBody)
 DECL_CONTEXT(TranslationUnit)
 #undef DECL_CONTEXT
 #undef DECL_CONTEXT_BASE

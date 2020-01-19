@@ -16,10 +16,9 @@
 #include "llvm/ADT/Twine.h"
 #include "llvm/BinaryFormat/XCOFF.h"
 #include "llvm/MC/MCSection.h"
+#include "llvm/MC/MCSymbolXCOFF.h"
 
 namespace llvm {
-
-class MCSymbol;
 
 // This class represents an XCOFF `Control Section`, more commonly referred to
 // as a csect. A csect represents the smallest possible unit of data/code which
@@ -37,13 +36,19 @@ class MCSectionXCOFF final : public MCSection {
   StringRef Name;
   XCOFF::StorageMappingClass MappingClass;
   XCOFF::SymbolType Type;
+  XCOFF::StorageClass StorageClass;
+  MCSymbolXCOFF *const QualName;
 
   MCSectionXCOFF(StringRef Section, XCOFF::StorageMappingClass SMC,
-                 XCOFF::SymbolType ST, SectionKind K, MCSymbol *Begin)
+                 XCOFF::SymbolType ST, XCOFF::StorageClass SC, SectionKind K,
+                 MCSymbolXCOFF *QualName, MCSymbol *Begin)
       : MCSection(SV_XCOFF, K, Begin), Name(Section), MappingClass(SMC),
-        Type(ST) {
-    assert((ST == XCOFF::XTY_SD || ST == XCOFF::XTY_CM) &&
+        Type(ST), StorageClass(SC), QualName(QualName) {
+    assert((ST == XCOFF::XTY_SD || ST == XCOFF::XTY_CM || ST == XCOFF::XTY_ER) &&
            "Invalid or unhandled type for csect.");
+    assert(QualName != nullptr && "QualName is needed.");
+    QualName->setStorageClass(SC);
+    QualName->setContainingCsect(this);
   }
 
 public:
@@ -55,7 +60,9 @@ public:
 
   StringRef getSectionName() const { return Name; }
   XCOFF::StorageMappingClass getMappingClass() const { return MappingClass; }
+  XCOFF::StorageClass getStorageClass() const { return StorageClass; }
   XCOFF::SymbolType getCSectType() const { return Type; }
+  MCSymbolXCOFF *getQualNameSymbol() const { return QualName; }
 
   void PrintSwitchToSection(const MCAsmInfo &MAI, const Triple &T,
                             raw_ostream &OS,

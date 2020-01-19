@@ -931,10 +931,14 @@ public:
   /// This sets up the graph and computes all of the entry points of the graph.
   /// No function definitions are scanned until their nodes in the graph are
   /// requested during traversal.
-  LazyCallGraph(Module &M, TargetLibraryInfo &TLI);
+  LazyCallGraph(Module &M,
+                function_ref<TargetLibraryInfo &(Function &)> GetTLI);
 
   LazyCallGraph(LazyCallGraph &&G);
   LazyCallGraph &operator=(LazyCallGraph &&RHS);
+
+  bool invalidate(Module &, const PreservedAnalyses &PA,
+                  ModuleAnalysisManager::Invalidator &);
 
   EdgeSequence::iterator begin() { return EntryEdges.begin(); }
   EdgeSequence::iterator end() { return EntryEdges.end(); }
@@ -1267,7 +1271,12 @@ public:
   /// This just builds the set of entry points to the call graph. The rest is
   /// built lazily as it is walked.
   LazyCallGraph run(Module &M, ModuleAnalysisManager &AM) {
-    return LazyCallGraph(M, AM.getResult<TargetLibraryAnalysis>(M));
+    FunctionAnalysisManager &FAM =
+        AM.getResult<FunctionAnalysisManagerModuleProxy>(M).getManager();
+    auto GetTLI = [&FAM](Function &F) -> TargetLibraryInfo & {
+      return FAM.getResult<TargetLibraryAnalysis>(F);
+    };
+    return LazyCallGraph(M, GetTLI);
   }
 };
 

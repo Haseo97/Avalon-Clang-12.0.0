@@ -6,362 +6,416 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-  switch (AttrKind) {
+  switch (getParsedKind()) {
+    case IgnoredAttribute:
+    case UnknownAttribute:
+    case NoSemaHandlerAttribute:
+      llvm_unreachable("Ignored/unknown shouldn't get here");
   case AT_AArch64VectorPcs: {
-    if (Name == "aarch64_vector_pcs" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "aarch64_vector_pcs" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "aarch64_vector_pcs" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "aarch64_vector_pcs" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "aarch64_vector_pcs" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "aarch64_vector_pcs" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_AMDGPUFlatWorkGroupSize: {
-    if (Name == "amdgpu_flat_work_group_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "amdgpu_flat_work_group_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "amdgpu_flat_work_group_size" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "amdgpu_flat_work_group_size" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_AMDGPUNumSGPR: {
-    if (Name == "amdgpu_num_sgpr" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "amdgpu_num_sgpr" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "amdgpu_num_sgpr" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "amdgpu_num_sgpr" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_AMDGPUNumVGPR: {
-    if (Name == "amdgpu_num_vgpr" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "amdgpu_num_vgpr" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "amdgpu_num_vgpr" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "amdgpu_num_vgpr" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_AMDGPUWavesPerEU: {
-    if (Name == "amdgpu_waves_per_eu" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "amdgpu_waves_per_eu" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "amdgpu_waves_per_eu" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "amdgpu_waves_per_eu" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Interrupt: {
-    if (Name == "interrupt" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "interrupt" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "interrupt" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "interrupt" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AVRSignal: {
-    if (Name == "signal" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "signal" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "signal" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "signal" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AbiTag: {
-    if (Name == "abi_tag" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "abi_tag" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "abi_tag" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "abi_tag" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AcquireCapability: {
-    if (Name == "acquire_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "acquire_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "acquire_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "acquire_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "acquire_shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "acquire_shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "acquire_shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "acquire_shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
-    if (Name == "exclusive_lock_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "exclusive_lock_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 4;
-    if (Name == "shared_lock_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "shared_lock_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 5;
     break;
   }
+  case AT_AcquireHandle: {
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_AcquiredAfter: {
-    if (Name == "acquired_after" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "acquired_after" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_AcquiredBefore: {
-    if (Name == "acquired_before" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "acquired_before" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_AddressSpace: {
-    if (Name == "address_space" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "address_space" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "address_space" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "address_space" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "address_space" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "address_space" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Alias: {
-    if (Name == "alias" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "alias" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AlignValue: {
-    if (Name == "align_value" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "align_value" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_Aligned: {
-    if (Name == "aligned" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "aligned" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "aligned" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "aligned" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "align" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "align" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
-    if (Name == "alignas" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "alignas" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
-    if (Name == "_Alignas" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_Alignas" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 4;
     break;
   }
   case AT_AllocAlign: {
-    if (Name == "alloc_align" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "alloc_align" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "alloc_align" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "alloc_align" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AllocSize: {
-    if (Name == "alloc_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "alloc_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "alloc_size" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "alloc_size" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AlwaysDestroy: {
-    if (Name == "always_destroy" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "always_destroy" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "always_destroy" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "always_destroy" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_AlwaysInline: {
-    if (Name == "always_inline" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "always_inline" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "always_inline" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "always_inline" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__forceinline" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__forceinline" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
     break;
   }
   case AT_AnalyzerNoReturn: {
-    if (Name == "analyzer_noreturn" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "analyzer_noreturn" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_Annotate: {
-    if (Name == "annotate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "annotate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "annotate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "annotate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "annotate" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "annotate" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_AnyX86NoCallerSavedRegisters: {
-    if (Name == "no_caller_saved_registers" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_caller_saved_registers" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_caller_saved_registers" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_caller_saved_registers" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AnyX86NoCfCheck: {
-    if (Name == "nocf_check" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nocf_check" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nocf_check" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nocf_check" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_ArcWeakrefUnavailable: {
-    if (Name == "objc_arc_weak_reference_unavailable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_arc_weak_reference_unavailable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_arc_weak_reference_unavailable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_arc_weak_reference_unavailable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_arc_weak_reference_unavailable" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_arc_weak_reference_unavailable" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ArgumentWithTypeTag: {
-    if (Name == "argument_with_type_tag" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "argument_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "argument_with_type_tag" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "argument_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "argument_with_type_tag" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "argument_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "pointer_with_type_tag" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pointer_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 3;
-    if (Name == "pointer_with_type_tag" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "pointer_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 4;
-    if (Name == "pointer_with_type_tag" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "pointer_with_type_tag" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 5;
     break;
   }
-  case AT_Artificial: {
-    if (Name == "artificial" && SyntaxUsed == 0 && Scope == "")
+  case AT_ArmMveAlias: {
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "artificial" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ArmMveStrictPolymorphism: {
+    if (Name == "__clang_arm_mve_strict_polymorphism" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "__clang_arm_mve_strict_polymorphism" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "__clang_arm_mve_strict_polymorphism" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_Artificial: {
+    if (Name == "artificial" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "artificial" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_AssertCapability: {
-    if (Name == "assert_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "assert_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "assert_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "assert_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "assert_shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "assert_shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "assert_shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "assert_shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
     break;
   }
   case AT_AssertExclusiveLock: {
-    if (Name == "assert_exclusive_lock" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "assert_exclusive_lock" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_AssertSharedLock: {
-    if (Name == "assert_shared_lock" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "assert_shared_lock" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_AssumeAligned: {
-    if (Name == "assume_aligned" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "assume_aligned" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "assume_aligned" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "assume_aligned" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Availability: {
-    if (Name == "availability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "availability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "availability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "availability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "availability" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "availability" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_BPFPreserveAccessIndex: {
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "preserve_access_index" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Blocks: {
-    if (Name == "blocks" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "blocks" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "blocks" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "blocks" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "blocks" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "blocks" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CDecl: {
-    if (Name == "cdecl" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cdecl" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cdecl" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "cdecl" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__cdecl" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__cdecl" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "_cdecl" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_cdecl" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
     break;
   }
   case AT_CFAuditedTransfer: {
-    if (Name == "cf_audited_transfer" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cf_audited_transfer" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cf_audited_transfer" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cf_audited_transfer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cf_audited_transfer" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cf_audited_transfer" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CFConsumed: {
-    if (Name == "cf_consumed" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cf_consumed" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cf_consumed" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cf_consumed" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cf_consumed" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cf_consumed" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_CFGuard: {
+    if (Name == "guard" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
+        return 0;
+    break;
+  }
+  case AT_CFICanonicalJumpTable: {
+    if (Name == "cfi_canonical_jump_table" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "cfi_canonical_jump_table" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "cfi_canonical_jump_table" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CFReturnsNotRetained: {
-    if (Name == "cf_returns_not_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cf_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cf_returns_not_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cf_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cf_returns_not_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cf_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CFReturnsRetained: {
-    if (Name == "cf_returns_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cf_returns_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cf_returns_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cf_returns_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cf_returns_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cf_returns_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CFUnknownTransfer: {
-    if (Name == "cf_unknown_transfer" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cf_unknown_transfer" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cf_unknown_transfer" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cf_unknown_transfer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cf_unknown_transfer" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cf_unknown_transfer" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_CPUDispatch: {
-    if (Name == "cpu_dispatch" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cpu_dispatch" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cpu_dispatch" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cpu_dispatch" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cpu_dispatch" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cpu_dispatch" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "cpu_dispatch" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "cpu_dispatch" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 3;
     break;
   }
   case AT_CPUSpecific: {
-    if (Name == "cpu_specific" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cpu_specific" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cpu_specific" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "cpu_specific" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "cpu_specific" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "cpu_specific" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "cpu_specific" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "cpu_specific" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 3;
     break;
   }
   case AT_CUDAConstant: {
-    if (Name == "constant" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "constant" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__constant__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__constant__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_CUDADevice: {
-    if (Name == "device" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "device" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__device__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__device__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_CUDAGlobal: {
-    if (Name == "global" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "global" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__global__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__global__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_CUDAHost: {
-    if (Name == "host" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "host" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__host__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__host__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
@@ -369,138 +423,147 @@
     break;
   }
   case AT_CUDALaunchBounds: {
-    if (Name == "launch_bounds" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "launch_bounds" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__launch_bounds__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__launch_bounds__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_CUDAShared: {
-    if (Name == "shared" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "shared" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__shared__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__shared__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_CXX11NoReturn: {
-    if (Name == "noreturn" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "noreturn" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 0;
     break;
   }
   case AT_CallableWhen: {
-    if (Name == "callable_when" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "callable_when" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "callable_when" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "callable_when" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Callback: {
-    if (Name == "callback" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "callback" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "callback" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "callback" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "callback" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "callback" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Capability: {
-    if (Name == "capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
     break;
   }
   case AT_CarriesDependency: {
-    if (Name == "carries_dependency" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "carries_dependency" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "carries_dependency" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "carries_dependency" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 1;
     break;
   }
   case AT_Cleanup: {
-    if (Name == "cleanup" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cleanup" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cleanup" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "cleanup" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_CodeSeg: {
-    if (Name == "code_seg" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "code_seg" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_Cold: {
-    if (Name == "cold" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "cold" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "cold" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "cold" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Common: {
-    if (Name == "common" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "common" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "common" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "common" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Const: {
-    if (Name == "const" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "const" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "const" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "const" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__const" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "__const" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "__const" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "__const" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 3;
     break;
   }
-  case AT_Constructor: {
-    if (Name == "constructor" && SyntaxUsed == 0 && Scope == "")
+  case AT_ConstInit: {
+    if (Name == "constinit" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "constructor" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "require_constant_initialization" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 1;
+    if (Name == "require_constant_initialization" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_Constructor: {
+    if (Name == "constructor" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "constructor" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Consumable: {
-    if (Name == "consumable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "consumable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "consumable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "consumable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_ConsumableAutoCast: {
-    if (Name == "consumable_auto_cast_state" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "consumable_auto_cast_state" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "consumable_auto_cast_state" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "consumable_auto_cast_state" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_ConsumableSetOnRead: {
-    if (Name == "consumable_set_state_on_read" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "consumable_set_state_on_read" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "consumable_set_state_on_read" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "consumable_set_state_on_read" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Convergent: {
-    if (Name == "convergent" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "convergent" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "convergent" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "convergent" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "convergent" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "convergent" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_DLLExport: {
-    if (Name == "dllexport" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "dllexport" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
-    if (Name == "dllexport" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "dllexport" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 1;
-    if (Name == "dllexport" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "dllexport" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 2;
     break;
   }
@@ -508,11 +571,11 @@
     break;
   }
   case AT_DLLImport: {
-    if (Name == "dllimport" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "dllimport" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
-    if (Name == "dllimport" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "dllimport" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 1;
-    if (Name == "dllimport" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "dllimport" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 2;
     break;
   }
@@ -520,1083 +583,1151 @@
     break;
   }
   case AT_Deprecated: {
-    if (Name == "deprecated" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "deprecated" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "deprecated" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "deprecated" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "deprecated" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "deprecated" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
-    if (Name == "deprecated" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "deprecated" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 3;
-    if (Name == "deprecated" && SyntaxUsed == 2 && Scope == "")
+    if (Name == "deprecated" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "")
         return 4;
     break;
   }
   case AT_Destructor: {
-    if (Name == "destructor" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "destructor" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "destructor" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "destructor" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_DiagnoseIf: {
-    if (Name == "diagnose_if" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "diagnose_if" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_DisableTailCalls: {
-    if (Name == "disable_tail_calls" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "disable_tail_calls" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "disable_tail_calls" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "disable_tail_calls" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "disable_tail_calls" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "disable_tail_calls" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_EmptyBases: {
-    if (Name == "empty_bases" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "empty_bases" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_EnableIf: {
-    if (Name == "enable_if" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "enable_if" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_EnumExtensibility: {
-    if (Name == "enum_extensibility" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "enum_extensibility" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "enum_extensibility" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "enum_extensibility" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "enum_extensibility" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "enum_extensibility" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ExcludeFromExplicitInstantiation: {
-    if (Name == "exclude_from_explicit_instantiation" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "exclude_from_explicit_instantiation" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "exclude_from_explicit_instantiation" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "exclude_from_explicit_instantiation" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "exclude_from_explicit_instantiation" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "exclude_from_explicit_instantiation" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ExclusiveTrylockFunction: {
-    if (Name == "exclusive_trylock_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "exclusive_trylock_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_ExtVectorType: {
-    if (Name == "ext_vector_type" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ext_vector_type" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_ExternalSourceSymbol: {
-    if (Name == "external_source_symbol" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "external_source_symbol" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "external_source_symbol" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "external_source_symbol" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "external_source_symbol" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "external_source_symbol" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_FallThrough: {
-    if (Name == "fallthrough" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "fallthrough" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 0;
-    if (Name == "fallthrough" && SyntaxUsed == 2 && Scope == "")
+    if (Name == "fallthrough" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "")
         return 1;
-    if (Name == "fallthrough" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "fallthrough" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 2;
+    if (Name == "fallthrough" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 3;
+    if (Name == "fallthrough" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
+        return 4;
     break;
   }
   case AT_FastCall: {
-    if (Name == "fastcall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "fastcall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "fastcall" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "fastcall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__fastcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__fastcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "_fastcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_fastcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
     break;
   }
   case AT_FlagEnum: {
-    if (Name == "flag_enum" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "flag_enum" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "flag_enum" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "flag_enum" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "flag_enum" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "flag_enum" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Flatten: {
-    if (Name == "flatten" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "flatten" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "flatten" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "flatten" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Format: {
-    if (Name == "format" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "format" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "format" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "format" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_FormatArg: {
-    if (Name == "format_arg" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "format_arg" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "format_arg" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "format_arg" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_GNUInline: {
-    if (Name == "gnu_inline" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "gnu_inline" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "gnu_inline" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "gnu_inline" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_GuardedBy: {
-    if (Name == "guarded_by" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "guarded_by" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_GuardedVar: {
-    if (Name == "guarded_var" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "guarded_var" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "guarded_var" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "guarded_var" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_HIPPinnedShadow: {
-    if (Name == "hip_pinned_shadow" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "hip_pinned_shadow" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__hip_pinned_shadow__" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "__hip_pinned_shadow__" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 1;
     break;
   }
   case AT_Hot: {
-    if (Name == "hot" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "hot" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "hot" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "hot" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_IBAction: {
-    if (Name == "ibaction" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ibaction" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ibaction" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ibaction" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ibaction" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ibaction" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_IBOutlet: {
-    if (Name == "iboutlet" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "iboutlet" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "iboutlet" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "iboutlet" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "iboutlet" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "iboutlet" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_IBOutletCollection: {
-    if (Name == "iboutletcollection" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "iboutletcollection" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "iboutletcollection" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "iboutletcollection" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "iboutletcollection" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "iboutletcollection" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_IFunc: {
-    if (Name == "ifunc" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ifunc" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ifunc" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "ifunc" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_InitPriority: {
-    if (Name == "init_priority" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "init_priority" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "init_priority" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "init_priority" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_IntelOclBicc: {
-    if (Name == "intel_ocl_bicc" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "intel_ocl_bicc" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "intel_ocl_bicc" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "intel_ocl_bicc" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_InternalLinkage: {
-    if (Name == "internal_linkage" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "internal_linkage" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "internal_linkage" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "internal_linkage" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "internal_linkage" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "internal_linkage" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_LTOVisibilityPublic: {
-    if (Name == "lto_visibility_public" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "lto_visibility_public" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "lto_visibility_public" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "lto_visibility_public" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "lto_visibility_public" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "lto_visibility_public" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_LayoutVersion: {
-    if (Name == "layout_version" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "layout_version" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_LifetimeBound: {
-    if (Name == "lifetimebound" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "lifetimebound" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "lifetimebound" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "lifetimebound" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_LockReturned: {
-    if (Name == "lock_returned" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "lock_returned" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_Lockable: {
-    if (Name == "lockable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "lockable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_LocksExcluded: {
-    if (Name == "locks_excluded" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "locks_excluded" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_LoopHint: {
-    if (Name == "loop" && SyntaxUsed == 6 && Scope == "clang")
+    if (Name == "loop" && getSyntax() == AttributeCommonInfo::AS_Pragma && Scope == "clang")
         return 0;
-    if (Name == "unroll" && SyntaxUsed == 6 && Scope == "")
+    if (Name == "unroll" && getSyntax() == AttributeCommonInfo::AS_Pragma && Scope == "")
         return 1;
-    if (Name == "nounroll" && SyntaxUsed == 6 && Scope == "")
+    if (Name == "nounroll" && getSyntax() == AttributeCommonInfo::AS_Pragma && Scope == "")
         return 2;
-    if (Name == "unroll_and_jam" && SyntaxUsed == 6 && Scope == "")
+    if (Name == "unroll_and_jam" && getSyntax() == AttributeCommonInfo::AS_Pragma && Scope == "")
         return 3;
-    if (Name == "nounroll_and_jam" && SyntaxUsed == 6 && Scope == "")
+    if (Name == "nounroll_and_jam" && getSyntax() == AttributeCommonInfo::AS_Pragma && Scope == "")
         return 4;
     break;
   }
   case AT_MIGServerRoutine: {
-    if (Name == "mig_server_routine" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "mig_server_routine" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "mig_server_routine" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "mig_server_routine" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "mig_server_routine" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "mig_server_routine" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_MSABI: {
-    if (Name == "ms_abi" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ms_abi" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ms_abi" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "ms_abi" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_MSAllocator: {
-    if (Name == "allocator" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "allocator" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_MSInheritance: {
-    if (Name == "__single_inheritance" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__single_inheritance" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "__multiple_inheritance" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__multiple_inheritance" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
-    if (Name == "__virtual_inheritance" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__virtual_inheritance" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "__unspecified_inheritance" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__unspecified_inheritance" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
     break;
   }
   case AT_MSNoVTable: {
-    if (Name == "novtable" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "novtable" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_MSStruct: {
-    if (Name == "ms_struct" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ms_struct" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ms_struct" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "ms_struct" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_MayAlias: {
-    if (Name == "may_alias" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "may_alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "may_alias" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "may_alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_MicroMips: {
-    if (Name == "micromips" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "micromips" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "micromips" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "micromips" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_MinSize: {
-    if (Name == "minsize" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "minsize" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "minsize" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "minsize" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "minsize" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "minsize" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_MinVectorWidth: {
-    if (Name == "min_vector_width" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "min_vector_width" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "min_vector_width" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "min_vector_width" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "min_vector_width" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "min_vector_width" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Mips16: {
-    if (Name == "mips16" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "mips16" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "mips16" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "mips16" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_MipsLongCall: {
-    if (Name == "long_call" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "long_call" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "long_call" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "long_call" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "far" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "far" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "far" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "far" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 3;
     break;
   }
   case AT_MipsShortCall: {
-    if (Name == "short_call" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "short_call" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "short_call" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "short_call" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "near" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "near" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "near" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "near" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 3;
     break;
   }
   case AT_Mode: {
-    if (Name == "mode" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "mode" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "mode" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "mode" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NSConsumed: {
-    if (Name == "ns_consumed" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ns_consumed" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ns_consumed" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ns_consumed" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ns_consumed" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ns_consumed" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NSConsumesSelf: {
-    if (Name == "ns_consumes_self" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ns_consumes_self" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ns_consumes_self" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ns_consumes_self" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ns_consumes_self" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ns_consumes_self" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NSReturnsAutoreleased: {
-    if (Name == "ns_returns_autoreleased" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ns_returns_autoreleased" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ns_returns_autoreleased" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ns_returns_autoreleased" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ns_returns_autoreleased" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ns_returns_autoreleased" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NSReturnsNotRetained: {
-    if (Name == "ns_returns_not_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ns_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ns_returns_not_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ns_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ns_returns_not_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ns_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NSReturnsRetained: {
-    if (Name == "ns_returns_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ns_returns_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ns_returns_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ns_returns_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ns_returns_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ns_returns_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Naked: {
-    if (Name == "naked" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "naked" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "naked" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "naked" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "naked" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "naked" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
     break;
   }
   case AT_NeonPolyVectorType: {
-    if (Name == "neon_polyvector_type" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "neon_polyvector_type" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "neon_polyvector_type" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "neon_polyvector_type" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "neon_polyvector_type" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "neon_polyvector_type" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NeonVectorType: {
-    if (Name == "neon_vector_type" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "neon_vector_type" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "neon_vector_type" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "neon_vector_type" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "neon_vector_type" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "neon_vector_type" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoAlias: {
-    if (Name == "noalias" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "noalias" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
-  case AT_NoCommon: {
-    if (Name == "nocommon" && SyntaxUsed == 0 && Scope == "")
+  case AT_NoBuiltin: {
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nocommon" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "no_builtin" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_NoCommon: {
+    if (Name == "nocommon" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "nocommon" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoDebug: {
-    if (Name == "nodebug" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nodebug" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nodebug" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nodebug" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoDeref: {
-    if (Name == "noderef" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "noderef" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "noderef" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "noderef" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "noderef" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "noderef" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoDestroy: {
-    if (Name == "no_destroy" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_destroy" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_destroy" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_destroy" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_NoDuplicate: {
-    if (Name == "noduplicate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "noduplicate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "noduplicate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "noduplicate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "noduplicate" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "noduplicate" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoEscape: {
-    if (Name == "noescape" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "noescape" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "noescape" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "noescape" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "noescape" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "noescape" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoInline: {
-    if (Name == "noinline" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "noinline" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "noinline" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "noinline" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "noinline" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "noinline" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
     break;
   }
   case AT_NoInstrumentFunction: {
-    if (Name == "no_instrument_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_instrument_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_instrument_function" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_instrument_function" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoMicroMips: {
-    if (Name == "nomicromips" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nomicromips" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nomicromips" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nomicromips" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoMips16: {
-    if (Name == "nomips16" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nomips16" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nomips16" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nomips16" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoReturn: {
-    if (Name == "noreturn" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "noreturn" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "noreturn" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "noreturn" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "noreturn" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "noreturn" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
     break;
   }
   case AT_NoSanitize: {
-    if (Name == "no_sanitize" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_sanitize" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_sanitize" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_sanitize" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "no_sanitize" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "no_sanitize" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoSanitizeSpecific: {
-    if (Name == "no_address_safety_analysis" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_address_safety_analysis" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_address_safety_analysis" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_address_safety_analysis" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "no_sanitize_address" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_sanitize_address" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "no_sanitize_address" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_sanitize_address" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 3;
-    if (Name == "no_sanitize_thread" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_sanitize_thread" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 4;
-    if (Name == "no_sanitize_thread" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_sanitize_thread" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 5;
-    if (Name == "no_sanitize_memory" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_sanitize_memory" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 6;
-    if (Name == "no_sanitize_memory" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_sanitize_memory" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 7;
-    if (Name == "no_sanitize_memory" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "no_sanitize_memory" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 8;
     break;
   }
   case AT_NoSpeculativeLoadHardening: {
-    if (Name == "no_speculative_load_hardening" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_speculative_load_hardening" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "no_speculative_load_hardening" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "no_speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoSplitStack: {
-    if (Name == "no_split_stack" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_split_stack" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_split_stack" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "no_split_stack" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NoStackProtector: {
-    if (Name == "no_stack_protector" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_stack_protector" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_stack_protector" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_stack_protector" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "no_stack_protector" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "no_stack_protector" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoThreadSafetyAnalysis: {
-    if (Name == "no_thread_safety_analysis" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "no_thread_safety_analysis" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "no_thread_safety_analysis" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "no_thread_safety_analysis" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "no_thread_safety_analysis" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "no_thread_safety_analysis" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_NoThrow: {
-    if (Name == "nothrow" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nothrow" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nothrow" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nothrow" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "nothrow" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "nothrow" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
     break;
   }
   case AT_NoUniqueAddress: {
-    if (Name == "no_unique_address" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "no_unique_address" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 0;
     break;
   }
   case AT_NonNull: {
-    if (Name == "nonnull" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nonnull" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "nonnull" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "nonnull" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_NotTailCalled: {
-    if (Name == "not_tail_called" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "not_tail_called" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "not_tail_called" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "not_tail_called" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "not_tail_called" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "not_tail_called" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSConsumed: {
-    if (Name == "os_consumed" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_consumed" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_consumed" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_consumed" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_consumed" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_consumed" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSConsumesThis: {
-    if (Name == "os_consumes_this" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_consumes_this" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_consumes_this" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_consumes_this" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_consumes_this" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_consumes_this" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSReturnsNotRetained: {
-    if (Name == "os_returns_not_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_returns_not_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_returns_not_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_returns_not_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSReturnsRetained: {
-    if (Name == "os_returns_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_returns_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_returns_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_returns_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_returns_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_returns_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSReturnsRetainedOnNonZero: {
-    if (Name == "os_returns_retained_on_non_zero" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_returns_retained_on_non_zero" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_returns_retained_on_non_zero" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_returns_retained_on_non_zero" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_returns_retained_on_non_zero" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_returns_retained_on_non_zero" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OSReturnsRetainedOnZero: {
-    if (Name == "os_returns_retained_on_zero" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "os_returns_retained_on_zero" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "os_returns_retained_on_zero" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "os_returns_retained_on_zero" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "os_returns_retained_on_zero" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "os_returns_retained_on_zero" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCBoxable: {
-    if (Name == "objc_boxable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_boxable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_boxable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_boxable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_boxable" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_boxable" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCBridge: {
-    if (Name == "objc_bridge" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_bridge" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_bridge" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_bridge" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_bridge" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_bridge" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCBridgeMutable: {
-    if (Name == "objc_bridge_mutable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_bridge_mutable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_bridge_mutable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_bridge_mutable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_bridge_mutable" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_bridge_mutable" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCBridgeRelated: {
-    if (Name == "objc_bridge_related" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_bridge_related" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_bridge_related" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_bridge_related" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_bridge_related" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_bridge_related" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCClassStub: {
-    if (Name == "objc_class_stub" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_class_stub" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_class_stub" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_class_stub" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_class_stub" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_class_stub" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCDesignatedInitializer: {
-    if (Name == "objc_designated_initializer" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_designated_initializer" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_designated_initializer" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_designated_initializer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_designated_initializer" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_designated_initializer" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ObjCDirect: {
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "objc_direct" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ObjCDirectMembers: {
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "objc_direct_members" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCException: {
-    if (Name == "objc_exception" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_exception" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_exception" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_exception" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_exception" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_exception" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCExplicitProtocolImpl: {
-    if (Name == "objc_protocol_requires_explicit_implementation" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_protocol_requires_explicit_implementation" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_protocol_requires_explicit_implementation" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_protocol_requires_explicit_implementation" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_protocol_requires_explicit_implementation" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_protocol_requires_explicit_implementation" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCExternallyRetained: {
-    if (Name == "objc_externally_retained" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_externally_retained" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_externally_retained" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_externally_retained" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_externally_retained" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_externally_retained" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCGC: {
-    if (Name == "objc_gc" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_gc" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_gc" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_gc" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_gc" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_gc" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCIndependentClass: {
-    if (Name == "objc_independent_class" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_independent_class" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_independent_class" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_independent_class" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_independent_class" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_independent_class" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCInertUnsafeUnretained: {
-    if (Name == "__unsafe_unretained" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__unsafe_unretained" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_ObjCKindOf: {
-    if (Name == "__kindof" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__kindof" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_ObjCMethodFamily: {
-    if (Name == "objc_method_family" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_method_family" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_method_family" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_method_family" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_method_family" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_method_family" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCNSObject: {
-    if (Name == "NSObject" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "NSObject" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "NSObject" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "NSObject" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "NSObject" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "NSObject" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCNonLazyClass: {
-    if (Name == "objc_nonlazy_class" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_nonlazy_class" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_nonlazy_class" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_nonlazy_class" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_nonlazy_class" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_nonlazy_class" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCOwnership: {
-    if (Name == "objc_ownership" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_ownership" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_ownership" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_ownership" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_ownership" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_ownership" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCPreciseLifetime: {
-    if (Name == "objc_precise_lifetime" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_precise_lifetime" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_precise_lifetime" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_precise_lifetime" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_precise_lifetime" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_precise_lifetime" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCRequiresPropertyDefs: {
-    if (Name == "objc_requires_property_definitions" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_requires_property_definitions" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_requires_property_definitions" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_requires_property_definitions" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_requires_property_definitions" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_requires_property_definitions" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCRequiresSuper: {
-    if (Name == "objc_requires_super" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_requires_super" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_requires_super" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_requires_super" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_requires_super" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_requires_super" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCReturnsInnerPointer: {
-    if (Name == "objc_returns_inner_pointer" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_returns_inner_pointer" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_returns_inner_pointer" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_returns_inner_pointer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_returns_inner_pointer" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_returns_inner_pointer" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCRootClass: {
-    if (Name == "objc_root_class" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_root_class" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_root_class" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_root_class" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_root_class" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_root_class" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCRuntimeName: {
-    if (Name == "objc_runtime_name" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_runtime_name" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_runtime_name" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_runtime_name" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_runtime_name" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_runtime_name" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCRuntimeVisible: {
-    if (Name == "objc_runtime_visible" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_runtime_visible" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_runtime_visible" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_runtime_visible" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_runtime_visible" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_runtime_visible" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_ObjCSubclassingRestricted: {
-    if (Name == "objc_subclassing_restricted" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "objc_subclassing_restricted" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "objc_subclassing_restricted" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "objc_subclassing_restricted" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "objc_subclassing_restricted" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "objc_subclassing_restricted" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_OpenCLAccess: {
-    if (Name == "__read_only" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__read_only" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "read_only" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "read_only" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
-    if (Name == "__write_only" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__write_only" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "write_only" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "write_only" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
-    if (Name == "__read_write" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__read_write" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 4;
-    if (Name == "read_write" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "read_write" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 5;
     break;
   }
   case AT_OpenCLConstantAddressSpace: {
-    if (Name == "__constant" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__constant" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "constant" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "constant" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLGenericAddressSpace: {
-    if (Name == "__generic" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__generic" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "generic" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "generic" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLGlobalAddressSpace: {
-    if (Name == "__global" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__global" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "global" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "global" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLIntelReqdSubGroupSize: {
-    if (Name == "intel_reqd_sub_group_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "intel_reqd_sub_group_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_OpenCLKernel: {
-    if (Name == "__kernel" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__kernel" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "kernel" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "kernel" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
     break;
   }
   case AT_OpenCLLocalAddressSpace: {
-    if (Name == "__local" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__local" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "local" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "local" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLNoSVM: {
-    if (Name == "nosvm" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "nosvm" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_OpenCLPrivateAddressSpace: {
-    if (Name == "__private" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__private" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
-    if (Name == "private" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "private" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLUnrollHint: {
-    if (Name == "opencl_unroll_hint" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "opencl_unroll_hint" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_OptimizeNone: {
-    if (Name == "optnone" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "optnone" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "optnone" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "optnone" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "optnone" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "optnone" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Overloadable: {
-    if (Name == "overloadable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "overloadable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "overloadable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "overloadable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "overloadable" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "overloadable" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Owner: {
-    if (Name == "Owner" && SyntaxUsed == 1 && Scope == "gsl")
+    if (Name == "Owner" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gsl")
         return 0;
     break;
   }
   case AT_Ownership: {
-    if (Name == "ownership_holds" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ownership_holds" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "ownership_holds" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ownership_holds" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "ownership_holds" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ownership_holds" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "ownership_returns" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ownership_returns" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 3;
-    if (Name == "ownership_returns" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ownership_returns" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 4;
-    if (Name == "ownership_returns" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ownership_returns" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 5;
-    if (Name == "ownership_takes" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "ownership_takes" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 6;
-    if (Name == "ownership_takes" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "ownership_takes" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 7;
-    if (Name == "ownership_takes" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "ownership_takes" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 8;
     break;
   }
   case AT_Packed: {
-    if (Name == "packed" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "packed" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "packed" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "packed" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_ParamTypestate: {
-    if (Name == "param_typestate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "param_typestate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "param_typestate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "param_typestate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Pascal: {
-    if (Name == "pascal" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pascal" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "pascal" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "pascal" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "pascal" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "pascal" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "__pascal" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__pascal" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
-    if (Name == "_pascal" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_pascal" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 4;
     break;
   }
   case AT_PassObjectSize: {
-    if (Name == "pass_object_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pass_object_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "pass_object_size" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "pass_object_size" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "pass_object_size" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "pass_object_size" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pass_dynamic_object_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 3;
-    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "pass_dynamic_object_size" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 4;
-    if (Name == "pass_dynamic_object_size" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "pass_dynamic_object_size" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 5;
     break;
   }
-  case AT_Pcs: {
-    if (Name == "pcs" && SyntaxUsed == 0 && Scope == "")
+  case AT_PatchableFunctionEntry: {
+    if (Name == "patchable_function_entry" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "pcs" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "patchable_function_entry" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
+        return 1;
+    break;
+  }
+  case AT_Pcs: {
+    if (Name == "pcs" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "pcs" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Pointer: {
-    if (Name == "Pointer" && SyntaxUsed == 1 && Scope == "gsl")
+    if (Name == "Pointer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gsl")
         return 0;
     break;
   }
@@ -1606,6 +1737,9 @@
   case AT_PragmaClangDataSection: {
     break;
   }
+  case AT_PragmaClangRelroSection: {
+    break;
+  }
   case AT_PragmaClangRodataSection: {
     break;
   }
@@ -1613,551 +1747,580 @@
     break;
   }
   case AT_PreserveAll: {
-    if (Name == "preserve_all" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "preserve_all" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "preserve_all" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "preserve_all" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "preserve_all" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "preserve_all" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_PreserveMost: {
-    if (Name == "preserve_most" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "preserve_most" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "preserve_most" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "preserve_most" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "preserve_most" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "preserve_most" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_PtGuardedBy: {
-    if (Name == "pt_guarded_by" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pt_guarded_by" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_PtGuardedVar: {
-    if (Name == "pt_guarded_var" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pt_guarded_var" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "pt_guarded_var" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "pt_guarded_var" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Ptr32: {
-    if (Name == "__ptr32" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__ptr32" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_Ptr64: {
-    if (Name == "__ptr64" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__ptr64" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_Pure: {
-    if (Name == "pure" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "pure" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "pure" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "pure" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_RegCall: {
-    if (Name == "regcall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "regcall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "regcall" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "regcall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__regcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__regcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
     break;
   }
   case AT_Regparm: {
-    if (Name == "regparm" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "regparm" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "regparm" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "regparm" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Reinitializes: {
-    if (Name == "reinitializes" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "reinitializes" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "reinitializes" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "reinitializes" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_ReleaseCapability: {
-    if (Name == "release_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "release_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "release_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "release_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "release_shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "release_shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "release_shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "release_shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
-    if (Name == "release_generic_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "release_generic_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 4;
-    if (Name == "release_generic_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "release_generic_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 5;
-    if (Name == "unlock_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "unlock_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 6;
-    if (Name == "unlock_function" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "unlock_function" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 7;
     break;
   }
+  case AT_ReleaseHandle: {
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_RenderScriptKernel: {
-    if (Name == "kernel" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "kernel" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_ReqdWorkGroupSize: {
-    if (Name == "reqd_work_group_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "reqd_work_group_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    break;
-  }
-  case AT_RequireConstantInit: {
-    if (Name == "require_constant_initialization" && SyntaxUsed == 0 && Scope == "")
-        return 0;
-    if (Name == "require_constant_initialization" && SyntaxUsed == 1 && Scope == "clang")
-        return 1;
     break;
   }
   case AT_RequiresCapability: {
-    if (Name == "requires_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "requires_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "requires_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "requires_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "exclusive_locks_required" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "exclusive_locks_required" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "exclusive_locks_required" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "exclusive_locks_required" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
-    if (Name == "requires_shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "requires_shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 4;
-    if (Name == "requires_shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "requires_shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 5;
-    if (Name == "shared_locks_required" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "shared_locks_required" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 6;
-    if (Name == "shared_locks_required" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "shared_locks_required" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 7;
     break;
   }
   case AT_Restrict: {
-    if (Name == "restrict" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "restrict" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
-    if (Name == "malloc" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "malloc" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 1;
-    if (Name == "malloc" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "malloc" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 2;
     break;
   }
   case AT_ReturnTypestate: {
-    if (Name == "return_typestate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "return_typestate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "return_typestate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "return_typestate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_ReturnsNonNull: {
-    if (Name == "returns_nonnull" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "returns_nonnull" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "returns_nonnull" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "returns_nonnull" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_ReturnsTwice: {
-    if (Name == "returns_twice" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "returns_twice" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "returns_twice" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "returns_twice" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_SPtr: {
-    if (Name == "__sptr" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__sptr" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
-  case AT_ScopedLockable: {
-    if (Name == "scoped_lockable" && SyntaxUsed == 0 && Scope == "")
+  case AT_SYCLKernel: {
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "scoped_lockable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_ScopedLockable: {
+    if (Name == "scoped_lockable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "scoped_lockable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Section: {
-    if (Name == "section" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "section" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "section" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "section" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "allocate" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "allocate" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 2;
     break;
   }
   case AT_SelectAny: {
-    if (Name == "selectany" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "selectany" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
-    if (Name == "selectany" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "selectany" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 1;
-    if (Name == "selectany" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "selectany" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 2;
     break;
   }
   case AT_Sentinel: {
-    if (Name == "sentinel" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "sentinel" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "sentinel" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "sentinel" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_SetTypestate: {
-    if (Name == "set_typestate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "set_typestate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "set_typestate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "set_typestate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_SharedTrylockFunction: {
-    if (Name == "shared_trylock_function" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "shared_trylock_function" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_SpeculativeLoadHardening: {
-    if (Name == "speculative_load_hardening" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "speculative_load_hardening" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "speculative_load_hardening" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "speculative_load_hardening" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_StdCall: {
-    if (Name == "stdcall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "stdcall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "stdcall" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "stdcall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__stdcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__stdcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "_stdcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_stdcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
     break;
   }
   case AT_Suppress: {
-    if (Name == "suppress" && SyntaxUsed == 1 && Scope == "gsl")
+    if (Name == "suppress" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gsl")
         return 0;
     break;
   }
   case AT_SwiftCall: {
-    if (Name == "swiftcall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "swiftcall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "swiftcall" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "swiftcall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "swiftcall" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "swiftcall" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_SwiftContext: {
-    if (Name == "swift_context" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "swift_context" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "swift_context" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "swift_context" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "swift_context" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "swift_context" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_SwiftErrorResult: {
-    if (Name == "swift_error_result" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "swift_error_result" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "swift_error_result" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "swift_error_result" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "swift_error_result" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "swift_error_result" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_SwiftIndirectResult: {
-    if (Name == "swift_indirect_result" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "swift_indirect_result" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "swift_indirect_result" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "swift_indirect_result" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "swift_indirect_result" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "swift_indirect_result" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_SysVABI: {
-    if (Name == "sysv_abi" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "sysv_abi" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "sysv_abi" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "sysv_abi" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_TLSModel: {
-    if (Name == "tls_model" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "tls_model" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "tls_model" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "tls_model" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Target: {
-    if (Name == "target" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "target" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "target" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "target" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_TestTypestate: {
-    if (Name == "test_typestate" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "test_typestate" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "test_typestate" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "test_typestate" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_ThisCall: {
-    if (Name == "thiscall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "thiscall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "thiscall" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "thiscall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
-    if (Name == "__thiscall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__thiscall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 2;
-    if (Name == "_thiscall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_thiscall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
     break;
   }
   case AT_Thread: {
-    if (Name == "thread" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "thread" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
     break;
   }
   case AT_TransparentUnion: {
-    if (Name == "transparent_union" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "transparent_union" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "transparent_union" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "transparent_union" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_TrivialABI: {
-    if (Name == "trivial_abi" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "trivial_abi" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "trivial_abi" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "trivial_abi" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_TryAcquireCapability: {
-    if (Name == "try_acquire_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "try_acquire_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "try_acquire_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "try_acquire_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "try_acquire_shared_capability" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "try_acquire_shared_capability" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 2;
-    if (Name == "try_acquire_shared_capability" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "try_acquire_shared_capability" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 3;
     break;
   }
   case AT_TypeNonNull: {
-    if (Name == "_Nonnull" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_Nonnull" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_TypeNullUnspecified: {
-    if (Name == "_Null_unspecified" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_Null_unspecified" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_TypeNullable: {
-    if (Name == "_Nullable" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_Nullable" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_TypeTagForDatatype: {
-    if (Name == "type_tag_for_datatype" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "type_tag_for_datatype" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "type_tag_for_datatype" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "type_tag_for_datatype" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "type_tag_for_datatype" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "type_tag_for_datatype" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_TypeVisibility: {
-    if (Name == "type_visibility" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "type_visibility" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "type_visibility" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "type_visibility" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "type_visibility" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "type_visibility" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_UPtr: {
-    if (Name == "__uptr" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__uptr" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
     break;
   }
   case AT_Unavailable: {
-    if (Name == "unavailable" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "unavailable" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "unavailable" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "unavailable" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "unavailable" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "unavailable" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_Uninitialized: {
-    if (Name == "uninitialized" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "uninitialized" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "uninitialized" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "uninitialized" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_Unused: {
-    if (Name == "maybe_unused" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "maybe_unused" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 0;
-    if (Name == "unused" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "unused" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 1;
-    if (Name == "unused" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "unused" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 2;
-    if (Name == "maybe_unused" && SyntaxUsed == 2 && Scope == "")
+    if (Name == "maybe_unused" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "")
         return 3;
     break;
   }
-  case AT_Used: {
-    if (Name == "used" && SyntaxUsed == 0 && Scope == "")
+  case AT_UseHandle: {
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "used" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_Used: {
+    if (Name == "used" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "used" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Uuid: {
-    if (Name == "uuid" && SyntaxUsed == 3 && Scope == "")
+    if (Name == "uuid" && getSyntax() == AttributeCommonInfo::AS_Declspec && Scope == "")
         return 0;
-    if (Name == "uuid" && SyntaxUsed == 4 && Scope == "")
+    if (Name == "uuid" && getSyntax() == AttributeCommonInfo::AS_Microsoft && Scope == "")
         return 1;
     break;
   }
   case AT_VecReturn: {
-    if (Name == "vecreturn" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "vecreturn" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "vecreturn" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "vecreturn" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
     break;
   }
   case AT_VecTypeHint: {
-    if (Name == "vec_type_hint" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "vec_type_hint" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_VectorCall: {
-    if (Name == "vectorcall" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "vectorcall" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "vectorcall" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "vectorcall" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "vectorcall" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "vectorcall" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "__vectorcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "__vectorcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 3;
-    if (Name == "_vectorcall" && SyntaxUsed == 5 && Scope == "")
+    if (Name == "_vectorcall" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 4;
     break;
   }
   case AT_VectorSize: {
-    if (Name == "vector_size" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "vector_size" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "vector_size" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "vector_size" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_Visibility: {
-    if (Name == "visibility" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "visibility" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "visibility" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "visibility" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_WarnUnused: {
-    if (Name == "warn_unused" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "warn_unused" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "warn_unused" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "warn_unused" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_WarnUnusedResult: {
-    if (Name == "nodiscard" && SyntaxUsed == 1 && Scope == "")
+    if (Name == "nodiscard" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "")
         return 0;
-    if (Name == "nodiscard" && SyntaxUsed == 2 && Scope == "")
+    if (Name == "nodiscard" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "")
         return 1;
-    if (Name == "warn_unused_result" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "warn_unused_result" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 2;
-    if (Name == "warn_unused_result" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "warn_unused_result" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 3;
-    if (Name == "warn_unused_result" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "warn_unused_result" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 4;
     break;
   }
   case AT_Weak: {
-    if (Name == "weak" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "weak" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "weak" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "weak" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_WeakImport: {
-    if (Name == "weak_import" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "weak_import" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "weak_import" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "weak_import" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "weak_import" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "weak_import" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_WeakRef: {
-    if (Name == "weakref" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "weakref" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "weakref" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "weakref" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
-  case AT_WebAssemblyImportModule: {
-    if (Name == "import_module" && SyntaxUsed == 0 && Scope == "")
+  case AT_WebAssemblyExportName: {
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "import_module" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "import_module" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
+  case AT_WebAssemblyImportModule: {
+    if (Name == "import_module" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "import_module" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "import_module" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_WebAssemblyImportName: {
-    if (Name == "import_name" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "import_name" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "import_name" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "import_name" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "import_name" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "import_name" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
   case AT_WorkGroupSizeHint: {
-    if (Name == "work_group_size_hint" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "work_group_size_hint" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
     break;
   }
   case AT_X86ForceAlignArgPointer: {
-    if (Name == "force_align_arg_pointer" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "force_align_arg_pointer" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "force_align_arg_pointer" && SyntaxUsed == 1 && Scope == "gnu")
+    if (Name == "force_align_arg_pointer" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
     break;
   }
   case AT_XRayInstrument: {
-    if (Name == "xray_always_instrument" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "xray_always_instrument" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "xray_always_instrument" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "xray_always_instrument" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "xray_always_instrument" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "xray_always_instrument" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
-    if (Name == "xray_never_instrument" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "xray_never_instrument" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 3;
-    if (Name == "xray_never_instrument" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "xray_never_instrument" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 4;
-    if (Name == "xray_never_instrument" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "xray_never_instrument" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 5;
     break;
   }
   case AT_XRayLogArgs: {
-    if (Name == "xray_log_args" && SyntaxUsed == 0 && Scope == "")
+    if (Name == "xray_log_args" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "xray_log_args" && SyntaxUsed == 1 && Scope == "clang")
+    if (Name == "xray_log_args" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "xray_log_args" && SyntaxUsed == 2 && Scope == "clang")
+    if (Name == "xray_log_args" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }

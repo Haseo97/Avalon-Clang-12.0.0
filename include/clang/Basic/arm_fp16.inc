@@ -101,10 +101,10 @@ case NEON::BI__builtin_neon_vcvth_n_u32_f16: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_u64_f16: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_u16_f16: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_f16_u32: i = 1; l = 1; u = 15; break;
-case NEON::BI__builtin_neon_vcvth_n_f16_u64: i = 1; l = 1; u = 15; break;
-case NEON::BI__builtin_neon_vcvth_n_f16_u16: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_f16_s32: i = 1; l = 1; u = 15; break;
+case NEON::BI__builtin_neon_vcvth_n_f16_u64: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_f16_s64: i = 1; l = 1; u = 15; break;
+case NEON::BI__builtin_neon_vcvth_n_f16_u16: i = 1; l = 1; u = 15; break;
 case NEON::BI__builtin_neon_vcvth_n_f16_s16: i = 1; l = 1; u = 15; break;
 #endif
 

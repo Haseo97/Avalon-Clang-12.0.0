@@ -11,14 +11,12 @@
     const auto *SA = cast<AArch64VectorPcsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AMDGPUFlatWorkGroupSize: {
     const auto *SA = cast<AMDGPUFlatWorkGroupSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getMin());
     Record.AddStmt(SA->getMax());
     break;
@@ -27,7 +25,6 @@
     const auto *SA = cast<AMDGPUNumSGPRAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getNumSGPR());
     break;
   }
@@ -35,7 +32,6 @@
     const auto *SA = cast<AMDGPUNumVGPRAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getNumVGPR());
     break;
   }
@@ -43,7 +39,6 @@
     const auto *SA = cast<AMDGPUWavesPerEUAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getMin());
     Record.AddStmt(SA->getMax());
     break;
@@ -52,7 +47,6 @@
     const auto *SA = cast<ARMInterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getInterrupt());
     break;
   }
@@ -60,20 +54,17 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AVRInterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AVRSignal: {
     const auto *SA = cast<AVRSignalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AbiTag: {
     const auto *SA = cast<AbiTagAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->tags_size());
     for (auto &Val : SA->tags())
       Record.AddString(Val);
@@ -83,17 +74,22 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AcquireCapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
+    break;
+  }
+  case attr::AcquireHandle: {
+    const auto *SA = cast<AcquireHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
     break;
   }
   case attr::AcquiredAfter: {
     const auto *SA = cast<AcquiredAfterAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -103,7 +99,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AcquiredBeforeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -112,14 +107,12 @@ Record.push_back(SA->getInterrupt());
   case attr::AddressSpace: {
     const auto *SA = cast<AddressSpaceAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getAddressSpace());
     break;
   }
   case attr::Alias: {
     const auto *SA = cast<AliasAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getAliasee());
     break;
   }
@@ -127,13 +120,11 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AlignMac68kAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AlignValue: {
     const auto *SA = cast<AlignValueAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getAlignment());
     break;
   }
@@ -141,7 +132,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AlignedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->isAlignmentExpr());
     if (SA->isAlignmentExpr())
       Record.AddStmt(SA->getAlignmentExpr());
@@ -153,7 +143,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AllocAlignAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getParamIndex().serialize());
     break;
   }
@@ -161,7 +150,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AllocSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getElemSizeParam().serialize());
     Record.push_back(SA->getNumElemsParam().serialize());
     break;
@@ -170,28 +158,24 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AlwaysDestroyAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AlwaysInline: {
     const auto *SA = cast<AlwaysInlineAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AnalyzerNoReturn: {
     const auto *SA = cast<AnalyzerNoReturnAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Annotate: {
     const auto *SA = cast<AnnotateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getAnnotation());
     break;
   }
@@ -199,61 +183,65 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AnyX86InterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AnyX86NoCallerSavedRegisters: {
     const auto *SA = cast<AnyX86NoCallerSavedRegistersAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AnyX86NoCfCheck: {
     const auto *SA = cast<AnyX86NoCfCheckAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ArcWeakrefUnavailable: {
     const auto *SA = cast<ArcWeakrefUnavailableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ArgumentWithTypeTag: {
     const auto *SA = cast<ArgumentWithTypeTagAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getArgumentKind());
     Record.push_back(SA->getArgumentIdx().serialize());
     Record.push_back(SA->getTypeTagIdx().serialize());
     Record.push_back(SA->getIsPointer());
     break;
   }
+  case attr::ArmMveAlias: {
+    const auto *SA = cast<ArmMveAliasAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddIdentifierRef(SA->getBuiltinName());
+    break;
+  }
+  case attr::ArmMveStrictPolymorphism: {
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::Artificial: {
     const auto *SA = cast<ArtificialAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::AsmLabel: {
     const auto *SA = cast<AsmLabelAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getLabel());
+    Record.push_back(SA->getIsLiteralLabel());
     break;
   }
   case attr::AssertCapability: {
     const auto *SA = cast<AssertCapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -263,7 +251,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AssertExclusiveLockAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -273,7 +260,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AssertSharedLockAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -283,7 +269,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AssumeAlignedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getAlignment());
     Record.AddStmt(SA->getOffset());
     break;
@@ -292,7 +277,6 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<AvailabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getPlatform());
     Record.AddVersionTuple(SA->getIntroduced());
     Record.AddVersionTuple(SA->getDeprecated());
@@ -304,11 +288,16 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->getPriority());
     break;
   }
+  case attr::BPFPreserveAccessIndex: {
+    const auto *SA = cast<BPFPreserveAccessIndexAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::Blocks: {
     const auto *SA = cast<BlocksAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getType());
     break;
   }
@@ -316,56 +305,61 @@ Record.push_back(SA->getType());
     const auto *SA = cast<C11NoReturnAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CDecl: {
     const auto *SA = cast<CDeclAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CFAuditedTransfer: {
     const auto *SA = cast<CFAuditedTransferAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CFConsumed: {
     const auto *SA = cast<CFConsumedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::CFGuard: {
+    const auto *SA = cast<CFGuardAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+Record.push_back(SA->getGuard());
+    break;
+  }
+  case attr::CFICanonicalJumpTable: {
+    const auto *SA = cast<CFICanonicalJumpTableAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
     break;
   }
   case attr::CFReturnsNotRetained: {
     const auto *SA = cast<CFReturnsNotRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CFReturnsRetained: {
     const auto *SA = cast<CFReturnsRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CFUnknownTransfer: {
     const auto *SA = cast<CFUnknownTransferAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CPUDispatch: {
     const auto *SA = cast<CPUDispatchAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->cpus_size());
     for (auto &Val : SA->cpus())
       Record.AddIdentifierRef(Val);
@@ -375,7 +369,6 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CPUSpecificAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->cpus_size());
     for (auto &Val : SA->cpus())
       Record.AddIdentifierRef(Val);
@@ -385,42 +378,36 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CUDAConstantAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CUDADevice: {
     const auto *SA = cast<CUDADeviceAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CUDAGlobal: {
     const auto *SA = cast<CUDAGlobalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CUDAHost: {
     const auto *SA = cast<CUDAHostAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CUDAInvalidTarget: {
     const auto *SA = cast<CUDAInvalidTargetAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CUDALaunchBounds: {
     const auto *SA = cast<CUDALaunchBoundsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getMaxThreads());
     Record.AddStmt(SA->getMinBlocks());
     break;
@@ -429,21 +416,18 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CUDASharedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CXX11NoReturn: {
     const auto *SA = cast<CXX11NoReturnAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CallableWhen: {
     const auto *SA = cast<CallableWhenAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->callableStates_size());
     for (CallableWhenAttr::callableStates_iterator i = SA->callableStates_begin(), e = SA->callableStates_end(); i != e; ++i)
       Record.push_back((*i));
@@ -453,7 +437,6 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CallbackAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->encoding_size());
     for (auto &Val : SA->encoding())
       Record.push_back(Val);
@@ -463,7 +446,6 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -471,21 +453,18 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CapturedRecordAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::CarriesDependency: {
     const auto *SA = cast<CarriesDependencyAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Cleanup: {
     const auto *SA = cast<CleanupAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddDeclRef(SA->getFunctionDecl());
     break;
   }
@@ -493,7 +472,6 @@ Record.push_back(SA->getType());
     const auto *SA = cast<CodeSegAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -501,28 +479,30 @@ Record.push_back(SA->getType());
     const auto *SA = cast<ColdAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Common: {
     const auto *SA = cast<CommonAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Const: {
     const auto *SA = cast<ConstAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::ConstInit: {
+    const auto *SA = cast<ConstInitAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
     break;
   }
   case attr::Constructor: {
     const auto *SA = cast<ConstructorAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getPriority());
     break;
   }
@@ -530,7 +510,6 @@ Record.push_back(SA->getType());
     const auto *SA = cast<ConsumableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getDefaultState());
     break;
   }
@@ -538,56 +517,48 @@ Record.push_back(SA->getDefaultState());
     const auto *SA = cast<ConsumableAutoCastAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ConsumableSetOnRead: {
     const auto *SA = cast<ConsumableSetOnReadAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Convergent: {
     const auto *SA = cast<ConvergentAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::DLLExport: {
     const auto *SA = cast<DLLExportAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::DLLExportStaticLocal: {
     const auto *SA = cast<DLLExportStaticLocalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::DLLImport: {
     const auto *SA = cast<DLLImportAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::DLLImportStaticLocal: {
     const auto *SA = cast<DLLImportStaticLocalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Deprecated: {
     const auto *SA = cast<DeprecatedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getMessage());
     Record.AddString(SA->getReplacement());
     break;
@@ -596,7 +567,6 @@ Record.push_back(SA->getDefaultState());
     const auto *SA = cast<DestructorAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getPriority());
     break;
   }
@@ -604,7 +574,6 @@ Record.push_back(SA->getDefaultState());
     const auto *SA = cast<DiagnoseIfAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getCond());
     Record.AddString(SA->getMessage());
 Record.push_back(SA->getDiagnosticType());
@@ -616,21 +585,18 @@ Record.push_back(SA->getDiagnosticType());
     const auto *SA = cast<DisableTailCallsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::EmptyBases: {
     const auto *SA = cast<EmptyBasesAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::EnableIf: {
     const auto *SA = cast<EnableIfAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getCond());
     Record.AddString(SA->getMessage());
     break;
@@ -639,7 +605,6 @@ Record.push_back(SA->getDiagnosticType());
     const auto *SA = cast<EnumExtensibilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getExtensibility());
     break;
   }
@@ -647,14 +612,12 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<ExcludeFromExplicitInstantiationAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ExclusiveTrylockFunction: {
     const auto *SA = cast<ExclusiveTrylockFunctionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getSuccessValue());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
@@ -665,7 +628,6 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<ExternalSourceSymbolAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getLanguage());
     Record.AddString(SA->getDefinedIn());
     Record.push_back(SA->getGeneratedDeclaration());
@@ -673,42 +635,36 @@ Record.push_back(SA->getExtensibility());
   }
   case attr::FallThrough: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::FastCall: {
     const auto *SA = cast<FastCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Final: {
     const auto *SA = cast<FinalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::FlagEnum: {
     const auto *SA = cast<FlagEnumAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Flatten: {
     const auto *SA = cast<FlattenAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Format: {
     const auto *SA = cast<FormatAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getType());
     Record.push_back(SA->getFormatIdx());
     Record.push_back(SA->getFirstArg());
@@ -718,7 +674,6 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<FormatArgAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getFormatIdx().serialize());
     break;
   }
@@ -726,14 +681,12 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<GNUInlineAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::GuardedBy: {
     const auto *SA = cast<GuardedByAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getArg());
     break;
   }
@@ -741,49 +694,42 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<GuardedVarAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::HIPPinnedShadow: {
     const auto *SA = cast<HIPPinnedShadowAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Hot: {
     const auto *SA = cast<HotAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::IBAction: {
     const auto *SA = cast<IBActionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::IBOutlet: {
     const auto *SA = cast<IBOutletAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::IBOutletCollection: {
     const auto *SA = cast<IBOutletCollectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddTypeSourceInfo(SA->getInterfaceLoc());
     break;
   }
   case attr::IFunc: {
     const auto *SA = cast<IFuncAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getResolver());
     break;
   }
@@ -791,14 +737,12 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<InitPriorityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getPriority());
     break;
   }
   case attr::InitSeg: {
     const auto *SA = cast<InitSegAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getSection());
     break;
   }
@@ -806,28 +750,24 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<IntelOclBiccAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::InternalLinkage: {
     const auto *SA = cast<InternalLinkageAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::LTOVisibilityPublic: {
     const auto *SA = cast<LTOVisibilityPublicAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::LayoutVersion: {
     const auto *SA = cast<LayoutVersionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getVersion());
     break;
   }
@@ -835,14 +775,12 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<LifetimeBoundAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::LockReturned: {
     const auto *SA = cast<LockReturnedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getArg());
     break;
   }
@@ -850,7 +788,6 @@ Record.push_back(SA->getExtensibility());
     const auto *SA = cast<LocksExcludedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -859,7 +796,6 @@ Record.push_back(SA->getExtensibility());
   case attr::LoopHint: {
     const auto *SA = cast<LoopHintAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getOption());
 Record.push_back(SA->getState());
     Record.AddStmt(SA->getValue());
@@ -869,28 +805,24 @@ Record.push_back(SA->getState());
     const auto *SA = cast<MIGServerRoutineAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MSABI: {
     const auto *SA = cast<MSABIAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MSAllocator: {
     const auto *SA = cast<MSAllocatorAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MSInheritance: {
     const auto *SA = cast<MSInheritanceAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getBestCase());
     break;
   }
@@ -898,14 +830,12 @@ Record.push_back(SA->getState());
     const auto *SA = cast<MSNoVTableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MSP430Interrupt: {
     const auto *SA = cast<MSP430InterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getNumber());
     break;
   }
@@ -913,14 +843,12 @@ Record.push_back(SA->getState());
     const auto *SA = cast<MSStructAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MSVtorDisp: {
     const auto *SA = cast<MSVtorDispAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getVdm());
     break;
   }
@@ -928,7 +856,6 @@ Record.push_back(SA->getState());
     const auto *SA = cast<MaxFieldAlignmentAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getAlignment());
     break;
   }
@@ -936,28 +863,24 @@ Record.push_back(SA->getState());
     const auto *SA = cast<MayAliasAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MicroMips: {
     const auto *SA = cast<MicroMipsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MinSize: {
     const auto *SA = cast<MinSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MinVectorWidth: {
     const auto *SA = cast<MinVectorWidthAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getVectorWidth());
     break;
   }
@@ -965,14 +888,12 @@ Record.push_back(SA->getState());
     const auto *SA = cast<Mips16Attr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MipsInterrupt: {
     const auto *SA = cast<MipsInterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getInterrupt());
     break;
   }
@@ -980,20 +901,17 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<MipsLongCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::MipsShortCall: {
     const auto *SA = cast<MipsShortCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Mode: {
     const auto *SA = cast<ModeAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getMode());
     break;
   }
@@ -1001,129 +919,118 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<NSConsumedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NSConsumesSelf: {
     const auto *SA = cast<NSConsumesSelfAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NSReturnsAutoreleased: {
     const auto *SA = cast<NSReturnsAutoreleasedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NSReturnsNotRetained: {
     const auto *SA = cast<NSReturnsNotRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NSReturnsRetained: {
     const auto *SA = cast<NSReturnsRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Naked: {
     const auto *SA = cast<NakedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoAlias: {
     const auto *SA = cast<NoAliasAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::NoBuiltin: {
+    const auto *SA = cast<NoBuiltinAttr>(A);
+    Record.push_back(A->isImplicit());
+    Record.push_back(SA->builtinNames_size());
+    for (auto &Val : SA->builtinNames())
+      Record.AddString(Val);
     break;
   }
   case attr::NoCommon: {
     const auto *SA = cast<NoCommonAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoDebug: {
     const auto *SA = cast<NoDebugAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoDeref: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoDestroy: {
     const auto *SA = cast<NoDestroyAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoDuplicate: {
     const auto *SA = cast<NoDuplicateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoEscape: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoInline: {
     const auto *SA = cast<NoInlineAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoInstrumentFunction: {
     const auto *SA = cast<NoInstrumentFunctionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoMicroMips: {
     const auto *SA = cast<NoMicroMipsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoMips16: {
     const auto *SA = cast<NoMips16Attr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoReturn: {
     const auto *SA = cast<NoReturnAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoSanitize: {
     const auto *SA = cast<NoSanitizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->sanitizers_size());
     for (auto &Val : SA->sanitizers())
       Record.AddString(Val);
@@ -1133,49 +1040,42 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<NoSpeculativeLoadHardeningAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoSplitStack: {
     const auto *SA = cast<NoSplitStackAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoStackProtector: {
     const auto *SA = cast<NoStackProtectorAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoThreadSafetyAnalysis: {
     const auto *SA = cast<NoThreadSafetyAnalysisAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoThrow: {
     const auto *SA = cast<NoThrowAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NoUniqueAddress: {
     const auto *SA = cast<NoUniqueAddressAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::NonNull: {
     const auto *SA = cast<NonNullAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.push_back(Val.serialize());
@@ -1185,14 +1085,12 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<NotTailCalledAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OMPAllocateDecl: {
     const auto *SA = cast<OMPAllocateDeclAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getAllocatorType());
     Record.AddStmt(SA->getAllocator());
     break;
@@ -1200,7 +1098,6 @@ Record.push_back(SA->getAllocatorType());
   case attr::OMPCaptureKind: {
     const auto *SA = cast<OMPCaptureKindAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getCaptureKind());
     break;
   }
@@ -1208,13 +1105,11 @@ Record.push_back(SA->getAllocatorType());
     const auto *SA = cast<OMPCaptureNoInitAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OMPDeclareSimdDecl: {
     const auto *SA = cast<OMPDeclareSimdDeclAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getBranchState());
     Record.AddStmt(SA->getSimdlen());
     Record.push_back(SA->uniforms_size());
@@ -1241,14 +1136,35 @@ Record.push_back(SA->getBranchState());
     const auto *SA = cast<OMPDeclareTargetDeclAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getMapType());
+Record.push_back(SA->getDevType());
+    break;
+  }
+  case attr::OMPDeclareVariant: {
+    const auto *SA = cast<OMPDeclareVariantAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddStmt(SA->getVariantFuncRef());
+    Record.push_back(SA->scores_size());
+    for (auto &Val : SA->scores())
+      Record.AddStmt(Val);
+    Record.push_back(SA->ctxSelectorSets_size());
+    for (auto &Val : SA->ctxSelectorSets())
+      Record.push_back(Val);
+    Record.push_back(SA->ctxSelectors_size());
+    for (auto &Val : SA->ctxSelectors())
+      Record.push_back(Val);
+    Record.push_back(SA->implVendors_size());
+    for (auto &Val : SA->implVendors())
+      Record.AddString(Val);
+    Record.push_back(SA->deviceKinds_size());
+    for (auto &Val : SA->deviceKinds())
+      Record.AddString(Val);
     break;
   }
   case attr::OMPReferencedVar: {
     const auto *SA = cast<OMPReferencedVarAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getRef());
     break;
   }
@@ -1256,61 +1172,52 @@ Record.push_back(SA->getMapType());
     const auto *SA = cast<OMPThreadPrivateDeclAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSConsumed: {
     const auto *SA = cast<OSConsumedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSConsumesThis: {
     const auto *SA = cast<OSConsumesThisAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSReturnsNotRetained: {
     const auto *SA = cast<OSReturnsNotRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSReturnsRetained: {
     const auto *SA = cast<OSReturnsRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSReturnsRetainedOnNonZero: {
     const auto *SA = cast<OSReturnsRetainedOnNonZeroAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OSReturnsRetainedOnZero: {
     const auto *SA = cast<OSReturnsRetainedOnZeroAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCBoxable: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCBridge: {
     const auto *SA = cast<ObjCBridgeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getBridgedType());
     break;
   }
@@ -1318,7 +1225,6 @@ Record.push_back(SA->getMapType());
     const auto *SA = cast<ObjCBridgeMutableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getBridgedType());
     break;
   }
@@ -1326,7 +1232,6 @@ Record.push_back(SA->getMapType());
     const auto *SA = cast<ObjCBridgeRelatedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getRelatedClass());
     Record.AddIdentifierRef(SA->getClassMethod());
     Record.AddIdentifierRef(SA->getInstanceMethod());
@@ -1334,39 +1239,41 @@ Record.push_back(SA->getMapType());
   }
   case attr::ObjCClassStub: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCDesignatedInitializer: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::ObjCDirect: {
+    Record.push_back(A->isImplicit());
+    break;
+  }
+  case attr::ObjCDirectMembers: {
+    Record.push_back(A->isImplicit());
     break;
   }
   case attr::ObjCException: {
     const auto *SA = cast<ObjCExceptionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCExplicitProtocolImpl: {
     const auto *SA = cast<ObjCExplicitProtocolImplAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCExternallyRetained: {
     const auto *SA = cast<ObjCExternallyRetainedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCGC: {
     const auto *SA = cast<ObjCGCAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getKind());
     break;
   }
@@ -1374,24 +1281,20 @@ Record.push_back(SA->getMapType());
     const auto *SA = cast<ObjCIndependentClassAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCInertUnsafeUnretained: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCKindOf: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCMethodFamily: {
     const auto *SA = cast<ObjCMethodFamilyAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getFamily());
     break;
   }
@@ -1399,19 +1302,16 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<ObjCNSObjectAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCNonLazyClass: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCOwnership: {
     const auto *SA = cast<ObjCOwnershipAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getKind());
     break;
   }
@@ -1419,81 +1319,68 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<ObjCPreciseLifetimeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCRequiresPropertyDefs: {
     const auto *SA = cast<ObjCRequiresPropertyDefsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCRequiresSuper: {
     const auto *SA = cast<ObjCRequiresSuperAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCReturnsInnerPointer: {
     const auto *SA = cast<ObjCReturnsInnerPointerAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCRootClass: {
     const auto *SA = cast<ObjCRootClassAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCRuntimeName: {
     const auto *SA = cast<ObjCRuntimeNameAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getMetadataName());
     break;
   }
   case attr::ObjCRuntimeVisible: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ObjCSubclassingRestricted: {
     const auto *SA = cast<ObjCSubclassingRestrictedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLAccess: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLConstantAddressSpace: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLGenericAddressSpace: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLGlobalAddressSpace: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLIntelReqdSubGroupSize: {
     const auto *SA = cast<OpenCLIntelReqdSubGroupSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getSubGroupSize());
     break;
   }
@@ -1501,24 +1388,20 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<OpenCLKernelAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLLocalAddressSpace: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLPrivateAddressSpace: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::OpenCLUnrollHint: {
     const auto *SA = cast<OpenCLUnrollHintAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getUnrollHint());
     break;
   }
@@ -1526,26 +1409,22 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<OptimizeNoneAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Overloadable: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Override: {
     const auto *SA = cast<OverrideAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Owner: {
     const auto *SA = cast<OwnerAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddTypeSourceInfo(SA->getDerefTypeLoc());
     break;
   }
@@ -1553,7 +1432,6 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<OwnershipAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getModule());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
@@ -1564,14 +1442,12 @@ Record.push_back(SA->getFamily());
     const auto *SA = cast<PackedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ParamTypestate: {
     const auto *SA = cast<ParamTypestateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getParamState());
     break;
   }
@@ -1579,22 +1455,27 @@ Record.push_back(SA->getParamState());
     const auto *SA = cast<PascalAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::PassObjectSize: {
     const auto *SA = cast<PassObjectSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getType());
+    break;
+  }
+  case attr::PatchableFunctionEntry: {
+    const auto *SA = cast<PatchableFunctionEntryAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(SA->getCount());
+    Record.push_back(SA->getOffset());
     break;
   }
   case attr::Pcs: {
     const auto *SA = cast<PcsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getPCS());
     break;
   }
@@ -1602,7 +1483,6 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PointerAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddTypeSourceInfo(SA->getDerefTypeLoc());
     break;
   }
@@ -1610,7 +1490,6 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PragmaClangBSSSectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -1618,7 +1497,13 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PragmaClangDataSectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    Record.AddString(SA->getName());
+    break;
+  }
+  case attr::PragmaClangRelroSection: {
+    const auto *SA = cast<PragmaClangRelroSectionAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
     Record.AddString(SA->getName());
     break;
   }
@@ -1626,7 +1511,6 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PragmaClangRodataSectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -1634,7 +1518,6 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PragmaClangTextSectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -1642,21 +1525,18 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PreserveAllAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::PreserveMost: {
     const auto *SA = cast<PreserveMostAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::PtGuardedBy: {
     const auto *SA = cast<PtGuardedByAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getArg());
     break;
   }
@@ -1664,31 +1544,26 @@ Record.push_back(SA->getPCS());
     const auto *SA = cast<PtGuardedVarAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Ptr32: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Ptr64: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Pure: {
     const auto *SA = cast<PureAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::RISCVInterrupt: {
     const auto *SA = cast<RISCVInterruptAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getInterrupt());
     break;
   }
@@ -1696,53 +1571,47 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<RegCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Reinitializes: {
     const auto *SA = cast<ReinitializesAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ReleaseCapability: {
     const auto *SA = cast<ReleaseCapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
     break;
   }
+  case attr::ReleaseHandle: {
+    const auto *SA = cast<ReleaseHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
+    break;
+  }
   case attr::RenderScriptKernel: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ReqdWorkGroupSize: {
     const auto *SA = cast<ReqdWorkGroupSizeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getXDim());
     Record.push_back(SA->getYDim());
     Record.push_back(SA->getZDim());
-    break;
-  }
-  case attr::RequireConstantInit: {
-    const auto *SA = cast<RequireConstantInitAttr>(A);
-    Record.push_back(SA->isInherited());
-    Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::RequiresCapability: {
     const auto *SA = cast<RequiresCapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
       Record.AddStmt(Val);
@@ -1752,14 +1621,12 @@ Record.push_back(SA->getInterrupt());
     const auto *SA = cast<RestrictAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ReturnTypestate: {
     const auto *SA = cast<ReturnTypestateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getState());
     break;
   }
@@ -1767,33 +1634,34 @@ Record.push_back(SA->getState());
     const auto *SA = cast<ReturnsNonNullAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::ReturnsTwice: {
     const auto *SA = cast<ReturnsTwiceAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::SPtr: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::SYCLKernel: {
+    const auto *SA = cast<SYCLKernelAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
     break;
   }
   case attr::ScopedLockable: {
     const auto *SA = cast<ScopedLockableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Section: {
     const auto *SA = cast<SectionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getName());
     break;
   }
@@ -1801,14 +1669,12 @@ Record.push_back(SA->getState());
     const auto *SA = cast<SelectAnyAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Sentinel: {
     const auto *SA = cast<SentinelAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getSentinel());
     Record.push_back(SA->getNullPos());
     break;
@@ -1817,7 +1683,6 @@ Record.push_back(SA->getState());
     const auto *SA = cast<SetTypestateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getNewState());
     break;
   }
@@ -1825,7 +1690,6 @@ Record.push_back(SA->getNewState());
     const auto *SA = cast<SharedTrylockFunctionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getSuccessValue());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
@@ -1836,20 +1700,17 @@ Record.push_back(SA->getNewState());
     const auto *SA = cast<SpeculativeLoadHardeningAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::StdCall: {
     const auto *SA = cast<StdCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Suppress: {
     const auto *SA = cast<SuppressAttr>(A);
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->diagnosticIdentifiers_size());
     for (auto &Val : SA->diagnosticIdentifiers())
       Record.AddString(Val);
@@ -1859,42 +1720,36 @@ Record.push_back(SA->getNewState());
     const auto *SA = cast<SwiftCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::SwiftContext: {
     const auto *SA = cast<SwiftContextAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::SwiftErrorResult: {
     const auto *SA = cast<SwiftErrorResultAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::SwiftIndirectResult: {
     const auto *SA = cast<SwiftIndirectResultAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::SysVABI: {
     const auto *SA = cast<SysVABIAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TLSModel: {
     const auto *SA = cast<TLSModelAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getModel());
     break;
   }
@@ -1902,7 +1757,6 @@ Record.push_back(SA->getNewState());
     const auto *SA = cast<TargetAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getFeaturesStr());
     break;
   }
@@ -1910,7 +1764,6 @@ Record.push_back(SA->getNewState());
     const auto *SA = cast<TestTypestateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getTestState());
     break;
   }
@@ -1918,33 +1771,28 @@ Record.push_back(SA->getTestState());
     const auto *SA = cast<ThisCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Thread: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TransparentUnion: {
     const auto *SA = cast<TransparentUnionAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TrivialABI: {
     const auto *SA = cast<TrivialABIAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TryAcquireCapability: {
     const auto *SA = cast<TryAcquireCapabilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddStmt(SA->getSuccessValue());
     Record.push_back(SA->args_size());
     for (auto &Val : SA->args())
@@ -1953,24 +1801,20 @@ Record.push_back(SA->getTestState());
   }
   case attr::TypeNonNull: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TypeNullUnspecified: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TypeNullable: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::TypeTagForDatatype: {
     const auto *SA = cast<TypeTagForDatatypeAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddIdentifierRef(SA->getArgumentKind());
     Record.AddTypeSourceInfo(SA->getMatchingCTypeLoc());
     Record.push_back(SA->getLayoutCompatible());
@@ -1981,20 +1825,17 @@ Record.push_back(SA->getTestState());
     const auto *SA = cast<TypeVisibilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getVisibility());
     break;
   }
   case attr::UPtr: {
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Unavailable: {
     const auto *SA = cast<UnavailableAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getMessage());
 Record.push_back(SA->getImplicitReason());
     break;
@@ -2003,28 +1844,31 @@ Record.push_back(SA->getImplicitReason());
     const auto *SA = cast<UninitializedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Unused: {
     const auto *SA = cast<UnusedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
+    break;
+  }
+  case attr::UseHandle: {
+    const auto *SA = cast<UseHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
     break;
   }
   case attr::Used: {
     const auto *SA = cast<UsedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Uuid: {
     const auto *SA = cast<UuidAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getGuid());
     break;
   }
@@ -2032,14 +1876,12 @@ Record.push_back(SA->getImplicitReason());
     const auto *SA = cast<VecReturnAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::VecTypeHint: {
     const auto *SA = cast<VecTypeHintAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddTypeSourceInfo(SA->getTypeHintLoc());
     break;
   }
@@ -2047,14 +1889,12 @@ Record.push_back(SA->getImplicitReason());
     const auto *SA = cast<VectorCallAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::Visibility: {
     const auto *SA = cast<VisibilityAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
 Record.push_back(SA->getVisibility());
     break;
   }
@@ -2062,14 +1902,12 @@ Record.push_back(SA->getVisibility());
     const auto *SA = cast<WarnUnusedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::WarnUnusedResult: {
     const auto *SA = cast<WarnUnusedResultAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getMessage());
     break;
   }
@@ -2077,29 +1915,32 @@ Record.push_back(SA->getVisibility());
     const auto *SA = cast<WeakAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::WeakImport: {
     const auto *SA = cast<WeakImportAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::WeakRef: {
     const auto *SA = cast<WeakRefAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getAliasee());
+    break;
+  }
+  case attr::WebAssemblyExportName: {
+    const auto *SA = cast<WebAssemblyExportNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getExportName());
     break;
   }
   case attr::WebAssemblyImportModule: {
     const auto *SA = cast<WebAssemblyImportModuleAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getImportModule());
     break;
   }
@@ -2107,7 +1948,6 @@ Record.push_back(SA->getVisibility());
     const auto *SA = cast<WebAssemblyImportNameAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.AddString(SA->getImportName());
     break;
   }
@@ -2115,7 +1955,6 @@ Record.push_back(SA->getVisibility());
     const auto *SA = cast<WorkGroupSizeHintAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getXDim());
     Record.push_back(SA->getYDim());
     Record.push_back(SA->getZDim());
@@ -2125,21 +1964,18 @@ Record.push_back(SA->getVisibility());
     const auto *SA = cast<X86ForceAlignArgPointerAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::XRayInstrument: {
     const auto *SA = cast<XRayInstrumentAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     break;
   }
   case attr::XRayLogArgs: {
     const auto *SA = cast<XRayLogArgsAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
-    Record.push_back(A->getSpellingListIndex());
     Record.push_back(SA->getArgumentCount());
     break;
   }

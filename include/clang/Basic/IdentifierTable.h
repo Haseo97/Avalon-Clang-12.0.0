@@ -384,6 +384,17 @@ public:
     return getName().startswith("<#") && getName().endswith("#>");
   }
 
+  /// Determine whether \p this is a name reserved for the implementation (C99
+  /// 7.1.3, C++ [lib.global.names]).
+  bool isReservedName(bool doubleUnderscoreOnly = false) const {
+    if (getLength() < 2)
+      return false;
+    const char *Name = getNameStart();
+    return Name[0] == '_' &&
+           (Name[1] == '_' ||
+            (Name[1] >= 'A' && Name[1] <= 'Z' && !doubleUnderscoreOnly));
+  }
+
   /// Provide less than operator for lexicographical sorting.
   bool operator<(const IdentifierInfo &RHS) const {
     return getName() < RHS.getName();
@@ -581,6 +592,8 @@ public:
   iterator end() const   { return HashTable.end(); }
   unsigned size() const  { return HashTable.size(); }
 
+  iterator find(StringRef Name) const { return HashTable.find(Name); }
+
   /// Print some statistics to stderr that indicate how well the
   /// hashing is doing.
   void PrintStats() const;
@@ -749,6 +762,12 @@ public:
   bool isUnarySelector() const {
     return getIdentifierInfoFlag() == ZeroArg;
   }
+
+  /// If this selector is the specific keyword selector described by Names.
+  bool isKeywordSelector(ArrayRef<StringRef> Names) const;
+
+  /// If this selector is the specific unary selector described by Name.
+  bool isUnarySelector(StringRef Name) const;
 
   unsigned getNumArgs() const;
 
@@ -948,7 +967,7 @@ struct PointerLikeTypeTraits<clang::Selector> {
     return clang::Selector(reinterpret_cast<uintptr_t>(P));
   }
 
-  enum { NumLowBitsAvailable = 0 };
+  static constexpr int NumLowBitsAvailable = 0;
 };
 
 // Provide PointerLikeTypeTraits for IdentifierInfo pointers, which
@@ -963,7 +982,7 @@ struct PointerLikeTypeTraits<clang::IdentifierInfo*> {
     return static_cast<clang::IdentifierInfo*>(P);
   }
 
-  enum { NumLowBitsAvailable = 1 };
+  static constexpr int NumLowBitsAvailable = 1;
 };
 
 template<>
@@ -976,7 +995,7 @@ struct PointerLikeTypeTraits<const clang::IdentifierInfo*> {
     return static_cast<const clang::IdentifierInfo*>(P);
   }
 
-  enum { NumLowBitsAvailable = 1 };
+  static constexpr int NumLowBitsAvailable = 1;
 };
 
 } // namespace llvm

@@ -500,6 +500,11 @@ struct NoInfsFPMathAttr : StrBoolAttr {
     return "no-infs-fp-math";
   }
 };
+struct NoInlineLineTablesAttr : StrBoolAttr {
+  static StringRef getKind() {
+    return "no-inline-line-tables";
+  }
+};
 struct NoJumpTablesAttr : StrBoolAttr {
   static StringRef getKind() {
     return "no-jump-tables";

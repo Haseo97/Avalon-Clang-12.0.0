@@ -31,6 +31,7 @@
 #ifndef LLVM_ANALYSIS_INSTRUCTIONSIMPLIFY_H
 #define LLVM_ANALYSIS_INSTRUCTIONSIMPLIFY_H
 
+#include "llvm/ADT/SetVector.h"
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/Operator.h"
 #include "llvm/IR/User.h"
@@ -140,6 +141,13 @@ Value *SimplifyFSubInst(Value *LHS, Value *RHS, FastMathFlags FMF,
 /// Given operands for an FMul, fold the result or return null.
 Value *SimplifyFMulInst(Value *LHS, Value *RHS, FastMathFlags FMF,
                         const SimplifyQuery &Q);
+
+/// Given operands for the multiplication of a FMA, fold the result or return
+/// null. In contrast to SimplifyFMulInst, this function will not perform
+/// simplifications whose unrounded results differ when rounded to the argument
+/// type.
+Value *SimplifyFMAFMul(Value *LHS, Value *RHS, FastMathFlags FMF,
+                       const SimplifyQuery &Q);
 
 /// Given operands for a Mul, fold the result or return null.
 Value *SimplifyMulInst(Value *LHS, Value *RHS, const SimplifyQuery &Q);
@@ -251,6 +259,10 @@ Value *SimplifyBinOp(unsigned Opcode, Value *LHS, Value *RHS,
 /// Given a callsite, fold the result or return null.
 Value *SimplifyCall(CallBase *Call, const SimplifyQuery &Q);
 
+/// Given an operand for a Freeze, see if we can fold the result.
+/// If not, this returns null.
+Value *SimplifyFreezeInst(Value *Op, const SimplifyQuery &Q);
+
 /// See if we can compute a simplified version of this instruction. If not,
 /// return null.
 Value *SimplifyInstruction(Instruction *I, const SimplifyQuery &Q,
@@ -261,12 +273,14 @@ Value *SimplifyInstruction(Instruction *I, const SimplifyQuery &Q,
 /// This first performs a normal RAUW of I with SimpleV. It then recursively
 /// attempts to simplify those users updated by the operation. The 'I'
 /// instruction must not be equal to the simplified value 'SimpleV'.
+/// If UnsimplifiedUsers is provided, instructions that could not be simplified
+/// are added to it.
 ///
 /// The function returns true if any simplifications were performed.
-bool replaceAndRecursivelySimplify(Instruction *I, Value *SimpleV,
-                                   const TargetLibraryInfo *TLI = nullptr,
-                                   const DominatorTree *DT = nullptr,
-                                   AssumptionCache *AC = nullptr);
+bool replaceAndRecursivelySimplify(
+    Instruction *I, Value *SimpleV, const TargetLibraryInfo *TLI = nullptr,
+    const DominatorTree *DT = nullptr, AssumptionCache *AC = nullptr,
+    SmallSetVector<Instruction *, 8> *UnsimplifiedUsers = nullptr);
 
 /// Recursively attempt to simplify an instruction.
 ///

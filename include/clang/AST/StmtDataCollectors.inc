@@ -118,7 +118,7 @@ DEF_ADD_DATA(FloatingLiteral, {
 )
 DEF_ADD_DATA(GenericSelectionExpr, {
 
-    for (const GenericSelectionExpr::ConstAssociation &Assoc : S->associations()) {
+    for (const GenericSelectionExpr::ConstAssociation Assoc : S->associations()) {
       addData(Assoc.getType());
     }
   }

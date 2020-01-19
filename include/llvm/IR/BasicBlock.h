@@ -133,6 +133,15 @@ public:
          static_cast<const BasicBlock *>(this)->getTerminatingDeoptimizeCall());
   }
 
+  /// Returns the call instruction calling \@llvm.experimental.deoptimize
+  /// that is present either in current basic block or in block that is a unique
+  /// successor to current block, if such call is present. Otherwise, returns null.
+  const CallInst *getPostdominatingDeoptimizeCall() const;
+  CallInst *getPostdominatingDeoptimizeCall() {
+    return const_cast<CallInst *>(
+         static_cast<const BasicBlock *>(this)->getPostdominatingDeoptimizeCall());
+  }
+
   /// Returns the call instruction marked 'musttail' prior to the terminating
   /// return instruction of this basic block, if such a call is present.
   /// Otherwise, returns null.
@@ -191,6 +200,11 @@ public:
   iterator_range<filter_iterator<BasicBlock::iterator,
                                  std::function<bool(Instruction &)>>>
   instructionsWithoutDebug();
+
+  /// Return the size of the basic block ignoring debug instructions
+  filter_iterator<BasicBlock::const_iterator,
+                  std::function<bool(const Instruction &)>>::difference_type
+  sizeWithoutDebug() const;
 
   /// Unlink 'this' from the containing function, but do not delete it.
   void removeFromParent();

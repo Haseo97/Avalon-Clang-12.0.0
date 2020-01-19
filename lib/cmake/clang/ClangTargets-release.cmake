@@ -235,6 +235,16 @@ set_target_properties(clangDependencyScanning PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clangDependencyScanning )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clangDependencyScanning "${_IMPORT_PREFIX}/lib/libclangDependencyScanning.a" )
 
+# Import target "clangTransformer" for configuration "Release"
+set_property(TARGET clangTransformer APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clangTransformer PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTransformer.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clangTransformer )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clangTransformer "${_IMPORT_PREFIX}/lib/libclangTransformer.a" )
+
 # Import target "clangTooling" for configuration "Release"
 set_property(TARGET clangTooling APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clangTooling PROPERTIES
@@ -278,11 +288,11 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_clangFormat "${_IMPORT_PREFIX}/lib/libclangF
 # Import target "clang" for configuration "Release"
 set_property(TARGET clang APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-10"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-11"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS clang )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang "${_IMPORT_PREFIX}/bin/clang-10" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang "${_IMPORT_PREFIX}/bin/clang-11" )
 
 # Import target "clang-format" for configuration "Release"
 set_property(TARGET clang-format APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
@@ -322,6 +332,24 @@ set_target_properties(clang-import-test PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clang-import-test )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clang-import-test "${_IMPORT_PREFIX}/bin/clang-import-test" )
 
+# Import target "clang-offload-bundler" for configuration "Release"
+set_property(TARGET clang-offload-bundler APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-offload-bundler PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-offload-bundler"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-offload-bundler )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-offload-bundler "${_IMPORT_PREFIX}/bin/clang-offload-bundler" )
+
+# Import target "clang-offload-wrapper" for configuration "Release"
+set_property(TARGET clang-offload-wrapper APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-offload-wrapper PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-offload-wrapper"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-offload-wrapper )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-offload-wrapper "${_IMPORT_PREFIX}/bin/clang-offload-wrapper" )
+
 # Import target "clang-scan-deps" for configuration "Release"
 set_property(TARGET clang-scan-deps APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang-scan-deps PROPERTIES
@@ -352,415 +380,22 @@ list(APPEND _IMPORT_CHECK_FILES_FOR_clang-refactor "${_IMPORT_PREFIX}/bin/clang-
 # Import target "clang-cpp" for configuration "Release"
 set_property(TARGET clang-cpp APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang-cpp PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10svn"
-  IMPORTED_SONAME_RELEASE "libclang-cpp.so.10svn"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang-cpp.so.11git"
+  IMPORTED_SONAME_RELEASE "libclang-cpp.so.11git"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS clang-cpp )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-cpp "${_IMPORT_PREFIX}/lib/libclang-cpp.so.10svn" )
-
-# Import target "clangApplyReplacements" for configuration "Release"
-set_property(TARGET clangApplyReplacements APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangApplyReplacements PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangApplyReplacements.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangApplyReplacements )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangApplyReplacements "${_IMPORT_PREFIX}/lib/libclangApplyReplacements.a" )
-
-# Import target "clang-apply-replacements" for configuration "Release"
-set_property(TARGET clang-apply-replacements APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clang-apply-replacements PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-apply-replacements"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clang-apply-replacements )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-apply-replacements "${_IMPORT_PREFIX}/bin/clang-apply-replacements" )
-
-# Import target "clangReorderFields" for configuration "Release"
-set_property(TARGET clangReorderFields APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangReorderFields PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangReorderFields.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangReorderFields )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangReorderFields "${_IMPORT_PREFIX}/lib/libclangReorderFields.a" )
-
-# Import target "clang-reorder-fields" for configuration "Release"
-set_property(TARGET clang-reorder-fields APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clang-reorder-fields PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-reorder-fields"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clang-reorder-fields )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-reorder-fields "${_IMPORT_PREFIX}/bin/clang-reorder-fields" )
-
-# Import target "modularize" for configuration "Release"
-set_property(TARGET modularize APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(modularize PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/modularize"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS modularize )
-list(APPEND _IMPORT_CHECK_FILES_FOR_modularize "${_IMPORT_PREFIX}/bin/modularize" )
-
-# Import target "clangTidy" for configuration "Release"
-set_property(TARGET clangTidy APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidy PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidy.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidy )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidy "${_IMPORT_PREFIX}/lib/libclangTidy.a" )
-
-# Import target "clangTidyAndroidModule" for configuration "Release"
-set_property(TARGET clangTidyAndroidModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyAndroidModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyAndroidModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyAndroidModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyAndroidModule "${_IMPORT_PREFIX}/lib/libclangTidyAndroidModule.a" )
-
-# Import target "clangTidyAbseilModule" for configuration "Release"
-set_property(TARGET clangTidyAbseilModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyAbseilModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyAbseilModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyAbseilModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyAbseilModule "${_IMPORT_PREFIX}/lib/libclangTidyAbseilModule.a" )
-
-# Import target "clangTidyBoostModule" for configuration "Release"
-set_property(TARGET clangTidyBoostModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyBoostModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyBoostModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyBoostModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyBoostModule "${_IMPORT_PREFIX}/lib/libclangTidyBoostModule.a" )
-
-# Import target "clangTidyBugproneModule" for configuration "Release"
-set_property(TARGET clangTidyBugproneModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyBugproneModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyBugproneModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyBugproneModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyBugproneModule "${_IMPORT_PREFIX}/lib/libclangTidyBugproneModule.a" )
-
-# Import target "clangTidyCERTModule" for configuration "Release"
-set_property(TARGET clangTidyCERTModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyCERTModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyCERTModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyCERTModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyCERTModule "${_IMPORT_PREFIX}/lib/libclangTidyCERTModule.a" )
-
-# Import target "clangTidyCppCoreGuidelinesModule" for configuration "Release"
-set_property(TARGET clangTidyCppCoreGuidelinesModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyCppCoreGuidelinesModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyCppCoreGuidelinesModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyCppCoreGuidelinesModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyCppCoreGuidelinesModule "${_IMPORT_PREFIX}/lib/libclangTidyCppCoreGuidelinesModule.a" )
-
-# Import target "clangTidyFuchsiaModule" for configuration "Release"
-set_property(TARGET clangTidyFuchsiaModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyFuchsiaModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyFuchsiaModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyFuchsiaModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyFuchsiaModule "${_IMPORT_PREFIX}/lib/libclangTidyFuchsiaModule.a" )
-
-# Import target "clangTidyGoogleModule" for configuration "Release"
-set_property(TARGET clangTidyGoogleModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyGoogleModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyGoogleModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyGoogleModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyGoogleModule "${_IMPORT_PREFIX}/lib/libclangTidyGoogleModule.a" )
-
-# Import target "clangTidyHICPPModule" for configuration "Release"
-set_property(TARGET clangTidyHICPPModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyHICPPModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyHICPPModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyHICPPModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyHICPPModule "${_IMPORT_PREFIX}/lib/libclangTidyHICPPModule.a" )
-
-# Import target "clangTidyLinuxKernelModule" for configuration "Release"
-set_property(TARGET clangTidyLinuxKernelModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyLinuxKernelModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyLinuxKernelModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyLinuxKernelModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyLinuxKernelModule "${_IMPORT_PREFIX}/lib/libclangTidyLinuxKernelModule.a" )
-
-# Import target "clangTidyLLVMModule" for configuration "Release"
-set_property(TARGET clangTidyLLVMModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyLLVMModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyLLVMModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyLLVMModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyLLVMModule "${_IMPORT_PREFIX}/lib/libclangTidyLLVMModule.a" )
-
-# Import target "clangTidyMiscModule" for configuration "Release"
-set_property(TARGET clangTidyMiscModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyMiscModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyMiscModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyMiscModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyMiscModule "${_IMPORT_PREFIX}/lib/libclangTidyMiscModule.a" )
-
-# Import target "clangTidyModernizeModule" for configuration "Release"
-set_property(TARGET clangTidyModernizeModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyModernizeModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyModernizeModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyModernizeModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyModernizeModule "${_IMPORT_PREFIX}/lib/libclangTidyModernizeModule.a" )
-
-# Import target "clangTidyObjCModule" for configuration "Release"
-set_property(TARGET clangTidyObjCModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyObjCModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyObjCModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyObjCModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyObjCModule "${_IMPORT_PREFIX}/lib/libclangTidyObjCModule.a" )
-
-# Import target "clangTidyOpenMPModule" for configuration "Release"
-set_property(TARGET clangTidyOpenMPModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyOpenMPModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyOpenMPModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyOpenMPModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyOpenMPModule "${_IMPORT_PREFIX}/lib/libclangTidyOpenMPModule.a" )
-
-# Import target "clangTidyPerformanceModule" for configuration "Release"
-set_property(TARGET clangTidyPerformanceModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyPerformanceModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyPerformanceModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyPerformanceModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPerformanceModule "${_IMPORT_PREFIX}/lib/libclangTidyPerformanceModule.a" )
-
-# Import target "clangTidyPlugin" for configuration "Release"
-set_property(TARGET clangTidyPlugin APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyPlugin PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyPlugin )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPlugin "${_IMPORT_PREFIX}/lib/libclangTidyPlugin.a" )
-
-# Import target "clangTidyPortabilityModule" for configuration "Release"
-set_property(TARGET clangTidyPortabilityModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyPortabilityModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyPortabilityModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyPortabilityModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyPortabilityModule "${_IMPORT_PREFIX}/lib/libclangTidyPortabilityModule.a" )
-
-# Import target "clangTidyReadabilityModule" for configuration "Release"
-set_property(TARGET clangTidyReadabilityModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyReadabilityModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyReadabilityModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyReadabilityModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyReadabilityModule "${_IMPORT_PREFIX}/lib/libclangTidyReadabilityModule.a" )
-
-# Import target "clang-tidy" for configuration "Release"
-set_property(TARGET clang-tidy APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clang-tidy PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-tidy"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clang-tidy )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-tidy "${_IMPORT_PREFIX}/bin/clang-tidy" )
-
-# Import target "clangTidyUtils" for configuration "Release"
-set_property(TARGET clangTidyUtils APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyUtils PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyUtils.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyUtils )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyUtils "${_IMPORT_PREFIX}/lib/libclangTidyUtils.a" )
-
-# Import target "clangTidyZirconModule" for configuration "Release"
-set_property(TARGET clangTidyZirconModule APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangTidyZirconModule PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangTidyZirconModule )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangTidyZirconModule "${_IMPORT_PREFIX}/lib/libclangTidyZirconModule.a" )
-
-# Import target "clangChangeNamespace" for configuration "Release"
-set_property(TARGET clangChangeNamespace APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangChangeNamespace PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangChangeNamespace.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangChangeNamespace )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangChangeNamespace "${_IMPORT_PREFIX}/lib/libclangChangeNamespace.a" )
-
-# Import target "clangDoc" for configuration "Release"
-set_property(TARGET clangDoc APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangDoc PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangDoc.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangDoc )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangDoc "${_IMPORT_PREFIX}/lib/libclangDoc.a" )
-
-# Import target "clang-doc" for configuration "Release"
-set_property(TARGET clang-doc APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clang-doc PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-doc"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clang-doc )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-doc "${_IMPORT_PREFIX}/bin/clang-doc" )
-
-# Import target "clangIncludeFixer" for configuration "Release"
-set_property(TARGET clangIncludeFixer APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangIncludeFixer PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangIncludeFixer.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangIncludeFixer )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangIncludeFixer "${_IMPORT_PREFIX}/lib/libclangIncludeFixer.a" )
-
-# Import target "clangIncludeFixerPlugin" for configuration "Release"
-set_property(TARGET clangIncludeFixerPlugin APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangIncludeFixerPlugin PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangIncludeFixerPlugin.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangIncludeFixerPlugin )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangIncludeFixerPlugin "${_IMPORT_PREFIX}/lib/libclangIncludeFixerPlugin.a" )
-
-# Import target "clang-include-fixer" for configuration "Release"
-set_property(TARGET clang-include-fixer APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clang-include-fixer PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-include-fixer"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clang-include-fixer )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clang-include-fixer "${_IMPORT_PREFIX}/bin/clang-include-fixer" )
-
-# Import target "findAllSymbols" for configuration "Release"
-set_property(TARGET findAllSymbols APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(findAllSymbols PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libfindAllSymbols.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS findAllSymbols )
-list(APPEND _IMPORT_CHECK_FILES_FOR_findAllSymbols "${_IMPORT_PREFIX}/lib/libfindAllSymbols.a" )
-
-# Import target "clangMove" for configuration "Release"
-set_property(TARGET clangMove APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangMove PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangMove.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangMove )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangMove "${_IMPORT_PREFIX}/lib/libclangMove.a" )
-
-# Import target "clangQuery" for configuration "Release"
-set_property(TARGET clangQuery APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangQuery PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangQuery.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangQuery )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangQuery "${_IMPORT_PREFIX}/lib/libclangQuery.a" )
-
-# Import target "clangDaemon" for configuration "Release"
-set_property(TARGET clangDaemon APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangDaemon PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangDaemon.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangDaemon )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangDaemon "${_IMPORT_PREFIX}/lib/libclangDaemon.a" )
-
-# Import target "clangDaemonTweaks" for configuration "Release"
-set_property(TARGET clangDaemonTweaks APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangDaemonTweaks PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclangDaemonTweaks.a"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangDaemonTweaks )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangDaemonTweaks "${_IMPORT_PREFIX}/lib/libclangDaemonTweaks.a" )
-
-# Import target "clangd" for configuration "Release"
-set_property(TARGET clangd APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(clangd PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clangd"
-  )
-
-list(APPEND _IMPORT_CHECK_TARGETS clangd )
-list(APPEND _IMPORT_CHECK_FILES_FOR_clangd "${_IMPORT_PREFIX}/bin/clangd" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-cpp "${_IMPORT_PREFIX}/lib/libclang-cpp.so.11git" )
 
 # Import target "libclang" for configuration "Release"
 set_property(TARGET libclang APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(libclang PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang.so.10"
-  IMPORTED_SONAME_RELEASE "libclang.so.10svn"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libclang.so.11"
+  IMPORTED_SONAME_RELEASE "libclang.so.11git"
   )
 
 list(APPEND _IMPORT_CHECK_TARGETS libclang )
-list(APPEND _IMPORT_CHECK_FILES_FOR_libclang "${_IMPORT_PREFIX}/lib/libclang.so.10" )
+list(APPEND _IMPORT_CHECK_FILES_FOR_libclang "${_IMPORT_PREFIX}/lib/libclang.so.11" )
 
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

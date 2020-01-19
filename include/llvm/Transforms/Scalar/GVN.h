@@ -61,13 +61,50 @@ class GVNLegacyPass;
 
 } // end namespace gvn
 
+/// A set of parameters to control various transforms performed by GVN pass.
+//  Each of the optional boolean parameters can be set to:
+///      true - enabling the transformation.
+///      false - disabling the transformation.
+///      None - relying on a global default.
+/// Intended use is to create a default object, modify parameters with
+/// additional setters and then pass it to GVN.
+struct GVNOptions {
+  Optional<bool> AllowPRE = None;
+  Optional<bool> AllowLoadPRE = None;
+  Optional<bool> AllowMemDep = None;
+
+  GVNOptions() = default;
+
+  /// Enables or disables PRE in GVN.
+  GVNOptions &setPRE(bool PRE) {
+    AllowPRE = PRE;
+    return *this;
+  }
+
+  /// Enables or disables PRE of loads in GVN.
+  GVNOptions &setLoadPRE(bool LoadPRE) {
+    AllowLoadPRE = LoadPRE;
+    return *this;
+  }
+
+  /// Enables or disables use of MemDepAnalysis.
+  GVNOptions &setMemDep(bool MemDep) {
+    AllowMemDep = MemDep;
+    return *this;
+  }
+};
+
 /// The core GVN pass object.
 ///
 /// FIXME: We should have a good summary of the GVN algorithm implemented by
 /// this particular pass here.
 class GVN : public PassInfoMixin<GVN> {
+  GVNOptions Options;
+
 public:
   struct Expression;
+
+  GVN(GVNOptions Options = {}) : Options(Options) {}
 
   /// Run the pass over the function.
   PreservedAnalyses run(Function &F, FunctionAnalysisManager &AM);
@@ -83,6 +120,10 @@ public:
   AliasAnalysis *getAliasAnalysis() const { return VN.getAliasAnalysis(); }
   MemoryDependenceResults &getMemDep() const { return *MD; }
 
+  bool isPREEnabled() const;
+  bool isLoadPREEnabled() const;
+  bool isMemDepEnabled() const;
+
   /// This class holds the mapping between values and value numbers.  It is used
   /// as an efficient mechanism to determine the expression-wise equivalence of
   /// two values.
@@ -94,7 +135,7 @@ public:
     // value number to the index of Expression in Expressions. We use it
     // instead of a DenseMap because filling such mapping is faster than
     // filling a DenseMap and the compile time is a little better.
-    uint32_t nextExprNumber;
+    uint32_t nextExprNumber = 0;
 
     std::vector<Expression> Expressions;
     std::vector<uint32_t> ExprIdx;
@@ -107,9 +148,9 @@ public:
         DenseMap<std::pair<uint32_t, const BasicBlock *>, uint32_t>;
     PhiTranslateMap PhiTranslateTable;
 
-    AliasAnalysis *AA;
-    MemoryDependenceResults *MD;
-    DominatorTree *DT;
+    AliasAnalysis *AA = nullptr;
+    MemoryDependenceResults *MD = nullptr;
+    DominatorTree *DT = nullptr;
 
     uint32_t nextValueNumber = 1;
 
@@ -120,6 +161,8 @@ public:
     uint32_t lookupOrAddCall(CallInst *C);
     uint32_t phiTranslateImpl(const BasicBlock *BB, const BasicBlock *PhiBlock,
                               uint32_t Num, GVN &Gvn);
+    bool areCallValsEqual(uint32_t Num, uint32_t NewNum, const BasicBlock *Pred,
+                          const BasicBlock *PhiBlock, GVN &Gvn);
     std::pair<uint32_t, bool> assignExpNewValueNum(Expression &exp);
     bool areAllValsInBB(uint32_t num, const BasicBlock *BB, GVN &Gvn);
 
@@ -128,6 +171,7 @@ public:
     ValueTable(const ValueTable &Arg);
     ValueTable(ValueTable &&Arg);
     ~ValueTable();
+    ValueTable &operator=(const ValueTable &Arg);
 
     uint32_t lookupOrAdd(Value *V);
     uint32_t lookup(Value *V, bool Verify = true) const;
@@ -152,13 +196,14 @@ private:
   friend class gvn::GVNLegacyPass;
   friend struct DenseMapInfo<Expression>;
 
-  MemoryDependenceResults *MD;
-  DominatorTree *DT;
-  const TargetLibraryInfo *TLI;
-  AssumptionCache *AC;
+  MemoryDependenceResults *MD = nullptr;
+  DominatorTree *DT = nullptr;
+  const TargetLibraryInfo *TLI = nullptr;
+  AssumptionCache *AC = nullptr;
   SetVector<BasicBlock *> DeadBlocks;
-  OptimizationRemarkEmitter *ORE;
-  ImplicitControlFlowTracking *ICF;
+  OptimizationRemarkEmitter *ORE = nullptr;
+  ImplicitControlFlowTracking *ICF = nullptr;
+  LoopInfo *LI = nullptr;
 
   ValueTable VN;
 
@@ -175,7 +220,7 @@ private:
   // Block-local map of equivalent values to their leader, does not
   // propagate to any successors. Entries added mid-block are applied
   // to the remaining instructions in the block.
-  SmallMapVector<Value *, Constant *, 4> ReplaceWithConstMap;
+  SmallMapVector<Value *, Value *, 4> ReplaceOperandsWithMap;
   SmallVector<Instruction *, 8> InstrsToErase;
 
   // Map the block to reversed postorder traversal number. It is used to
@@ -280,7 +325,7 @@ private:
   void verifyRemoved(const Instruction *I) const;
   bool splitCriticalEdges();
   BasicBlock *splitCriticalEdges(BasicBlock *Pred, BasicBlock *Succ);
-  bool replaceOperandsWithConsts(Instruction *I) const;
+  bool replaceOperandsForInBlockEquality(Instruction *I) const;
   bool propagateEquality(Value *LHS, Value *RHS, const BasicBlockEdge &Root,
                          bool DominatesByEdge);
   bool processFoldableCondBr(BranchInst *BI);
@@ -290,8 +335,8 @@ private:
 };
 
 /// Create a legacy GVN pass. This also allows parameterizing whether or not
-/// loads are eliminated by the pass.
-FunctionPass *createGVNPass(bool NoLoads = false);
+/// MemDep is enabled.
+FunctionPass *createGVNPass(bool NoMemDepAnalysis = false);
 
 /// A simple and fast domtree-based GVN pass to hoist common expressions
 /// from sibling branches.
