@@ -286,3 +286,37 @@ case ARM::BI__builtin_arm_mve_vsriq_m_n_u8:
 case ARM::BI__builtin_arm_mve_vsriq_n_s8:
 case ARM::BI__builtin_arm_mve_vsriq_n_u8:
   return SemaBuiltinConstantArgRange(TheCall, 2, 0x1, 0x8);
+case ARM::BI__builtin_arm_mve_vbicq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vbicq_m_n_u16:
+case ARM::BI__builtin_arm_mve_vbicq_n_s16:
+case ARM::BI__builtin_arm_mve_vbicq_n_u16:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_u16:
+case ARM::BI__builtin_arm_mve_vorrq_n_s16:
+case ARM::BI__builtin_arm_mve_vorrq_n_u16:
+  return SemaBuiltinConstantArgShiftedByte(TheCall, 1, 16);
+case ARM::BI__builtin_arm_mve_vbicq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vbicq_m_n_u32:
+case ARM::BI__builtin_arm_mve_vbicq_n_s32:
+case ARM::BI__builtin_arm_mve_vbicq_n_u32:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_u32:
+case ARM::BI__builtin_arm_mve_vorrq_n_s32:
+case ARM::BI__builtin_arm_mve_vorrq_n_u32:
+  return SemaBuiltinConstantArgShiftedByte(TheCall, 1, 32);
+case ARM::BI__builtin_arm_mve_vmvnq_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_n_u16:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_u16:
+  return SemaBuiltinConstantArgShiftedByteOrXXFF(TheCall, 0, 16);
+case ARM::BI__builtin_arm_mve_vmvnq_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_n_u32:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_u32:
+  return SemaBuiltinConstantArgShiftedByteOrXXFF(TheCall, 0, 32);
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_u16:
+  return SemaBuiltinConstantArgShiftedByteOrXXFF(TheCall, 1, 16);
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_u32:
+  return SemaBuiltinConstantArgShiftedByteOrXXFF(TheCall, 1, 32);

@@ -220,6 +220,11 @@ public:
     W.find("deducedType").writeOptional(deducedType);
     AutoTypeKeyword keyword = ( node->getKeyword() );
     W.find("keyword").writeAutoTypeKeyword(keyword);
+    llvm::Optional<const ConceptDecl*> typeConstraintConcept = ( makeOptionalFromPointer(
+        const_cast<const ConceptDecl*>(node->getTypeConstraintConcept())) );
+    W.find("typeConstraintConcept").writeOptional(typeConstraintConcept);
+    llvm::ArrayRef<TemplateArgument> typeConstraintArguments = ( node->getTypeConstraintArguments() );
+    W.find("typeConstraintArguments").writeArray(typeConstraintArguments);
     uint32_t dependence = ( !node->getDeducedType().isNull() ? 0 :
                   node->containsUnexpandedParameterPack() ? 2 :
                   node->isDependentType() ? 1 : 0 );

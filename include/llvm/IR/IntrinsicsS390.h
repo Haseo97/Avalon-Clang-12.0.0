@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum S390Intrinsics : unsigned {
 // Enum values for intrinsics
-    s390_efpc = 6022,                                 // llvm.s390.efpc
+    s390_efpc = 6099,                                 // llvm.s390.efpc
     s390_etnd,                                 // llvm.s390.etnd
     s390_lcbb,                                 // llvm.s390.lcbb
     s390_ntstg,                                // llvm.s390.ntstg

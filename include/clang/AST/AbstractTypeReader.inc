@@ -253,11 +253,16 @@ public:
     auto &ctx = R.getASTContext();
     llvm::Optional<QualType> deducedType = R.find("deducedType").template readOptional<QualType>();
     AutoTypeKeyword keyword = R.find("keyword").readAutoTypeKeyword();
+    llvm::Optional<ConceptDecl*> typeConstraintConcept = R.find("typeConstraintConcept").template readOptional<ConceptDecl*>();
+    llvm::SmallVector<TemplateArgument, 8> typeConstraintArguments_buffer_0;
+    llvm::ArrayRef<TemplateArgument> typeConstraintArguments = R.find("typeConstraintArguments").template readArray<TemplateArgument>(typeConstraintArguments_buffer_0);
     uint32_t dependence = R.find("dependence").readUInt32();
     
     return ctx.getAutoType(makeNullableFromOptional(deducedType), keyword,
                            /*isDependentWithoutDeducedType*/ dependence > 0,
-                           /*isPackWithoutDeducedType*/ dependence > 1);
+                           /*isPackWithoutDeducedType*/ dependence > 1,
+                           makePointerFromOptional(typeConstraintConcept),
+                           typeConstraintArguments);
   
   }
 

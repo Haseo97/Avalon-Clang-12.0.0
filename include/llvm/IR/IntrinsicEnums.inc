@@ -81,6 +81,7 @@
     experimental_constrained_floor,            // llvm.experimental.constrained.floor
     experimental_constrained_fma,              // llvm.experimental.constrained.fma
     experimental_constrained_fmul,             // llvm.experimental.constrained.fmul
+    experimental_constrained_fmuladd,          // llvm.experimental.constrained.fmuladd
     experimental_constrained_fpext,            // llvm.experimental.constrained.fpext
     experimental_constrained_fptosi,           // llvm.experimental.constrained.fptosi
     experimental_constrained_fptoui,           // llvm.experimental.constrained.fptoui
@@ -182,6 +183,7 @@
     maxnum,                                    // llvm.maxnum
     memcpy,                                    // llvm.memcpy
     memcpy_element_unordered_atomic,           // llvm.memcpy.element.unordered.atomic
+    memcpy_inline,                             // llvm.memcpy.inline
     memmove,                                   // llvm.memmove
     memmove_element_unordered_atomic,          // llvm.memmove.element.unordered.atomic
     memset,                                    // llvm.memset
@@ -271,7 +273,8 @@
     vaend,                                     // llvm.va_end
     vastart,                                   // llvm.va_start
     var_annotation,                            // llvm.var.annotation
+    vscale,                                    // llvm.vscale
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7512
+    num_intrinsics = 7589

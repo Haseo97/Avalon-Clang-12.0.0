@@ -72,6 +72,13 @@ struct ReadDispatcher<CallingConv> {
   }
 };
 template <>
+struct ReadDispatcher<ConceptDecl*> {
+  template <class BasicReader, class... Args>
+  static ConceptDecl* read(BasicReader &R, Args &&... args) {
+    return R.readConceptDeclRef(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct ReadDispatcher<Decl*> {
   template <class BasicReader, class... Args>
   static Decl* read(BasicReader &R, Args &&... args) {
@@ -347,6 +354,12 @@ struct UnpackOptionalValue<CXXRecordDecl*> {
   }
 };
 template <>
+struct UnpackOptionalValue<ConceptDecl*> {
+  static Optional<ConceptDecl*> unpack(ConceptDecl* value) {
+    return value ? llvm::Optional<ConceptDecl*>(value) : llvm::None;
+  }
+};
+template <>
 struct UnpackOptionalValue<Decl*> {
   static Optional<Decl*> unpack(Decl* value) {
     return value ? llvm::Optional<Decl*>(value) : llvm::None;
@@ -486,6 +499,9 @@ public:
   }
   CallingConv readCallingConv() {
     return asImpl().template readEnum<CallingConv>();
+  }
+  ConceptDecl* readConceptDeclRef() {
+    return cast_or_null<ConceptDecl>(asImpl().readDeclRef());
   }
   DeclarationName readDeclarationName() {
     auto &ctx = asImpl().getASTContext();

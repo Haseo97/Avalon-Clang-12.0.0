@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum HEXAGONIntrinsics : unsigned {
 // Enum values for intrinsics
-    hexagon_A2_abs = 1880,                            // llvm.hexagon.A2.abs
+    hexagon_A2_abs = 1929,                            // llvm.hexagon.A2.abs
     hexagon_A2_absp,                           // llvm.hexagon.A2.absp
     hexagon_A2_abssat,                         // llvm.hexagon.A2.abssat
     hexagon_A2_add,                            // llvm.hexagon.A2.add
@@ -223,6 +223,10 @@ enum HEXAGONIntrinsics : unsigned {
     hexagon_A4_vrminw,                         // llvm.hexagon.A4.vrminw
     hexagon_A5_vaddhubs,                       // llvm.hexagon.A5.vaddhubs
     hexagon_A6_vcmpbeq_notany,                 // llvm.hexagon.A6.vcmpbeq.notany
+    hexagon_A7_clip,                           // llvm.hexagon.A7.clip
+    hexagon_A7_croundd_ri,                     // llvm.hexagon.A7.croundd.ri
+    hexagon_A7_croundd_rr,                     // llvm.hexagon.A7.croundd.rr
+    hexagon_A7_vclip,                          // llvm.hexagon.A7.vclip
     hexagon_C2_all8,                           // llvm.hexagon.C2.all8
     hexagon_C2_and,                            // llvm.hexagon.C2.and
     hexagon_C2_andn,                           // llvm.hexagon.C2.andn
@@ -310,6 +314,12 @@ enum HEXAGONIntrinsics : unsigned {
     hexagon_F2_dfcmpuo,                        // llvm.hexagon.F2.dfcmpuo
     hexagon_F2_dfimm_n,                        // llvm.hexagon.F2.dfimm.n
     hexagon_F2_dfimm_p,                        // llvm.hexagon.F2.dfimm.p
+    hexagon_F2_dfmax,                          // llvm.hexagon.F2.dfmax
+    hexagon_F2_dfmin,                          // llvm.hexagon.F2.dfmin
+    hexagon_F2_dfmpyfix,                       // llvm.hexagon.F2.dfmpyfix
+    hexagon_F2_dfmpyhh,                        // llvm.hexagon.F2.dfmpyhh
+    hexagon_F2_dfmpylh,                        // llvm.hexagon.F2.dfmpylh
+    hexagon_F2_dfmpyll,                        // llvm.hexagon.F2.dfmpyll
     hexagon_F2_dfsub,                          // llvm.hexagon.F2.dfsub
     hexagon_F2_sfadd,                          // llvm.hexagon.F2.sfadd
     hexagon_F2_sfclass,                        // llvm.hexagon.F2.sfclass
@@ -668,6 +678,24 @@ enum HEXAGONIntrinsics : unsigned {
     hexagon_M5_vrmpybuu,                       // llvm.hexagon.M5.vrmpybuu
     hexagon_M6_vabsdiffb,                      // llvm.hexagon.M6.vabsdiffb
     hexagon_M6_vabsdiffub,                     // llvm.hexagon.M6.vabsdiffub
+    hexagon_M7_dcmpyiw,                        // llvm.hexagon.M7.dcmpyiw
+    hexagon_M7_dcmpyiw_acc,                    // llvm.hexagon.M7.dcmpyiw.acc
+    hexagon_M7_dcmpyiwc,                       // llvm.hexagon.M7.dcmpyiwc
+    hexagon_M7_dcmpyiwc_acc,                   // llvm.hexagon.M7.dcmpyiwc.acc
+    hexagon_M7_dcmpyrw,                        // llvm.hexagon.M7.dcmpyrw
+    hexagon_M7_dcmpyrw_acc,                    // llvm.hexagon.M7.dcmpyrw.acc
+    hexagon_M7_dcmpyrwc,                       // llvm.hexagon.M7.dcmpyrwc
+    hexagon_M7_dcmpyrwc_acc,                   // llvm.hexagon.M7.dcmpyrwc.acc
+    hexagon_M7_vdmpy,                          // llvm.hexagon.M7.vdmpy
+    hexagon_M7_vdmpy_acc,                      // llvm.hexagon.M7.vdmpy.acc
+    hexagon_M7_wcmpyiw,                        // llvm.hexagon.M7.wcmpyiw
+    hexagon_M7_wcmpyiw_rnd,                    // llvm.hexagon.M7.wcmpyiw.rnd
+    hexagon_M7_wcmpyiwc,                       // llvm.hexagon.M7.wcmpyiwc
+    hexagon_M7_wcmpyiwc_rnd,                   // llvm.hexagon.M7.wcmpyiwc.rnd
+    hexagon_M7_wcmpyrw,                        // llvm.hexagon.M7.wcmpyrw
+    hexagon_M7_wcmpyrw_rnd,                    // llvm.hexagon.M7.wcmpyrw.rnd
+    hexagon_M7_wcmpyrwc,                       // llvm.hexagon.M7.wcmpyrwc
+    hexagon_M7_wcmpyrwc_rnd,                   // llvm.hexagon.M7.wcmpyrwc.rnd
     hexagon_S2_addasl_rrri,                    // llvm.hexagon.S2.addasl.rrri
     hexagon_S2_asl_i_p,                        // llvm.hexagon.S2.asl.i.p
     hexagon_S2_asl_i_p_acc,                    // llvm.hexagon.S2.asl.i.p.acc

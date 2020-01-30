@@ -79,6 +79,20 @@ struct WriteDispatcher<CallingConv> {
   }
 };
 template <>
+struct WriteDispatcher<ConceptDecl*> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeConceptDeclRef(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct WriteDispatcher<const ConceptDecl*> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeConceptDeclRef(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct WriteDispatcher<Decl*> {
   template <class BasicWriter, class... Args>
   static void write(BasicWriter &W, Args &&... args) {
@@ -465,6 +479,18 @@ struct PackOptionalValue<const CXXRecordDecl*> {
   }
 };
 template <>
+struct PackOptionalValue<ConceptDecl*> {
+  static ConceptDecl* pack(Optional<ConceptDecl*> value) {
+    return value ? *value : nullptr;
+  }
+};
+template <>
+struct PackOptionalValue<const ConceptDecl*> {
+  static const ConceptDecl* pack(Optional<const ConceptDecl*> value) {
+    return value ? *value : nullptr;
+  }
+};
+template <>
 struct PackOptionalValue<Decl*> {
   static Decl* pack(Optional<Decl*> value) {
     return value ? *value : nullptr;
@@ -692,6 +718,9 @@ public:
   }
   void writeCallingConv(CallingConv value) {
     asImpl().writeEnum(value);
+  }
+  void writeConceptDeclRef(const ConceptDecl* value) {
+    asImpl().writeDeclRef(value);
   }
   void writeDeclarationName(DeclarationName node) {
     auto &&subW = asImpl().writeObject();

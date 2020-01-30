@@ -1466,6 +1466,36 @@ case ARM::BI__builtin_arm_mve_vst4q_u8: {
   NumVectors = 4;
   break; // custom code gen
 }
+case ARM::BI__builtin_arm_mve_vmaxnmaq_f16:
+case ARM::BI__builtin_arm_mve_vmaxnmaq_f32:
+case ARM::BI__builtin_arm_mve_vminnmaq_f16:
+case ARM::BI__builtin_arm_mve_vminnmaq_f32: {
+  llvm::Type * Param0;
+  Intrinsic::ID  Param1;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmaxnmaq_f16:
+    Param0 = llvm::VectorType::get(HalfTy, 8);
+    Param1 = Intrinsic::maxnum;
+    break;
+  case ARM::BI__builtin_arm_mve_vmaxnmaq_f32:
+    Param0 = llvm::VectorType::get(FloatTy, 4);
+    Param1 = Intrinsic::maxnum;
+    break;
+  case ARM::BI__builtin_arm_mve_vminnmaq_f16:
+    Param0 = llvm::VectorType::get(HalfTy, 8);
+    Param1 = Intrinsic::minnum;
+    break;
+  case ARM::BI__builtin_arm_mve_vminnmaq_f32:
+    Param0 = llvm::VectorType::get(FloatTy, 4);
+    Param1 = Intrinsic::minnum;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::fabs, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 1> {Val0});
+  Value *Val2 = EmitScalarExpr(E->getArg(1));
+  Value *Val3 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::fabs, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 1> {Val2});
+  return Builder.CreateCall(CGM.getIntrinsic(Param1, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 2> {Val1, Val3});
+}
 case ARM::BI__builtin_arm_mve_vctp16q:
 case ARM::BI__builtin_arm_mve_vctp32q:
 case ARM::BI__builtin_arm_mve_vctp64q:
@@ -1494,6 +1524,39 @@ case ARM::BI__builtin_arm_mve_vctp8q: {
   Value *Val1 = Builder.CreateCall(CGM.getIntrinsic(Param0), llvm::SmallVector<Value *, 1> {Val0});
   Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_v2i, llvm::SmallVector<llvm::Type *, 1> {Param1}), llvm::SmallVector<Value *, 1> {Val1});
   return Builder.CreateIntCast(Val2, Int16Ty, false);
+}
+case ARM::BI__builtin_arm_mve_vmvnq_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, Param0);
+  Value *Val2 = ARMMVEVectorSplat(Builder, Val1);
+  return Builder.CreateNot(Val2);
+}
+case ARM::BI__builtin_arm_mve_vmvnq_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateIntCast(Val1, Int16Ty, Param0);
+  Value *Val3 = ARMMVEVectorSplat(Builder, Val2);
+  return Builder.CreateNot(Val3);
 }
 case ARM::BI__builtin_arm_mve_vmaxvq_s16:
 case ARM::BI__builtin_arm_mve_vmaxvq_s8:
@@ -1888,35 +1951,6 @@ case ARM::BI__builtin_arm_mve_vcmphiq_n_u8: {
   Value *Val4 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_v2i, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 1> {Val3});
   return Builder.CreateIntCast(Val4, Int16Ty, false);
 }
-case ARM::BI__builtin_arm_mve_vmaxnmaq_f16:
-case ARM::BI__builtin_arm_mve_vmaxnmaq_f32:
-case ARM::BI__builtin_arm_mve_vminnmaq_f16:
-case ARM::BI__builtin_arm_mve_vminnmaq_f32: {
-  llvm::Type * Param0;
-  Intrinsic::ID  Param1;
-  switch (BuiltinID) {
-  case ARM::BI__builtin_arm_mve_vmaxnmaq_f16:
-    Param0 = llvm::VectorType::get(HalfTy, 8);
-    Param1 = Intrinsic::maxnum;
-    break;
-  case ARM::BI__builtin_arm_mve_vmaxnmaq_f32:
-    Param0 = llvm::VectorType::get(FloatTy, 4);
-    Param1 = Intrinsic::maxnum;
-    break;
-  case ARM::BI__builtin_arm_mve_vminnmaq_f16:
-    Param0 = llvm::VectorType::get(HalfTy, 8);
-    Param1 = Intrinsic::minnum;
-    break;
-  case ARM::BI__builtin_arm_mve_vminnmaq_f32:
-    Param0 = llvm::VectorType::get(FloatTy, 4);
-    Param1 = Intrinsic::minnum;
-    break;
-  }
-  Value *Val0 = EmitScalarExpr(E->getArg(0));
-  Value *Val1 = EmitScalarExpr(E->getArg(1));
-  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::fabs, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 1> {Val1});
-  return Builder.CreateCall(CGM.getIntrinsic(Param1, llvm::SmallVector<llvm::Type *, 1> {Param0}), llvm::SmallVector<Value *, 2> {Val0, Val2});
-}
 case ARM::BI__builtin_arm_mve_vmaxvq_s32:
 case ARM::BI__builtin_arm_mve_vmaxvq_u32:
 case ARM::BI__builtin_arm_mve_vminvq_s32:
@@ -2271,6 +2305,78 @@ case ARM::BI__builtin_arm_mve_vminq_u8: {
   Value *Val1 = EmitScalarExpr(E->getArg(1));
   Value *Val2 = Builder.CreateICmpULE(Val0, Val1);
   return Builder.CreateSelect(Val2, Val0, Val1);
+}
+case ARM::BI__builtin_arm_mve_vbicq_n_s32:
+case ARM::BI__builtin_arm_mve_vbicq_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vbicq_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vbicq_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = EmitScalarExpr(E->getArg(1));
+  Value *Val2 = Builder.CreateIntCast(Val1, Int32Ty, Param0);
+  Value *Val3 = ARMMVEVectorSplat(Builder, Val2);
+  Value *Val4 = Builder.CreateNot(Val3);
+  return Builder.CreateAnd(Val0, Val4);
+}
+case ARM::BI__builtin_arm_mve_vorrq_n_s32:
+case ARM::BI__builtin_arm_mve_vorrq_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vorrq_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vorrq_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = EmitScalarExpr(E->getArg(1));
+  Value *Val2 = Builder.CreateIntCast(Val1, Int32Ty, Param0);
+  Value *Val3 = ARMMVEVectorSplat(Builder, Val2);
+  return Builder.CreateOr(Val0, Val3);
+}
+case ARM::BI__builtin_arm_mve_vbicq_n_s16:
+case ARM::BI__builtin_arm_mve_vbicq_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vbicq_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vbicq_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = EmitScalarExpr(E->getArg(1));
+  Value *Val2 = Builder.CreateIntCast(Val1, Int32Ty, false);
+  Value *Val3 = Builder.CreateIntCast(Val2, Int16Ty, Param0);
+  Value *Val4 = ARMMVEVectorSplat(Builder, Val3);
+  Value *Val5 = Builder.CreateNot(Val4);
+  return Builder.CreateAnd(Val0, Val5);
+}
+case ARM::BI__builtin_arm_mve_vorrq_n_s16:
+case ARM::BI__builtin_arm_mve_vorrq_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vorrq_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vorrq_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(0));
+  Value *Val1 = EmitScalarExpr(E->getArg(1));
+  Value *Val2 = Builder.CreateIntCast(Val1, Int32Ty, false);
+  Value *Val3 = Builder.CreateIntCast(Val2, Int16Ty, Param0);
+  Value *Val4 = ARMMVEVectorSplat(Builder, Val3);
+  return Builder.CreateOr(Val0, Val4);
 }
 case ARM::BI__builtin_arm_mve_vshlq_n_s16:
 case ARM::BI__builtin_arm_mve_vshlq_n_s32:
@@ -8396,6 +8502,49 @@ case ARM::BI__builtin_arm_mve_vpselq_u8: {
   Value *Val4 = EmitScalarExpr(E->getArg(1));
   return Builder.CreateSelect(Val2, Val3, Val4);
 }
+case ARM::BI__builtin_arm_mve_vbicq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vbicq_m_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vbicq_m_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vbicq_m_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 4)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(0));
+  Value *Val4 = EmitScalarExpr(E->getArg(1));
+  Value *Val5 = Builder.CreateIntCast(Val4, Int32Ty, Param0);
+  Value *Val6 = ARMMVEVectorSplat(Builder, Val5);
+  Value *Val7 = Builder.CreateNot(Val6);
+  Value *Val8 = Builder.CreateAnd(Val3, Val7);
+  return Builder.CreateSelect(Val2, Val8, Val3);
+}
+case ARM::BI__builtin_arm_mve_vorrq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vorrq_m_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vorrq_m_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 4)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(0));
+  Value *Val4 = EmitScalarExpr(E->getArg(1));
+  Value *Val5 = Builder.CreateIntCast(Val4, Int32Ty, Param0);
+  Value *Val6 = ARMMVEVectorSplat(Builder, Val5);
+  Value *Val7 = Builder.CreateOr(Val3, Val6);
+  return Builder.CreateSelect(Val2, Val7, Val3);
+}
 case ARM::BI__builtin_arm_mve_vpselq_s64:
 case ARM::BI__builtin_arm_mve_vpselq_u64: {
   Value *Val0 = EmitScalarExpr(E->getArg(2));
@@ -8410,6 +8559,94 @@ case ARM::BI__builtin_arm_mve_vpselq_u64: {
   Value *Val9 = Builder.CreateSelect(Val2, Val5, Val8);
   llvm::Type *Val10 = llvm::VectorType::get(Int64Ty, 2);
   return Builder.CreateBitCast(Val9, Val10);
+}
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_m_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_m_n_u32:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 4)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(1));
+  Value *Val4 = Builder.CreateIntCast(Val3, Int32Ty, Param0);
+  Value *Val5 = ARMMVEVectorSplat(Builder, Val4);
+  Value *Val6 = Builder.CreateNot(Val5);
+  Value *Val7 = EmitScalarExpr(E->getArg(0));
+  return Builder.CreateSelect(Val2, Val6, Val7);
+}
+case ARM::BI__builtin_arm_mve_vbicq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vbicq_m_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vbicq_m_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vbicq_m_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 8)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(0));
+  Value *Val4 = EmitScalarExpr(E->getArg(1));
+  Value *Val5 = Builder.CreateIntCast(Val4, Int32Ty, false);
+  Value *Val6 = Builder.CreateIntCast(Val5, Int16Ty, Param0);
+  Value *Val7 = ARMMVEVectorSplat(Builder, Val6);
+  Value *Val8 = Builder.CreateNot(Val7);
+  Value *Val9 = Builder.CreateAnd(Val3, Val8);
+  return Builder.CreateSelect(Val2, Val9, Val3);
+}
+case ARM::BI__builtin_arm_mve_vorrq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vorrq_m_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vorrq_m_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vorrq_m_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 8)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(0));
+  Value *Val4 = EmitScalarExpr(E->getArg(1));
+  Value *Val5 = Builder.CreateIntCast(Val4, Int32Ty, false);
+  Value *Val6 = Builder.CreateIntCast(Val5, Int16Ty, Param0);
+  Value *Val7 = ARMMVEVectorSplat(Builder, Val6);
+  Value *Val8 = Builder.CreateOr(Val3, Val7);
+  return Builder.CreateSelect(Val2, Val8, Val3);
+}
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_m_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_m_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_m_n_u16:
+    Param0 = false;
+    break;
+  }
+  Value *Val0 = EmitScalarExpr(E->getArg(2));
+  Value *Val1 = Builder.CreateIntCast(Val0, Int32Ty, false);
+  Value *Val2 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 8)}), llvm::SmallVector<Value *, 1> {Val1});
+  Value *Val3 = EmitScalarExpr(E->getArg(1));
+  Value *Val4 = Builder.CreateIntCast(Val3, Int32Ty, false);
+  Value *Val5 = Builder.CreateIntCast(Val4, Int16Ty, Param0);
+  Value *Val6 = ARMMVEVectorSplat(Builder, Val5);
+  Value *Val7 = Builder.CreateNot(Val6);
+  Value *Val8 = EmitScalarExpr(E->getArg(0));
+  return Builder.CreateSelect(Val2, Val7, Val8);
 }
 case ARM::BI__builtin_arm_mve_vabavq_p_s16:
 case ARM::BI__builtin_arm_mve_vabavq_p_s32:
@@ -10491,6 +10728,29 @@ case ARM::BI__builtin_arm_mve_vorrq_x_u16: {
   llvm::Type *Val14 = llvm::VectorType::get(Int16Ty, 8);
   return Builder.CreateBitCast(Val13, Val14);
 }
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_s16:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_u16: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_x_n_s16:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_x_n_u16:
+    Param0 = false;
+    break;
+  }
+  llvm::Type *Val0 = llvm::VectorType::get(Int16Ty, 8);
+  Value *Val1 = UndefValue::get(Val0);
+  Value *Val2 = EmitScalarExpr(E->getArg(1));
+  Value *Val3 = Builder.CreateIntCast(Val2, Int32Ty, false);
+  Value *Val4 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 8)}), llvm::SmallVector<Value *, 1> {Val3});
+  Value *Val5 = EmitScalarExpr(E->getArg(0));
+  Value *Val6 = Builder.CreateIntCast(Val5, Int32Ty, false);
+  Value *Val7 = Builder.CreateIntCast(Val6, Int16Ty, Param0);
+  Value *Val8 = ARMMVEVectorSplat(Builder, Val7);
+  Value *Val9 = Builder.CreateNot(Val8);
+  return Builder.CreateSelect(Val4, Val9, Val1);
+}
 case ARM::BI__builtin_arm_mve_vcaddq_rot270_x_s16:
 case ARM::BI__builtin_arm_mve_vcaddq_rot270_x_u16:
 case ARM::BI__builtin_arm_mve_vcaddq_rot90_x_s16:
@@ -10881,6 +11141,28 @@ case ARM::BI__builtin_arm_mve_vorrq_x_u32: {
   Value *Val13 = Builder.CreateCall(CGM.getIntrinsic(Param0, llvm::SmallVector<llvm::Type *, 2> {llvm::VectorType::get(Int32Ty, 4), llvm::VectorType::get(Builder.getInt1Ty(), 4)}), llvm::SmallVector<Value *, 4> {Val4, Val7, Val10, Val12});
   llvm::Type *Val14 = llvm::VectorType::get(Int32Ty, 4);
   return Builder.CreateBitCast(Val13, Val14);
+}
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_s32:
+case ARM::BI__builtin_arm_mve_vmvnq_x_n_u32: {
+  bool  Param0;
+  switch (BuiltinID) {
+  case ARM::BI__builtin_arm_mve_vmvnq_x_n_s32:
+    Param0 = true;
+    break;
+  case ARM::BI__builtin_arm_mve_vmvnq_x_n_u32:
+    Param0 = false;
+    break;
+  }
+  llvm::Type *Val0 = llvm::VectorType::get(Int32Ty, 4);
+  Value *Val1 = UndefValue::get(Val0);
+  Value *Val2 = EmitScalarExpr(E->getArg(1));
+  Value *Val3 = Builder.CreateIntCast(Val2, Int32Ty, false);
+  Value *Val4 = Builder.CreateCall(CGM.getIntrinsic(Intrinsic::arm_mve_pred_i2v, llvm::SmallVector<llvm::Type *, 1> {llvm::VectorType::get(Builder.getInt1Ty(), 4)}), llvm::SmallVector<Value *, 1> {Val3});
+  Value *Val5 = EmitScalarExpr(E->getArg(0));
+  Value *Val6 = Builder.CreateIntCast(Val5, Int32Ty, Param0);
+  Value *Val7 = ARMMVEVectorSplat(Builder, Val6);
+  Value *Val8 = Builder.CreateNot(Val7);
+  return Builder.CreateSelect(Val4, Val8, Val1);
 }
 case ARM::BI__builtin_arm_mve_vcaddq_rot270_x_s32:
 case ARM::BI__builtin_arm_mve_vcaddq_rot270_x_u32:

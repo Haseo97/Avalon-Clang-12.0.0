@@ -3528,9 +3528,6 @@ public:
   }
 
 
-    bool isMutex() const { return getName().equals_lower("mutex"); }
-    bool isRole() const { return getName().equals_lower("role"); }
-  
 
   static bool classof(const Attr *A) { return A->getKind() == attr::Capability; }
 };
