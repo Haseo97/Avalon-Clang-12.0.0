@@ -492,14 +492,7 @@
   }
   void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
     const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
-    for (const auto &Val : SA->ctxSelectorSets())
-      OS << " " << Val;
-    for (const auto &Val : SA->ctxSelectors())
-      OS << " " << Val;
-    for (const auto &Val : SA->implVendors())
-      OS << " " << Val;
-    for (const auto &Val : SA->deviceKinds())
-      OS << " " << Val;
+    OS << " " << SA->getTraitInfos();
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;

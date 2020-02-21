@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum MIPSIntrinsics : unsigned {
 // Enum values for intrinsics
-    mips_absq_s_ph = 3677,                            // llvm.mips.absq.s.ph
+    mips_absq_s_ph = 3805,                            // llvm.mips.absq.s.ph
     mips_absq_s_qb,                            // llvm.mips.absq.s.qb
     mips_absq_s_w,                             // llvm.mips.absq.s.w
     mips_add_a_b,                              // llvm.mips.add.a.b
@@ -404,6 +404,8 @@ enum MIPSIntrinsics : unsigned {
     mips_ldi_d,                                // llvm.mips.ldi.d
     mips_ldi_h,                                // llvm.mips.ldi.h
     mips_ldi_w,                                // llvm.mips.ldi.w
+    mips_ldr_d,                                // llvm.mips.ldr.d
+    mips_ldr_w,                                // llvm.mips.ldr.w
     mips_lhx,                                  // llvm.mips.lhx
     mips_lsa,                                  // llvm.mips.lsa
     mips_lwx,                                  // llvm.mips.lwx
@@ -636,6 +638,8 @@ enum MIPSIntrinsics : unsigned {
     mips_st_d,                                 // llvm.mips.st.d
     mips_st_h,                                 // llvm.mips.st.h
     mips_st_w,                                 // llvm.mips.st.w
+    mips_str_d,                                // llvm.mips.str.d
+    mips_str_w,                                // llvm.mips.str.w
     mips_subq_ph,                              // llvm.mips.subq.ph
     mips_subq_s_ph,                            // llvm.mips.subq.s.ph
     mips_subq_s_w,                             // llvm.mips.subq.s.w

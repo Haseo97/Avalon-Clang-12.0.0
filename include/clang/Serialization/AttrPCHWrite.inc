@@ -1145,21 +1145,7 @@ Record.push_back(SA->getDevType());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddStmt(SA->getVariantFuncRef());
-    Record.push_back(SA->scores_size());
-    for (auto &Val : SA->scores())
-      Record.AddStmt(Val);
-    Record.push_back(SA->ctxSelectorSets_size());
-    for (auto &Val : SA->ctxSelectorSets())
-      Record.push_back(Val);
-    Record.push_back(SA->ctxSelectors_size());
-    for (auto &Val : SA->ctxSelectors())
-      Record.push_back(Val);
-    Record.push_back(SA->implVendors_size());
-    for (auto &Val : SA->implVendors())
-      Record.AddString(Val);
-    Record.push_back(SA->deviceKinds_size());
-    for (auto &Val : SA->deviceKinds())
-      Record.AddString(Val);
+    Record.writeOMPTraitInfo(SA->getTraitInfos());
     break;
   }
   case attr::OMPReferencedVar: {

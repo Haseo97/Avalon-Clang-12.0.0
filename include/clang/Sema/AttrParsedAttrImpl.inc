@@ -2161,9 +2161,9 @@ static void matchRulesForObjCDirect(llvm::SmallVectorImpl<std::pair<attr::Subjec
 }
 
 static bool checkObjCDirectMembersAppertainsTo(Sema &S, const ParsedAttr &Attr, const Decl *D) {
-  if (!D || (!isa<ObjCImplDecl>(D) && !isa<ObjCCategoryDecl>(D))) {
+  if (!D || (!isa<ObjCImplDecl>(D) && !isa<ObjCInterfaceDecl>(D) && !isa<ObjCCategoryDecl>(D))) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
-      << Attr << "Objective-C implementation declarations and Objective-C containers";
+      << Attr << "Objective-C implementation declarations, Objective-C interfaces, and Objective-C containers";
     return false;
   }
   return true;
@@ -2171,6 +2171,7 @@ static bool checkObjCDirectMembersAppertainsTo(Sema &S, const ParsedAttr &Attr, 
 
 static void matchRulesForObjCDirectMembers(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_implementation, /*IsSupported=*/LangOpts.ObjC));
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_interface, /*IsSupported=*/LangOpts.ObjC));
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_objc_category, /*IsSupported=*/LangOpts.ObjC));
 }
 

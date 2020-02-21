@@ -1522,40 +1522,8 @@
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     Expr * variantFuncRef = Record.readExpr();
-    unsigned scoresSize = Record.readInt();
-    SmallVector<Expr *, 4> scores;
-    scores.reserve(scoresSize);
-    for (unsigned i = 0; i != scoresSize; ++i)
-      scores.push_back(Record.readExpr());
-    unsigned ctxSelectorSetsSize = Record.readInt();
-    SmallVector<unsigned, 4> ctxSelectorSets;
-    ctxSelectorSets.reserve(ctxSelectorSetsSize);
-    for (unsigned i = 0; i != ctxSelectorSetsSize; ++i)
-      ctxSelectorSets.push_back(Record.readInt());
-    unsigned ctxSelectorsSize = Record.readInt();
-    SmallVector<unsigned, 4> ctxSelectors;
-    ctxSelectors.reserve(ctxSelectorsSize);
-    for (unsigned i = 0; i != ctxSelectorsSize; ++i)
-      ctxSelectors.push_back(Record.readInt());
-    unsigned implVendorsSize = Record.readInt();
-    SmallVector<StringRef, 4> implVendors;
-    implVendors.reserve(implVendorsSize);
-    SmallVector<std::string, 4> implVendorsStorage;
-    implVendorsStorage.reserve(implVendorsSize);
-    for (unsigned i = 0; i != implVendorsSize; ++i)
-      implVendorsStorage.push_back(Record.readString());
-    for (unsigned i = 0; i != implVendorsSize; ++i)
-      implVendors.push_back(implVendorsStorage[i]);
-    unsigned deviceKindsSize = Record.readInt();
-    SmallVector<StringRef, 4> deviceKinds;
-    deviceKinds.reserve(deviceKindsSize);
-    SmallVector<std::string, 4> deviceKindsStorage;
-    deviceKindsStorage.reserve(deviceKindsSize);
-    for (unsigned i = 0; i != deviceKindsSize; ++i)
-      deviceKindsStorage.push_back(Record.readString());
-    for (unsigned i = 0; i != deviceKindsSize; ++i)
-      deviceKinds.push_back(deviceKindsStorage[i]);
-    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, scores.data(), scoresSize, ctxSelectorSets.data(), ctxSelectorSetsSize, ctxSelectors.data(), ctxSelectorsSize, implVendors.data(), implVendorsSize, deviceKinds.data(), deviceKindsSize);
+    OMPTraitInfo traitInfos = Record.readOMPTraitInfo();
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, traitInfos);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;

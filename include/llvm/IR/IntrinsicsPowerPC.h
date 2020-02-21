@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum PPCIntrinsics : unsigned {
 // Enum values for intrinsics
-    ppc_addf128_round_to_odd = 5640,                  // llvm.ppc.addf128.round.to.odd
+    ppc_addf128_round_to_odd = 5772,                  // llvm.ppc.addf128.round.to.odd
     ppc_altivec_crypto_vcipher,                // llvm.ppc.altivec.crypto.vcipher
     ppc_altivec_crypto_vcipherlast,            // llvm.ppc.altivec.crypto.vcipherlast
     ppc_altivec_crypto_vncipher,               // llvm.ppc.altivec.crypto.vncipher
@@ -231,6 +231,8 @@ enum PPCIntrinsics : unsigned {
     ppc_cfence,                                // llvm.ppc.cfence
     ppc_dcba,                                  // llvm.ppc.dcba
     ppc_dcbf,                                  // llvm.ppc.dcbf
+    ppc_dcbfl,                                 // llvm.ppc.dcbfl
+    ppc_dcbflp,                                // llvm.ppc.dcbflp
     ppc_dcbi,                                  // llvm.ppc.dcbi
     ppc_dcbst,                                 // llvm.ppc.dcbst
     ppc_dcbt,                                  // llvm.ppc.dcbt
@@ -242,6 +244,7 @@ enum PPCIntrinsics : unsigned {
     ppc_divf128_round_to_odd,                  // llvm.ppc.divf128.round.to.odd
     ppc_divwe,                                 // llvm.ppc.divwe
     ppc_divweu,                                // llvm.ppc.divweu
+    ppc_eieio,                                 // llvm.ppc.eieio
     ppc_fmaf128_round_to_odd,                  // llvm.ppc.fmaf128.round.to.odd
     ppc_get_texasr,                            // llvm.ppc.get.texasr
     ppc_get_texasru,                           // llvm.ppc.get.texasru

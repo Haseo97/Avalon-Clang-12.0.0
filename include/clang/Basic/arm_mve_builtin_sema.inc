@@ -78,6 +78,14 @@ case ARM::BI__builtin_arm_mve_vshlq_n_u16:
 case ARM::BI__builtin_arm_mve_vshlq_x_n_s16:
 case ARM::BI__builtin_arm_mve_vshlq_x_n_u16:
   return SemaBuiltinConstantArgRange(TheCall, 1, 0x0, 0xF);
+case ARM::BI__builtin_arm_mve_vcvtq_n_f16_s16:
+case ARM::BI__builtin_arm_mve_vcvtq_n_f16_u16:
+case ARM::BI__builtin_arm_mve_vcvtq_n_s16_f16:
+case ARM::BI__builtin_arm_mve_vcvtq_n_u16_f16:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_f16_s16:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_f16_u16:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_s16_f16:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_u16_f16:
 case ARM::BI__builtin_arm_mve_vrshrq_n_s16:
 case ARM::BI__builtin_arm_mve_vrshrq_n_u16:
 case ARM::BI__builtin_arm_mve_vrshrq_x_n_s16:
@@ -103,6 +111,14 @@ case ARM::BI__builtin_arm_mve_uqshl:
 case ARM::BI__builtin_arm_mve_uqshll:
 case ARM::BI__builtin_arm_mve_urshr:
 case ARM::BI__builtin_arm_mve_urshrl:
+case ARM::BI__builtin_arm_mve_vcvtq_n_f32_s32:
+case ARM::BI__builtin_arm_mve_vcvtq_n_f32_u32:
+case ARM::BI__builtin_arm_mve_vcvtq_n_s32_f32:
+case ARM::BI__builtin_arm_mve_vcvtq_n_u32_f32:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_f32_s32:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_f32_u32:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_s32_f32:
+case ARM::BI__builtin_arm_mve_vcvtq_x_n_u32_f32:
 case ARM::BI__builtin_arm_mve_vrshrq_n_s32:
 case ARM::BI__builtin_arm_mve_vrshrq_n_u32:
 case ARM::BI__builtin_arm_mve_vrshrq_x_n_s32:
@@ -112,6 +128,32 @@ case ARM::BI__builtin_arm_mve_vshrq_n_u32:
 case ARM::BI__builtin_arm_mve_vshrq_x_n_s32:
 case ARM::BI__builtin_arm_mve_vshrq_x_n_u32:
   return SemaBuiltinConstantArgRange(TheCall, 1, 0x1, 0x20);
+case ARM::BI__builtin_arm_mve_vddupq_n_u16:
+case ARM::BI__builtin_arm_mve_vddupq_n_u32:
+case ARM::BI__builtin_arm_mve_vddupq_n_u8:
+case ARM::BI__builtin_arm_mve_vddupq_wb_u16:
+case ARM::BI__builtin_arm_mve_vddupq_wb_u32:
+case ARM::BI__builtin_arm_mve_vddupq_wb_u8:
+case ARM::BI__builtin_arm_mve_vddupq_x_n_u16:
+case ARM::BI__builtin_arm_mve_vddupq_x_n_u32:
+case ARM::BI__builtin_arm_mve_vddupq_x_n_u8:
+case ARM::BI__builtin_arm_mve_vddupq_x_wb_u16:
+case ARM::BI__builtin_arm_mve_vddupq_x_wb_u32:
+case ARM::BI__builtin_arm_mve_vddupq_x_wb_u8:
+case ARM::BI__builtin_arm_mve_vidupq_n_u16:
+case ARM::BI__builtin_arm_mve_vidupq_n_u32:
+case ARM::BI__builtin_arm_mve_vidupq_n_u8:
+case ARM::BI__builtin_arm_mve_vidupq_wb_u16:
+case ARM::BI__builtin_arm_mve_vidupq_wb_u32:
+case ARM::BI__builtin_arm_mve_vidupq_wb_u8:
+case ARM::BI__builtin_arm_mve_vidupq_x_n_u16:
+case ARM::BI__builtin_arm_mve_vidupq_x_n_u32:
+case ARM::BI__builtin_arm_mve_vidupq_x_n_u8:
+case ARM::BI__builtin_arm_mve_vidupq_x_wb_u16:
+case ARM::BI__builtin_arm_mve_vidupq_x_wb_u32:
+case ARM::BI__builtin_arm_mve_vidupq_x_wb_u8:
+  return SemaBuiltinConstantArgRange(TheCall, 1, 0x1, 0x8) ||
+         SemaBuiltinConstantArgPower2(TheCall, 1);
 case ARM::BI__builtin_arm_mve_vrshrq_n_s8:
 case ARM::BI__builtin_arm_mve_vrshrq_n_u8:
 case ARM::BI__builtin_arm_mve_vrshrq_x_n_s8:
@@ -171,6 +213,10 @@ case ARM::BI__builtin_arm_mve_vsliq_m_n_u16:
 case ARM::BI__builtin_arm_mve_vsliq_n_s16:
 case ARM::BI__builtin_arm_mve_vsliq_n_u16:
   return SemaBuiltinConstantArgRange(TheCall, 2, 0x0, 0xF);
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_f16_s16:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_f16_u16:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_s16_f16:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_u16_f16:
 case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_s32:
 case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_u32:
 case ARM::BI__builtin_arm_mve_vqrshrnbq_n_s32:
@@ -224,6 +270,10 @@ case ARM::BI__builtin_arm_mve_vsriq_m_n_u16:
 case ARM::BI__builtin_arm_mve_vsriq_n_s16:
 case ARM::BI__builtin_arm_mve_vsriq_n_u16:
   return SemaBuiltinConstantArgRange(TheCall, 2, 0x1, 0x10);
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_f32_s32:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_f32_u32:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_s32_f32:
+case ARM::BI__builtin_arm_mve_vcvtq_m_n_u32_f32:
 case ARM::BI__builtin_arm_mve_vrshrq_m_n_s32:
 case ARM::BI__builtin_arm_mve_vrshrq_m_n_u32:
 case ARM::BI__builtin_arm_mve_vshrq_m_n_s32:
@@ -233,6 +283,44 @@ case ARM::BI__builtin_arm_mve_vsriq_m_n_u32:
 case ARM::BI__builtin_arm_mve_vsriq_n_s32:
 case ARM::BI__builtin_arm_mve_vsriq_n_u32:
   return SemaBuiltinConstantArgRange(TheCall, 2, 0x1, 0x20);
+case ARM::BI__builtin_arm_mve_vddupq_m_n_u16:
+case ARM::BI__builtin_arm_mve_vddupq_m_n_u32:
+case ARM::BI__builtin_arm_mve_vddupq_m_n_u8:
+case ARM::BI__builtin_arm_mve_vddupq_m_wb_u16:
+case ARM::BI__builtin_arm_mve_vddupq_m_wb_u32:
+case ARM::BI__builtin_arm_mve_vddupq_m_wb_u8:
+case ARM::BI__builtin_arm_mve_vdwdupq_n_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_n_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_n_u8:
+case ARM::BI__builtin_arm_mve_vdwdupq_wb_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_wb_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_wb_u8:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_n_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_n_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_n_u8:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_wb_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_wb_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_x_wb_u8:
+case ARM::BI__builtin_arm_mve_vidupq_m_n_u16:
+case ARM::BI__builtin_arm_mve_vidupq_m_n_u32:
+case ARM::BI__builtin_arm_mve_vidupq_m_n_u8:
+case ARM::BI__builtin_arm_mve_vidupq_m_wb_u16:
+case ARM::BI__builtin_arm_mve_vidupq_m_wb_u32:
+case ARM::BI__builtin_arm_mve_vidupq_m_wb_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_n_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_n_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_n_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_wb_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_wb_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_wb_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_x_n_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_x_n_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_x_n_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_x_wb_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_x_wb_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_x_wb_u8:
+  return SemaBuiltinConstantArgRange(TheCall, 2, 0x1, 0x8) ||
+         SemaBuiltinConstantArgPower2(TheCall, 2);
 case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_s16:
 case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_u16:
 case ARM::BI__builtin_arm_mve_vqrshrnbq_n_s16:
@@ -286,6 +374,20 @@ case ARM::BI__builtin_arm_mve_vsriq_m_n_u8:
 case ARM::BI__builtin_arm_mve_vsriq_n_s8:
 case ARM::BI__builtin_arm_mve_vsriq_n_u8:
   return SemaBuiltinConstantArgRange(TheCall, 2, 0x1, 0x8);
+case ARM::BI__builtin_arm_mve_vdwdupq_m_n_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_m_n_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_m_n_u8:
+case ARM::BI__builtin_arm_mve_vdwdupq_m_wb_u16:
+case ARM::BI__builtin_arm_mve_vdwdupq_m_wb_u32:
+case ARM::BI__builtin_arm_mve_vdwdupq_m_wb_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_m_n_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_m_n_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_m_n_u8:
+case ARM::BI__builtin_arm_mve_viwdupq_m_wb_u16:
+case ARM::BI__builtin_arm_mve_viwdupq_m_wb_u32:
+case ARM::BI__builtin_arm_mve_viwdupq_m_wb_u8:
+  return SemaBuiltinConstantArgRange(TheCall, 3, 0x1, 0x8) ||
+         SemaBuiltinConstantArgPower2(TheCall, 3);
 case ARM::BI__builtin_arm_mve_vbicq_m_n_s16:
 case ARM::BI__builtin_arm_mve_vbicq_m_n_u16:
 case ARM::BI__builtin_arm_mve_vbicq_n_s16:

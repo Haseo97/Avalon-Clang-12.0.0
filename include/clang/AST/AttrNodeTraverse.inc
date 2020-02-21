@@ -117,8 +117,6 @@
   void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
     const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
     Visit(SA->getVariantFuncRef());
-    for (OMPDeclareVariantAttr::scores_iterator I = SA->scores_begin(), E = SA->scores_end(); I != E; ++I)
-      Visit(*I);
   }
   void VisitOMPReferencedVarAttr(const OMPReferencedVarAttr *A) {
     const auto *SA = cast<OMPReferencedVarAttr>(A); (void)SA;

@@ -9122,94 +9122,39 @@ public:
 class OMPDeclareVariantAttr : public InheritableAttr {
 Expr * variantFuncRef;
 
-  unsigned scores_Size;
-  Expr * *scores_;
-
-  unsigned ctxSelectorSets_Size;
-  unsigned *ctxSelectorSets_;
-
-  unsigned ctxSelectors_Size;
-  unsigned *ctxSelectors_;
-
-  unsigned implVendors_Size;
-  StringRef *implVendors_;
-
-  unsigned deviceKinds_Size;
-  StringRef *deviceKinds_;
+OMPTraitInfo traitInfos;
 
 public:
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * *Scores, unsigned ScoresSize, unsigned *CtxSelectorSets, unsigned CtxSelectorSetsSize, unsigned *CtxSelectors, unsigned CtxSelectorsSize, StringRef *ImplVendors, unsigned ImplVendorsSize, StringRef *DeviceKinds, unsigned DeviceKindsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Scores, ScoresSize, CtxSelectorSets, CtxSelectorSetsSize, CtxSelectors, CtxSelectorsSize, ImplVendors, ImplVendorsSize, DeviceKinds, DeviceKindsSize);
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo TraitInfos, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, TraitInfos);
     A->setImplicit(true);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * *Scores, unsigned ScoresSize, unsigned *CtxSelectorSets, unsigned CtxSelectorSetsSize, unsigned *CtxSelectors, unsigned CtxSelectorsSize, StringRef *ImplVendors, unsigned ImplVendorsSize, StringRef *DeviceKinds, unsigned DeviceKindsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Scores, ScoresSize, CtxSelectorSets, CtxSelectorSetsSize, CtxSelectors, CtxSelectorsSize, ImplVendors, ImplVendorsSize, DeviceKinds, DeviceKindsSize);
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo TraitInfos, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, TraitInfos);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * *Scores, unsigned ScoresSize, unsigned *CtxSelectorSets, unsigned CtxSelectorSetsSize, unsigned *CtxSelectors, unsigned CtxSelectorsSize, StringRef *ImplVendors, unsigned ImplVendorsSize, StringRef *DeviceKinds, unsigned DeviceKindsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo TraitInfos, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return CreateImplicit(Ctx, VariantFuncRef, Scores, ScoresSize, CtxSelectorSets, CtxSelectorSetsSize, CtxSelectors, CtxSelectorsSize, ImplVendors, ImplVendorsSize, DeviceKinds, DeviceKindsSize, I);
+    return CreateImplicit(Ctx, VariantFuncRef, TraitInfos, I);
   }
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * *Scores, unsigned ScoresSize, unsigned *CtxSelectorSets, unsigned CtxSelectorSetsSize, unsigned *CtxSelectors, unsigned CtxSelectorsSize, StringRef *ImplVendors, unsigned ImplVendorsSize, StringRef *DeviceKinds, unsigned DeviceKindsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo TraitInfos, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return Create(Ctx, VariantFuncRef, Scores, ScoresSize, CtxSelectorSets, CtxSelectorSetsSize, CtxSelectors, CtxSelectorsSize, ImplVendors, ImplVendorsSize, DeviceKinds, DeviceKindsSize, I);
+    return Create(Ctx, VariantFuncRef, TraitInfos, I);
   }
   OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , Expr * VariantFuncRef
-              , Expr * *Scores, unsigned ScoresSize
-              , unsigned *CtxSelectorSets, unsigned CtxSelectorSetsSize
-              , unsigned *CtxSelectors, unsigned CtxSelectorsSize
-              , StringRef *ImplVendors, unsigned ImplVendorsSize
-              , StringRef *DeviceKinds, unsigned DeviceKindsSize
+              , OMPTraitInfo TraitInfos
              )
     : InheritableAttr(Ctx, CommonInfo, attr::OMPDeclareVariant, false, true)
               , variantFuncRef(VariantFuncRef)
-              , scores_Size(ScoresSize), scores_(new (Ctx, 16) Expr *[scores_Size])
-              , ctxSelectorSets_Size(CtxSelectorSetsSize), ctxSelectorSets_(new (Ctx, 16) unsigned[ctxSelectorSets_Size])
-              , ctxSelectors_Size(CtxSelectorsSize), ctxSelectors_(new (Ctx, 16) unsigned[ctxSelectors_Size])
-              , implVendors_Size(ImplVendorsSize), implVendors_(new (Ctx, 16) StringRef[implVendors_Size])
-              , deviceKinds_Size(DeviceKindsSize), deviceKinds_(new (Ctx, 16) StringRef[deviceKinds_Size])
-  {
-    std::copy(Scores, Scores + scores_Size, scores_);
-    std::copy(CtxSelectorSets, CtxSelectorSets + ctxSelectorSets_Size, ctxSelectorSets_);
-    std::copy(CtxSelectors, CtxSelectors + ctxSelectors_Size, ctxSelectors_);
-    for (size_t I = 0, E = implVendors_Size; I != E;
-         ++I) {
-      StringRef Ref = ImplVendors[I];
-      if (!Ref.empty()) {
-        char *Mem = new (Ctx, 1) char[Ref.size()];
-        std::memcpy(Mem, Ref.data(), Ref.size());
-        implVendors_[I] = StringRef(Mem, Ref.size());
-      }
-    }
-    for (size_t I = 0, E = deviceKinds_Size; I != E;
-         ++I) {
-      StringRef Ref = DeviceKinds[I];
-      if (!Ref.empty()) {
-        char *Mem = new (Ctx, 1) char[Ref.size()];
-        std::memcpy(Mem, Ref.data(), Ref.size());
-        deviceKinds_[I] = StringRef(Mem, Ref.size());
-      }
-    }
-  }
-
-  OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
-              , Expr * VariantFuncRef
-             )
-    : InheritableAttr(Ctx, CommonInfo, attr::OMPDeclareVariant, false, true)
-              , variantFuncRef(VariantFuncRef)
-              , scores_Size(0), scores_(nullptr)
-              , ctxSelectorSets_Size(0), ctxSelectorSets_(nullptr)
-              , ctxSelectors_Size(0), ctxSelectors_(nullptr)
-              , implVendors_Size(0), implVendors_(nullptr)
-              , deviceKinds_Size(0), deviceKinds_(nullptr)
+              , traitInfos(TraitInfos)
   {
   }
 
@@ -9221,49 +9166,12 @@ public:
     return variantFuncRef;
   }
 
-  typedef Expr ** scores_iterator;
-  scores_iterator scores_begin() const { return scores_; }
-  scores_iterator scores_end() const { return scores_ + scores_Size; }
-  unsigned scores_size() const { return scores_Size; }
-  llvm::iterator_range<scores_iterator> scores() const { return llvm::make_range(scores_begin(), scores_end()); }
+  OMPTraitInfo getTraitInfos() const {
+    return traitInfos;
+  }
 
 
-  typedef unsigned* ctxSelectorSets_iterator;
-  ctxSelectorSets_iterator ctxSelectorSets_begin() const { return ctxSelectorSets_; }
-  ctxSelectorSets_iterator ctxSelectorSets_end() const { return ctxSelectorSets_ + ctxSelectorSets_Size; }
-  unsigned ctxSelectorSets_size() const { return ctxSelectorSets_Size; }
-  llvm::iterator_range<ctxSelectorSets_iterator> ctxSelectorSets() const { return llvm::make_range(ctxSelectorSets_begin(), ctxSelectorSets_end()); }
-
-
-  typedef unsigned* ctxSelectors_iterator;
-  ctxSelectors_iterator ctxSelectors_begin() const { return ctxSelectors_; }
-  ctxSelectors_iterator ctxSelectors_end() const { return ctxSelectors_ + ctxSelectors_Size; }
-  unsigned ctxSelectors_size() const { return ctxSelectors_Size; }
-  llvm::iterator_range<ctxSelectors_iterator> ctxSelectors() const { return llvm::make_range(ctxSelectors_begin(), ctxSelectors_end()); }
-
-
-  typedef StringRef* implVendors_iterator;
-  implVendors_iterator implVendors_begin() const { return implVendors_; }
-  implVendors_iterator implVendors_end() const { return implVendors_ + implVendors_Size; }
-  unsigned implVendors_size() const { return implVendors_Size; }
-  llvm::iterator_range<implVendors_iterator> implVendors() const { return llvm::make_range(implVendors_begin(), implVendors_end()); }
-
-
-  typedef StringRef* deviceKinds_iterator;
-  deviceKinds_iterator deviceKinds_begin() const { return deviceKinds_; }
-  deviceKinds_iterator deviceKinds_end() const { return deviceKinds_ + deviceKinds_Size; }
-  unsigned deviceKinds_size() const { return deviceKinds_Size; }
-  llvm::iterator_range<deviceKinds_iterator> deviceKinds() const { return llvm::make_range(deviceKinds_begin(), deviceKinds_end()); }
-
-
-
-    void printScore(raw_ostream & OS, const PrintingPolicy &Policy, unsigned I) const {
-      if (const Expr *E = *std::next(scores_begin(), I)) {
-        OS << "score(";
-        E->printPretty(OS, nullptr, Policy);
-        OS << "):";
-      }
-    }
+    OMPTraitInfo &getTraitInfo() { return traitInfos; }
     void printPrettyPragma(raw_ostream & OS, const PrintingPolicy &Policy)
         const {
       if (const Expr *E = getVariantFuncRef()) {
@@ -9271,66 +9179,8 @@ public:
         E->printPretty(OS, nullptr, Policy);
         OS << ")";
       }
-      // TODO: add printing of real context selectors.
       OS << " match(";
-      int Used[OMP_CTX_SET_unknown] = {0};
-      for (unsigned I = 0, E = ctxSelectorSets_size(); I < E; ++I) {
-        auto CtxSet = static_cast<OpenMPContextSelectorSetKind>(
-            *std::next(ctxSelectorSets_begin(), I));
-        if (Used[CtxSet])
-          continue;
-        if (I > 0)
-          OS << ",";
-        switch (CtxSet) {
-        case OMP_CTX_SET_implementation:
-          OS << "implementation={";
-          break;
-        case OMP_CTX_SET_device:
-          OS << "device={";
-          break;
-        case OMP_CTX_SET_unknown:
-          llvm_unreachable("Unknown context selector set.");
-        }
-        Used[CtxSet] = 1;
-        for (unsigned K = I, EK = ctxSelectors_size(); K < EK; ++K) {
-          auto CtxSetK = static_cast<OpenMPContextSelectorSetKind>(
-              *std::next(ctxSelectorSets_begin(), K));
-          if (CtxSet != CtxSetK)
-            continue;
-          if (K != I)
-            OS << ",";
-          auto Ctx = static_cast<OpenMPContextSelectorKind>(
-              *std::next(ctxSelectors_begin(), K));
-          switch (Ctx) {
-          case OMP_CTX_vendor:
-            assert(CtxSet == OMP_CTX_SET_implementation &&
-                   "Expected implementation context selector set.");
-            OS << "vendor(";
-            printScore(OS, Policy, K);
-            if (implVendors_size() > 0) {
-              OS << *implVendors(). begin();
-              for (StringRef VendorName : llvm::drop_begin(implVendors(), 1))
-                OS << ", " << VendorName;
-            }
-            OS << ")";
-            break;
-          case OMP_CTX_kind:
-            assert(CtxSet == OMP_CTX_SET_device &&
-                   "Expected device context selector set.");
-            OS << "kind(";
-            if (deviceKinds_size() > 0) {
-              OS << *deviceKinds().begin();
-              for (StringRef KindName : llvm::drop_begin(deviceKinds(), 1))
-                OS << ", " << KindName;
-            }
-            OS << ")";
-            break;
-          case OMP_CTX_unknown:
-            llvm_unreachable("Unknown context selector.");
-          }
-        }
-        OS << "}";
-      }
+      traitInfos.print(OS, Policy);
       OS << ")";
     }
   

@@ -591,7 +591,7 @@ class AMDGPUDimProfile<string opmod,
   AMDGPUDimProps Dim = dim;
   string OpMod = opmod; // the corresponding instruction is named IMAGE_OpMod
 
-  // These are entended to be overwritten by subclasses
+  // These are intended to be overwritten by subclasses
   bit IsSample = 0;
   bit IsAtomic = 0;
   list<LLVMType> RetTypes = [];
@@ -1858,7 +1858,7 @@ def int_amdgcn_else : Intrinsic<[llvm_i1_ty, llvm_anyint_ty],
 >;
 
 def int_amdgcn_if_break : Intrinsic<[llvm_anyint_ty],
-  [llvm_i1_ty, llvm_anyint_ty], [IntrNoMem, IntrConvergent]
+  [llvm_i1_ty, LLVMMatchType<0>], [IntrNoMem, IntrConvergent]
 >;
 
 def int_amdgcn_loop : Intrinsic<[llvm_i1_ty],
