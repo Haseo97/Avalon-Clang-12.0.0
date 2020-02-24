@@ -2428,9 +2428,11 @@ OPTION(prefix_1, "madx", madx, Flag, m_x86_Features_Group, INVALID, nullptr, Cor
 OPTION(prefix_1, "maes", maes, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "main-file-name", main_file_name, Separate, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "Main file name to use for debug info and source if missing", nullptr, nullptr)
-OPTION(prefix_1, "malign-branch-boundary=", malign_branch_boundary_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "malign-branch-boundary=", malign_branch_boundary_EQ, Joined, m_Group, INVALID, nullptr, DriverOption, 0,
+       "Specify the boundary's size to align branches", nullptr, nullptr)
 OPTION(prefix_1, "malign-branch-prefix-size=", malign_branch_prefix_size_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "malign-branch=", malign_branch_EQ, CommaJoined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "malign-branch=", malign_branch_EQ, CommaJoined, m_Group, INVALID, nullptr, DriverOption, 0,
+       "Specify types of branches to align", nullptr, nullptr)
 OPTION(prefix_1, "malign-double", malign_double, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
        "Align doubles to two words in structs (x86 only)", nullptr, nullptr)
 OPTION(prefix_1, "malign-functions=", malign_functions_EQ, Joined, clang_ignored_m_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -2477,7 +2479,8 @@ OPTION(prefix_1, "mbranch-likely", mbranch_likely, Flag, m_Group, INVALID, nullp
 OPTION(prefix_1, "mbranch-protection=", mbranch_protection_EQ, Joined, INVALID, INVALID, nullptr, 0, 0,
        "Enforce targets of indirect branches and function returns", nullptr, nullptr)
 OPTION(prefix_1, "mbranch-target-enforce", mbranch_target_enforce, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "mbranches-within-32B-boundaries", mbranches_within_32B_boundaries, Flag, m_Group, INVALID, nullptr, DriverOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mbranches-within-32B-boundaries", mbranches_within_32B_boundaries, Flag, m_Group, INVALID, nullptr, DriverOption, 0,
+       "Align selected branches (fused, jcc, jmp) within 32-byte boundary", nullptr, nullptr)
 OPTION(prefix_1, "mbulk-memory", mbulk_memory, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcheck-zero-division", mcheck_zero_division, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcldemote", mcldemote, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
@@ -2488,12 +2491,10 @@ OPTION(prefix_1, "mcmodel=medany", mcmodel_EQ_medany, Flag, m_riscv_Features_Gro
        "Equivalent to -mcmodel=medium, compatible with RISC-V gcc.", nullptr, nullptr)
 OPTION(prefix_1, "mcmodel=medlow", mcmodel_EQ_medlow, Flag, m_riscv_Features_Group, mcmodel_EQ, "small\0", CC1Option, 0,
        "Equivalent to -mcmodel=small, compatible with RISC-V gcc.", nullptr, nullptr)
-OPTION(prefix_1, "mcmodel=", mcmodel_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mcmodel=", mcmodel_EQ, Joined, m_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcmpb", mcmpb, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mcmse", mcmse, Flag, m_arm_Features_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
        "Allow use of CMSE (Armv8-M Security Extensions)", nullptr, nullptr)
-OPTION(prefix_1, "mcode-model", mcode_model, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
-       "The code model to use", nullptr, "tiny,small,kernel,medium,large")
 OPTION(prefix_1, "mcode-object-v3", mcode_object_v3, Flag, m_amdgpu_Features_Group, INVALID, nullptr, 0, 0,
        "Enable code object v3 (AMDGPU only)", nullptr, nullptr)
 OPTION(prefix_1, "mcompact-branches=", mcompact_branches_EQ, Joined, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)

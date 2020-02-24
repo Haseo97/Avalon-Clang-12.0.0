@@ -242,6 +242,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_asr,                           // llvm.aarch64.sve.asr
     aarch64_sve_asr_wide,                      // llvm.aarch64.sve.asr.wide
     aarch64_sve_asrd,                          // llvm.aarch64.sve.asrd
+    aarch64_sve_bcax,                          // llvm.aarch64.sve.bcax
     aarch64_sve_bic,                           // llvm.aarch64.sve.bic
     aarch64_sve_bic_z,                         // llvm.aarch64.sve.bic.z
     aarch64_sve_brka,                          // llvm.aarch64.sve.brka
@@ -251,6 +252,9 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_brkn_z,                        // llvm.aarch64.sve.brkn.z
     aarch64_sve_brkpa_z,                       // llvm.aarch64.sve.brkpa.z
     aarch64_sve_brkpb_z,                       // llvm.aarch64.sve.brkpb.z
+    aarch64_sve_bsl,                           // llvm.aarch64.sve.bsl
+    aarch64_sve_bsl1n,                         // llvm.aarch64.sve.bsl1n
+    aarch64_sve_bsl2n,                         // llvm.aarch64.sve.bsl2n
     aarch64_sve_cadd_x,                        // llvm.aarch64.sve.cadd.x
     aarch64_sve_cdot,                          // llvm.aarch64.sve.cdot
     aarch64_sve_cdot_lane,                     // llvm.aarch64.sve.cdot.lane
@@ -289,6 +293,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_dup,                           // llvm.aarch64.sve.dup
     aarch64_sve_eor,                           // llvm.aarch64.sve.eor
     aarch64_sve_eor_z,                         // llvm.aarch64.sve.eor.z
+    aarch64_sve_eor3,                          // llvm.aarch64.sve.eor3
     aarch64_sve_eorbt,                         // llvm.aarch64.sve.eorbt
     aarch64_sve_eortb,                         // llvm.aarch64.sve.eortb
     aarch64_sve_eorv,                          // llvm.aarch64.sve.eorv
@@ -419,6 +424,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_mul,                           // llvm.aarch64.sve.mul
     aarch64_sve_mul_lane,                      // llvm.aarch64.sve.mul.lane
     aarch64_sve_nand_z,                        // llvm.aarch64.sve.nand.z
+    aarch64_sve_nbsl,                          // llvm.aarch64.sve.nbsl
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
     aarch64_sve_nmatch,                        // llvm.aarch64.sve.nmatch
     aarch64_sve_nor_z,                         // llvm.aarch64.sve.nor.z
@@ -432,6 +438,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_pmullb_pair,                   // llvm.aarch64.sve.pmullb.pair
     aarch64_sve_pmullt_pair,                   // llvm.aarch64.sve.pmullt.pair
     aarch64_sve_pnext,                         // llvm.aarch64.sve.pnext
+    aarch64_sve_prf,                           // llvm.aarch64.sve.prf
     aarch64_sve_ptest_any,                     // llvm.aarch64.sve.ptest.any
     aarch64_sve_ptest_first,                   // llvm.aarch64.sve.ptest.first
     aarch64_sve_ptest_last,                    // llvm.aarch64.sve.ptest.last

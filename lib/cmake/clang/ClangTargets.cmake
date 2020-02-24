@@ -290,10 +290,6 @@ add_library(clang-cpp SHARED IMPORTED)
 # Create imported target libclang
 add_library(libclang SHARED IMPORTED)
 
-set_target_properties(libclang PROPERTIES
-  INTERFACE_COMPILE_DEFINITIONS "CINDEX_EXPORTS"
-)
-
 if(CMAKE_VERSION VERSION_LESS 2.8.12)
   message(FATAL_ERROR "This file relies on consumers using CMake 2.8.12 or greater.")
 endif()

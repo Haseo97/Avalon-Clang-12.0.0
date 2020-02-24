@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum HEXAGONIntrinsics : unsigned {
 // Enum values for intrinsics
-    hexagon_A2_abs = 2057,                            // llvm.hexagon.A2.abs
+    hexagon_A2_abs = 2064,                            // llvm.hexagon.A2.abs
     hexagon_A2_absp,                           // llvm.hexagon.A2.absp
     hexagon_A2_abssat,                         // llvm.hexagon.A2.abssat
     hexagon_A2_add,                            // llvm.hexagon.A2.add
@@ -964,6 +964,8 @@ enum HEXAGONIntrinsics : unsigned {
     hexagon_V6_pred_scalar2_128B,              // llvm.hexagon.V6.pred.scalar2.128B
     hexagon_V6_pred_scalar2v2,                 // llvm.hexagon.V6.pred.scalar2v2
     hexagon_V6_pred_scalar2v2_128B,            // llvm.hexagon.V6.pred.scalar2v2.128B
+    hexagon_V6_pred_typecast,                  // llvm.hexagon.V6.pred.typecast
+    hexagon_V6_pred_typecast_128B,             // llvm.hexagon.V6.pred.typecast.128B
     hexagon_V6_pred_xor,                       // llvm.hexagon.V6.pred.xor
     hexagon_V6_pred_xor_128B,                  // llvm.hexagon.V6.pred.xor.128B
     hexagon_V6_shuffeqh,                       // llvm.hexagon.V6.shuffeqh
