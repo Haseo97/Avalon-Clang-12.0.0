@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum X86Intrinsics : unsigned {
 // Enum values for intrinsics
-    x86_3dnow_pavgusb = 6508,                         // llvm.x86.3dnow.pavgusb
+    x86_3dnow_pavgusb = 6549,                         // llvm.x86.3dnow.pavgusb
     x86_3dnow_pf2id,                           // llvm.x86.3dnow.pf2id
     x86_3dnow_pfacc,                           // llvm.x86.3dnow.pfacc
     x86_3dnow_pfadd,                           // llvm.x86.3dnow.pfadd
@@ -552,8 +552,6 @@ enum X86Intrinsics : unsigned {
     x86_avx512_mask_sqrt_ss,                   // llvm.x86.avx512.mask.sqrt.ss
     x86_avx512_mask_sub_sd_round,              // llvm.x86.avx512.mask.sub.sd.round
     x86_avx512_mask_sub_ss_round,              // llvm.x86.avx512.mask.sub.ss.round
-    x86_avx512_mask_vcvtph2ps_128,             // llvm.x86.avx512.mask.vcvtph2ps.128
-    x86_avx512_mask_vcvtph2ps_256,             // llvm.x86.avx512.mask.vcvtph2ps.256
     x86_avx512_mask_vcvtph2ps_512,             // llvm.x86.avx512.mask.vcvtph2ps.512
     x86_avx512_mask_vcvtps2ph_128,             // llvm.x86.avx512.mask.vcvtps2ph.128
     x86_avx512_mask_vcvtps2ph_256,             // llvm.x86.avx512.mask.vcvtps2ph.256
@@ -796,6 +794,10 @@ enum X86Intrinsics : unsigned {
     x86_flags_read_u64,                        // llvm.x86.flags.read.u64
     x86_flags_write_u32,                       // llvm.x86.flags.write.u32
     x86_flags_write_u64,                       // llvm.x86.flags.write.u64
+    x86_fma_vfmaddsub_pd,                      // llvm.x86.fma.vfmaddsub.pd
+    x86_fma_vfmaddsub_pd_256,                  // llvm.x86.fma.vfmaddsub.pd.256
+    x86_fma_vfmaddsub_ps,                      // llvm.x86.fma.vfmaddsub.ps
+    x86_fma_vfmaddsub_ps_256,                  // llvm.x86.fma.vfmaddsub.ps.256
     x86_fxrstor,                               // llvm.x86.fxrstor
     x86_fxrstor64,                             // llvm.x86.fxrstor64
     x86_fxsave,                                // llvm.x86.fxsave
@@ -1097,8 +1099,6 @@ enum X86Intrinsics : unsigned {
     x86_tpause,                                // llvm.x86.tpause
     x86_umonitor,                              // llvm.x86.umonitor
     x86_umwait,                                // llvm.x86.umwait
-    x86_vcvtph2ps_128,                         // llvm.x86.vcvtph2ps.128
-    x86_vcvtph2ps_256,                         // llvm.x86.vcvtph2ps.256
     x86_vcvtps2ph_128,                         // llvm.x86.vcvtps2ph.128
     x86_vcvtps2ph_256,                         // llvm.x86.vcvtps2ph.256
     x86_vgf2p8affineinvqb_128,                 // llvm.x86.vgf2p8affineinvqb.128

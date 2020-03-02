@@ -3479,7 +3479,9 @@ OPTION(prefix_2, "showFilenames-", _SLASH_showFilenames_, Flag, cl_Group, INVALI
        "Do not print the name of each compiled file (default)", nullptr, nullptr)
 OPTION(prefix_2, "showFilenames", _SLASH_showFilenames, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Print the name of each compiled file", nullptr, nullptr)
-OPTION(prefix_2, "showIncludes", _SLASH_showIncludes, Flag, cl_Group, show_includes, nullptr, CLOption | DriverOption | CLOption, 0,
+OPTION(prefix_2, "showIncludes:user", _SLASH_showIncludes_user, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
+       "Like /showIncludes but omit system headers", nullptr, nullptr)
+OPTION(prefix_2, "showIncludes", _SLASH_showIncludes, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Print info about included files to stderr", nullptr, nullptr)
 OPTION(prefix_3, "signed-char", _signed_char, Flag, INVALID, fsigned_char, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "single_module", single__module, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)

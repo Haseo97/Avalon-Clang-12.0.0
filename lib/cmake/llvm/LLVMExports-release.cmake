@@ -1000,6 +1000,15 @@ set_target_properties(llvm-extract PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS llvm-extract )
 list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-extract "${_IMPORT_PREFIX}/bin/llvm-extract" )
 
+# Import target "llvm-gsymutil" for configuration "Release"
+set_property(TARGET llvm-gsymutil APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(llvm-gsymutil PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/llvm-gsymutil"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS llvm-gsymutil )
+list(APPEND _IMPORT_CHECK_FILES_FOR_llvm-gsymutil "${_IMPORT_PREFIX}/bin/llvm-gsymutil" )
+
 # Import target "llvm-ifs" for configuration "Release"
 set_property(TARGET llvm-ifs APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(llvm-ifs PROPERTIES

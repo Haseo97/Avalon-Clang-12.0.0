@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum BPFIntrinsics : unsigned {
 // Enum values for intrinsics
-    bpf_load_byte = 2059,                             // llvm.bpf.load.byte
+    bpf_load_byte = 2100,                             // llvm.bpf.load.byte
     bpf_load_half,                             // llvm.bpf.load.half
     bpf_load_word,                             // llvm.bpf.load.word
     bpf_preserve_field_info,                   // llvm.bpf.preserve.field.info

@@ -239,6 +239,7 @@
     sadd_sat,                                  // llvm.sadd.sat
     sadd_with_overflow,                        // llvm.sadd.with.overflow
     sdiv_fix,                                  // llvm.sdiv.fix
+    sdiv_fix_sat,                              // llvm.sdiv.fix.sat
     set_loop_iterations,                       // llvm.set.loop.iterations
     sideeffect,                                // llvm.sideeffect
     sin,                                       // llvm.sin
@@ -264,6 +265,7 @@
     uadd_sat,                                  // llvm.uadd.sat
     uadd_with_overflow,                        // llvm.uadd.with.overflow
     udiv_fix,                                  // llvm.udiv.fix
+    udiv_fix_sat,                              // llvm.udiv.fix.sat
     umul_fix,                                  // llvm.umul.fix
     umul_fix_sat,                              // llvm.umul.fix.sat
     umul_with_overflow,                        // llvm.umul.with.overflow
@@ -277,4 +279,4 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7733
+    num_intrinsics = 7774
