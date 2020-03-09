@@ -4365,6 +4365,102 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqdmull
 int64x2_t __arm_vqdmulltq_s32(int32x4_t, int32x4_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqdmulltq_s32)))
 int64x2_t __arm_vqdmulltq(int32x4_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s16)))
+int8x16_t __arm_vqmovnbq_m_s16(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s16)))
+int8x16_t __arm_vqmovnbq_m(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s32)))
+int16x8_t __arm_vqmovnbq_m_s32(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s32)))
+int16x8_t __arm_vqmovnbq_m(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u16)))
+uint8x16_t __arm_vqmovnbq_m_u16(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u16)))
+uint8x16_t __arm_vqmovnbq_m(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u32)))
+uint16x8_t __arm_vqmovnbq_m_u32(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u32)))
+uint16x8_t __arm_vqmovnbq_m(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s16)))
+int8x16_t __arm_vqmovnbq_s16(int8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s16)))
+int8x16_t __arm_vqmovnbq(int8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s32)))
+int16x8_t __arm_vqmovnbq_s32(int16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s32)))
+int16x8_t __arm_vqmovnbq(int16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u16)))
+uint8x16_t __arm_vqmovnbq_u16(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u16)))
+uint8x16_t __arm_vqmovnbq(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u32)))
+uint16x8_t __arm_vqmovnbq_u32(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u32)))
+uint16x8_t __arm_vqmovnbq(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s16)))
+int8x16_t __arm_vqmovntq_m_s16(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s16)))
+int8x16_t __arm_vqmovntq_m(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s32)))
+int16x8_t __arm_vqmovntq_m_s32(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s32)))
+int16x8_t __arm_vqmovntq_m(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u16)))
+uint8x16_t __arm_vqmovntq_m_u16(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u16)))
+uint8x16_t __arm_vqmovntq_m(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u32)))
+uint16x8_t __arm_vqmovntq_m_u32(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u32)))
+uint16x8_t __arm_vqmovntq_m(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s16)))
+int8x16_t __arm_vqmovntq_s16(int8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s16)))
+int8x16_t __arm_vqmovntq(int8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s32)))
+int16x8_t __arm_vqmovntq_s32(int16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s32)))
+int16x8_t __arm_vqmovntq(int16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u16)))
+uint8x16_t __arm_vqmovntq_u16(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u16)))
+uint8x16_t __arm_vqmovntq(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u32)))
+uint16x8_t __arm_vqmovntq_u32(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u32)))
+uint16x8_t __arm_vqmovntq(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s16)))
+uint8x16_t __arm_vqmovunbq_m_s16(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s16)))
+uint8x16_t __arm_vqmovunbq_m(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s32)))
+uint16x8_t __arm_vqmovunbq_m_s32(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s32)))
+uint16x8_t __arm_vqmovunbq_m(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s16)))
+uint8x16_t __arm_vqmovunbq_s16(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s16)))
+uint8x16_t __arm_vqmovunbq(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s32)))
+uint16x8_t __arm_vqmovunbq_s32(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s32)))
+uint16x8_t __arm_vqmovunbq(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s16)))
+uint8x16_t __arm_vqmovuntq_m_s16(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s16)))
+uint8x16_t __arm_vqmovuntq_m(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s32)))
+uint16x8_t __arm_vqmovuntq_m_s32(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s32)))
+uint16x8_t __arm_vqmovuntq_m(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s16)))
+uint8x16_t __arm_vqmovuntq_s16(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s16)))
+uint8x16_t __arm_vqmovuntq(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s32)))
+uint16x8_t __arm_vqmovuntq_s32(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s32)))
+uint16x8_t __arm_vqmovuntq(uint16x8_t, int32x4_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqnegq_m_s16)))
 int16x8_t __arm_vqnegq_m_s16(int16x8_t, int16x8_t, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqnegq_m_s16)))
@@ -5837,6 +5933,38 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vrshrq_
 uint8x16_t __arm_vrshrq_x_n_u8(uint8x16_t, int, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vrshrq_x_n_u8)))
 uint8x16_t __arm_vrshrq_x(uint8x16_t, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_s32)))
+int32x4_t __arm_vsbciq_m_s32(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_s32)))
+int32x4_t __arm_vsbciq_m(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_u32)))
+uint32x4_t __arm_vsbciq_m_u32(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_u32)))
+uint32x4_t __arm_vsbciq_m(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_s32)))
+int32x4_t __arm_vsbciq_s32(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_s32)))
+int32x4_t __arm_vsbciq(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_u32)))
+uint32x4_t __arm_vsbciq_u32(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_u32)))
+uint32x4_t __arm_vsbciq(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_s32)))
+int32x4_t __arm_vsbcq_m_s32(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_s32)))
+int32x4_t __arm_vsbcq_m(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_u32)))
+uint32x4_t __arm_vsbcq_m_u32(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_u32)))
+uint32x4_t __arm_vsbcq_m(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_s32)))
+int32x4_t __arm_vsbcq_s32(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_s32)))
+int32x4_t __arm_vsbcq(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_u32)))
+uint32x4_t __arm_vsbcq_u32(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_u32)))
+uint32x4_t __arm_vsbcq(uint32x4_t, uint32x4_t, unsigned *);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_s16)))
 int16x8_t __arm_vsetq_lane_s16(int16_t, int16x8_t, int);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_s16)))
@@ -5869,6 +5997,54 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsetq_l
 uint8x16_t __arm_vsetq_lane_u8(uint8_t, uint8x16_t, int);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_u8)))
 uint8x16_t __arm_vsetq_lane(uint8_t, uint8x16_t, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s16)))
+int16x8_t __arm_vshlcq_m_s16(int16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s16)))
+int16x8_t __arm_vshlcq_m(int16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s32)))
+int32x4_t __arm_vshlcq_m_s32(int32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s32)))
+int32x4_t __arm_vshlcq_m(int32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s8)))
+int8x16_t __arm_vshlcq_m_s8(int8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s8)))
+int8x16_t __arm_vshlcq_m(int8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u16)))
+uint16x8_t __arm_vshlcq_m_u16(uint16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u16)))
+uint16x8_t __arm_vshlcq_m(uint16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u32)))
+uint32x4_t __arm_vshlcq_m_u32(uint32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u32)))
+uint32x4_t __arm_vshlcq_m(uint32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u8)))
+uint8x16_t __arm_vshlcq_m_u8(uint8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u8)))
+uint8x16_t __arm_vshlcq_m(uint8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s16)))
+int16x8_t __arm_vshlcq_s16(int16x8_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s16)))
+int16x8_t __arm_vshlcq(int16x8_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s32)))
+int32x4_t __arm_vshlcq_s32(int32x4_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s32)))
+int32x4_t __arm_vshlcq(int32x4_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s8)))
+int8x16_t __arm_vshlcq_s8(int8x16_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s8)))
+int8x16_t __arm_vshlcq(int8x16_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u16)))
+uint16x8_t __arm_vshlcq_u16(uint16x8_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u16)))
+uint16x8_t __arm_vshlcq(uint16x8_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u32)))
+uint32x4_t __arm_vshlcq_u32(uint32x4_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u32)))
+uint32x4_t __arm_vshlcq(uint32x4_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u8)))
+uint8x16_t __arm_vshlcq_u8(uint8x16_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u8)))
+uint8x16_t __arm_vshlcq(uint8x16_t, uint32_t *, int);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshllbq_m_n_s16)))
 int32x4_t __arm_vshllbq_m_n_s16(int32x4_t, int16x8_t, int, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshllbq_m_n_s16)))
@@ -7581,10 +7757,144 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcreate
 float16x8_t __arm_vcreateq_f16(uint64_t, uint64_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcreateq_f32)))
 float32x4_t __arm_vcreateq_f32(uint64_t, uint64_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s16_f16)))
+int16x8_t __arm_vcvtaq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s16_f16)))
+int16x8_t __arm_vcvtaq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s32_f32)))
+int32x4_t __arm_vcvtaq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s32_f32)))
+int32x4_t __arm_vcvtaq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u16_f16)))
+uint16x8_t __arm_vcvtaq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u16_f16)))
+uint16x8_t __arm_vcvtaq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u32_f32)))
+uint32x4_t __arm_vcvtaq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u32_f32)))
+uint32x4_t __arm_vcvtaq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_s16_f16)))
+int16x8_t __arm_vcvtaq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_s32_f32)))
+int32x4_t __arm_vcvtaq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_u16_f16)))
+uint16x8_t __arm_vcvtaq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_u32_f32)))
+uint32x4_t __arm_vcvtaq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_s16_f16)))
+int16x8_t __arm_vcvtaq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_s32_f32)))
+int32x4_t __arm_vcvtaq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_u16_f16)))
+uint16x8_t __arm_vcvtaq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_u32_f32)))
+uint32x4_t __arm_vcvtaq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_f16_f32)))
 float16x8_t __arm_vcvtbq_f16_f32(float16x8_t, float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_f32_f16)))
+float32x4_t __arm_vcvtbq_f32_f16(float16x8_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_m_f16_f32)))
 float16x8_t __arm_vcvtbq_m_f16_f32(float16x8_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_m_f32_f16)))
+float32x4_t __arm_vcvtbq_m_f32_f16(float32x4_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_x_f32_f16)))
+float32x4_t __arm_vcvtbq_x_f32_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s16_f16)))
+int16x8_t __arm_vcvtmq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s16_f16)))
+int16x8_t __arm_vcvtmq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s32_f32)))
+int32x4_t __arm_vcvtmq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s32_f32)))
+int32x4_t __arm_vcvtmq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u16_f16)))
+uint16x8_t __arm_vcvtmq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u16_f16)))
+uint16x8_t __arm_vcvtmq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u32_f32)))
+uint32x4_t __arm_vcvtmq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u32_f32)))
+uint32x4_t __arm_vcvtmq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_s16_f16)))
+int16x8_t __arm_vcvtmq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_s32_f32)))
+int32x4_t __arm_vcvtmq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_u16_f16)))
+uint16x8_t __arm_vcvtmq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_u32_f32)))
+uint32x4_t __arm_vcvtmq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_s16_f16)))
+int16x8_t __arm_vcvtmq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_s32_f32)))
+int32x4_t __arm_vcvtmq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_u16_f16)))
+uint16x8_t __arm_vcvtmq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_u32_f32)))
+uint32x4_t __arm_vcvtmq_x_u32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s16_f16)))
+int16x8_t __arm_vcvtnq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s16_f16)))
+int16x8_t __arm_vcvtnq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s32_f32)))
+int32x4_t __arm_vcvtnq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s32_f32)))
+int32x4_t __arm_vcvtnq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u16_f16)))
+uint16x8_t __arm_vcvtnq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u16_f16)))
+uint16x8_t __arm_vcvtnq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u32_f32)))
+uint32x4_t __arm_vcvtnq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u32_f32)))
+uint32x4_t __arm_vcvtnq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_s16_f16)))
+int16x8_t __arm_vcvtnq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_s32_f32)))
+int32x4_t __arm_vcvtnq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_u16_f16)))
+uint16x8_t __arm_vcvtnq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_u32_f32)))
+uint32x4_t __arm_vcvtnq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_s16_f16)))
+int16x8_t __arm_vcvtnq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_s32_f32)))
+int32x4_t __arm_vcvtnq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_u16_f16)))
+uint16x8_t __arm_vcvtnq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_u32_f32)))
+uint32x4_t __arm_vcvtnq_x_u32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s16_f16)))
+int16x8_t __arm_vcvtpq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s16_f16)))
+int16x8_t __arm_vcvtpq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s32_f32)))
+int32x4_t __arm_vcvtpq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s32_f32)))
+int32x4_t __arm_vcvtpq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u16_f16)))
+uint16x8_t __arm_vcvtpq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u16_f16)))
+uint16x8_t __arm_vcvtpq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u32_f32)))
+uint32x4_t __arm_vcvtpq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u32_f32)))
+uint32x4_t __arm_vcvtpq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_s16_f16)))
+int16x8_t __arm_vcvtpq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_s32_f32)))
+int32x4_t __arm_vcvtpq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_u16_f16)))
+uint16x8_t __arm_vcvtpq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_u32_f32)))
+uint32x4_t __arm_vcvtpq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_s16_f16)))
+int16x8_t __arm_vcvtpq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_s32_f32)))
+int32x4_t __arm_vcvtpq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_u16_f16)))
+uint16x8_t __arm_vcvtpq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_u32_f32)))
+uint32x4_t __arm_vcvtpq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtq_f16_s16)))
 float16x8_t __arm_vcvtq_f16_s16(int16x8_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtq_f16_s16)))
@@ -7747,8 +8057,14 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtq_x
 uint32x4_t __arm_vcvtq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_f16_f32)))
 float16x8_t __arm_vcvttq_f16_f32(float16x8_t, float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_f32_f16)))
+float32x4_t __arm_vcvttq_f32_f16(float16x8_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_m_f16_f32)))
 float16x8_t __arm_vcvttq_m_f16_f32(float16x8_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_m_f32_f16)))
+float32x4_t __arm_vcvttq_m_f32_f16(float32x4_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_x_f32_f16)))
+float32x4_t __arm_vcvttq_x_f32_f16(float16x8_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vdupq_m_n_f16)))
 float16x8_t __arm_vdupq_m_n_f16(float16x8_t, float16_t, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vdupq_m_n_f16)))
@@ -12884,6 +13200,102 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqdmull
 int64x2_t vqdmulltq_s32(int32x4_t, int32x4_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqdmulltq_s32)))
 int64x2_t vqdmulltq(int32x4_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s16)))
+int8x16_t vqmovnbq_m_s16(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s16)))
+int8x16_t vqmovnbq_m(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s32)))
+int16x8_t vqmovnbq_m_s32(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_s32)))
+int16x8_t vqmovnbq_m(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u16)))
+uint8x16_t vqmovnbq_m_u16(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u16)))
+uint8x16_t vqmovnbq_m(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u32)))
+uint16x8_t vqmovnbq_m_u32(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_m_u32)))
+uint16x8_t vqmovnbq_m(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s16)))
+int8x16_t vqmovnbq_s16(int8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s16)))
+int8x16_t vqmovnbq(int8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s32)))
+int16x8_t vqmovnbq_s32(int16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_s32)))
+int16x8_t vqmovnbq(int16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u16)))
+uint8x16_t vqmovnbq_u16(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u16)))
+uint8x16_t vqmovnbq(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u32)))
+uint16x8_t vqmovnbq_u32(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovnbq_u32)))
+uint16x8_t vqmovnbq(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s16)))
+int8x16_t vqmovntq_m_s16(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s16)))
+int8x16_t vqmovntq_m(int8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s32)))
+int16x8_t vqmovntq_m_s32(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_s32)))
+int16x8_t vqmovntq_m(int16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u16)))
+uint8x16_t vqmovntq_m_u16(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u16)))
+uint8x16_t vqmovntq_m(uint8x16_t, uint16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u32)))
+uint16x8_t vqmovntq_m_u32(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_m_u32)))
+uint16x8_t vqmovntq_m(uint16x8_t, uint32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s16)))
+int8x16_t vqmovntq_s16(int8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s16)))
+int8x16_t vqmovntq(int8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s32)))
+int16x8_t vqmovntq_s32(int16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_s32)))
+int16x8_t vqmovntq(int16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u16)))
+uint8x16_t vqmovntq_u16(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u16)))
+uint8x16_t vqmovntq(uint8x16_t, uint16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u32)))
+uint16x8_t vqmovntq_u32(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovntq_u32)))
+uint16x8_t vqmovntq(uint16x8_t, uint32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s16)))
+uint8x16_t vqmovunbq_m_s16(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s16)))
+uint8x16_t vqmovunbq_m(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s32)))
+uint16x8_t vqmovunbq_m_s32(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_m_s32)))
+uint16x8_t vqmovunbq_m(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s16)))
+uint8x16_t vqmovunbq_s16(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s16)))
+uint8x16_t vqmovunbq(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s32)))
+uint16x8_t vqmovunbq_s32(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovunbq_s32)))
+uint16x8_t vqmovunbq(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s16)))
+uint8x16_t vqmovuntq_m_s16(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s16)))
+uint8x16_t vqmovuntq_m(uint8x16_t, int16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s32)))
+uint16x8_t vqmovuntq_m_s32(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_m_s32)))
+uint16x8_t vqmovuntq_m(uint16x8_t, int32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s16)))
+uint8x16_t vqmovuntq_s16(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s16)))
+uint8x16_t vqmovuntq(uint8x16_t, int16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s32)))
+uint16x8_t vqmovuntq_s32(uint16x8_t, int32x4_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqmovuntq_s32)))
+uint16x8_t vqmovuntq(uint16x8_t, int32x4_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vqnegq_m_s16)))
 int16x8_t vqnegq_m_s16(int16x8_t, int16x8_t, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vqnegq_m_s16)))
@@ -14356,6 +14768,38 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vrshrq_
 uint8x16_t vrshrq_x_n_u8(uint8x16_t, int, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vrshrq_x_n_u8)))
 uint8x16_t vrshrq_x(uint8x16_t, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_s32)))
+int32x4_t vsbciq_m_s32(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_s32)))
+int32x4_t vsbciq_m(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_u32)))
+uint32x4_t vsbciq_m_u32(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_m_u32)))
+uint32x4_t vsbciq_m(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_s32)))
+int32x4_t vsbciq_s32(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_s32)))
+int32x4_t vsbciq(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbciq_u32)))
+uint32x4_t vsbciq_u32(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbciq_u32)))
+uint32x4_t vsbciq(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_s32)))
+int32x4_t vsbcq_m_s32(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_s32)))
+int32x4_t vsbcq_m(int32x4_t, int32x4_t, int32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_u32)))
+uint32x4_t vsbcq_m_u32(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_m_u32)))
+uint32x4_t vsbcq_m(uint32x4_t, uint32x4_t, uint32x4_t, unsigned *, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_s32)))
+int32x4_t vsbcq_s32(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_s32)))
+int32x4_t vsbcq(int32x4_t, int32x4_t, unsigned *);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsbcq_u32)))
+uint32x4_t vsbcq_u32(uint32x4_t, uint32x4_t, unsigned *);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsbcq_u32)))
+uint32x4_t vsbcq(uint32x4_t, uint32x4_t, unsigned *);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_s16)))
 int16x8_t vsetq_lane_s16(int16_t, int16x8_t, int);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_s16)))
@@ -14388,6 +14832,54 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vsetq_l
 uint8x16_t vsetq_lane_u8(uint8_t, uint8x16_t, int);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vsetq_lane_u8)))
 uint8x16_t vsetq_lane(uint8_t, uint8x16_t, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s16)))
+int16x8_t vshlcq_m_s16(int16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s16)))
+int16x8_t vshlcq_m(int16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s32)))
+int32x4_t vshlcq_m_s32(int32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s32)))
+int32x4_t vshlcq_m(int32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s8)))
+int8x16_t vshlcq_m_s8(int8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_s8)))
+int8x16_t vshlcq_m(int8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u16)))
+uint16x8_t vshlcq_m_u16(uint16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u16)))
+uint16x8_t vshlcq_m(uint16x8_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u32)))
+uint32x4_t vshlcq_m_u32(uint32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u32)))
+uint32x4_t vshlcq_m(uint32x4_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u8)))
+uint8x16_t vshlcq_m_u8(uint8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_m_u8)))
+uint8x16_t vshlcq_m(uint8x16_t, uint32_t *, int, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s16)))
+int16x8_t vshlcq_s16(int16x8_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s16)))
+int16x8_t vshlcq(int16x8_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s32)))
+int32x4_t vshlcq_s32(int32x4_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s32)))
+int32x4_t vshlcq(int32x4_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s8)))
+int8x16_t vshlcq_s8(int8x16_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_s8)))
+int8x16_t vshlcq(int8x16_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u16)))
+uint16x8_t vshlcq_u16(uint16x8_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u16)))
+uint16x8_t vshlcq(uint16x8_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u32)))
+uint32x4_t vshlcq_u32(uint32x4_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u32)))
+uint32x4_t vshlcq(uint32x4_t, uint32_t *, int);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u8)))
+uint8x16_t vshlcq_u8(uint8x16_t, uint32_t *, int);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshlcq_u8)))
+uint8x16_t vshlcq(uint8x16_t, uint32_t *, int);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vshllbq_m_n_s16)))
 int32x4_t vshllbq_m_n_s16(int32x4_t, int16x8_t, int, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vshllbq_m_n_s16)))
@@ -16093,10 +16585,144 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcreate
 float16x8_t vcreateq_f16(uint64_t, uint64_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcreateq_f32)))
 float32x4_t vcreateq_f32(uint64_t, uint64_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s16_f16)))
+int16x8_t vcvtaq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s16_f16)))
+int16x8_t vcvtaq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s32_f32)))
+int32x4_t vcvtaq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_s32_f32)))
+int32x4_t vcvtaq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u16_f16)))
+uint16x8_t vcvtaq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u16_f16)))
+uint16x8_t vcvtaq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u32_f32)))
+uint32x4_t vcvtaq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_m_u32_f32)))
+uint32x4_t vcvtaq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_s16_f16)))
+int16x8_t vcvtaq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_s32_f32)))
+int32x4_t vcvtaq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_u16_f16)))
+uint16x8_t vcvtaq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_u32_f32)))
+uint32x4_t vcvtaq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_s16_f16)))
+int16x8_t vcvtaq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_s32_f32)))
+int32x4_t vcvtaq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_u16_f16)))
+uint16x8_t vcvtaq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtaq_x_u32_f32)))
+uint32x4_t vcvtaq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_f16_f32)))
 float16x8_t vcvtbq_f16_f32(float16x8_t, float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_f32_f16)))
+float32x4_t vcvtbq_f32_f16(float16x8_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_m_f16_f32)))
 float16x8_t vcvtbq_m_f16_f32(float16x8_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_m_f32_f16)))
+float32x4_t vcvtbq_m_f32_f16(float32x4_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtbq_x_f32_f16)))
+float32x4_t vcvtbq_x_f32_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s16_f16)))
+int16x8_t vcvtmq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s16_f16)))
+int16x8_t vcvtmq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s32_f32)))
+int32x4_t vcvtmq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_s32_f32)))
+int32x4_t vcvtmq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u16_f16)))
+uint16x8_t vcvtmq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u16_f16)))
+uint16x8_t vcvtmq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u32_f32)))
+uint32x4_t vcvtmq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_m_u32_f32)))
+uint32x4_t vcvtmq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_s16_f16)))
+int16x8_t vcvtmq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_s32_f32)))
+int32x4_t vcvtmq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_u16_f16)))
+uint16x8_t vcvtmq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_u32_f32)))
+uint32x4_t vcvtmq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_s16_f16)))
+int16x8_t vcvtmq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_s32_f32)))
+int32x4_t vcvtmq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_u16_f16)))
+uint16x8_t vcvtmq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtmq_x_u32_f32)))
+uint32x4_t vcvtmq_x_u32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s16_f16)))
+int16x8_t vcvtnq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s16_f16)))
+int16x8_t vcvtnq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s32_f32)))
+int32x4_t vcvtnq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_s32_f32)))
+int32x4_t vcvtnq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u16_f16)))
+uint16x8_t vcvtnq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u16_f16)))
+uint16x8_t vcvtnq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u32_f32)))
+uint32x4_t vcvtnq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_m_u32_f32)))
+uint32x4_t vcvtnq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_s16_f16)))
+int16x8_t vcvtnq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_s32_f32)))
+int32x4_t vcvtnq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_u16_f16)))
+uint16x8_t vcvtnq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_u32_f32)))
+uint32x4_t vcvtnq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_s16_f16)))
+int16x8_t vcvtnq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_s32_f32)))
+int32x4_t vcvtnq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_u16_f16)))
+uint16x8_t vcvtnq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtnq_x_u32_f32)))
+uint32x4_t vcvtnq_x_u32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s16_f16)))
+int16x8_t vcvtpq_m_s16_f16(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s16_f16)))
+int16x8_t vcvtpq_m(int16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s32_f32)))
+int32x4_t vcvtpq_m_s32_f32(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_s32_f32)))
+int32x4_t vcvtpq_m(int32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u16_f16)))
+uint16x8_t vcvtpq_m_u16_f16(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u16_f16)))
+uint16x8_t vcvtpq_m(uint16x8_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u32_f32)))
+uint32x4_t vcvtpq_m_u32_f32(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_m_u32_f32)))
+uint32x4_t vcvtpq_m(uint32x4_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_s16_f16)))
+int16x8_t vcvtpq_s16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_s32_f32)))
+int32x4_t vcvtpq_s32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_u16_f16)))
+uint16x8_t vcvtpq_u16_f16(float16x8_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_u32_f32)))
+uint32x4_t vcvtpq_u32_f32(float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_s16_f16)))
+int16x8_t vcvtpq_x_s16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_s32_f32)))
+int32x4_t vcvtpq_x_s32_f32(float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_u16_f16)))
+uint16x8_t vcvtpq_x_u16_f16(float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtpq_x_u32_f32)))
+uint32x4_t vcvtpq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtq_f16_s16)))
 float16x8_t vcvtq_f16_s16(int16x8_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vcvtq_f16_s16)))
@@ -16259,8 +16885,14 @@ static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvtq_x
 uint32x4_t vcvtq_x_u32_f32(float32x4_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_f16_f32)))
 float16x8_t vcvttq_f16_f32(float16x8_t, float32x4_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_f32_f16)))
+float32x4_t vcvttq_f32_f16(float16x8_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_m_f16_f32)))
 float16x8_t vcvttq_m_f16_f32(float16x8_t, float32x4_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_m_f32_f16)))
+float32x4_t vcvttq_m_f32_f16(float32x4_t, float16x8_t, mve_pred16_t);
+static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vcvttq_x_f32_f16)))
+float32x4_t vcvttq_x_f32_f16(float16x8_t, mve_pred16_t);
 static __inline__ __attribute__((__clang_arm_mve_alias(__builtin_arm_mve_vdupq_m_n_f16)))
 float16x8_t vdupq_m_n_f16(float16x8_t, float16_t, mve_pred16_t);
 static __inline__ __attribute__((overloadable, __clang_arm_mve_alias(__builtin_arm_mve_vdupq_m_n_f16)))

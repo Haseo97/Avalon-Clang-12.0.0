@@ -1588,7 +1588,7 @@ OPTION(prefix_1, "fno-strict-overflow", fno_strict_overflow, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-strict-return", fno_strict_return, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-strict-vtable-pointers", fno_strict_vtable_pointers, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-struct-path-tbaa", fno_struct_path_tbaa, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-sycl", fno_sycl, Flag, sycl_Group, INVALID, nullptr, 0, 0,
+OPTION(prefix_1, "fno-sycl", fno_sycl, Flag, sycl_Group, INVALID, nullptr, CoreOption, 0,
        "Disable SYCL kernels compilation for device", nullptr, nullptr)
 OPTION(prefix_1, "fno-temp-file", fno_temp_file, Flag, f_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Directly create compilation output files. This may lead to incorrect incremental builds if the compiler crashes", nullptr, nullptr)
@@ -2013,10 +2013,12 @@ OPTION(prefix_1, "fstrict-vtable-pointers", fstrict_vtable_pointers, Flag, f_Gro
 OPTION(prefix_1, "fstruct-path-tbaa", fstruct_path_tbaa, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsycl-is-device", fsycl_is_device, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Generate code for SYCL device.", nullptr, nullptr)
-OPTION(prefix_1, "fsycl", fsycl, Flag, sycl_Group, INVALID, nullptr, 0, 0,
+OPTION(prefix_1, "fsycl", fsycl, Flag, sycl_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Enable SYCL kernels compilation for device", nullptr, nullptr)
 OPTION(prefix_1, "fsymbol-partition=", fsymbol_partition_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsyntax-only", fsyntax_only, Flag, Action_Group, INVALID, nullptr, DriverOption | CoreOption | CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fsystem-module", fsystem_module, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
+       "Build this module as a system module. Only used with -emit-module", nullptr, nullptr)
 OPTION(prefix_2, "FS", _SLASH_FS, Flag, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ftabstop=", ftabstop_EQ, Joined, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ftabstop", ftabstop, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -3525,6 +3527,8 @@ OPTION(prefix_3, "stdlib", _stdlib, Separate, INVALID, stdlib_EQ, nullptr, 0, 0,
 OPTION(prefix_3, "std", _std, Separate, INVALID, std_EQ, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "sub_library", sub__library, JoinedOrSeparate, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "sub_umbrella", sub__umbrella, JoinedOrSeparate, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "sycl-std=", sycl_std_EQ, Joined, sycl_Group, INVALID, nullptr, CC1Option | NoArgumentUnused | CoreOption, 0,
+       "SYCL language standard to compile for.", nullptr, "2017, 121, 1.2.1, sycl-1.2.1")
 OPTION(prefix_1, "sys-header-deps", sys_header_deps, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Include system headers in dependency output", nullptr, nullptr)
 OPTION(prefix_3, "sysroot=", _sysroot_EQ, Joined, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)

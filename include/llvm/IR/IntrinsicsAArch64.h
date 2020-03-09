@@ -427,6 +427,9 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_ldff1_gather_uxtw_index,       // llvm.aarch64.sve.ldff1.gather.uxtw.index
     aarch64_sve_ldnf1,                         // llvm.aarch64.sve.ldnf1
     aarch64_sve_ldnt1,                         // llvm.aarch64.sve.ldnt1
+    aarch64_sve_ldnt1_gather,                  // llvm.aarch64.sve.ldnt1.gather
+    aarch64_sve_ldnt1_gather_scalar_offset,    // llvm.aarch64.sve.ldnt1.gather.scalar.offset
+    aarch64_sve_ldnt1_gather_uxtw,             // llvm.aarch64.sve.ldnt1.gather.uxtw
     aarch64_sve_lsl,                           // llvm.aarch64.sve.lsl
     aarch64_sve_lsl_wide,                      // llvm.aarch64.sve.lsl.wide
     aarch64_sve_lsr,                           // llvm.aarch64.sve.lsr
@@ -624,6 +627,9 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_st1_scatter_uxtw,              // llvm.aarch64.sve.st1.scatter.uxtw
     aarch64_sve_st1_scatter_uxtw_index,        // llvm.aarch64.sve.st1.scatter.uxtw.index
     aarch64_sve_stnt1,                         // llvm.aarch64.sve.stnt1
+    aarch64_sve_stnt1_scatter,                 // llvm.aarch64.sve.stnt1.scatter
+    aarch64_sve_stnt1_scatter_scalar_offset,   // llvm.aarch64.sve.stnt1.scatter.scalar.offset
+    aarch64_sve_stnt1_scatter_uxtw,            // llvm.aarch64.sve.stnt1.scatter.uxtw
     aarch64_sve_sub,                           // llvm.aarch64.sve.sub
     aarch64_sve_subhnb,                        // llvm.aarch64.sve.subhnb
     aarch64_sve_subhnt,                        // llvm.aarch64.sve.subhnt
@@ -751,6 +757,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_whilels,                       // llvm.aarch64.sve.whilels
     aarch64_sve_whilelt,                       // llvm.aarch64.sve.whilelt
     aarch64_sve_wrffr,                         // llvm.aarch64.sve.wrffr
+    aarch64_sve_xar,                           // llvm.aarch64.sve.xar
     aarch64_sve_zip1,                          // llvm.aarch64.sve.zip1
     aarch64_sve_zip2,                          // llvm.aarch64.sve.zip2
     aarch64_tagp,                              // llvm.aarch64.tagp

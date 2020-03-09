@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum RISCVIntrinsics : unsigned {
 // Enum values for intrinsics
-    riscv_masked_atomicrmw_add_i32 = 6266,            // llvm.riscv.masked.atomicrmw.add.i32
+    riscv_masked_atomicrmw_add_i32 = 6289,            // llvm.riscv.masked.atomicrmw.add.i32
     riscv_masked_atomicrmw_add_i64,            // llvm.riscv.masked.atomicrmw.add.i64
     riscv_masked_atomicrmw_max_i32,            // llvm.riscv.masked.atomicrmw.max.i32
     riscv_masked_atomicrmw_max_i64,            // llvm.riscv.masked.atomicrmw.max.i64
