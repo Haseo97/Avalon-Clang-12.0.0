@@ -275,8 +275,21 @@
     vaend,                                     // llvm.va_end
     vastart,                                   // llvm.va_start
     var_annotation,                            // llvm.var.annotation
+    vp_add,                                    // llvm.vp.add
+    vp_and,                                    // llvm.vp.and
+    vp_ashr,                                   // llvm.vp.ashr
+    vp_lshr,                                   // llvm.vp.lshr
+    vp_mul,                                    // llvm.vp.mul
+    vp_or,                                     // llvm.vp.or
+    vp_sdiv,                                   // llvm.vp.sdiv
+    vp_shl,                                    // llvm.vp.shl
+    vp_srem,                                   // llvm.vp.srem
+    vp_sub,                                    // llvm.vp.sub
+    vp_udiv,                                   // llvm.vp.udiv
+    vp_urem,                                   // llvm.vp.urem
+    vp_xor,                                    // llvm.vp.xor
     vscale,                                    // llvm.vscale
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7797
+    num_intrinsics = 7896

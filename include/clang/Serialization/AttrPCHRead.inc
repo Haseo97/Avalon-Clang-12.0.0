@@ -280,11 +280,11 @@
     New->setImplicit(isImplicit);
     break;
   }
-  case attr::ArmMveAlias: {
+  case attr::ArmBuiltinAlias: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     IdentifierInfo * builtinName = Record.readIdentifier();
-    New = new (Context) ArmMveAliasAttr(Context, Info, builtinName);
+    New = new (Context) ArmBuiltinAliasAttr(Context, Info, builtinName);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;
@@ -1021,6 +1021,12 @@
     bool isImplicit = Record.readInt();
     New = new (Context) LifetimeBoundAttr(Context, Info);
     cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::LoaderUninitialized: {
+    bool isImplicit = Record.readInt();
+    New = new (Context) LoaderUninitializedAttr(Context, Info);
     New->setImplicit(isImplicit);
     break;
   }

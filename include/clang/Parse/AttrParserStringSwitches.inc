@@ -39,7 +39,7 @@
 .Case("interrupt", true)
 .Case("argument_with_type_tag", true)
 .Case("pointer_with_type_tag", true)
-.Case("__clang_arm_mve_alias", true)
+.Case("__clang_arm_builtin_alias", true)
 .Case("availability", true)
 .Case("blocks", true)
 .Case("guard", true)

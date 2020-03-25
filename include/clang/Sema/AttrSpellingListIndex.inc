@@ -219,12 +219,12 @@
         return 5;
     break;
   }
-  case AT_ArmMveAlias: {
-    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+  case AT_ArmBuiltinAlias: {
+    if (Name == "__clang_arm_builtin_alias" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
-    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+    if (Name == "__clang_arm_builtin_alias" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
-    if (Name == "__clang_arm_mve_alias" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+    if (Name == "__clang_arm_builtin_alias" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
         return 2;
     break;
   }
@@ -826,6 +826,15 @@
         return 0;
     if (Name == "lifetimebound" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
         return 1;
+    break;
+  }
+  case AT_LoaderUninitialized: {
+    if (Name == "loader_uninitialized" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "loader_uninitialized" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "loader_uninitialized" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
     break;
   }
   case AT_LockReturned: {

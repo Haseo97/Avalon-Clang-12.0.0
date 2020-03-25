@@ -1338,9 +1338,13 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_RequiresCapability;	 // "requires_capability"
     }
     break;
-  case 20:	 // 5 strings to match.
+  case 20:	 // 6 strings to match.
     switch (Name[0]) {
     default: break;
+    case 'l':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "oader_uninitialized", 19) != 0)
+        break;
+      return AttributeCommonInfo::AT_LoaderUninitialized;	 // "loader_uninitialized"
     case 'n':	 // 1 string to match.
       if (memcmp(Name.data()+1, "eon_polyvector_type", 19) != 0)
         break;
@@ -1363,13 +1367,9 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WorkGroupSizeHint;	 // "work_group_size_hint"
     }
     break;
-  case 21:	 // 10 strings to match.
+  case 21:	 // 9 strings to match.
     switch (Name[0]) {
     default: break;
-    case '_':	 // 1 string to match.
-      if (memcmp(Name.data()+1, "_clang_arm_mve_alias", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArmMveAlias;	 // "__clang_arm_mve_alias"
     case 'a':	 // 1 string to match.
       if (memcmp(Name.data()+1, "ssert_exclusive_lock", 20) != 0)
         break;
@@ -1523,9 +1523,13 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       break;
     }
     break;
-  case 25:	 // 5 strings to match.
+  case 25:	 // 6 strings to match.
     switch (Name[0]) {
     default: break;
+    case '_':	 // 1 string to match.
+      if (memcmp(Name.data()+1, "_clang_arm_builtin_alias", 24) != 0)
+        break;
+      return AttributeCommonInfo::AT_ArmBuiltinAlias;	 // "__clang_arm_builtin_alias"
     case 'a':	 // 1 string to match.
       if (memcmp(Name.data()+1, "cquire_shared_capability", 24) != 0)
         break;
@@ -3231,14 +3235,18 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_RequiresCapability;	 // "clang::requires_capability"
     }
     break;
-  case 27:	 // 3 strings to match.
+  case 27:	 // 4 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 2 strings to match.
+    case 'c':	 // 3 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
       default: break;
+      case 'l':	 // 1 string to match.
+        if (memcmp(Name.data()+8, "oader_uninitialized", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_LoaderUninitialized;	 // "clang::loader_uninitialized"
       case 'n':	 // 1 string to match.
         if (memcmp(Name.data()+8, "eon_polyvector_type", 19) != 0)
           break;
@@ -3255,18 +3263,14 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_NoInstrumentFunction;	 // "gnu::no_instrument_function"
     }
     break;
-  case 28:	 // 10 strings to match.
+  case 28:	 // 9 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 9 strings to match.
+    case 'c':	 // 8 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
       default: break;
-      case '_':	 // 1 string to match.
-        if (memcmp(Name.data()+8, "_clang_arm_mve_alias", 20) != 0)
-          break;
-        return AttributeCommonInfo::AT_ArmMveAlias;	 // "clang::__clang_arm_mve_alias"
       case 'l':	 // 1 string to match.
         if (memcmp(Name.data()+8, "to_visibility_public", 20) != 0)
           break;
@@ -3428,11 +3432,15 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_NoSanitizeSpecific;	 // "gnu::no_address_safety_analysis"
     }
     break;
-  case 32:	 // 3 strings to match.
+  case 32:	 // 4 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
     default: break;
+    case '_':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "_clang_arm_builtin_alias", 24) != 0)
+        break;
+      return AttributeCommonInfo::AT_ArmBuiltinAlias;	 // "clang::__clang_arm_builtin_alias"
     case 'a':	 // 1 string to match.
       if (memcmp(Name.data()+8, "cquire_shared_capability", 24) != 0)
         break;
@@ -4166,11 +4174,15 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       break;
     }
     break;
-  case 27:	 // 2 strings to match.
+  case 27:	 // 3 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
     default: break;
+    case 'l':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "oader_uninitialized", 19) != 0)
+        break;
+      return AttributeCommonInfo::AT_LoaderUninitialized;	 // "clang::loader_uninitialized"
     case 'n':	 // 1 string to match.
       if (memcmp(Name.data()+8, "eon_polyvector_type", 19) != 0)
         break;
@@ -4181,15 +4193,11 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_ObjCRuntimeVisible;	 // "clang::objc_runtime_visible"
     }
     break;
-  case 28:	 // 8 strings to match.
+  case 28:	 // 7 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
     default: break;
-    case '_':	 // 1 string to match.
-      if (memcmp(Name.data()+8, "_clang_arm_mve_alias", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArmMveAlias;	 // "clang::__clang_arm_mve_alias"
     case 'l':	 // 1 string to match.
       if (memcmp(Name.data()+8, "to_visibility_public", 20) != 0)
         break;
@@ -4297,10 +4305,21 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_PassObjectSize;	 // "clang::pass_dynamic_object_size"
     }
     break;
-  case 32:	 // 1 string to match.
-    if (memcmp(Name.data()+0, "clang::no_thread_safety_analysis", 32) != 0)
+  case 32:	 // 2 strings to match.
+    if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
-    return AttributeCommonInfo::AT_NoThreadSafetyAnalysis;	 // "clang::no_thread_safety_analysis"
+    switch (Name[7]) {
+    default: break;
+    case '_':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "_clang_arm_builtin_alias", 24) != 0)
+        break;
+      return AttributeCommonInfo::AT_ArmBuiltinAlias;	 // "clang::__clang_arm_builtin_alias"
+    case 'n':	 // 1 string to match.
+      if (memcmp(Name.data()+8, "o_thread_safety_analysis", 24) != 0)
+        break;
+      return AttributeCommonInfo::AT_NoThreadSafetyAnalysis;	 // "clang::no_thread_safety_analysis"
+    }
+    break;
   case 33:	 // 2 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;

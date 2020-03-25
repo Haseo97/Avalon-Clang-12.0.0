@@ -161,8 +161,8 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<ArgumentWithTypeTagAttr>(At);
       return A->clone(C);
     }
-    case attr::ArmMveAlias: {
-      const auto *A = cast<ArmMveAliasAttr>(At);
+    case attr::ArmBuiltinAlias: {
+      const auto *A = cast<ArmBuiltinAliasAttr>(At);
       return A->clone(C);
     }
     case attr::ArmMveStrictPolymorphism: {
@@ -559,6 +559,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::LifetimeBound: {
       const auto *A = cast<LifetimeBoundAttr>(At);
+      return A->clone(C);
+    }
+    case attr::LoaderUninitialized: {
+      const auto *A = cast<LoaderUninitializedAttr>(At);
       return A->clone(C);
     }
     case attr::LockReturned: {
@@ -1483,7 +1487,7 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::ArgumentWithTypeTag: {
       return nullptr;
     }
-    case attr::ArmMveAlias: {
+    case attr::ArmBuiltinAlias: {
       return nullptr;
     }
     case attr::ArmMveStrictPolymorphism: {
@@ -1732,6 +1736,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::LifetimeBound: {
+      return nullptr;
+    }
+    case attr::LoaderUninitialized: {
       return nullptr;
     }
     case attr::LockReturned: {

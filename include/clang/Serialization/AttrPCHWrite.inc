@@ -213,8 +213,8 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(SA->getIsPointer());
     break;
   }
-  case attr::ArmMveAlias: {
-    const auto *SA = cast<ArmMveAliasAttr>(A);
+  case attr::ArmBuiltinAlias: {
+    const auto *SA = cast<ArmBuiltinAliasAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddIdentifierRef(SA->getBuiltinName());
@@ -774,6 +774,10 @@ Record.push_back(SA->getExtensibility());
   case attr::LifetimeBound: {
     const auto *SA = cast<LifetimeBoundAttr>(A);
     Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    break;
+  }
+  case attr::LoaderUninitialized: {
     Record.push_back(A->isImplicit());
     break;
   }

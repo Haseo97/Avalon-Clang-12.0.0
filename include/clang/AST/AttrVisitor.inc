@@ -124,8 +124,8 @@
   bool VisitArgumentWithTypeTagAttr(ArgumentWithTypeTagAttr *A) {
     return true; 
   }
-  bool TraverseArmMveAliasAttr(ArmMveAliasAttr *A);
-  bool VisitArmMveAliasAttr(ArmMveAliasAttr *A) {
+  bool TraverseArmBuiltinAliasAttr(ArmBuiltinAliasAttr *A);
+  bool VisitArmBuiltinAliasAttr(ArmBuiltinAliasAttr *A) {
     return true; 
   }
   bool TraverseArmMveStrictPolymorphismAttr(ArmMveStrictPolymorphismAttr *A);
@@ -454,6 +454,10 @@
   }
   bool TraverseLifetimeBoundAttr(LifetimeBoundAttr *A);
   bool VisitLifetimeBoundAttr(LifetimeBoundAttr *A) {
+    return true; 
+  }
+  bool TraverseLoaderUninitializedAttr(LoaderUninitializedAttr *A);
+  bool VisitLoaderUninitializedAttr(LoaderUninitializedAttr *A) {
     return true; 
   }
   bool TraverseLockReturnedAttr(LockReturnedAttr *A);
@@ -1510,10 +1514,10 @@ bool VISITORCLASS<Derived>::TraverseArgumentWithTypeTagAttr(ArgumentWithTypeTagA
 }
 
 template <typename Derived>
-bool VISITORCLASS<Derived>::TraverseArmMveAliasAttr(ArmMveAliasAttr *A) {
+bool VISITORCLASS<Derived>::TraverseArmBuiltinAliasAttr(ArmBuiltinAliasAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
-  if (!getDerived().VisitArmMveAliasAttr(A))
+  if (!getDerived().VisitArmBuiltinAliasAttr(A))
     return false;
   return true;
 }
@@ -2303,6 +2307,15 @@ bool VISITORCLASS<Derived>::TraverseLifetimeBoundAttr(LifetimeBoundAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitLifetimeBoundAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseLoaderUninitializedAttr(LoaderUninitializedAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitLoaderUninitializedAttr(A))
     return false;
   return true;
 }
@@ -4164,8 +4177,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseArcWeakrefUnavailableAttr(cast<ArcWeakrefUnavailableAttr>(A));
     case attr::ArgumentWithTypeTag:
       return getDerived().TraverseArgumentWithTypeTagAttr(cast<ArgumentWithTypeTagAttr>(A));
-    case attr::ArmMveAlias:
-      return getDerived().TraverseArmMveAliasAttr(cast<ArmMveAliasAttr>(A));
+    case attr::ArmBuiltinAlias:
+      return getDerived().TraverseArmBuiltinAliasAttr(cast<ArmBuiltinAliasAttr>(A));
     case attr::ArmMveStrictPolymorphism:
       return getDerived().TraverseArmMveStrictPolymorphismAttr(cast<ArmMveStrictPolymorphismAttr>(A));
     case attr::Artificial:
@@ -4330,6 +4343,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseLayoutVersionAttr(cast<LayoutVersionAttr>(A));
     case attr::LifetimeBound:
       return getDerived().TraverseLifetimeBoundAttr(cast<LifetimeBoundAttr>(A));
+    case attr::LoaderUninitialized:
+      return getDerived().TraverseLoaderUninitializedAttr(cast<LoaderUninitializedAttr>(A));
     case attr::LockReturned:
       return getDerived().TraverseLockReturnedAttr(cast<LockReturnedAttr>(A));
     case attr::LocksExcluded:

@@ -90,8 +90,8 @@
     OS << " " << SA->getTypeTagIdx().getSourceIndex();
     if (SA->getIsPointer()) OS << " IsPointer";
   }
-  void VisitArmMveAliasAttr(const ArmMveAliasAttr *A) {
-    const auto *SA = cast<ArmMveAliasAttr>(A); (void)SA;
+  void VisitArmBuiltinAliasAttr(const ArmBuiltinAliasAttr *A) {
+    const auto *SA = cast<ArmBuiltinAliasAttr>(A); (void)SA;
     if (SA->getBuiltinName())
       OS << " " << SA->getBuiltinName()->getName();
   }

@@ -673,7 +673,8 @@ OPTION(prefix_1, "fcolor-diagnostics", fcolor_diagnostics, Flag, f_Group, INVALI
        "Use colors in diagnostics", nullptr, nullptr)
 OPTION(prefix_1, "fcomment-block-commands=", fcomment_block_commands, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option, 0,
        "Treat each comma separated argument in <arg> as a documentation comment block command", "<arg>", nullptr)
-OPTION(prefix_1, "fcommon", fcommon, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fcommon", fcommon, Flag, f_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
+       "Place uninitialized global variables in a common block", nullptr, nullptr)
 OPTION(prefix_1, "fcompile-resource=", fcompile_resource_EQ, Joined, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fcomplete-member-pointers", fcomplete_member_pointers, Flag, f_clang_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
        "Require member pointer base types to be complete if they would be significant under the Microsoft ABI", nullptr, nullptr)
@@ -842,8 +843,6 @@ OPTION(prefix_1, "femit-coverage-data", femit_coverage_data, Flag, INVALID, INVA
        "Instrument the program to emit gcov coverage data when run.", nullptr, nullptr)
 OPTION(prefix_1, "femit-coverage-notes", femit_coverage_notes, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Emit a gcov coverage notes file when compiling.", nullptr, nullptr)
-OPTION(prefix_1, "femit-debug-entry-values", femit_debug_entry_values, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
-       "Enables debug info about call site parameter's entry values", nullptr, nullptr)
 OPTION(prefix_1, "femulated-tls", femulated_tls, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Use emutls functions to access thread_local variables", nullptr, nullptr)
 OPTION(prefix_1, "fencode-extended-block-signature", fencode_extended_block_signature, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -2523,6 +2522,8 @@ OPTION(prefix_1, "mdisable-tail-calls", mdisable_tail_calls, Flag, INVALID, INVA
        "Disable tail call optimization, keeping the call stack accurate", nullptr, nullptr)
 OPTION(prefix_1, "mdll", mdll, Joined, m_Group, INVALID, nullptr, DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mdouble-float", mdouble_float, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mdouble=", mdouble_EQ, Joined, m_Group, INVALID, nullptr, CC1Option, 0,
+       "Force double to be 32 bits or 64 bits", nullptr, "32,64")
 OPTION(prefix_1, "mdspr2", mdspr2, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mdsp", mdsp, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mdynamic-no-pic", mdynamic_no_pic, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -3027,6 +3028,10 @@ OPTION(prefix_1, "msign-return-address=", msign_return_address_EQ, Joined, m_Gro
        "Select return address signing scope", nullptr, "none,all,non-leaf")
 OPTION(prefix_1, "msimd128", msimd128, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "msingle-float", msingle_float, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "msmall-data-limit=", msmall_data_limit_EQ, Joined, m_Group, G, nullptr, 0, 0,
+       "Put global and static data smaller than the limit into a special section", nullptr, nullptr)
+OPTION(prefix_1, "msmall-data-limit", msmall_data_limit, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Put global and static data smaller than the limit into a special section", nullptr, nullptr)
 OPTION(prefix_1, "msmall-data-threshold=", msmall_data_threshold_EQ, Joined, m_Group, G, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "msoft-float", msoft_float, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
        "Use software floating point", nullptr, nullptr)

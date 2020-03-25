@@ -139,7 +139,7 @@ struct ParsedAttrInfoAMDGPUFlatWorkGroupSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::amdgpu_flat_work_group_size"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
     return false;
@@ -169,7 +169,7 @@ struct ParsedAttrInfoAMDGPUNumSGPR : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::amdgpu_num_sgpr"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
     return false;
@@ -199,7 +199,7 @@ struct ParsedAttrInfoAMDGPUNumVGPR : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::amdgpu_num_vgpr"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
     return false;
@@ -229,7 +229,7 @@ struct ParsedAttrInfoAMDGPUWavesPerEU : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::amdgpu_waves_per_eu"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "kernel functions";
     return false;
@@ -281,7 +281,7 @@ struct ParsedAttrInfoAVRSignal : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::signal"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -316,7 +316,7 @@ struct ParsedAttrInfoAbiTag : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::abi_tag"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isStruct(D) && !isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<NamespaceDecl>(D))) {
+  if (!isStruct(D) && !isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<NamespaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, variables, functions, and namespaces";
     return false;
@@ -353,7 +353,7 @@ struct ParsedAttrInfoAcquireCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"shared_lock_function"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -404,7 +404,7 @@ struct ParsedAttrInfoAcquireHandle : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::acquire_handle"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<ParmVarDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, typedefs, and parameters";
     return false;
@@ -435,7 +435,7 @@ struct ParsedAttrInfoAcquiredAfter : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"acquired_after"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -460,7 +460,7 @@ struct ParsedAttrInfoAcquiredBefore : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"acquired_before"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -504,7 +504,7 @@ struct ParsedAttrInfoAlias : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::alias"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isGlobalVar(D))) {
+  if (!isa<FunctionDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and global variables";
     return false;
@@ -534,7 +534,7 @@ struct ParsedAttrInfoAlignValue : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"align_value"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<TypedefNameDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables and typedefs";
     return false;
@@ -607,7 +607,7 @@ struct ParsedAttrInfoAllocAlign : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::alloc_align"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isHasFunctionProto(D))) {
+  if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
     return false;
@@ -633,7 +633,7 @@ struct ParsedAttrInfoAllocSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::alloc_size"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -663,7 +663,7 @@ struct ParsedAttrInfoAlwaysDestroy : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::always_destroy"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -694,7 +694,7 @@ struct ParsedAttrInfoAlwaysInline : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Keyword,"__forceinline"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -798,7 +798,7 @@ struct ParsedAttrInfoAnyX86NoCfCheck : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nocf_check"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isFunctionLike(D))) {
+  if (!isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and function pointers";
     return false;
@@ -834,7 +834,7 @@ struct ParsedAttrInfoArcWeakrefUnavailable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_arc_weak_reference_unavailable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -868,7 +868,7 @@ struct ParsedAttrInfoArgumentWithTypeTag : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::pointer_with_type_tag"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isHasFunctionProto(D))) {
+  if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
     return false;
@@ -903,9 +903,9 @@ virtual unsigned spellingIndexToSemanticSpelling(const ParsedAttr &Attr) const {
 static const ParsedAttrInfoArgumentWithTypeTag Instance;
 };
 const ParsedAttrInfoArgumentWithTypeTag ParsedAttrInfoArgumentWithTypeTag::Instance;
-struct ParsedAttrInfoArmMveAlias : public ParsedAttrInfo {
-  ParsedAttrInfoArmMveAlias() {
-    AttrKind = ParsedAttr::AT_ArmMveAlias;
+struct ParsedAttrInfoArmBuiltinAlias : public ParsedAttrInfo {
+  ParsedAttrInfoArmBuiltinAlias() {
+    AttrKind = ParsedAttr::AT_ArmBuiltinAlias;
     NumArgs = 1;
     OptArgs = 0;
     HasCustomParsing = 0;
@@ -914,12 +914,12 @@ struct ParsedAttrInfoArmMveAlias : public ParsedAttrInfo {
     IsStmt = 0;
     IsKnownToGCC = 0;
     IsSupportedByPragmaAttribute = 1;
-    Spellings.push_back({AttributeCommonInfo::AS_GNU,"__clang_arm_mve_alias"});
-    Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::__clang_arm_mve_alias"});
-    Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::__clang_arm_mve_alias"});
+    Spellings.push_back({AttributeCommonInfo::AS_GNU,"__clang_arm_builtin_alias"});
+    Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::__clang_arm_builtin_alias"});
+    Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::__clang_arm_builtin_alias"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -929,16 +929,16 @@ virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D
 
 virtual bool existsInTarget(const TargetInfo &Target) const {
   const llvm::Triple &T = Target.getTriple(); (void)T;
-  return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb);
+  return true && (T.getArch() == llvm::Triple::arm || T.getArch() == llvm::Triple::thumb || T.getArch() == llvm::Triple::armeb || T.getArch() == llvm::Triple::thumbeb || T.getArch() == llvm::Triple::aarch64);
 }
 
 virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
   MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_function, /*IsSupported=*/true));
 }
 
-static const ParsedAttrInfoArmMveAlias Instance;
+static const ParsedAttrInfoArmBuiltinAlias Instance;
 };
-const ParsedAttrInfoArmMveAlias ParsedAttrInfoArmMveAlias::Instance;
+const ParsedAttrInfoArmBuiltinAlias ParsedAttrInfoArmBuiltinAlias::Instance;
 struct ParsedAttrInfoArmMveStrictPolymorphism : public ParsedAttrInfo {
   ParsedAttrInfoArmMveStrictPolymorphism() {
     AttrKind = ParsedAttr::AT_ArmMveStrictPolymorphism;
@@ -977,7 +977,7 @@ struct ParsedAttrInfoArtificial : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::artificial"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isInlineFunction(D))) {
+  if (!isInlineFunction(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "inline functions";
     return false;
@@ -1005,7 +1005,7 @@ struct ParsedAttrInfoAssertCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::assert_shared_capability"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1050,7 +1050,7 @@ struct ParsedAttrInfoAssertExclusiveLock : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"assert_exclusive_lock"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1075,7 +1075,7 @@ struct ParsedAttrInfoAssertSharedLock : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"assert_shared_lock"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1101,7 +1101,7 @@ struct ParsedAttrInfoAssumeAligned : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::assume_aligned"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and functions";
     return false;
@@ -1133,7 +1133,7 @@ struct ParsedAttrInfoAvailability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::availability"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<NamedDecl>(D))) {
+  if (!isa<NamedDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "named declarations";
     return false;
@@ -1178,7 +1178,7 @@ struct ParsedAttrInfoBPFPreserveAccessIndex : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::preserve_access_index"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -1260,7 +1260,7 @@ struct ParsedAttrInfoCFAuditedTransfer : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::cf_audited_transfer"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1291,7 +1291,7 @@ struct ParsedAttrInfoCFConsumed : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::cf_consumed"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -1320,7 +1320,7 @@ struct ParsedAttrInfoCFGuard : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"guard"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1347,7 +1347,7 @@ struct ParsedAttrInfoCFICanonicalJumpTable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::cfi_canonical_jump_table"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1414,7 +1414,7 @@ struct ParsedAttrInfoCFUnknownTransfer : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::cf_unknown_transfer"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1446,7 +1446,7 @@ struct ParsedAttrInfoCPUDispatch : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"cpu_dispatch"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1478,7 +1478,7 @@ struct ParsedAttrInfoCPUSpecific : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"cpu_specific"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1508,7 +1508,7 @@ struct ParsedAttrInfoCUDAConstant : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__constant__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -1547,7 +1547,7 @@ struct ParsedAttrInfoCUDADevice : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__device__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<VarDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and variables";
     return false;
@@ -1587,7 +1587,7 @@ struct ParsedAttrInfoCUDAGlobal : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__global__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1626,7 +1626,7 @@ struct ParsedAttrInfoCUDAHost : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__host__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1663,7 +1663,7 @@ struct ParsedAttrInfoCUDAInvalidTarget : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1698,7 +1698,7 @@ struct ParsedAttrInfoCUDALaunchBounds : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__launch_bounds__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isFunctionLike(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, functions, and function pointers";
     return false;
@@ -1738,7 +1738,7 @@ struct ParsedAttrInfoCUDAShared : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__shared__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -1776,7 +1776,7 @@ struct ParsedAttrInfoCXX11NoReturn : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"::noreturn"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1806,7 +1806,7 @@ struct ParsedAttrInfoCallableWhen : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::callable_when"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXMethodDecl>(D))) {
+  if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1837,7 +1837,7 @@ struct ParsedAttrInfoCallback : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::callback"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -1869,7 +1869,7 @@ struct ParsedAttrInfoCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::shared_capability"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D))) {
+  if (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and typedefs";
     return false;
@@ -1920,7 +1920,7 @@ struct ParsedAttrInfoCarriesDependency : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"::carries_dependency"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D))) {
+  if (!isa<ParmVarDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters, Objective-C methods, and functions";
     return false;
@@ -1952,7 +1952,7 @@ struct ParsedAttrInfoCleanup : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::cleanup"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isLocalVar(D))) {
+  if (!isLocalVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "local variables";
     return false;
@@ -1977,7 +1977,7 @@ struct ParsedAttrInfoCodeSeg : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"code_seg"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and classes";
     return false;
@@ -2003,7 +2003,7 @@ struct ParsedAttrInfoCold : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::cold"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2033,7 +2033,7 @@ struct ParsedAttrInfoCommon : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::common"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -2083,7 +2083,7 @@ struct ParsedAttrInfoConstInit : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::require_constant_initialization"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isGlobalVar(D))) {
+  if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
     return false;
@@ -2140,7 +2140,7 @@ struct ParsedAttrInfoConstructor : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::constructor"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2170,7 +2170,7 @@ struct ParsedAttrInfoConsumable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::consumable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -2200,7 +2200,7 @@ struct ParsedAttrInfoConsumableAutoCast : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::consumable_auto_cast_state"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -2230,7 +2230,7 @@ struct ParsedAttrInfoConsumableSetOnRead : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::consumable_set_state_on_read"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -2261,7 +2261,7 @@ struct ParsedAttrInfoConvergent : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::convergent"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2292,7 +2292,7 @@ struct ParsedAttrInfoDLLExport : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::dllexport"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, variables, classes, and Objective-C interfaces";
     return false;
@@ -2328,7 +2328,7 @@ struct ParsedAttrInfoDLLExportStaticLocal : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2360,7 +2360,7 @@ struct ParsedAttrInfoDLLImport : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::dllimport"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<VarDecl>(D) && !isa<CXXRecordDecl>(D) && !isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, variables, classes, and Objective-C interfaces";
     return false;
@@ -2396,7 +2396,7 @@ struct ParsedAttrInfoDLLImportStaticLocal : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2447,7 +2447,7 @@ struct ParsedAttrInfoDestructor : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::destructor"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2476,7 +2476,7 @@ struct ParsedAttrInfoDiagnoseIf : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"diagnose_if"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and Objective-C properties";
     return false;
@@ -2503,7 +2503,7 @@ struct ParsedAttrInfoDisableTailCalls : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::disable_tail_calls"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -2533,7 +2533,7 @@ struct ParsedAttrInfoEmptyBases : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"empty_bases"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -2563,7 +2563,7 @@ struct ParsedAttrInfoEnableIf : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"enable_if"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2594,7 +2594,7 @@ struct ParsedAttrInfoEnumExtensibility : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::enum_extensibility"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<EnumDecl>(D))) {
+  if (!isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "enums";
     return false;
@@ -2625,7 +2625,7 @@ struct ParsedAttrInfoExcludeFromExplicitInstantiation : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::exclude_from_explicit_instantiation"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
     return false;
@@ -2656,7 +2656,7 @@ struct ParsedAttrInfoExclusiveTrylockFunction : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"exclusive_trylock_function"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2681,7 +2681,7 @@ struct ParsedAttrInfoExtVectorType : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"ext_vector_type"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<TypedefNameDecl>(D))) {
+  if (!isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "typedefs";
     return false;
@@ -2708,7 +2708,7 @@ struct ParsedAttrInfoExternalSourceSymbol : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::external_source_symbol"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<NamedDecl>(D))) {
+  if (!isa<NamedDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "named declarations";
     return false;
@@ -2792,7 +2792,7 @@ struct ParsedAttrInfoFlagEnum : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::flag_enum"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<EnumDecl>(D))) {
+  if (!isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "enums";
     return false;
@@ -2822,7 +2822,7 @@ struct ParsedAttrInfoFlatten : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::flatten"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2852,7 +2852,7 @@ struct ParsedAttrInfoFormat : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::format"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D) && !isHasFunctionProto(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D) && !isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, blocks, and non-K&R-style functions";
     return false;
@@ -2878,7 +2878,7 @@ struct ParsedAttrInfoFormatArg : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::format_arg"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and non-K&R-style functions";
     return false;
@@ -2904,7 +2904,7 @@ struct ParsedAttrInfoGNUInline : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::gnu_inline"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -2933,7 +2933,7 @@ struct ParsedAttrInfoGuardedBy : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"guarded_by"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -2959,7 +2959,7 @@ struct ParsedAttrInfoGuardedVar : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::guarded_var"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -2985,7 +2985,7 @@ struct ParsedAttrInfoHIPPinnedShadow : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"__hip_pinned_shadow__"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -3024,7 +3024,7 @@ struct ParsedAttrInfoHot : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::hot"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3055,7 +3055,7 @@ struct ParsedAttrInfoIBAction : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::ibaction"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isObjCInstanceMethod(D))) {
+  if (!isObjCInstanceMethod(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C instance methods";
     return false;
@@ -3121,7 +3121,7 @@ struct ParsedAttrInfoIFunc : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::ifunc"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3156,7 +3156,7 @@ struct ParsedAttrInfoInitPriority : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::init_priority"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -3204,7 +3204,7 @@ struct ParsedAttrInfoInternalLinkage : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::internal_linkage"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
     return false;
@@ -3237,7 +3237,7 @@ struct ParsedAttrInfoLTOVisibilityPublic : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::lto_visibility_public"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -3266,7 +3266,7 @@ struct ParsedAttrInfoLayoutVersion : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"layout_version"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -3297,7 +3297,7 @@ struct ParsedAttrInfoLifetimeBound : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::lifetimebound"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D) && !isImplicitObjectParameter(D))) {
+  if (!isa<ParmVarDecl>(D) && !isImplicitObjectParameter(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters and implicit object parameters";
     return false;
@@ -3317,6 +3317,37 @@ virtual bool diagLangOpts(Sema &S, const ParsedAttr &Attr) const {
 static const ParsedAttrInfoLifetimeBound Instance;
 };
 const ParsedAttrInfoLifetimeBound ParsedAttrInfoLifetimeBound::Instance;
+struct ParsedAttrInfoLoaderUninitialized : public ParsedAttrInfo {
+  ParsedAttrInfoLoaderUninitialized() {
+    AttrKind = ParsedAttr::AT_LoaderUninitialized;
+    NumArgs = 0;
+    OptArgs = 0;
+    HasCustomParsing = 0;
+    IsTargetSpecific = 0;
+    IsType = 0;
+    IsStmt = 0;
+    IsKnownToGCC = 0;
+    IsSupportedByPragmaAttribute = 1;
+    Spellings.push_back({AttributeCommonInfo::AS_GNU,"loader_uninitialized"});
+    Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::loader_uninitialized"});
+    Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::loader_uninitialized"});
+  }
+virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
+  if (!isGlobalVar(D)) {
+    S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
+      << Attr << "global variables";
+    return false;
+  }
+  return true;
+}
+
+virtual void getPragmaAttributeMatchRules(llvm::SmallVectorImpl<std::pair<attr::SubjectMatchRule, bool>> &MatchRules, const LangOptions &LangOpts) const {
+  MatchRules.push_back(std::make_pair(attr::SubjectMatchRule_variable_is_global, /*IsSupported=*/true));
+}
+
+static const ParsedAttrInfoLoaderUninitialized Instance;
+};
+const ParsedAttrInfoLoaderUninitialized ParsedAttrInfoLoaderUninitialized::Instance;
 struct ParsedAttrInfoLockReturned : public ParsedAttrInfo {
   ParsedAttrInfoLockReturned() {
     AttrKind = ParsedAttr::AT_LockReturned;
@@ -3331,7 +3362,7 @@ struct ParsedAttrInfoLockReturned : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"lock_returned"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3356,7 +3387,7 @@ struct ParsedAttrInfoLockable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"lockable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -3385,7 +3416,7 @@ struct ParsedAttrInfoLocksExcluded : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"locks_excluded"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3454,7 +3485,7 @@ struct ParsedAttrInfoMIGServerRoutine : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::mig_server_routine"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<BlockDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and blocks";
     return false;
@@ -3502,7 +3533,7 @@ struct ParsedAttrInfoMSAllocator : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"allocator"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3575,7 +3606,7 @@ struct ParsedAttrInfoMSNoVTable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"novtable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -3606,7 +3637,7 @@ struct ParsedAttrInfoMSStruct : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::ms_struct"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -3653,7 +3684,7 @@ struct ParsedAttrInfoMicroMips : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::micromips"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3689,7 +3720,7 @@ struct ParsedAttrInfoMinSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::minsize"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -3721,7 +3752,7 @@ struct ParsedAttrInfoMinVectorWidth : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::min_vector_width"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3751,7 +3782,7 @@ struct ParsedAttrInfoMips16 : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::mips16"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3788,7 +3819,7 @@ struct ParsedAttrInfoMipsLongCall : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::far"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3845,7 +3876,7 @@ struct ParsedAttrInfoMipsShortCall : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::near"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -3900,7 +3931,7 @@ struct ParsedAttrInfoMode : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::mode"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<EnumDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<FieldDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<EnumDecl>(D) && !isa<TypedefNameDecl>(D) && !isa<FieldDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables, enums, typedefs, and non-static data members";
     return false;
@@ -3927,7 +3958,7 @@ struct ParsedAttrInfoNSConsumed : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::ns_consumed"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -3958,7 +3989,7 @@ struct ParsedAttrInfoNSConsumesSelf : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::ns_consumes_self"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
     return false;
@@ -4043,7 +4074,7 @@ struct ParsedAttrInfoNaked : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"naked"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4108,7 +4139,7 @@ struct ParsedAttrInfoNoAlias : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"noalias"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4135,7 +4166,7 @@ struct ParsedAttrInfoNoBuiltin : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_builtin"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4165,7 +4196,7 @@ struct ParsedAttrInfoNoCommon : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nocommon"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -4195,7 +4226,7 @@ struct ParsedAttrInfoNoDebug : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nodebug"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<TypedefNameDecl>(D) && !isFunctionLike(D) && !isa<ObjCMethodDecl>(D) && !isNonParmVar(D))) {
+  if (!isa<TypedefNameDecl>(D) && !isFunctionLike(D) && !isa<ObjCMethodDecl>(D) && !isNonParmVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "typedefs, functions, function pointers, Objective-C methods, and variables";
     return false;
@@ -4246,7 +4277,7 @@ struct ParsedAttrInfoNoDestroy : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::no_destroy"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -4277,7 +4308,7 @@ struct ParsedAttrInfoNoDuplicate : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::noduplicate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4308,7 +4339,7 @@ struct ParsedAttrInfoNoEscape : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::noescape"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -4339,7 +4370,7 @@ struct ParsedAttrInfoNoInline : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"noinline"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4369,7 +4400,7 @@ struct ParsedAttrInfoNoInstrumentFunction : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::no_instrument_function"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4399,7 +4430,7 @@ struct ParsedAttrInfoNoMicroMips : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nomicromips"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4434,7 +4465,7 @@ struct ParsedAttrInfoNoMips16 : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nomips16"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4488,7 +4519,7 @@ struct ParsedAttrInfoNoSanitize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_sanitize"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isGlobalVar(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, and global variables";
     return false;
@@ -4527,7 +4558,7 @@ struct ParsedAttrInfoNoSanitizeSpecific : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_sanitize_memory"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isGlobalVar(D))) {
+  if (!isa<FunctionDecl>(D) && !isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and global variables";
     return false;
@@ -4559,7 +4590,7 @@ struct ParsedAttrInfoNoSpeculativeLoadHardening : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_speculative_load_hardening"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -4590,7 +4621,7 @@ struct ParsedAttrInfoNoSplitStack : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::no_split_stack"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4621,7 +4652,7 @@ struct ParsedAttrInfoNoStackProtector : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_stack_protector"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4652,7 +4683,7 @@ struct ParsedAttrInfoNoThreadSafetyAnalysis : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::no_thread_safety_analysis"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4683,7 +4714,7 @@ struct ParsedAttrInfoNoThrow : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"nothrow"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isFunctionLike(D))) {
+  if (!isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and function pointers";
     return false;
@@ -4712,7 +4743,7 @@ struct ParsedAttrInfoNoUniqueAddress : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"::no_unique_address"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isNonBitField(D))) {
+  if (!isNonBitField(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-bit-field non-static data members";
     return false;
@@ -4743,7 +4774,7 @@ struct ParsedAttrInfoNonNull : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::nonnull"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D) && !isa<ParmVarDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isHasFunctionProto(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, methods, and parameters";
     return false;
@@ -4770,7 +4801,7 @@ struct ParsedAttrInfoNotTailCalled : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::not_tail_called"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -4801,7 +4832,7 @@ struct ParsedAttrInfoOSConsumed : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_consumed"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -4832,7 +4863,7 @@ struct ParsedAttrInfoOSConsumesThis : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_consumes_this"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isNonStaticCXXMethod(D))) {
+  if (!isNonStaticCXXMethod(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static member functions";
     return false;
@@ -4859,7 +4890,7 @@ struct ParsedAttrInfoOSReturnsNotRetained : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_returns_not_retained"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, Objective-C properties, and parameters";
     return false;
@@ -4893,7 +4924,7 @@ struct ParsedAttrInfoOSReturnsRetained : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_returns_retained"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions, Objective-C methods, Objective-C properties, and parameters";
     return false;
@@ -4927,7 +4958,7 @@ struct ParsedAttrInfoOSReturnsRetainedOnNonZero : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_returns_retained_on_non_zero"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -4958,7 +4989,7 @@ struct ParsedAttrInfoOSReturnsRetainedOnZero : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::os_returns_retained_on_zero"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -4989,7 +5020,7 @@ struct ParsedAttrInfoObjCBoxable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_boxable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -5020,7 +5051,7 @@ struct ParsedAttrInfoObjCBridge : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_bridge"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D))) {
+  if (!isa<RecordDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and typedefs";
     return false;
@@ -5052,7 +5083,7 @@ struct ParsedAttrInfoObjCBridgeMutable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_bridge_mutable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -5083,7 +5114,7 @@ struct ParsedAttrInfoObjCBridgeRelated : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_bridge_related"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -5114,7 +5145,7 @@ struct ParsedAttrInfoObjCClassStub : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_class_stub"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5154,7 +5185,7 @@ struct ParsedAttrInfoObjCDesignatedInitializer : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_designated_initializer"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
     return false;
@@ -5185,7 +5216,7 @@ struct ParsedAttrInfoObjCDirect : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_direct"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
     return false;
@@ -5225,7 +5256,7 @@ struct ParsedAttrInfoObjCDirectMembers : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_direct_members"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCImplDecl>(D) && !isa<ObjCInterfaceDecl>(D) && !isa<ObjCCategoryDecl>(D))) {
+  if (!isa<ObjCImplDecl>(D) && !isa<ObjCInterfaceDecl>(D) && !isa<ObjCCategoryDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C implementation declarations, Objective-C interfaces, and Objective-C containers";
     return false;
@@ -5267,7 +5298,7 @@ struct ParsedAttrInfoObjCException : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_exception"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5298,7 +5329,7 @@ struct ParsedAttrInfoObjCExplicitProtocolImpl : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_protocol_requires_explicit_implementation"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCProtocolDecl>(D))) {
+  if (!isa<ObjCProtocolDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C protocols";
     return false;
@@ -5329,7 +5360,7 @@ struct ParsedAttrInfoObjCExternallyRetained : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_externally_retained"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isNonParmVar(D) && !isa<FunctionDecl>(D) && !isa<BlockDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isNonParmVar(D) && !isa<FunctionDecl>(D) && !isa<BlockDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, blocks, and Objective-C methods";
     return false;
@@ -5440,7 +5471,7 @@ struct ParsedAttrInfoObjCMethodFamily : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_method_family"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
     return false;
@@ -5489,7 +5520,7 @@ struct ParsedAttrInfoObjCNonLazyClass : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_nonlazy_class"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCImplDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCImplDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces and Objective-C implementation declarations";
     return false;
@@ -5548,7 +5579,7 @@ struct ParsedAttrInfoObjCPreciseLifetime : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_precise_lifetime"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -5579,7 +5610,7 @@ struct ParsedAttrInfoObjCRequiresPropertyDefs : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_requires_property_definitions"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5610,7 +5641,7 @@ struct ParsedAttrInfoObjCRequiresSuper : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_requires_super"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods";
     return false;
@@ -5641,7 +5672,7 @@ struct ParsedAttrInfoObjCReturnsInnerPointer : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_returns_inner_pointer"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and Objective-C properties";
     return false;
@@ -5673,7 +5704,7 @@ struct ParsedAttrInfoObjCRootClass : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_root_class"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5704,7 +5735,7 @@ struct ParsedAttrInfoObjCRuntimeName : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_runtime_name"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCProtocolDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D) && !isa<ObjCProtocolDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces and Objective-C protocols";
     return false;
@@ -5736,7 +5767,7 @@ struct ParsedAttrInfoObjCRuntimeVisible : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_runtime_visible"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5767,7 +5798,7 @@ struct ParsedAttrInfoObjCSubclassingRestricted : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::objc_subclassing_restricted"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCInterfaceDecl>(D))) {
+  if (!isa<ObjCInterfaceDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "Objective-C interfaces";
     return false;
@@ -5801,7 +5832,7 @@ struct ParsedAttrInfoOpenCLAccess : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Keyword,"read_write"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D) && !isa<TypedefNameDecl>(D))) {
+  if (!isa<ParmVarDecl>(D) && !isa<TypedefNameDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "parameters and typedefs";
     return false;
@@ -5970,7 +6001,7 @@ struct ParsedAttrInfoOpenCLIntelReqdSubGroupSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"intel_reqd_sub_group_size"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6000,7 +6031,7 @@ struct ParsedAttrInfoOpenCLKernel : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Keyword,"kernel"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6066,7 +6097,7 @@ struct ParsedAttrInfoOpenCLNoSVM : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"nosvm"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -6163,7 +6194,7 @@ struct ParsedAttrInfoOptimizeNone : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::optnone"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -6195,7 +6226,7 @@ struct ParsedAttrInfoOverloadable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::overloadable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6224,7 +6255,7 @@ struct ParsedAttrInfoOwner : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gsl::Owner"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isStruct(D))) {
+  if (!isStruct(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs";
     return false;
@@ -6261,7 +6292,7 @@ struct ParsedAttrInfoOwnership : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::ownership_takes"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isHasFunctionProto(D))) {
+  if (!isHasFunctionProto(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-K&R-style functions";
     return false;
@@ -6334,7 +6365,7 @@ struct ParsedAttrInfoParamTypestate : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::param_typestate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -6388,7 +6419,7 @@ struct ParsedAttrInfoPassObjectSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::pass_dynamic_object_size"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -6442,7 +6473,7 @@ struct ParsedAttrInfoPatchableFunctionEntry : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::patchable_function_entry"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -6494,7 +6525,7 @@ struct ParsedAttrInfoPointer : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gsl::Pointer"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isStruct(D))) {
+  if (!isStruct(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs";
     return false;
@@ -6522,7 +6553,7 @@ struct ParsedAttrInfoPragmaClangBSSSection : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isGlobalVar(D))) {
+  if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
     return false;
@@ -6546,7 +6577,7 @@ struct ParsedAttrInfoPragmaClangDataSection : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isGlobalVar(D))) {
+  if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
     return false;
@@ -6570,7 +6601,7 @@ struct ParsedAttrInfoPragmaClangRelroSection : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isGlobalVar(D))) {
+  if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
     return false;
@@ -6594,7 +6625,7 @@ struct ParsedAttrInfoPragmaClangRodataSection : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isGlobalVar(D))) {
+  if (!isGlobalVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "global variables";
     return false;
@@ -6618,7 +6649,7 @@ struct ParsedAttrInfoPragmaClangTextSection : public ParsedAttrInfo {
     IsSupportedByPragmaAttribute = 0;
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6679,7 +6710,7 @@ struct ParsedAttrInfoPtGuardedBy : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"pt_guarded_by"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -6705,7 +6736,7 @@ struct ParsedAttrInfoPtGuardedVar : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::pt_guarded_var"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FieldDecl>(D) && !isSharedVar(D))) {
+  if (!isa<FieldDecl>(D) && !isSharedVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "non-static data members and global variables";
     return false;
@@ -6815,7 +6846,7 @@ struct ParsedAttrInfoReinitializes : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::reinitializes"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isNonStaticNonConstCXXMethod(D))) {
+  if (!isNonStaticNonConstCXXMethod(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "non-static non-const member functions";
     return false;
@@ -6847,7 +6878,7 @@ struct ParsedAttrInfoReleaseCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::unlock_function"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6902,7 +6933,7 @@ struct ParsedAttrInfoReleaseHandle : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::release_handle"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -6931,7 +6962,7 @@ struct ParsedAttrInfoRenderScriptKernel : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"kernel"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -6969,7 +7000,7 @@ struct ParsedAttrInfoReqdWorkGroupSize : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"reqd_work_group_size"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7005,7 +7036,7 @@ struct ParsedAttrInfoRequiresCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::shared_locks_required"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7060,7 +7091,7 @@ struct ParsedAttrInfoRestrict : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::malloc"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7108,7 +7139,7 @@ struct ParsedAttrInfoReturnTypestate : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::return_typestate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ParmVarDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and parameters";
     return false;
@@ -7139,7 +7170,7 @@ struct ParsedAttrInfoReturnsNonNull : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::returns_nonnull"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods and functions";
     return false;
@@ -7170,7 +7201,7 @@ struct ParsedAttrInfoReturnsTwice : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::returns_twice"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7217,7 +7248,7 @@ struct ParsedAttrInfoSYCLKernel : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::sycl_kernel"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isFunctionTmpl(D))) {
+  if (!isFunctionTmpl(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "function templates";
     return false;
@@ -7252,7 +7283,7 @@ struct ParsedAttrInfoScopedLockable : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::scoped_lockable"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -7283,7 +7314,7 @@ struct ParsedAttrInfoSection : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"allocate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isGlobalVar(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isGlobalVar(D) && !isa<ObjCMethodDecl>(D) && !isa<ObjCPropertyDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions, global variables, Objective-C methods, and Objective-C properties";
     return false;
@@ -7369,7 +7400,7 @@ struct ParsedAttrInfoSetTypestate : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::set_typestate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXMethodDecl>(D))) {
+  if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7398,7 +7429,7 @@ struct ParsedAttrInfoSharedTrylockFunction : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"shared_trylock_function"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7425,7 +7456,7 @@ struct ParsedAttrInfoSpeculativeLoadHardening : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::speculative_load_hardening"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -7510,7 +7541,7 @@ struct ParsedAttrInfoSwiftContext : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::swift_context"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -7541,7 +7572,7 @@ struct ParsedAttrInfoSwiftErrorResult : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::swift_error_result"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -7572,7 +7603,7 @@ struct ParsedAttrInfoSwiftIndirectResult : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::swift_indirect_result"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -7619,7 +7650,7 @@ struct ParsedAttrInfoTLSModel : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::tls_model"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isTLSVar(D))) {
+  if (!isTLSVar(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "thread-local variables";
     return false;
@@ -7649,7 +7680,7 @@ struct ParsedAttrInfoTarget : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::target"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7679,7 +7710,7 @@ struct ParsedAttrInfoTestTypestate : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::test_typestate"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXMethodDecl>(D))) {
+  if (!isa<CXXMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7727,7 +7758,7 @@ struct ParsedAttrInfoThread : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Declspec,"thread"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D))) {
+  if (!isa<VarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables";
     return false;
@@ -7788,7 +7819,7 @@ struct ParsedAttrInfoTrivialABI : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::trivial_abi"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -7829,7 +7860,7 @@ struct ParsedAttrInfoTryAcquireCapability : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::try_acquire_shared_capability"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -7993,7 +8024,7 @@ struct ParsedAttrInfoUninitialized : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::uninitialized"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isLocalVar(D))) {
+  if (!isLocalVar(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "local variables";
     return false;
@@ -8021,7 +8052,7 @@ struct ParsedAttrInfoUnused : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"::maybe_unused"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<ObjCIvarDecl>(D) && !isa<TypeDecl>(D) && !isa<EnumDecl>(D) && !isa<EnumConstantDecl>(D) && !isa<LabelDecl>(D) && !isa<FieldDecl>(D) && !isa<ObjCMethodDecl>(D) && !isFunctionLike(D))) {
+  if (!isa<VarDecl>(D) && !isa<ObjCIvarDecl>(D) && !isa<TypeDecl>(D) && !isa<EnumDecl>(D) && !isa<EnumConstantDecl>(D) && !isa<LabelDecl>(D) && !isa<FieldDecl>(D) && !isa<ObjCMethodDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, non-static data members, types, enums, enumerators, labels, non-static data members, Objective-C methods, functions, and function pointers";
     return false;
@@ -8068,7 +8099,7 @@ struct ParsedAttrInfoUseHandle : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::use_handle"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ParmVarDecl>(D))) {
+  if (!isa<ParmVarDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "parameters";
     return false;
@@ -8098,7 +8129,7 @@ struct ParsedAttrInfoUsed : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::used"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isNonLocalVar(D) && !isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isNonLocalVar(D) && !isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables with non-local storage, functions, and Objective-C methods";
     return false;
@@ -8124,7 +8155,7 @@ struct ParsedAttrInfoUuid : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_Microsoft,"uuid"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D) && !isa<EnumDecl>(D))) {
+  if (!isa<RecordDecl>(D) && !isa<EnumDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, classes, and enums";
     return false;
@@ -8159,7 +8190,7 @@ struct ParsedAttrInfoVecReturn : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"clang::vecreturn"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<CXXRecordDecl>(D))) {
+  if (!isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "classes";
     return false;
@@ -8188,7 +8219,7 @@ struct ParsedAttrInfoVecTypeHint : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"vec_type_hint"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -8272,7 +8303,7 @@ struct ParsedAttrInfoWarnUnused : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::warn_unused"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<RecordDecl>(D))) {
+  if (!isa<RecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "structs, unions, and classes";
     return false;
@@ -8305,7 +8336,7 @@ struct ParsedAttrInfoWarnUnusedResult : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::warn_unused_result"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<ObjCMethodDecl>(D) && !isa<EnumDecl>(D) && !isa<RecordDecl>(D) && !isFunctionLike(D))) {
+  if (!isa<ObjCMethodDecl>(D) && !isa<EnumDecl>(D) && !isa<RecordDecl>(D) && !isFunctionLike(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "Objective-C methods, enums, structs, unions, classes, functions, and function pointers";
     return false;
@@ -8360,7 +8391,7 @@ struct ParsedAttrInfoWeak : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::weak"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D) && !isa<CXXRecordDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "variables, functions, and classes";
     return false;
@@ -8410,7 +8441,7 @@ struct ParsedAttrInfoWeakRef : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_CXX11,"gnu::weakref"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<VarDecl>(D) && !isa<FunctionDecl>(D))) {
+  if (!isa<VarDecl>(D) && !isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "variables and functions";
     return false;
@@ -8442,7 +8473,7 @@ struct ParsedAttrInfoWebAssemblyExportName : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::export_name"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -8478,7 +8509,7 @@ struct ParsedAttrInfoWebAssemblyImportModule : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::import_module"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -8514,7 +8545,7 @@ struct ParsedAttrInfoWebAssemblyImportName : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::import_name"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -8548,7 +8579,7 @@ struct ParsedAttrInfoWorkGroupSizeHint : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_GNU,"work_group_size_hint"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D))) {
+  if (!isa<FunctionDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::err_attribute_wrong_decl_type_str)
       << Attr << "functions";
     return false;
@@ -8604,7 +8635,7 @@ struct ParsedAttrInfoXRayInstrument : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::xray_never_instrument"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -8660,7 +8691,7 @@ struct ParsedAttrInfoXRayLogArgs : public ParsedAttrInfo {
     Spellings.push_back({AttributeCommonInfo::AS_C2x,"clang::xray_log_args"});
   }
 virtual bool diagAppertainsToDecl(Sema &S, const ParsedAttr &Attr, const Decl *D) const {
-  if (!D || (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D))) {
+  if (!isa<FunctionDecl>(D) && !isa<ObjCMethodDecl>(D)) {
     S.Diag(Attr.getLoc(), diag::warn_attribute_wrong_decl_type_str)
       << Attr << "functions and Objective-C methods";
     return false;
@@ -8703,7 +8734,7 @@ static const ParsedAttrInfo *AttrInfoMap[] = {
 &ParsedAttrInfoAnyX86NoCfCheck::Instance,
 &ParsedAttrInfoArcWeakrefUnavailable::Instance,
 &ParsedAttrInfoArgumentWithTypeTag::Instance,
-&ParsedAttrInfoArmMveAlias::Instance,
+&ParsedAttrInfoArmBuiltinAlias::Instance,
 &ParsedAttrInfoArmMveStrictPolymorphism::Instance,
 &ParsedAttrInfoArtificial::Instance,
 &ParsedAttrInfoAssertCapability::Instance,
@@ -8782,6 +8813,7 @@ static const ParsedAttrInfo *AttrInfoMap[] = {
 &ParsedAttrInfoLTOVisibilityPublic::Instance,
 &ParsedAttrInfoLayoutVersion::Instance,
 &ParsedAttrInfoLifetimeBound::Instance,
+&ParsedAttrInfoLoaderUninitialized::Instance,
 &ParsedAttrInfoLockReturned::Instance,
 &ParsedAttrInfoLockable::Instance,
 &ParsedAttrInfoLocksExcluded::Instance,
