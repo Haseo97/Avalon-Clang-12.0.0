@@ -19,7 +19,6 @@
 #include "llvm/ADT/Optional.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/Metadata.h"
-#include "llvm/Support/TypeSize.h"
 
 namespace llvm {
 
@@ -89,11 +88,6 @@ public:
       : Value(Raw > MaxValue ? Unknown : Raw) {}
 
   static LocationSize precise(uint64_t Value) { return LocationSize(Value); }
-  static LocationSize precise(TypeSize Value) {
-    if (Value.isScalable())
-      return unknown();
-    return precise(Value.getFixedSize());
-  }
 
   static LocationSize upperBound(uint64_t Value) {
     // You can't go lower than 0, so give a precise result.
@@ -102,11 +96,6 @@ public:
     if (LLVM_UNLIKELY(Value > MaxValue))
       return unknown();
     return LocationSize(Value | ImpreciseBit, Direct);
-  }
-  static LocationSize upperBound(TypeSize Value) {
-    if (Value.isScalable())
-      return unknown();
-    return upperBound(Value.getFixedSize());
   }
 
   constexpr static LocationSize unknown() {
@@ -249,12 +238,6 @@ public:
   static MemoryLocation getForArgument(const CallBase *Call, unsigned ArgIdx,
                                        const TargetLibraryInfo &TLI) {
     return getForArgument(Call, ArgIdx, &TLI);
-  }
-
-  // Return the exact size if the exact size is known at compiletime,
-  // otherwise return MemoryLocation::UnknownSize.
-  static uint64_t getSizeOrUnknown(const TypeSize &T) {
-    return T.isScalable() ? UnknownSize : T.getFixedSize();
   }
 
   explicit MemoryLocation(const Value *Ptr = nullptr,

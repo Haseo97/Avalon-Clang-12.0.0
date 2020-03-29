@@ -37,12 +37,7 @@ enum OperandConstraint {
 /// These are flags set on operands, but should be considered
 /// private, all access should go through the MCOperandInfo accessors.
 /// See the accessors for a description of what these are.
-enum OperandFlags {
-  LookupPtrRegClass = 0,
-  Predicate,
-  OptionalDef,
-  BranchTarget
-};
+enum OperandFlags { LookupPtrRegClass = 0, Predicate, OptionalDef };
 
 /// Operands are tagged with one of the values of this enum.
 enum OperandType {
@@ -102,9 +97,6 @@ public:
 
   /// Set if this operand is a optional def.
   bool isOptionalDef() const { return Flags & (1 << MCOI::OptionalDef); }
-
-  /// Set if this operand is a branch target.
-  bool isBranchTarget() const { return Flags & (1 << MCOI::BranchTarget); }
 
   bool isGenericType() const {
     return OperandType >= MCOI::OPERAND_FIRST_GENERIC &&
@@ -176,7 +168,6 @@ enum Flag {
   Add,
   Trap,
   VariadicOpsAreDefs,
-  Authenticated,
 };
 }
 
@@ -300,7 +291,7 @@ public:
 
   /// Returns true if this is a conditional, unconditional, or
   /// indirect branch.  Predicates below can be used to discriminate between
-  /// these cases, and the TargetInstrInfo::analyzeBranch method can be used to
+  /// these cases, and the TargetInstrInfo::AnalyzeBranch method can be used to
   /// get more information.
   bool isBranch() const { return Flags & (1ULL << MCID::Branch); }
 
@@ -310,7 +301,7 @@ public:
 
   /// Return true if this is a branch which may fall
   /// through to the next instruction or may transfer control flow to some other
-  /// block.  The TargetInstrInfo::analyzeBranch method can be used to get more
+  /// block.  The TargetInstrInfo::AnalyzeBranch method can be used to get more
   /// information about this branch.
   bool isConditionalBranch() const {
     return isBranch() && !isBarrier() && !isIndirectBranch();
@@ -318,7 +309,7 @@ public:
 
   /// Return true if this is a branch which always
   /// transfers control flow to some other block.  The
-  /// TargetInstrInfo::analyzeBranch method can be used to get more information
+  /// TargetInstrInfo::AnalyzeBranch method can be used to get more information
   /// about this branch.
   bool isUnconditionalBranch() const {
     return isBranch() && isBarrier() && !isIndirectBranch();
@@ -415,15 +406,6 @@ public:
   /// Return true if variadic operands of this instruction are definitions.
   bool variadicOpsAreDefs() const {
     return Flags & (1ULL << MCID::VariadicOpsAreDefs);
-  }
-
-  /// Return true if this instruction authenticates a pointer (e.g. LDRAx/BRAx
-  /// from ARMv8.3, which perform loads/branches with authentication).
-  ///
-  /// An authenticated instruction may fail in an ABI-defined manner when
-  /// operating on an invalid signed pointer.
-  bool isAuthenticated() const {
-    return Flags & (1ULL << MCID::Authenticated);
   }
 
   //===--------------------------------------------------------------------===//

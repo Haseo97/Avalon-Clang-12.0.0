@@ -112,7 +112,22 @@ def int_wasm_sub_saturate_unsigned :
   Intrinsic<[llvm_anyvector_ty],
             [LLVMMatchType<0>, LLVMMatchType<0>],
             [IntrNoMem, IntrSpeculatable]>;
-def int_wasm_avgr_unsigned :
+
+// TODO: Remove intrinsics and rely on codegen patterns once these are
+// officially merged to the spec proposal
+def int_wasm_min_signed :
+  Intrinsic<[llvm_anyvector_ty],
+            [LLVMMatchType<0>, LLVMMatchType<0>],
+            [IntrNoMem, IntrSpeculatable]>;
+def int_wasm_min_unsigned :
+  Intrinsic<[llvm_anyvector_ty],
+            [LLVMMatchType<0>, LLVMMatchType<0>],
+            [IntrNoMem, IntrSpeculatable]>;
+def int_wasm_max_signed :
+  Intrinsic<[llvm_anyvector_ty],
+            [LLVMMatchType<0>, LLVMMatchType<0>],
+            [IntrNoMem, IntrSpeculatable]>;
+def int_wasm_max_unsigned :
   Intrinsic<[llvm_anyvector_ty],
             [LLVMMatchType<0>, LLVMMatchType<0>],
             [IntrNoMem, IntrSpeculatable]>;
@@ -126,10 +141,6 @@ def int_wasm_anytrue :
             [llvm_anyvector_ty],
             [IntrNoMem, IntrSpeculatable]>;
 def int_wasm_alltrue :
-  Intrinsic<[llvm_i32_ty],
-            [llvm_anyvector_ty],
-            [IntrNoMem, IntrSpeculatable]>;
-def int_wasm_bitmask :
   Intrinsic<[llvm_i32_ty],
             [llvm_anyvector_ty],
             [IntrNoMem, IntrSpeculatable]>;

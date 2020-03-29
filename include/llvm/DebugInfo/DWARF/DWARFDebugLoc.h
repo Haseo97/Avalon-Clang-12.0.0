@@ -34,9 +34,6 @@ struct DWARFLocationEntry {
   /// The second value of the location entry (if applicable).
   uint64_t Value1;
 
-  /// The index of the section this entry is relative to (if applicable).
-  uint64_t SectionIndex;
-
   /// The location expression itself (if applicable).
   SmallVector<uint8_t, 4> Loc;
 };
@@ -63,9 +60,8 @@ public:
   /// updated to point past the end of the current list).
   bool dumpLocationList(uint64_t *Offset, raw_ostream &OS,
                         Optional<object::SectionedAddress> BaseAddr,
-                        const MCRegisterInfo *MRI, const DWARFObject &Obj,
-                        DWARFUnit *U, DIDumpOptions DumpOpts,
-                        unsigned Indent) const;
+                        const MCRegisterInfo *MRI, DWARFUnit *U,
+                        DIDumpOptions DumpOpts, unsigned Indent) const;
 
   Error visitAbsoluteLocationList(
       uint64_t Offset, Optional<object::SectionedAddress> BaseAddr,
@@ -76,8 +72,7 @@ protected:
   DWARFDataExtractor Data;
 
   virtual void dumpRawEntry(const DWARFLocationEntry &Entry, raw_ostream &OS,
-                            unsigned Indent, DIDumpOptions DumpOpts,
-                            const DWARFObject &Obj) const = 0;
+                            unsigned Indent) const = 0;
 };
 
 class DWARFDebugLoc final : public DWARFLocationTable {
@@ -103,18 +98,24 @@ public:
       : DWARFLocationTable(std::move(Data)) {}
 
   /// Print the location lists found within the debug_loc section.
-  void dump(raw_ostream &OS, const MCRegisterInfo *RegInfo,
-            const DWARFObject &Obj, DIDumpOptions DumpOpts,
+  void dump(raw_ostream &OS, const MCRegisterInfo *RegInfo, DIDumpOptions DumpOpts,
             Optional<uint64_t> Offset) const;
+
+  /// Parse the debug_loc section.
+  void parse();
+
+  /// Return the location list at the given offset or nullptr.
+  LocationList const *getLocationListAtOffset(uint64_t Offset) const;
 
   Error visitLocationList(
       uint64_t *Offset,
       function_ref<bool(const DWARFLocationEntry &)> Callback) const override;
 
+  Expected<LocationList> parseOneLocationList(uint64_t *Offset);
+
 protected:
   void dumpRawEntry(const DWARFLocationEntry &Entry, raw_ostream &OS,
-                    unsigned Indent, DIDumpOptions DumpOpts,
-                    const DWARFObject &Obj) const override;
+                    unsigned Indent) const override;
 };
 
 class DWARFDebugLoclists final : public DWARFLocationTable {
@@ -128,13 +129,11 @@ public:
 
   /// Dump all location lists within the given range.
   void dumpRange(uint64_t StartOffset, uint64_t Size, raw_ostream &OS,
-                 const MCRegisterInfo *MRI, const DWARFObject &Obj,
-                 DIDumpOptions DumpOpts);
+                 const MCRegisterInfo *MRI, DIDumpOptions DumpOpts);
 
 protected:
   void dumpRawEntry(const DWARFLocationEntry &Entry, raw_ostream &OS,
-                    unsigned Indent, DIDumpOptions DumpOpts,
-                    const DWARFObject &Obj) const override;
+                    unsigned Indent) const override;
 
 private:
   uint16_t Version;

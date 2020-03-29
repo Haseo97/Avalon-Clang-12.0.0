@@ -465,8 +465,7 @@ public:
     // encoding is reserved.
     CSK_MD5 = 1,
     CSK_SHA1 = 2,
-    CSK_SHA256 = 3,
-    CSK_Last = CSK_SHA256 // Should be last enumeration.
+    CSK_Last = CSK_SHA1 // Should be last enumeration.
   };
 
   /// A single checksum, represented by a \a Kind and a \a Value (a string).
@@ -1173,17 +1172,16 @@ private:
           DIGlobalVariableExpressionArray GlobalVariables,
           DIImportedEntityArray ImportedEntities, DIMacroNodeArray Macros,
           uint64_t DWOId, bool SplitDebugInlining, bool DebugInfoForProfiling,
-          unsigned NameTableKind, bool RangesBaseAddress, StringRef SysRoot,
-          StringRef SDK, StorageType Storage, bool ShouldCreate = true) {
-    return getImpl(
-        Context, SourceLanguage, File, getCanonicalMDString(Context, Producer),
-        IsOptimized, getCanonicalMDString(Context, Flags), RuntimeVersion,
-        getCanonicalMDString(Context, SplitDebugFilename), EmissionKind,
-        EnumTypes.get(), RetainedTypes.get(), GlobalVariables.get(),
-        ImportedEntities.get(), Macros.get(), DWOId, SplitDebugInlining,
-        DebugInfoForProfiling, NameTableKind, RangesBaseAddress,
-        getCanonicalMDString(Context, SysRoot),
-        getCanonicalMDString(Context, SDK), Storage, ShouldCreate);
+          unsigned NameTableKind, bool RangesBaseAddress, StorageType Storage,
+          bool ShouldCreate = true) {
+    return getImpl(Context, SourceLanguage, File,
+                   getCanonicalMDString(Context, Producer), IsOptimized,
+                   getCanonicalMDString(Context, Flags), RuntimeVersion,
+                   getCanonicalMDString(Context, SplitDebugFilename),
+                   EmissionKind, EnumTypes.get(), RetainedTypes.get(),
+                   GlobalVariables.get(), ImportedEntities.get(), Macros.get(),
+                   DWOId, SplitDebugInlining, DebugInfoForProfiling,
+                   NameTableKind, RangesBaseAddress, Storage, ShouldCreate);
   }
   static DICompileUnit *
   getImpl(LLVMContext &Context, unsigned SourceLanguage, Metadata *File,
@@ -1193,8 +1191,7 @@ private:
           Metadata *GlobalVariables, Metadata *ImportedEntities,
           Metadata *Macros, uint64_t DWOId, bool SplitDebugInlining,
           bool DebugInfoForProfiling, unsigned NameTableKind,
-          bool RangesBaseAddress, MDString *SysRoot, MDString *SDK,
-          StorageType Storage, bool ShouldCreate = true);
+          bool RangesBaseAddress, StorageType Storage, bool ShouldCreate = true);
 
   TempDICompileUnit cloneImpl() const {
     return getTemporary(
@@ -1203,7 +1200,7 @@ private:
         getEmissionKind(), getEnumTypes(), getRetainedTypes(),
         getGlobalVariables(), getImportedEntities(), getMacros(), DWOId,
         getSplitDebugInlining(), getDebugInfoForProfiling(), getNameTableKind(),
-        getRangesBaseAddress(), getSysRoot(), getSDK());
+        getRangesBaseAddress());
   }
 
 public:
@@ -1219,13 +1216,11 @@ public:
        DIGlobalVariableExpressionArray GlobalVariables,
        DIImportedEntityArray ImportedEntities, DIMacroNodeArray Macros,
        uint64_t DWOId, bool SplitDebugInlining, bool DebugInfoForProfiling,
-       DebugNameTableKind NameTableKind, bool RangesBaseAddress,
-       StringRef SysRoot, StringRef SDK),
+       DebugNameTableKind NameTableKind, bool RangesBaseAddress),
       (SourceLanguage, File, Producer, IsOptimized, Flags, RuntimeVersion,
        SplitDebugFilename, EmissionKind, EnumTypes, RetainedTypes,
        GlobalVariables, ImportedEntities, Macros, DWOId, SplitDebugInlining,
-       DebugInfoForProfiling, (unsigned)NameTableKind, RangesBaseAddress,
-       SysRoot, SDK))
+       DebugInfoForProfiling, (unsigned)NameTableKind, RangesBaseAddress))
   DEFINE_MDNODE_GET_DISTINCT_TEMPORARY(
       DICompileUnit,
       (unsigned SourceLanguage, Metadata *File, MDString *Producer,
@@ -1234,12 +1229,11 @@ public:
        Metadata *RetainedTypes, Metadata *GlobalVariables,
        Metadata *ImportedEntities, Metadata *Macros, uint64_t DWOId,
        bool SplitDebugInlining, bool DebugInfoForProfiling,
-       unsigned NameTableKind, bool RangesBaseAddress, MDString *SysRoot,
-       MDString *SDK),
+       unsigned NameTableKind, bool RangesBaseAddress),
       (SourceLanguage, File, Producer, IsOptimized, Flags, RuntimeVersion,
        SplitDebugFilename, EmissionKind, EnumTypes, RetainedTypes,
        GlobalVariables, ImportedEntities, Macros, DWOId, SplitDebugInlining,
-       DebugInfoForProfiling, NameTableKind, RangesBaseAddress, SysRoot, SDK))
+       DebugInfoForProfiling, NameTableKind, RangesBaseAddress))
 
   TempDICompileUnit clone() const { return cloneImpl(); }
 
@@ -1256,10 +1250,14 @@ public:
   DebugNameTableKind getNameTableKind() const {
     return (DebugNameTableKind)NameTableKind;
   }
-  bool getRangesBaseAddress() const { return RangesBaseAddress; }
-  StringRef getProducer() const { return getStringOperand(1); }
-  StringRef getFlags() const { return getStringOperand(2); }
-  StringRef getSplitDebugFilename() const { return getStringOperand(3); }
+  bool getRangesBaseAddress() const {
+    return RangesBaseAddress; }
+  StringRef getProducer() const {
+    return getStringOperand(1); }
+  StringRef getFlags() const {
+    return getStringOperand(2); }
+  StringRef getSplitDebugFilename() const {
+    return getStringOperand(3); }
   DICompositeTypeArray getEnumTypes() const {
     return cast_or_null<MDTuple>(getRawEnumTypes());
   }
@@ -1281,8 +1279,6 @@ public:
   void setSplitDebugInlining(bool SplitDebugInlining) {
     this->SplitDebugInlining = SplitDebugInlining;
   }
-  StringRef getSysRoot() const { return getStringOperand(9); }
-  StringRef getSDK() const { return getStringOperand(10); }
 
   MDString *getRawProducer() const { return getOperandAs<MDString>(1); }
   MDString *getRawFlags() const { return getOperandAs<MDString>(2); }
@@ -1294,8 +1290,6 @@ public:
   Metadata *getRawGlobalVariables() const { return getOperand(6); }
   Metadata *getRawImportedEntities() const { return getOperand(7); }
   Metadata *getRawMacros() const { return getOperand(8); }
-  MDString *getRawSysRoot() const { return getOperandAs<MDString>(9); }
-  MDString *getRawSDK() const { return getOperandAs<MDString>(10); }
 
   /// Replace arrays.
   ///
@@ -1764,7 +1758,6 @@ public:
   bool isPure() const { return getSPFlags() & SPFlagPure; }
   bool isElemental() const { return getSPFlags() & SPFlagElemental; }
   bool isRecursive() const { return getSPFlags() & SPFlagRecursive; }
-  bool isObjCDirect() const { return getSPFlags() & SPFlagObjCDirect; }
 
   /// Check if this is deleted member function.
   ///
@@ -2088,40 +2081,36 @@ class DIModule : public DIScope {
       : DIScope(Context, DIModuleKind, Storage, dwarf::DW_TAG_module, Ops) {}
   ~DIModule() = default;
 
-  static DIModule *getImpl(LLVMContext &Context, DIScope *Scope, StringRef Name,
-                           StringRef ConfigurationMacros, StringRef IncludePath,
-                           StringRef APINotesFile, StorageType Storage,
-                           bool ShouldCreate = true) {
+  static DIModule *getImpl(LLVMContext &Context, DIScope *Scope,
+                           StringRef Name, StringRef ConfigurationMacros,
+                           StringRef IncludePath, StringRef ISysRoot,
+                           StorageType Storage, bool ShouldCreate = true) {
     return getImpl(Context, Scope, getCanonicalMDString(Context, Name),
                    getCanonicalMDString(Context, ConfigurationMacros),
                    getCanonicalMDString(Context, IncludePath),
-                   getCanonicalMDString(Context, APINotesFile),
+                   getCanonicalMDString(Context, ISysRoot),
                    Storage, ShouldCreate);
   }
   static DIModule *getImpl(LLVMContext &Context, Metadata *Scope,
                            MDString *Name, MDString *ConfigurationMacros,
-                           MDString *IncludePath, MDString *APINotesFile,
+                           MDString *IncludePath, MDString *ISysRoot,
                            StorageType Storage, bool ShouldCreate = true);
 
   TempDIModule cloneImpl() const {
     return getTemporary(getContext(), getScope(), getName(),
                         getConfigurationMacros(), getIncludePath(),
-                        getAPINotesFile());
+                        getISysRoot());
   }
 
 public:
+  DEFINE_MDNODE_GET(DIModule, (DIScope *Scope, StringRef Name,
+                               StringRef ConfigurationMacros, StringRef IncludePath,
+                               StringRef ISysRoot),
+                    (Scope, Name, ConfigurationMacros, IncludePath, ISysRoot))
   DEFINE_MDNODE_GET(DIModule,
-                    (DIScope * Scope, StringRef Name,
-                     StringRef ConfigurationMacros, StringRef IncludePath,
-                     StringRef APINotesFile),
-                    (Scope, Name, ConfigurationMacros, IncludePath,
-                     APINotesFile))
-  DEFINE_MDNODE_GET(DIModule,
-                    (Metadata * Scope, MDString *Name,
-                     MDString *ConfigurationMacros, MDString *IncludePath,
-                     MDString *APINotesFile),
-                    (Scope, Name, ConfigurationMacros, IncludePath,
-                     APINotesFile))
+                    (Metadata *Scope, MDString *Name, MDString *ConfigurationMacros,
+                     MDString *IncludePath, MDString *ISysRoot),
+                    (Scope, Name, ConfigurationMacros, IncludePath, ISysRoot))
 
   TempDIModule clone() const { return cloneImpl(); }
 
@@ -2129,13 +2118,13 @@ public:
   StringRef getName() const { return getStringOperand(1); }
   StringRef getConfigurationMacros() const { return getStringOperand(2); }
   StringRef getIncludePath() const { return getStringOperand(3); }
-  StringRef getAPINotesFile() const { return getStringOperand(4); }
+  StringRef getISysRoot() const { return getStringOperand(4); }
 
   Metadata *getRawScope() const { return getOperand(0); }
   MDString *getRawName() const { return getOperandAs<MDString>(1); }
   MDString *getRawConfigurationMacros() const { return getOperandAs<MDString>(2); }
   MDString *getRawIncludePath() const { return getOperandAs<MDString>(3); }
-  MDString *getRawAPINotesFile() const { return getOperandAs<MDString>(4); }
+  MDString *getRawISysRoot() const { return getOperandAs<MDString>(4); }
 
   static bool classof(const Metadata *MD) {
     return MD->getMetadataID() == DIModuleKind;
@@ -2145,11 +2134,9 @@ public:
 /// Base class for template parameters.
 class DITemplateParameter : public DINode {
 protected:
-  bool IsDefault;
-
   DITemplateParameter(LLVMContext &Context, unsigned ID, StorageType Storage,
-                      unsigned Tag, bool IsDefault, ArrayRef<Metadata *> Ops)
-      : DINode(Context, ID, Storage, Tag, Ops), IsDefault(IsDefault) {}
+                      unsigned Tag, ArrayRef<Metadata *> Ops)
+      : DINode(Context, ID, Storage, Tag, Ops) {}
   ~DITemplateParameter() = default;
 
 public:
@@ -2158,7 +2145,6 @@ public:
 
   MDString *getRawName() const { return getOperandAs<MDString>(0); }
   Metadata *getRawType() const { return getOperand(1); }
-  bool isDefault() const { return IsDefault; }
 
   static bool classof(const Metadata *MD) {
     return MD->getMetadataID() == DITemplateTypeParameterKind ||
@@ -2171,35 +2157,30 @@ class DITemplateTypeParameter : public DITemplateParameter {
   friend class MDNode;
 
   DITemplateTypeParameter(LLVMContext &Context, StorageType Storage,
-                          bool IsDefault, ArrayRef<Metadata *> Ops)
+                          ArrayRef<Metadata *> Ops)
       : DITemplateParameter(Context, DITemplateTypeParameterKind, Storage,
-                            dwarf::DW_TAG_template_type_parameter, IsDefault,
-                            Ops) {}
+                            dwarf::DW_TAG_template_type_parameter, Ops) {}
   ~DITemplateTypeParameter() = default;
 
   static DITemplateTypeParameter *getImpl(LLVMContext &Context, StringRef Name,
-                                          DIType *Type, bool IsDefault,
-                                          StorageType Storage,
+                                          DIType *Type, StorageType Storage,
                                           bool ShouldCreate = true) {
-    return getImpl(Context, getCanonicalMDString(Context, Name), Type,
-                   IsDefault, Storage, ShouldCreate);
+    return getImpl(Context, getCanonicalMDString(Context, Name), Type, Storage,
+                   ShouldCreate);
   }
   static DITemplateTypeParameter *getImpl(LLVMContext &Context, MDString *Name,
-                                          Metadata *Type, bool IsDefault,
-                                          StorageType Storage,
+                                          Metadata *Type, StorageType Storage,
                                           bool ShouldCreate = true);
 
   TempDITemplateTypeParameter cloneImpl() const {
-    return getTemporary(getContext(), getName(), getType(), isDefault());
+    return getTemporary(getContext(), getName(), getType());
   }
 
 public:
-  DEFINE_MDNODE_GET(DITemplateTypeParameter,
-                    (StringRef Name, DIType *Type, bool IsDefault),
-                    (Name, Type, IsDefault))
-  DEFINE_MDNODE_GET(DITemplateTypeParameter,
-                    (MDString *Name, Metadata *Type, bool IsDefault),
-                    (Name, Type, IsDefault))
+  DEFINE_MDNODE_GET(DITemplateTypeParameter, (StringRef Name, DIType *Type),
+                    (Name, Type))
+  DEFINE_MDNODE_GET(DITemplateTypeParameter, (MDString * Name, Metadata *Type),
+                    (Name, Type))
 
   TempDITemplateTypeParameter clone() const { return cloneImpl(); }
 
@@ -2213,40 +2194,36 @@ class DITemplateValueParameter : public DITemplateParameter {
   friend class MDNode;
 
   DITemplateValueParameter(LLVMContext &Context, StorageType Storage,
-                           unsigned Tag, bool IsDefault,
-                           ArrayRef<Metadata *> Ops)
+                           unsigned Tag, ArrayRef<Metadata *> Ops)
       : DITemplateParameter(Context, DITemplateValueParameterKind, Storage, Tag,
-                            IsDefault, Ops) {}
+                            Ops) {}
   ~DITemplateValueParameter() = default;
 
   static DITemplateValueParameter *getImpl(LLVMContext &Context, unsigned Tag,
                                            StringRef Name, DIType *Type,
-                                           bool IsDefault, Metadata *Value,
-                                           StorageType Storage,
+                                           Metadata *Value, StorageType Storage,
                                            bool ShouldCreate = true) {
     return getImpl(Context, Tag, getCanonicalMDString(Context, Name), Type,
-                   IsDefault, Value, Storage, ShouldCreate);
+                   Value, Storage, ShouldCreate);
   }
   static DITemplateValueParameter *getImpl(LLVMContext &Context, unsigned Tag,
                                            MDString *Name, Metadata *Type,
-                                           bool IsDefault, Metadata *Value,
-                                           StorageType Storage,
+                                           Metadata *Value, StorageType Storage,
                                            bool ShouldCreate = true);
 
   TempDITemplateValueParameter cloneImpl() const {
     return getTemporary(getContext(), getTag(), getName(), getType(),
-                        isDefault(), getValue());
+                        getValue());
   }
 
 public:
   DEFINE_MDNODE_GET(DITemplateValueParameter,
-                    (unsigned Tag, StringRef Name, DIType *Type, bool IsDefault,
+                    (unsigned Tag, StringRef Name, DIType *Type,
                      Metadata *Value),
-                    (Tag, Name, Type, IsDefault, Value))
-  DEFINE_MDNODE_GET(DITemplateValueParameter,
-                    (unsigned Tag, MDString *Name, Metadata *Type,
-                     bool IsDefault, Metadata *Value),
-                    (Tag, Name, Type, IsDefault, Value))
+                    (Tag, Name, Type, Value))
+  DEFINE_MDNODE_GET(DITemplateValueParameter, (unsigned Tag, MDString *Name,
+                                               Metadata *Type, Metadata *Value),
+                    (Tag, Name, Type, Value))
 
   TempDITemplateValueParameter clone() const { return cloneImpl(); }
 
@@ -2573,11 +2550,6 @@ public:
     else
       return 0;
   }
-
-  using ExtOps = std::array<uint64_t, 6>;
-
-  /// Returns the ops for a zero- or sign-extension in a DIExpression.
-  static ExtOps getExtOps(unsigned FromSize, unsigned ToSize, bool Signed);
 
   /// Append a zero- or sign-extension to \p Expr. Converts the expression to a
   /// stack value if it isn't one already.
@@ -3278,89 +3250,6 @@ public:
 
   static bool classof(const Metadata *MD) {
     return MD->getMetadataID() == DIMacroFileKind;
-  }
-};
-
-/// Identifies a unique instance of a variable.
-///
-/// Storage for identifying a potentially inlined instance of a variable,
-/// or a fragment thereof. This guarantees that exactly one variable instance
-/// may be identified by this class, even when that variable is a fragment of
-/// an aggregate variable and/or there is another inlined instance of the same
-/// source code variable nearby.
-/// This class does not necessarily uniquely identify that variable: it is
-/// possible that a DebugVariable with different parameters may point to the
-/// same variable instance, but not that one DebugVariable points to multiple
-/// variable instances.
-class DebugVariable {
-  using FragmentInfo = DIExpression::FragmentInfo;
-
-  const DILocalVariable *Variable;
-  Optional<FragmentInfo> Fragment;
-  const DILocation *InlinedAt;
-
-  /// Fragment that will overlap all other fragments. Used as default when
-  /// caller demands a fragment.
-  static const FragmentInfo DefaultFragment;
-
-public:
-  DebugVariable(const DILocalVariable *Var, Optional<FragmentInfo> FragmentInfo,
-                const DILocation *InlinedAt)
-      : Variable(Var), Fragment(FragmentInfo), InlinedAt(InlinedAt) {}
-
-  DebugVariable(const DILocalVariable *Var, const DIExpression *DIExpr,
-                const DILocation *InlinedAt)
-      : Variable(Var),
-        Fragment(DIExpr ? DIExpr->getFragmentInfo() : NoneType()),
-        InlinedAt(InlinedAt) {}
-
-  const DILocalVariable *getVariable() const { return Variable; }
-  const Optional<FragmentInfo> getFragment() const { return Fragment; }
-  const DILocation *getInlinedAt() const { return InlinedAt; }
-
-  const FragmentInfo getFragmentOrDefault() const {
-    return Fragment.getValueOr(DefaultFragment);
-  }
-
-  static bool isDefaultFragment(const FragmentInfo F) {
-    return F == DefaultFragment;
-  }
-
-  bool operator==(const DebugVariable &Other) const {
-    return std::tie(Variable, Fragment, InlinedAt) ==
-           std::tie(Other.Variable, Other.Fragment, Other.InlinedAt);
-  }
-
-  bool operator<(const DebugVariable &Other) const {
-    return std::tie(Variable, Fragment, InlinedAt) <
-           std::tie(Other.Variable, Other.Fragment, Other.InlinedAt);
-  }
-};
-
-template <> struct DenseMapInfo<DebugVariable> {
-  using FragmentInfo = DIExpression::FragmentInfo;
-
-  /// Empty key: no key should be generated that has no DILocalVariable.
-  static inline DebugVariable getEmptyKey() {
-    return DebugVariable(nullptr, NoneType(), nullptr);
-  }
-
-  /// Difference in tombstone is that the Optional is meaningful.
-  static inline DebugVariable getTombstoneKey() {
-    return DebugVariable(nullptr, {{0, 0}}, nullptr);
-  }
-
-  static unsigned getHashValue(const DebugVariable &D) {
-    unsigned HV = 0;
-    const Optional<FragmentInfo> Fragment = D.getFragment();
-    if (Fragment)
-      HV = DenseMapInfo<FragmentInfo>::getHashValue(*Fragment);
-
-    return hash_combine(D.getVariable(), HV, D.getInlinedAt());
-  }
-
-  static bool isEqual(const DebugVariable &A, const DebugVariable &B) {
-    return A == B;
   }
 };
 

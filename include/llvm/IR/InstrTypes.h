@@ -47,7 +47,7 @@
 namespace llvm {
 
 namespace Intrinsic {
-typedef unsigned ID;
+enum ID : unsigned;
 }
 
 //===----------------------------------------------------------------------===//
@@ -154,20 +154,18 @@ public:
   }
 #include "llvm/IR/Instruction.def"
 
-  static UnaryOperator *
-  CreateWithCopiedFlags(UnaryOps Opc, Value *V, Instruction *CopyO,
-                        const Twine &Name = "",
-                        Instruction *InsertBefore = nullptr) {
-    UnaryOperator *UO = Create(Opc, V, Name, InsertBefore);
+  static UnaryOperator *CreateWithCopiedFlags(UnaryOps Opc,
+                                              Value *V,
+                                              Instruction *CopyO,
+                                              const Twine &Name = "") {
+    UnaryOperator *UO = Create(Opc, V, Name);
     UO->copyIRFlags(CopyO);
     return UO;
   }
 
   static UnaryOperator *CreateFNegFMF(Value *Op, Instruction *FMFSource,
-                                      const Twine &Name = "",
-                                      Instruction *InsertBefore = nullptr) {
-    return CreateWithCopiedFlags(Instruction::FNeg, Op, FMFSource, Name,
-                                 InsertBefore);
+                                      const Twine &Name = "") {
+    return CreateWithCopiedFlags(Instruction::FNeg, Op, FMFSource, Name);
   }
 
   UnaryOps getOpcode() const {
@@ -282,6 +280,11 @@ public:
                                        const Twine &Name = "") {
     return CreateWithCopiedFlags(Instruction::FRem, V1, V2, FMFSource, Name);
   }
+  static BinaryOperator *CreateFNegFMF(Value *Op, Instruction *FMFSource,
+                                       const Twine &Name = "") {
+    Value *Zero = ConstantFP::getNegativeZero(Op->getType());
+    return CreateWithCopiedFlags(Instruction::FSub, Zero, Op, FMFSource, Name);
+  }
 
   static BinaryOperator *CreateNSW(BinaryOps Opc, Value *V1, Value *V2,
                                    const Twine &Name = "") {
@@ -387,6 +390,10 @@ public:
                                       Instruction *InsertBefore = nullptr);
   static BinaryOperator *CreateNUWNeg(Value *Op, const Twine &Name,
                                       BasicBlock *InsertAtEnd);
+  static BinaryOperator *CreateFNeg(Value *Op, const Twine &Name = "",
+                                    Instruction *InsertBefore = nullptr);
+  static BinaryOperator *CreateFNeg(Value *Op, const Twine &Name,
+                                    BasicBlock *InsertAtEnd);
   static BinaryOperator *CreateNot(Value *Op, const Twine &Name = "",
                                    Instruction *InsertBefore = nullptr);
   static BinaryOperator *CreateNot(Value *Op, const Twine &Name,
@@ -1059,7 +1066,7 @@ public:
       : Tag(std::move(Tag)), Inputs(Inputs) {}
 
   explicit OperandBundleDefT(const OperandBundleUse &OBU) {
-    Tag = std::string(OBU.getTagName());
+    Tag = OBU.getTagName();
     Inputs.insert(Inputs.end(), OBU.Inputs.begin(), OBU.Inputs.end());
   }
 
@@ -1578,29 +1585,17 @@ public:
   }
 
   /// Extract the alignment of the return value.
-  /// FIXME: Remove this function once transition to Align is over.
-  /// Use getRetAlign() instead.
   unsigned getRetAlignment() const {
     if (const auto MA = Attrs.getRetAlignment())
       return MA->value();
     return 0;
   }
 
-  /// Extract the alignment of the return value.
-  MaybeAlign getRetAlign() const { return Attrs.getRetAlignment(); }
-
   /// Extract the alignment for a call or parameter (0=unknown).
-  /// FIXME: Remove this function once transition to Align is over.
-  /// Use getParamAlign() instead.
   unsigned getParamAlignment(unsigned ArgNo) const {
     if (const auto MA = Attrs.getParamAlignment(ArgNo))
       return MA->value();
     return 0;
-  }
-
-  /// Extract the alignment for a call or parameter (0=unknown).
-  MaybeAlign getParamAlign(unsigned ArgNo) const {
-    return Attrs.getParamAlignment(ArgNo);
   }
 
   /// Extract the byval type for a call or parameter.
@@ -1869,7 +1864,10 @@ public:
   /// OperandBundleUser to a vector of OperandBundleDefs.  Note:
   /// OperandBundeUses and OperandBundleDefs are non-trivially *different*
   /// representations of operand bundles (see documentation above).
-  void getOperandBundlesAsDefs(SmallVectorImpl<OperandBundleDef> &Defs) const;
+  void getOperandBundlesAsDefs(SmallVectorImpl<OperandBundleDef> &Defs) const {
+    for (unsigned i = 0, e = getNumOperandBundles(); i != e; ++i)
+      Defs.emplace_back(getOperandBundleAt(i));
+  }
 
   /// Return the operand bundle for the operand at index OpIdx.
   ///
@@ -1937,7 +1935,7 @@ public:
   /// Is the function attribute S disallowed by some operand bundle on
   /// this operand bundle user?
   bool isFnAttrDisallowedByOpBundle(StringRef S) const {
-    // Operand bundles only possibly disallow readnone, readonly and argmemonly
+    // Operand bundles only possibly disallow readnone, readonly and argmenonly
     // attributes.  All String attributes are fine.
     return false;
   }
@@ -2097,14 +2095,16 @@ public:
   op_iterator populateBundleOperandInfos(ArrayRef<OperandBundleDef> Bundles,
                                          const unsigned BeginIndex);
 
-public:
   /// Return the BundleOpInfo for the operand at index OpIdx.
   ///
   /// It is an error to call this with an OpIdx that does not correspond to an
   /// bundle operand.
-  BundleOpInfo &getBundleOpInfoForOperand(unsigned OpIdx);
   const BundleOpInfo &getBundleOpInfoForOperand(unsigned OpIdx) const {
-    return const_cast<CallBase *>(this)->getBundleOpInfoForOperand(OpIdx);
+    for (auto &BOI : bundle_op_infos())
+      if (BOI.Begin <= OpIdx && OpIdx < BOI.End)
+        return BOI;
+
+    llvm_unreachable("Did not find operand bundle for operand!");
   }
 
 protected:

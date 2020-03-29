@@ -10,7 +10,6 @@
 // SanitizerMask.
 //
 //===----------------------------------------------------------------------===//
-
 #ifndef LLVM_CLANG_BASIC_SANITIZERSPECIALCASELIST_H
 #define LLVM_CLANG_BASIC_SANITIZERSPECIALCASELIST_H
 
@@ -18,14 +17,8 @@
 #include "clang/Basic/Sanitizers.h"
 #include "llvm/ADT/StringRef.h"
 #include "llvm/Support/SpecialCaseList.h"
+#include "llvm/Support/VirtualFileSystem.h"
 #include <memory>
-#include <vector>
-
-namespace llvm {
-namespace vfs {
-class FileSystem;
-}
-} // namespace llvm
 
 namespace clang {
 

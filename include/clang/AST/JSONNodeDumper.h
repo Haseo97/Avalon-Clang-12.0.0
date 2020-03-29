@@ -64,7 +64,7 @@ public:
 
     // We need to capture an owning-string in the lambda because the lambda
     // is invoked in a deferred manner.
-    std::string LabelStr(!Label.empty() ? Label : "inner");
+    std::string LabelStr = !Label.empty() ? Label : "inner";
     bool WasFirstChild = FirstChild;
     auto DumpWithIndent = [=](bool IsLastChild) {
       if (WasFirstChild) {
@@ -126,7 +126,7 @@ class JSONNodeDumper
   ASTNameGenerator ASTNameGen;
   PrintingPolicy PrintPolicy;
   const comments::CommandTraits *Traits;
-  StringRef LastLocFilename, LastLocPresumedFilename;
+  StringRef LastLocFilename;
   unsigned LastLocLine, LastLocPresumedLine;
 
   using InnerAttrVisitor = ConstAttrVisitor<JSONNodeDumper>;

@@ -11,9 +11,7 @@
 #define LLVM_CLANG_TOOLING_SYNTAX_TREE_H
 
 #include "clang/AST/Decl.h"
-#include "clang/Basic/TokenKinds.h"
 #include "clang/Tooling/Syntax/Nodes.h"
-#include "clang/Tooling/Syntax/Tree.h"
 
 namespace clang {
 namespace syntax {
@@ -21,13 +19,6 @@ namespace syntax {
 /// Build a syntax tree for the main file.
 syntax::TranslationUnit *buildSyntaxTree(Arena &A,
                                          const clang::TranslationUnitDecl &TU);
-
-// Create syntax trees from subtrees not backed by the source code.
-
-clang::syntax::Leaf *createPunctuation(clang::syntax::Arena &A,
-                                       clang::tok::TokenKind K);
-clang::syntax::EmptyStatement *createEmptyStatement(clang::syntax::Arena &A);
-
 } // namespace syntax
 } // namespace clang
 #endif

@@ -195,6 +195,26 @@ private:
   Value *Callee = nullptr;
 };
 
+/// Common super class of ArrayType, StructType and VectorType.
+class CompositeType : public Type {
+protected:
+  explicit CompositeType(LLVMContext &C, TypeID tid) : Type(C, tid) {}
+
+public:
+  /// Given an index value into the type, return the type of the element.
+  Type *getTypeAtIndex(const Value *V) const;
+  Type *getTypeAtIndex(unsigned Idx) const;
+  bool indexValid(const Value *V) const;
+  bool indexValid(unsigned Idx) const;
+
+  /// Methods for support type inquiry through isa, cast, and dyn_cast.
+  static bool classof(const Type *T) {
+    return T->getTypeID() == ArrayTyID ||
+           T->getTypeID() == StructTyID ||
+           T->getTypeID() == VectorTyID;
+  }
+};
+
 /// Class to represent struct types. There are two different kinds of struct
 /// types: Literal structs and Identified structs.
 ///
@@ -215,8 +235,8 @@ private:
 /// elements as defined by DataLayout (which is required to match what the code
 /// generator for a target expects).
 ///
-class StructType : public Type {
-  StructType(LLVMContext &C) : Type(C, StructTyID) {}
+class StructType : public CompositeType {
+  StructType(LLVMContext &C) : CompositeType(C, StructTyID) {}
 
   enum {
     /// This is the contents of the SubClassData field.
@@ -247,7 +267,8 @@ public:
                             StringRef Name, bool isPacked = false);
   static StructType *create(LLVMContext &Context, ArrayRef<Type *> Elements);
   template <class... Tys>
-  static std::enable_if_t<are_base_of<Type, Tys...>::value, StructType *>
+  static typename std::enable_if<are_base_of<Type, Tys...>::value,
+                                 StructType *>::type
   create(StringRef Name, Type *elt1, Tys *... elts) {
     assert(elt1 && "Cannot create a struct type with no elements with this");
     SmallVector<llvm::Type *, 8> StructFields({elt1, elts...});
@@ -265,7 +286,8 @@ public:
   /// specifying the elements as arguments. Note that this method always returns
   /// a non-packed struct, and requires at least one element type.
   template <class... Tys>
-  static std::enable_if_t<are_base_of<Type, Tys...>::value, StructType *>
+  static typename std::enable_if<are_base_of<Type, Tys...>::value,
+                                 StructType *>::type
   get(Type *elt1, Tys *... elts) {
     assert(elt1 && "Cannot create a struct type with no elements with this");
     LLVMContext &Ctx = elt1->getContext();
@@ -302,7 +324,7 @@ public:
   void setBody(ArrayRef<Type*> Elements, bool isPacked = false);
 
   template <typename... Tys>
-  std::enable_if_t<are_base_of<Type, Tys...>::value, void>
+  typename std::enable_if<are_base_of<Type, Tys...>::value, void>::type
   setBody(Type *elt1, Tys *... elts) {
     assert(elt1 && "Cannot create a struct type with no elements with this");
     SmallVector<llvm::Type *, 8> StructFields({elt1, elts...});
@@ -330,11 +352,6 @@ public:
     assert(N < NumContainedTys && "Element number out of range!");
     return ContainedTys[N];
   }
-  /// Given an index value into the type, return the type of the element.
-  Type *getTypeAtIndex(const Value *V) const;
-  Type *getTypeAtIndex(unsigned N) const { return getElementType(N); }
-  bool indexValid(const Value *V) const;
-  bool indexValid(unsigned Idx) const { return Idx < getNumElements(); }
 
   /// Methods for support type inquiry through isa, cast, and dyn_cast.
   static bool classof(const Type *T) {
@@ -360,14 +377,14 @@ Type *Type::getStructElementType(unsigned N) const {
 /// for use of SIMD instructions. SequentialType holds the common features of
 /// both, which stem from the fact that both lay their components out in memory
 /// identically.
-class SequentialType : public Type {
+class SequentialType : public CompositeType {
   Type *ContainedType;               ///< Storage for the single contained type.
   uint64_t NumElements;
 
 protected:
   SequentialType(TypeID TID, Type *ElType, uint64_t NumElements)
-      : Type(ElType->getContext(), TID), ContainedType(ElType),
-        NumElements(NumElements) {
+    : CompositeType(ElType->getContext(), TID), ContainedType(ElType),
+      NumElements(NumElements) {
     ContainedTys = &ContainedType;
     NumContainedTys = 1;
   }

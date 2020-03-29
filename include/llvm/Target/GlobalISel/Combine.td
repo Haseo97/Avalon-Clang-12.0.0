@@ -66,21 +66,11 @@ class GIDefKindWithArgs;
 ///       is incorrect.
 def root : GIDefKind;
 
-/// Declares data that is passed from the match stage to the apply stage.
-class GIDefMatchData<string type> : GIDefKind {
-  /// A C++ type name indicating the storage type.
-  string Type = type;
-}
-
-def extending_load_matchdata : GIDefMatchData<"PreferredTuple">;
-def indexed_load_store_matchdata : GIDefMatchData<"IndexedLoadStoreMatchInfo">;
-
 /// The operator at the root of a GICombineRule.Match dag.
 def match;
 /// All arguments of the match operator must be either:
 /// * A subclass of GIMatchKind
 /// * A subclass of GIMatchKindWithArgs
-/// * A subclass of Instruction
 /// * A MIR code block (deprecated)
 /// The GIMatchKind and GIMatchKindWithArgs cases are described in more detail
 /// in their definitions below.
@@ -88,10 +78,6 @@ def match;
 /// that occur multiple times introduce edges.
 class GIMatchKind;
 class GIMatchKindWithArgs;
-
-/// In lieu of having proper macro support. Trivial one-off opcode checks can be
-/// performed with this.
-def wip_match_opcode : GIMatchKindWithArgs;
 
 /// The operator at the root of a GICombineRule.Apply dag.
 def apply;
@@ -103,94 +89,15 @@ class GIApplyKindWithArgs;
 
 def copy_prop : GICombineRule<
   (defs root:$d),
-  (match (COPY $d, $s):$mi,
-         [{ return Helper.matchCombineCopy(*${mi}); }]),
-  (apply [{ Helper.applyCombineCopy(*${mi}); }])>;
-
-def extending_loads : GICombineRule<
-  (defs root:$root, extending_load_matchdata:$matchinfo),
-  (match (wip_match_opcode G_LOAD, G_SEXTLOAD, G_ZEXTLOAD):$root,
-         [{ return Helper.matchCombineExtendingLoads(*${root}, ${matchinfo}); }]),
-  (apply [{ Helper.applyCombineExtendingLoads(*${root}, ${matchinfo}); }])>;
-def combines_for_extload: GICombineGroup<[extending_loads]>;
-
-def combine_indexed_load_store : GICombineRule<
-  (defs root:$root, indexed_load_store_matchdata:$matchinfo),
-  (match (wip_match_opcode G_LOAD, G_SEXTLOAD, G_ZEXTLOAD, G_STORE):$root,
-         [{ return Helper.matchCombineIndexedLoadStore(*${root}, ${matchinfo}); }]),
-  (apply [{ Helper.applyCombineIndexedLoadStore(*${root}, ${matchinfo}); }])>;
+  (match [{ return Helper.matchCombineCopy(${d}); }]),
+  (apply [{ Helper.applyCombineCopy(${d}); }])>;
+def trivial_combines : GICombineGroup<[copy_prop]>;
 
 // FIXME: Is there a reason this wasn't in tryCombine? I've left it out of
 //        all_combines because it wasn't there.
 def elide_br_by_inverting_cond : GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_BR):$root,
-         [{ return Helper.matchElideBrByInvertingCond(*${root}); }]),
-  (apply [{ Helper.applyElideBrByInvertingCond(*${root}); }])>;
+  (defs root:$d),
+  (match [{ return Helper.matchElideBrByInvertingCond(${d}); }]),
+  (apply [{ Helper.applyElideBrByInvertingCond(${d}); }])>;
 
-def ptr_add_immed_matchdata : GIDefMatchData<"PtrAddChain">;
-def ptr_add_immed_chain : GICombineRule<
-  (defs root:$d, ptr_add_immed_matchdata:$matchinfo),
-  (match (wip_match_opcode G_PTR_ADD):$d,
-         [{ return Helper.matchPtrAddImmedChain(*${d}, ${matchinfo}); }]),
-  (apply [{ Helper.applyPtrAddImmedChain(*${d}, ${matchinfo}); }])>;
-
-def mul_to_shl_matchdata : GIDefMatchData<"unsigned">;
-def mul_to_shl : GICombineRule<
-  (defs root:$d, mul_to_shl_matchdata:$matchinfo),
-  (match (G_MUL $d, $op1, $op2):$mi,
-         [{ return Helper.matchCombineMulToShl(*${mi}, ${matchinfo}); }]),
-  (apply [{ Helper.applyCombineMulToShl(*${mi}, ${matchinfo}); }])>;
-
-// [us]itofp(undef) = 0, because the result value is bounded.
-def undef_to_fp_zero : GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_UITOFP, G_SITOFP):$root,
-         [{ return Helper.matchAnyExplicitUseIsUndef(*${root}); }]),
-  (apply [{ Helper.replaceInstWithFConstant(*${root}, 0.0); }])>;
-
-def undef_to_int_zero: GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_AND, G_MUL):$root,
-         [{ return Helper.matchAnyExplicitUseIsUndef(*${root}); }]),
-  (apply [{ Helper.replaceInstWithConstant(*${root}, 0); }])>;
-
-def undef_to_negative_one: GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_OR):$root,
-         [{ return Helper.matchAnyExplicitUseIsUndef(*${root}); }]),
-  (apply [{ Helper.replaceInstWithConstant(*${root}, -1); }])>;
-
-// Instructions where if any source operand is undef, the instruction can be
-// replaced with undef.
-def propagate_undef_any_op: GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_ADD, G_FPTOSI, G_FPTOUI, G_SUB, G_XOR):$root,
-         [{ return Helper.matchAnyExplicitUseIsUndef(*${root}); }]),
-  (apply [{ Helper.replaceInstWithUndef(*${root}); }])>;
-
-// Instructions where if all source operands are undef, the instruction can be
-// replaced with undef.
-def propagate_undef_all_ops: GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_SHUFFLE_VECTOR):$root,
-          [{ return Helper.matchAllExplicitUsesAreUndef(*${root}); }]),
-  (apply [{ Helper.replaceInstWithUndef(*${root}); }])>;
-
-// Replace a G_SHUFFLE_VECTOR with an undef mask with a G_IMPLICIT_DEF.
-def propagate_undef_shuffle_mask: GICombineRule<
-  (defs root:$root),
-  (match (wip_match_opcode G_SHUFFLE_VECTOR):$root,
-         [{ return Helper.matchUndefShuffleVectorMask(*${root}); }]),
-  (apply [{ Helper.replaceInstWithUndef(*${root}); }])>;
-
-// FIXME: These should use the custom predicate feature once it lands.
-def undef_combines : GICombineGroup<[undef_to_fp_zero, undef_to_int_zero,
-                                     undef_to_negative_one,
-                                     propagate_undef_any_op,
-                                     propagate_undef_all_ops,
-                                     propagate_undef_shuffle_mask]>;
-
-def trivial_combines : GICombineGroup<[copy_prop, mul_to_shl]>;
-def all_combines : GICombineGroup<[trivial_combines, ptr_add_immed_chain,
-    combines_for_extload, combine_indexed_load_store, undef_combines]>;
+def all_combines : GICombineGroup<[trivial_combines]>;

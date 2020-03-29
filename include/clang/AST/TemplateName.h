@@ -13,7 +13,6 @@
 #ifndef LLVM_CLANG_AST_TEMPLATENAME_H
 #define LLVM_CLANG_AST_TEMPLATENAME_H
 
-#include "clang/AST/DependenceFlags.h"
 #include "clang/AST/NestedNameSpecifier.h"
 #include "clang/Basic/LLVM.h"
 #include "llvm/ADT/FoldingSet.h"
@@ -120,10 +119,6 @@ public:
 
   iterator begin() const { return getStorage(); }
   iterator end() const { return getStorage() + size(); }
-
-  llvm::ArrayRef<NamedDecl*> decls() const {
-    return llvm::makeArrayRef(begin(), end());
-  }
 };
 
 /// A structure for storing an already-substituted template template
@@ -191,8 +186,8 @@ public:
 /// only be understood in the context of
 class TemplateName {
   using StorageType =
-      llvm::PointerUnion<TemplateDecl *, UncommonTemplateNameStorage *,
-                         QualifiedTemplateName *, DependentTemplateName *>;
+      llvm::PointerUnion4<TemplateDecl *, UncommonTemplateNameStorage *,
+                          QualifiedTemplateName *, DependentTemplateName *>;
 
   StorageType Storage;
 
@@ -295,8 +290,6 @@ public:
   /// template template argument. This refers to the most recent declaration of
   /// the template, including any default template arguments.
   TemplateName getNameToSubstitute() const;
-
-  TemplateNameDependence getDependence() const;
 
   /// Determines whether this is a dependent template name.
   bool isDependent() const;
@@ -562,7 +555,7 @@ struct PointerLikeTypeTraits<clang::TemplateName> {
   }
 
   // No bits are available!
-  static constexpr int NumLowBitsAvailable = 0;
+  enum { NumLowBitsAvailable = 0 };
 };
 
 } // namespace llvm.

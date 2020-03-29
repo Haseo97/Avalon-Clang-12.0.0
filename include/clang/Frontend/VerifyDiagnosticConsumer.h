@@ -10,7 +10,6 @@
 #define LLVM_CLANG_FRONTEND_VERIFYDIAGNOSTICCONSUMER_H
 
 #include "clang/Basic/Diagnostic.h"
-#include "clang/Basic/FileManager.h"
 #include "clang/Basic/LLVM.h"
 #include "clang/Basic/SourceLocation.h"
 #include "clang/Lex/Preprocessor.h"

@@ -50,9 +50,10 @@ template <class T> void addDataToConsumer(T &DataConsumer, const QualType &QT) {
 }
 
 template <class T, class Type>
-std::enable_if_t<std::is_integral<Type>::value || std::is_enum<Type>::value ||
-                 std::is_convertible<Type, size_t>::value // for llvm::hash_code
-                 >
+typename std::enable_if<
+    std::is_integral<Type>::value || std::is_enum<Type>::value ||
+    std::is_convertible<Type, size_t>::value // for llvm::hash_code
+    >::type
 addDataToConsumer(T &DataConsumer, Type Data) {
   DataConsumer.update(StringRef(reinterpret_cast<char *>(&Data), sizeof(Data)));
 }

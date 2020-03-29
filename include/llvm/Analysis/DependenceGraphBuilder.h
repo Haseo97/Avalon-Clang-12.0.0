@@ -54,21 +54,12 @@ public:
   /// therefore the worst-case time complexity is O(N^2). The average time
   /// complexity is O((N^2)/2).
   void populate() {
-    computeInstructionOrdinals();
     createFineGrainedNodes();
     createDefUseEdges();
     createMemoryDependencyEdges();
-    simplify();
     createAndConnectRootNode();
     createPiBlocks();
-    sortNodesTopologically();
   }
-
-  /// Compute ordinal numbers for each instruction and store them in a map for
-  /// future look up. These ordinals are used to compute node ordinals which are
-  /// in turn used to order nodes that are part of a cycle.
-  /// Instruction ordinals are assigned based on lexical program order.
-  void computeInstructionOrdinals();
 
   /// Create fine grained nodes. These are typically atomic nodes that
   /// consist of a single instruction.
@@ -93,18 +84,6 @@ public:
   /// the dependence graph into an acyclic graph.
   void createPiBlocks();
 
-  /// Go through all the nodes in the graph and collapse any two nodes
-  /// 'a' and 'b' if all of the following are true:
-  ///   - the only edge from 'a' is a def-use edge to 'b' and
-  ///   - the only edge to 'b' is a def-use edge from 'a' and
-  ///   - there is no cyclic edge from 'b' to 'a' and
-  ///   - all instructions in 'a' and 'b' belong to the same basic block and
-  ///   - both 'a' and 'b' are simple (single or multi instruction) nodes.
-  void simplify();
-
-  /// Topologically sort the graph nodes.
-  void sortNodesTopologically();
-
 protected:
   /// Create the root node of the graph.
   virtual NodeType &createRootNode() = 0;
@@ -125,10 +104,6 @@ protected:
   /// Create a rooted edge going from \p Src to \p Tgt .
   virtual EdgeType &createRootedEdge(NodeType &Src, NodeType &Tgt) = 0;
 
-  /// Given a pi-block node, return a vector of all the nodes contained within
-  /// it.
-  virtual const NodeListType &getNodesInPiBlock(const NodeType &N) = 0;
-
   /// Deallocate memory of edge \p E.
   virtual void destroyEdge(EdgeType &E) { delete &E; }
 
@@ -139,38 +114,8 @@ protected:
   /// and false otherwise.
   virtual bool shouldCreatePiBlocks() const { return true; }
 
-  /// Return true if graph simplification step is requested, and false
-  /// otherwise.
-  virtual bool shouldSimplify() const { return true; }
-
-  /// Return true if it's safe to merge the two nodes.
-  virtual bool areNodesMergeable(const NodeType &A,
-                                 const NodeType &B) const = 0;
-
-  /// Append the content of node \p B into node \p A and remove \p B and
-  /// the edge between \p A and \p B from the graph.
-  virtual void mergeNodes(NodeType &A, NodeType &B) = 0;
-
-  /// Given an instruction \p I return its associated ordinal number.
-  size_t getOrdinal(Instruction &I) {
-    assert(InstOrdinalMap.find(&I) != InstOrdinalMap.end() &&
-           "No ordinal computed for this instruction.");
-    return InstOrdinalMap[&I];
-  }
-
-  /// Given a node \p N return its associated ordinal number.
-  size_t getOrdinal(NodeType &N) {
-    assert(NodeOrdinalMap.find(&N) != NodeOrdinalMap.end() &&
-           "No ordinal computed for this node.");
-    return NodeOrdinalMap[&N];
-  }
-
   /// Map types to map instructions to nodes used when populating the graph.
   using InstToNodeMap = DenseMap<Instruction *, NodeType *>;
-
-  /// Map Types to map instruction/nodes to an ordinal number.
-  using InstToOrdinalMap = DenseMap<Instruction *, size_t>;
-  using NodeToOrdinalMap = DenseMap<NodeType *, size_t>;
 
   /// Reference to the graph that gets built by a concrete implementation of
   /// this builder.
@@ -185,14 +130,6 @@ protected:
 
   /// A mapping from instructions to the corresponding nodes in the graph.
   InstToNodeMap IMap;
-
-  /// A mapping from each instruction to an ordinal number. This map is used to
-  /// populate the \p NodeOrdinalMap.
-  InstToOrdinalMap InstOrdinalMap;
-
-  /// A mapping from nodes to an ordinal number. This map is used to sort nodes
-  /// in a pi-block based on program order.
-  NodeToOrdinalMap NodeOrdinalMap;
 };
 
 } // namespace llvm

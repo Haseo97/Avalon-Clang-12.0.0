@@ -188,19 +188,8 @@ inline bool operator!=(const SourceLocation &LHS, const SourceLocation &RHS) {
   return !(LHS == RHS);
 }
 
-// Ordering is meaningful only if LHS and RHS have the same FileID!
-// Otherwise use SourceManager::isBeforeInTranslationUnit().
 inline bool operator<(const SourceLocation &LHS, const SourceLocation &RHS) {
   return LHS.getRawEncoding() < RHS.getRawEncoding();
-}
-inline bool operator>(const SourceLocation &LHS, const SourceLocation &RHS) {
-  return LHS.getRawEncoding() > RHS.getRawEncoding();
-}
-inline bool operator<=(const SourceLocation &LHS, const SourceLocation &RHS) {
-  return LHS.getRawEncoding() <= RHS.getRawEncoding();
-}
-inline bool operator>=(const SourceLocation &LHS, const SourceLocation &RHS) {
-  return LHS.getRawEncoding() >= RHS.getRawEncoding();
 }
 
 /// A trivial tuple used to represent a source range.
@@ -228,11 +217,6 @@ public:
 
   bool operator!=(const SourceRange &X) const {
     return B != X.B || E != X.E;
-  }
-
-  // Returns true iff other is wholly contained within this range.
-  bool fullyContains(const SourceRange &other) const {
-    return B <= other.B && E >= other.E;
   }
 
   void print(raw_ostream &OS, const SourceManager &SM) const;
@@ -482,7 +466,7 @@ namespace llvm {
   // Teach SmallPtrSet how to handle SourceLocation.
   template<>
   struct PointerLikeTypeTraits<clang::SourceLocation> {
-    static constexpr int NumLowBitsAvailable = 0;
+    enum { NumLowBitsAvailable = 0 };
 
     static void *getAsVoidPointer(clang::SourceLocation L) {
       return L.getPtrEncoding();

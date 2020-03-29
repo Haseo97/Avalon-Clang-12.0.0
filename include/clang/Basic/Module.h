@@ -15,11 +15,13 @@
 #ifndef LLVM_CLANG_BASIC_MODULE_H
 #define LLVM_CLANG_BASIC_MODULE_H
 
+#include "clang/Basic/FileManager.h"
 #include "clang/Basic/SourceLocation.h"
 #include "llvm/ADT/ArrayRef.h"
 #include "llvm/ADT/DenseSet.h"
 #include "llvm/ADT/Optional.h"
 #include "llvm/ADT/PointerIntPair.h"
+#include "llvm/ADT/PointerUnion.h"
 #include "llvm/ADT/SetVector.h"
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/STLExtras.h"
@@ -42,9 +44,6 @@ class raw_ostream;
 
 namespace clang {
 
-class DirectoryEntry;
-class FileEntry;
-class FileManager;
 class LangOptions;
 class TargetInfo;
 
@@ -102,7 +101,7 @@ public:
   std::string PresumedModuleMapFile;
 
   /// The umbrella header or directory.
-  const void *Umbrella = nullptr;
+  llvm::PointerUnion<const DirectoryEntry *, const FileEntry *> Umbrella;
 
   /// The module signature.
   ASTFileSignature Signature;
@@ -268,9 +267,6 @@ public:
   /// Whether this module came from a "private" module map, found next
   /// to a regular (public) module map.
   unsigned ModuleMapIsPrivate : 1;
-
-  /// Whether Umbrella is a directory or header.
-  unsigned HasUmbrellaDir : 1;
 
   /// Describes the visibility of the various names within a
   /// particular module.
@@ -491,22 +487,26 @@ public:
   /// Retrieve the header that serves as the umbrella header for this
   /// module.
   Header getUmbrellaHeader() const {
-    if (!HasUmbrellaDir)
-      return Header{UmbrellaAsWritten,
-                    static_cast<const FileEntry *>(Umbrella)};
+    if (auto *E = Umbrella.dyn_cast<const FileEntry *>())
+      return Header{UmbrellaAsWritten, E};
     return Header{};
   }
 
   /// Determine whether this module has an umbrella directory that is
   /// not based on an umbrella header.
-  bool hasUmbrellaDir() const { return Umbrella && HasUmbrellaDir; }
+  bool hasUmbrellaDir() const {
+    return Umbrella && Umbrella.is<const DirectoryEntry *>();
+  }
 
   /// Add a top-level header associated with this module.
-  void addTopHeader(const FileEntry *File);
+  void addTopHeader(const FileEntry *File) {
+    assert(File);
+    TopHeaders.insert(File);
+  }
 
   /// Add a top-level header filename associated with this module.
   void addTopHeaderFilename(StringRef Filename) {
-    TopHeaderNames.push_back(std::string(Filename));
+    TopHeaderNames.push_back(Filename);
   }
 
   /// The top-level headers associated with this module.
@@ -653,32 +653,6 @@ private:
   /// Visibility generation, bumped every time the visibility state changes.
   unsigned Generation = 0;
 };
-
-/// Abstracts clang modules and precompiled header files and holds
-/// everything needed to generate debug info for an imported module
-/// or PCH.
-class ASTSourceDescriptor {
-  StringRef PCHModuleName;
-  StringRef Path;
-  StringRef ASTFile;
-  ASTFileSignature Signature;
-  const Module *ClangModule = nullptr;
-
-public:
-  ASTSourceDescriptor() = default;
-  ASTSourceDescriptor(StringRef Name, StringRef Path, StringRef ASTFile,
-                      ASTFileSignature Signature)
-      : PCHModuleName(std::move(Name)), Path(std::move(Path)),
-        ASTFile(std::move(ASTFile)), Signature(Signature) {}
-  ASTSourceDescriptor(const Module &M);
-
-  std::string getModuleName() const;
-  StringRef getPath() const { return Path; }
-  StringRef getASTFile() const { return ASTFile; }
-  ASTFileSignature getSignature() const { return Signature; }
-  const Module *getModuleOrNull() const { return ClangModule; }
-};
-
 
 } // namespace clang
 

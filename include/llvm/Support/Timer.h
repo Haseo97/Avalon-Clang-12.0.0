@@ -174,7 +174,6 @@ class TimerGroup {
     std::string Description;
 
     PrintRecord(const PrintRecord &Other) = default;
-    PrintRecord &operator=(const PrintRecord &Other) = default;
     PrintRecord(const TimeRecord &Time, const std::string &Name,
                 const std::string &Description)
       : Time(Time), Name(Name), Description(Description) {}
@@ -230,11 +229,6 @@ public:
   /// used by the Statistic code to influence the construction and destruction
   /// order of the global timer lists.
   static void ConstructTimerLists();
-
-  /// This makes the default group unmanaged, and lets the user manage the
-  /// group's lifetime.
-  static std::unique_ptr<TimerGroup> aquireDefaultGroup();
-
 private:
   friend class Timer;
   friend void PrintStatisticsJSON(raw_ostream &OS);

@@ -19,7 +19,6 @@
 
 #include "polly/ScopDetection.h"
 #include "polly/Support/SCEVAffinator.h"
-#include "polly/Support/ScopHelper.h"
 #include "llvm/ADT/ArrayRef.h"
 #include "llvm/ADT/MapVector.h"
 #include "llvm/ADT/SetVector.h"
@@ -54,6 +53,23 @@ extern bool UseInstructionNames;
 // be created. More complex scops will result in very high compile time and
 // are also unlikely to result in good code.
 extern int const MaxDisjunctsInDomain;
+
+/// Enumeration of assumptions Polly can take.
+enum AssumptionKind {
+  ALIASING,
+  INBOUNDS,
+  WRAPPING,
+  UNSIGNED,
+  PROFITABLE,
+  ERRORBLOCK,
+  COMPLEXITY,
+  INFINITELOOP,
+  INVARIANTLOAD,
+  DELINEARIZATION,
+};
+
+/// Enum to distinguish between assumptions and restrictions.
+enum AssumptionSign { AS_ASSUMPTION, AS_RESTRICTION };
 
 /// The different memory kinds used in Polly.
 ///
@@ -463,8 +479,6 @@ public:
     RT_BAND, ///< Bitwise And
   };
 
-  using SubscriptsTy = SmallVector<const SCEV *, 4>;
-
 private:
   /// A unique identifier for this memory access.
   ///
@@ -576,7 +590,7 @@ private:
   bool IsAffine = true;
 
   /// Subscript expression for each dimension.
-  SubscriptsTy Subscripts;
+  SmallVector<const SCEV *, 4> Subscripts;
 
   /// Relation from statement instances to the accessed array elements.
   ///
@@ -619,7 +633,7 @@ private:
 
   isl::basic_map createBasicAccessMap(ScopStmt *Statement);
 
-  isl::set assumeNoOutOfBound();
+  void assumeNoOutOfBound();
 
   /// Compute bounds on an over approximated  access relation.
   ///
@@ -879,11 +893,6 @@ public:
 
   /// Return the access instruction of this memory access.
   Instruction *getAccessInstruction() const { return AccessInstruction; }
-
-  ///  Return an iterator range containing the subscripts.
-  iterator_range<SubscriptsTy::const_iterator> subscripts() const {
-    return make_range(Subscripts.begin(), Subscripts.end());
-  }
 
   /// Return the number of access function subscript.
   unsigned getNumSubscripts() const { return Subscripts.size(); }
@@ -1615,6 +1624,24 @@ public:
 /// Print ScopStmt S to raw_ostream OS.
 raw_ostream &operator<<(raw_ostream &OS, const ScopStmt &S);
 
+/// Helper struct to remember assumptions.
+struct Assumption {
+  /// The kind of the assumption (e.g., WRAPPING).
+  AssumptionKind Kind;
+
+  /// Flag to distinguish assumptions and restrictions.
+  AssumptionSign Sign;
+
+  /// The valid/invalid context if this is an assumption/restriction.
+  isl::set Set;
+
+  /// The location that caused this assumption.
+  DebugLoc Loc;
+
+  /// An optional block whose domain can simplify the assumption.
+  BasicBlock *BB;
+};
+
 /// Build the conditions sets for the branch condition @p Condition in
 /// the @p Domain.
 ///
@@ -1708,6 +1735,12 @@ private:
 
   /// The name of the SCoP (identical to the regions name)
   Optional<std::string> name;
+
+  /// The ID to be assigned to the next Scop in a function
+  static int NextScopID;
+
+  /// The name of the function currently under consideration
+  static std::string CurrentFunc;
 
   // Access functions of the SCoP.
   //
@@ -1805,6 +1838,19 @@ private:
   /// need to be "false". Otherwise they behave the same.
   isl::set InvalidContext;
 
+  using RecordedAssumptionsTy = SmallVector<Assumption, 8>;
+  /// Collection to hold taken assumptions.
+  ///
+  /// There are two reasons why we want to record assumptions first before we
+  /// add them to the assumed/invalid context:
+  ///   1) If the SCoP is not profitable or otherwise invalid without the
+  ///      assumed/invalid context we do not have to compute it.
+  ///   2) Information about the context are gathered rather late in the SCoP
+  ///      construction (basically after we know all parameters), thus the user
+  ///      might see overly complicated assumptions to be taken while they will
+  ///      only be simplified later on.
+  RecordedAssumptionsTy RecordedAssumptions;
+
   /// The schedule of the SCoP
   ///
   /// The schedule of the SCoP describes the execution order of the statements
@@ -1893,10 +1939,12 @@ private:
   DenseMap<const ScopArrayInfo *, SmallVector<MemoryAccess *, 4>>
       PHIIncomingAccs;
 
+  /// Return the ID for a new Scop within a function
+  static int getNextID(std::string ParentFunc);
+
   /// Scop constructor; invoked from ScopBuilder::buildScop.
   Scop(Region &R, ScalarEvolution &SE, LoopInfo &LI, DominatorTree &DT,
-       ScopDetection::DetectionContext &DC, OptimizationRemarkEmitter &ORE,
-       int ID);
+       ScopDetection::DetectionContext &DC, OptimizationRemarkEmitter &ORE);
 
   //@}
 
@@ -2081,6 +2129,12 @@ public:
                       InvariantEquivClasses.end());
   }
 
+  /// Return an iterator range containing hold assumptions.
+  iterator_range<RecordedAssumptionsTy::const_iterator>
+  recorded_assumptions() const {
+    return make_range(RecordedAssumptions.begin(), RecordedAssumptions.end());
+  }
+
   /// Return an iterator range containing all the MemoryAccess objects of the
   /// Scop.
   iterator_range<AccFuncVector::iterator> access_functions() {
@@ -2243,6 +2297,9 @@ public:
   /// @returns True if the optimized SCoP can be executed.
   bool hasFeasibleRuntimeContext() const;
 
+  /// Clear assumptions which have been already processed.
+  void clearRecordedAssumptions() { return RecordedAssumptions.clear(); }
+
   /// Check if the assumption in @p Set is trivial or not.
   ///
   /// @param Set  The relations between parameters that are assumed to hold.
@@ -2289,6 +2346,24 @@ public:
   ///             calculate hotness when emitting remark.
   void addAssumption(AssumptionKind Kind, isl::set Set, DebugLoc Loc,
                      AssumptionSign Sign, BasicBlock *BB);
+
+  /// Record an assumption for later addition to the assumed context.
+  ///
+  /// This function will add the assumption to the RecordedAssumptions. This
+  /// collection will be added (@see addAssumption) to the assumed context once
+  /// all paramaters are known and the context is fully built.
+  ///
+  /// @param Kind The assumption kind describing the underlying cause.
+  /// @param Set  The relations between parameters that are assumed to hold.
+  /// @param Loc  The location in the source that caused this assumption.
+  /// @param Sign Enum to indicate if the assumptions in @p Set are positive
+  ///             (needed/assumptions) or negative (invalid/restrictions).
+  /// @param BB   The block in which this assumption was taken. If it is
+  ///             set, the domain of that block will be used to simplify the
+  ///             actual assumption in @p Set once it is added. This is useful
+  ///             if the assumption was created prior to the domain.
+  void recordAssumption(AssumptionKind Kind, isl::set Set, DebugLoc Loc,
+                        AssumptionSign Sign, BasicBlock *BB = nullptr);
 
   /// Mark the scop as invalid.
   ///
@@ -2429,7 +2504,7 @@ public:
   ///
   /// @returns The ScopArrayInfo pointer or NULL if no such pointer is
   ///          available.
-  ScopArrayInfo *getScopArrayInfoOrNull(Value *BasePtr, MemoryKind Kind);
+  const ScopArrayInfo *getScopArrayInfoOrNull(Value *BasePtr, MemoryKind Kind);
 
   /// Return the cached ScopArrayInfo object for @p BasePtr.
   ///
@@ -2438,7 +2513,7 @@ public:
   ///
   /// @returns The ScopArrayInfo pointer (may assert if no such pointer is
   ///          available).
-  ScopArrayInfo *getScopArrayInfo(Value *BasePtr, MemoryKind Kind);
+  const ScopArrayInfo *getScopArrayInfo(Value *BasePtr, MemoryKind Kind);
 
   /// Invalidate ScopArrayInfo object for base address.
   ///
@@ -2514,16 +2589,13 @@ public:
   /// a dummy value of appropriate dimension is returned. This allows to bail
   /// for complex cases without "error handling code" needed on the users side.
   PWACtx getPwAff(const SCEV *E, BasicBlock *BB = nullptr,
-                  bool NonNegative = false,
-                  RecordedAssumptionsTy *RecordedAssumptions = nullptr);
+                  bool NonNegative = false);
 
   /// Compute the isl representation for the SCEV @p E
   ///
   /// This function is like @see Scop::getPwAff() but strips away the invalid
   /// domain part associated with the piecewise affine function.
-  isl::pw_aff
-  getPwAffOnly(const SCEV *E, BasicBlock *BB = nullptr,
-               RecordedAssumptionsTy *RecordedAssumptions = nullptr);
+  isl::pw_aff getPwAffOnly(const SCEV *E, BasicBlock *BB = nullptr);
 
   /// Check if an <nsw> AddRec for the loop L is cached.
   bool hasNSWAddRecForLoop(Loop *L) { return Affinator.hasNSWAddRecForLoop(L); }

@@ -47,6 +47,11 @@ class MCRegisterInfo;
 class MemoryBuffer;
 class raw_ostream;
 
+/// Used as a return value for a error callback passed to DWARF context.
+/// Callback should return Halt if client application wants to stop
+/// object parsing, or should return Continue otherwise.
+enum class ErrorPolicy { Halt, Continue };
+
 /// DWARFContext
 /// This data structure is the top level entity that deals with dwarf debug
 /// information parsing. The actual data is supplied through DWARFObj.
@@ -61,7 +66,7 @@ class DWARFContext : public DIContext {
   std::unique_ptr<DWARFDebugLine> Line;
   std::unique_ptr<DWARFDebugFrame> DebugFrame;
   std::unique_ptr<DWARFDebugFrame> EHFrame;
-  std::unique_ptr<DWARFDebugMacro> Macinfo;
+  std::unique_ptr<DWARFDebugMacro> Macro;
   std::unique_ptr<DWARFDebugNames> Names;
   std::unique_ptr<AppleAcceleratorTable> AppleNames;
   std::unique_ptr<AppleAcceleratorTable> AppleTypes;
@@ -70,7 +75,6 @@ class DWARFContext : public DIContext {
 
   DWARFUnitVector DWOUnits;
   std::unique_ptr<DWARFDebugAbbrev> AbbrevDWO;
-  std::unique_ptr<DWARFDebugMacro> MacinfoDWO;
 
   /// The maximum DWARF version of all units.
   unsigned MaxVersion = 0;
@@ -85,10 +89,6 @@ class DWARFContext : public DIContext {
   std::string DWPName;
 
   std::unique_ptr<MCRegisterInfo> RegInfo;
-
-  std::function<void(Error)> RecoverableErrorHandler =
-      WithColor::defaultErrorHandler;
-  std::function<void(Error)> WarningHandler = WithColor::defaultWarningHandler;
 
   /// Read compile units from the debug_info section (if necessary)
   /// and type units from the debug_types sections (if necessary)
@@ -106,11 +106,7 @@ class DWARFContext : public DIContext {
 
 public:
   DWARFContext(std::unique_ptr<const DWARFObject> DObj,
-               std::string DWPName = "",
-               std::function<void(Error)> RecoverableErrorHandler =
-                   WithColor::defaultErrorHandler,
-               std::function<void(Error)> WarningHandler =
-                   WithColor::defaultWarningHandler);
+               std::string DWPName = "");
   ~DWARFContext();
 
   DWARFContext(DWARFContext &) = delete;
@@ -273,10 +269,7 @@ public:
   const DWARFDebugFrame *getEHFrame();
 
   /// Get a pointer to the parsed DebugMacro object.
-  const DWARFDebugMacro *getDebugMacinfo();
-
-  /// Get a pointer to the parsed dwo DebugMacro object.
-  const DWARFDebugMacro *getDebugMacinfoDWO();
+  const DWARFDebugMacro *getDebugMacro();
 
   /// Get a reference to the parsed accelerator table object.
   const DWARFDebugNames &getDebugNames();
@@ -298,10 +291,10 @@ public:
   const DWARFDebugLine::LineTable *getLineTableForUnit(DWARFUnit *U);
 
   /// Get a pointer to a parsed line table corresponding to a compile unit.
-  /// Report any recoverable parsing problems using the handler.
+  /// Report any recoverable parsing problems using the callback.
   Expected<const DWARFDebugLine::LineTable *>
   getLineTableForUnit(DWARFUnit *U,
-                      function_ref<void(Error)> RecoverableErrorHandler);
+                      std::function<void(Error)> RecoverableErrorCallback);
 
   DataExtractor getStringExtractor() const {
     return DataExtractor(DObj->getStrSection(), false, 0);
@@ -346,27 +339,17 @@ public:
 
   const MCRegisterInfo *getRegisterInfo() const { return RegInfo.get(); }
 
-  function_ref<void(Error)> getRecoverableErrorHandler() {
-    return RecoverableErrorHandler;
-  }
-
-  function_ref<void(Error)> getWarningHandler() { return WarningHandler; }
-
+  /// Function used to handle default error reporting policy. Prints a error
+  /// message and returns Continue, so DWARF context ignores the error.
+  static ErrorPolicy defaultErrorHandler(Error E);
   static std::unique_ptr<DWARFContext>
   create(const object::ObjectFile &Obj, const LoadedObjectInfo *L = nullptr,
-         std::string DWPName = "",
-         std::function<void(Error)> RecoverableErrorHandler =
-             WithColor::defaultErrorHandler,
-         std::function<void(Error)> WarningHandler =
-             WithColor::defaultWarningHandler);
+         function_ref<ErrorPolicy(Error)> HandleError = defaultErrorHandler,
+         std::string DWPName = "");
 
   static std::unique_ptr<DWARFContext>
   create(const StringMap<std::unique_ptr<MemoryBuffer>> &Sections,
-         uint8_t AddrSize, bool isLittleEndian = sys::IsLittleEndianHost,
-         std::function<void(Error)> RecoverableErrorHandler =
-             WithColor::defaultErrorHandler,
-         std::function<void(Error)> WarningHandler =
-             WithColor::defaultWarningHandler);
+         uint8_t AddrSize, bool isLittleEndian = sys::IsLittleEndianHost);
 
   /// Loads register info for the architecture of the provided object file.
   /// Improves readability of dumped DWARF expressions. Requires the caller to
@@ -376,6 +359,9 @@ public:
   /// Get address size from CUs.
   /// TODO: refactor compile_units() to make this const.
   uint8_t getCUAddrSize();
+
+  /// Dump Error as warning message to stderr.
+  static void dumpWarning(Error Warning);
 
   Triple::ArchType getArch() const {
     return getDWARFObj().getFile()->getArch();

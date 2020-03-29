@@ -30,7 +30,6 @@
 namespace llvm {
 
 class GlobalValue;
-class GlobalValueSummary;
 
 namespace object {
 
@@ -42,11 +41,6 @@ class SymbolRef;
 using JITTargetAddress = uint64_t;
 
 /// Convert a JITTargetAddress to a pointer.
-///
-/// Note: This is a raw cast of the address bit pattern to the given pointer
-/// type. When casting to a function pointer in order to execute JIT'd code
-/// jitTargetAddressToFunction should be preferred, as it will also perform
-/// pointer signing on targets that require it.
 template <typename T> T jitTargetAddressToPointer(JITTargetAddress Addr) {
   static_assert(std::is_pointer<T>::value, "T must be a pointer type");
   uintptr_t IntPtr = static_cast<uintptr_t>(Addr);
@@ -54,18 +48,6 @@ template <typename T> T jitTargetAddressToPointer(JITTargetAddress Addr) {
   return reinterpret_cast<T>(IntPtr);
 }
 
-/// Convert a JITTargetAddress to a callable function pointer.
-///
-/// Casts the given address to a callable function pointer. This operation
-/// will perform pointer signing for platforms that require it (e.g. arm64e).
-template <typename T> T jitTargetAddressToFunction(JITTargetAddress Addr) {
-  static_assert(std::is_pointer<T>::value &&
-                    std::is_function<std::remove_pointer_t<T>>::value,
-                "T must be a function pointer type");
-  return jitTargetAddressToPointer<T>(Addr);
-}
-
-/// Convert a pointer to a JITTargetAddress.
 template <typename T> JITTargetAddress pointerToJITTargetAddress(T *Ptr) {
   return static_cast<JITTargetAddress>(reinterpret_cast<uintptr_t>(Ptr));
 }
@@ -160,10 +142,6 @@ public:
   /// Construct a JITSymbolFlags value based on the flags of the given global
   /// value.
   static JITSymbolFlags fromGlobalValue(const GlobalValue &GV);
-
-  /// Construct a JITSymbolFlags value based on the flags of the given global
-  /// value summary.
-  static JITSymbolFlags fromSummary(GlobalValueSummary *S);
 
   /// Construct a JITSymbolFlags value based on the flags of the given libobject
   /// symbol.

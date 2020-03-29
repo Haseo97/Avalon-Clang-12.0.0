@@ -13,10 +13,10 @@
 #ifndef LLVM_CLANG_AST_ATTR_H
 #define LLVM_CLANG_AST_ATTR_H
 
-#include "clang/AST/ASTFwd.h"
+#include "clang/AST/ASTContextAllocate.h"  // For Attrs.inc
 #include "clang/AST/AttrIterator.h"
 #include "clang/AST/Decl.h"
-#include "clang/AST/OpenMPClause.h"
+#include "clang/AST/Expr.h"
 #include "clang/AST/Type.h"
 #include "clang/Basic/AttrKinds.h"
 #include "clang/Basic/AttributeCommonInfo.h"
@@ -328,18 +328,6 @@ public:
 
 static_assert(sizeof(ParamIdx) == sizeof(ParamIdx::SerialType),
               "ParamIdx does not fit its serialization type");
-
-/// Contains information gathered from parsing the contents of TargetAttr.
-struct ParsedTargetAttr {
-  std::vector<std::string> Features;
-  StringRef Architecture;
-  StringRef BranchProtection;
-  bool DuplicateArchitecture = false;
-  bool operator ==(const ParsedTargetAttr &Other) const {
-    return DuplicateArchitecture == Other.DuplicateArchitecture &&
-           Architecture == Other.Architecture && Features == Other.Features;
-  }
-};
 
 #include "clang/AST/Attrs.inc"
 

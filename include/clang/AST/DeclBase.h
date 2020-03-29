@@ -626,16 +626,7 @@ protected:
     setModuleOwnershipKind(ModuleOwnershipKind::ModulePrivate);
   }
 
-public:
-  /// Set the FromASTFile flag. This indicates that this declaration
-  /// was deserialized and not parsed from source code and enables
-  /// features such as module ownership information.
-  void setFromASTFile() {
-    FromASTFile = true;
-  }
-
-  /// Set the owning module ID.  This may only be called for
-  /// deserialized Decls.
+  /// Set the owning module ID.
   void setOwningModuleID(unsigned ID) {
     assert(isFromASTFile() && "Only works on a deserialized declaration");
     *((unsigned*)this - 2) = ID;
@@ -1510,9 +1501,10 @@ class DeclContext {
     /// constructor or a destructor.
     uint64_t IsTrivialForCall : 1;
 
+    /// Used by CXXMethodDecl
     uint64_t IsDefaulted : 1;
+    /// Used by CXXMethodDecl
     uint64_t IsExplicitlyDefaulted : 1;
-    uint64_t HasDefaultedFunctionInfo : 1;
     uint64_t HasImplicitReturnZero : 1;
     uint64_t IsLateTemplateParsed : 1;
 
@@ -1542,13 +1534,10 @@ class DeclContext {
 
     /// Store the ODRHash after first calculation.
     uint64_t HasODRHash : 1;
-
-    /// Indicates if the function uses Floating Point Constrained Intrinsics
-    uint64_t UsesFPIntrin : 1;
   };
 
   /// Number of non-inherited bits in FunctionDeclBitfields.
-  enum { NumFunctionDeclBits = 27 };
+  enum { NumFunctionDeclBits = 25 };
 
   /// Stores the bits used by CXXConstructorDecl. If modified
   /// NumCXXConstructorDeclBits and the accessor
@@ -1565,7 +1554,7 @@ class DeclContext {
     /// exactly 64 bits and thus the width of NumCtorInitializers
     /// will need to be shrunk if some bit is added to NumDeclContextBitfields,
     /// NumFunctionDeclBitfields or CXXConstructorDeclBitfields.
-    uint64_t NumCtorInitializers : 21;
+    uint64_t NumCtorInitializers : 23;
     uint64_t IsInheritingConstructor : 1;
 
     /// Whether this constructor has a trail-allocated explicit specifier.

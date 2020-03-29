@@ -109,12 +109,8 @@ public:
 
   /// Return the alignment of the memory that is being allocated by the
   /// instruction.
-  MaybeAlign getAlign() const {
-    return decodeMaybeAlign(getSubclassDataFromInstruction() & 31);
-  }
-  // FIXME: Remove this one transition to Align is over.
   unsigned getAlignment() const {
-    if (const auto MA = getAlign())
+    if (const auto MA = decodeMaybeAlign(getSubclassDataFromInstruction() & 31))
       return MA->value();
     return 0;
   }
@@ -243,20 +239,14 @@ public:
   }
 
   /// Return the alignment of the access that is being performed.
-  /// FIXME: Remove this function once transition to Align is over.
-  /// Use getAlign() instead.
   unsigned getAlignment() const {
-    if (const auto MA = getAlign())
+    if (const auto MA =
+            decodeMaybeAlign((getSubclassDataFromInstruction() >> 1) & 31))
       return MA->value();
     return 0;
   }
 
-  /// Return the alignment of the access that is being performed.
-  MaybeAlign getAlign() const {
-    return decodeMaybeAlign((getSubclassDataFromInstruction() >> 1) & 31);
-  }
-
-  void setAlignment(MaybeAlign Alignment);
+  void setAlignment(MaybeAlign Align);
 
   /// Returns the ordering constraint of this load instruction.
   AtomicOrdering getOrdering() const {
@@ -375,19 +365,14 @@ public:
   DECLARE_TRANSPARENT_OPERAND_ACCESSORS(Value);
 
   /// Return the alignment of the access that is being performed
-  /// FIXME: Remove this function once transition to Align is over.
-  /// Use getAlign() instead.
   unsigned getAlignment() const {
-    if (const auto MA = getAlign())
+    if (const auto MA =
+            decodeMaybeAlign((getSubclassDataFromInstruction() >> 1) & 31))
       return MA->value();
     return 0;
   }
 
-  MaybeAlign getAlign() const {
-    return decodeMaybeAlign((getSubclassDataFromInstruction() >> 1) & 31);
-  }
-
-  void setAlignment(MaybeAlign Alignment);
+  void setAlignment(MaybeAlign Align);
 
   /// Returns the ordering constraint of this store instruction.
   AtomicOrdering getOrdering() const {
@@ -1008,22 +993,15 @@ public:
     return getPointerAddressSpace();
   }
 
-  /// Returns the result type of a getelementptr with the given source
-  /// element type and indexes.
+  /// Returns the type of the element that would be loaded with
+  /// a load instruction with the specified parameters.
   ///
   /// Null is returned if the indices are invalid for the specified
-  /// source element type.
+  /// pointer type.
+  ///
   static Type *getIndexedType(Type *Ty, ArrayRef<Value *> IdxList);
   static Type *getIndexedType(Type *Ty, ArrayRef<Constant *> IdxList);
   static Type *getIndexedType(Type *Ty, ArrayRef<uint64_t> IdxList);
-
-  /// Return the type of the element at the given index of an indexable
-  /// type.  This is equivalent to "getIndexedType(Agg, {Zero, Idx})".
-  ///
-  /// Returns null if the type can't be indexed, or the given index is not
-  /// legal for the given type.
-  static Type *getTypeAtIndex(Type *Ty, Value *Idx);
-  static Type *getTypeAtIndex(Type *Ty, uint64_t Idx);
 
   inline op_iterator       idx_begin()       { return op_begin()+1; }
   inline const_op_iterator idx_begin() const { return op_begin()+1; }
@@ -1067,13 +1045,13 @@ public:
                                    Ptr->getType()->getPointerAddressSpace());
     // Vector GEP
     if (Ptr->getType()->isVectorTy()) {
-      ElementCount EltCount = Ptr->getType()->getVectorElementCount();
-      return VectorType::get(PtrTy, EltCount);
+      unsigned NumElem = Ptr->getType()->getVectorNumElements();
+      return VectorType::get(PtrTy, NumElem);
     }
     for (Value *Index : IdxList)
       if (Index->getType()->isVectorTy()) {
-        ElementCount EltCount = Index->getType()->getVectorElementCount();
-        return VectorType::get(PtrTy, EltCount);
+        unsigned NumElem = Index->getType()->getVectorNumElements();
+        return VectorType::get(PtrTy, NumElem);
       }
     // Scalar GEP
     return PtrTy;

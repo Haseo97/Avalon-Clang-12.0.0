@@ -124,20 +124,17 @@ public:
     return CurrentSCC;
   }
 
-  /// Test if the current SCC has a cycle.
+  /// Test if the current SCC has a loop.
   ///
   /// If the SCC has more than one node, this is trivially true.  If not, it may
-  /// still contain a cycle if the node has an edge back to itself.
-  bool hasCycle() const;
+  /// still contain a loop if the node has an edge back to itself.
+  bool hasLoop() const;
 
   /// This informs the \c scc_iterator that the specified \c Old node
   /// has been deleted, and \c New is to be used in its place.
   void ReplaceNode(NodeRef Old, NodeRef New) {
     assert(nodeVisitNumbers.count(Old) && "Old not in scc_iterator?");
-    // Do the assignment in two steps, in case 'New' is not yet in the map, and
-    // inserting it causes the map to grow.
-    auto tempVal = nodeVisitNumbers[Old];
-    nodeVisitNumbers[New] = tempVal;
+    nodeVisitNumbers[New] = nodeVisitNumbers[Old];
     nodeVisitNumbers.erase(Old);
   }
 };
@@ -212,7 +209,7 @@ template <class GraphT, class GT> void scc_iterator<GraphT, GT>::GetNextSCC() {
 }
 
 template <class GraphT, class GT>
-bool scc_iterator<GraphT, GT>::hasCycle() const {
+bool scc_iterator<GraphT, GT>::hasLoop() const {
     assert(!CurrentSCC.empty() && "Dereferencing END SCC iterator!");
     if (CurrentSCC.size() > 1)
       return true;

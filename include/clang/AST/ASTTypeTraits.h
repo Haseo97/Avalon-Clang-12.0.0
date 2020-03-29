@@ -16,7 +16,10 @@
 #define LLVM_CLANG_AST_ASTTYPETRAITS_H
 
 #include "clang/AST/ASTFwd.h"
+#include "clang/AST/Decl.h"
 #include "clang/AST/NestedNameSpecifier.h"
+#include "clang/AST/OpenMPClause.h"
+#include "clang/AST/Stmt.h"
 #include "clang/AST/TemplateBase.h"
 #include "clang/AST/TypeLoc.h"
 #include "clang/Basic/LLVM.h"
@@ -33,6 +36,8 @@ namespace clang {
 
 struct PrintingPolicy;
 
+namespace ast_type_traits {
+
 /// Defines how we descend a level in the AST when we pass
 /// through expressions.
 enum TraversalKind {
@@ -41,10 +46,7 @@ enum TraversalKind {
 
   /// Will not traverse implicit casts and parentheses.
   /// Corresponds to Expr::IgnoreParenImpCasts()
-  TK_IgnoreImplicitCastsAndParentheses,
-
-  /// Ignore AST nodes not written in the source
-  TK_IgnoreUnlessSpelledInSource
+  TK_IgnoreImplicitCastsAndParentheses
 };
 
 /// Kind identifier.
@@ -463,22 +465,22 @@ private:
 
 template <typename T>
 struct DynTypedNode::BaseConverter<
-    T, std::enable_if_t<std::is_base_of<Decl, T>::value>>
+    T, typename std::enable_if<std::is_base_of<Decl, T>::value>::type>
     : public DynCastPtrConverter<T, Decl> {};
 
 template <typename T>
 struct DynTypedNode::BaseConverter<
-    T, std::enable_if_t<std::is_base_of<Stmt, T>::value>>
+    T, typename std::enable_if<std::is_base_of<Stmt, T>::value>::type>
     : public DynCastPtrConverter<T, Stmt> {};
 
 template <typename T>
 struct DynTypedNode::BaseConverter<
-    T, std::enable_if_t<std::is_base_of<Type, T>::value>>
+    T, typename std::enable_if<std::is_base_of<Type, T>::value>::type>
     : public DynCastPtrConverter<T, Type> {};
 
 template <typename T>
 struct DynTypedNode::BaseConverter<
-    T, std::enable_if_t<std::is_base_of<OMPClause, T>::value>>
+    T, typename std::enable_if<std::is_base_of<OMPClause, T>::value>::type>
     : public DynCastPtrConverter<T, OMPClause> {};
 
 template <>
@@ -520,29 +522,18 @@ template <typename T, typename EnablerT> struct DynTypedNode::BaseConverter {
   }
 };
 
-// Previously these types were defined in the clang::ast_type_traits namespace.
-// Provide typedefs so that legacy code can be fixed asynchronously.
-namespace ast_type_traits {
-using DynTypedNode = ::clang::DynTypedNode;
-using ASTNodeKind = ::clang::ASTNodeKind;
-using TraversalKind = ::clang::TraversalKind;
-
-constexpr TraversalKind TK_AsIs = ::clang::TK_AsIs;
-constexpr TraversalKind TK_IgnoreImplicitCastsAndParentheses =
-    ::clang::TK_IgnoreImplicitCastsAndParentheses;
-constexpr TraversalKind TK_IgnoreUnlessSpelledInSource =
-    ::clang::TK_IgnoreUnlessSpelledInSource;
-} // namespace ast_type_traits
-
+} // end namespace ast_type_traits
 } // end namespace clang
 
 namespace llvm {
 
 template <>
-struct DenseMapInfo<clang::ASTNodeKind> : clang::ASTNodeKind::DenseMapInfo {};
+struct DenseMapInfo<clang::ast_type_traits::ASTNodeKind>
+    : clang::ast_type_traits::ASTNodeKind::DenseMapInfo {};
 
 template <>
-struct DenseMapInfo<clang::DynTypedNode> : clang::DynTypedNode::DenseMapInfo {};
+struct DenseMapInfo<clang::ast_type_traits::DynTypedNode>
+    : clang::ast_type_traits::DynTypedNode::DenseMapInfo {};
 
 }  // end namespace llvm
 

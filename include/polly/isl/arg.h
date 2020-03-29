@@ -53,7 +53,6 @@ struct isl_arg {
 	char			 short_name;
 	const char		*long_name;
 	const char		*argument_name;
-#define ISL_ARG_OFFSET_NONE	((size_t) -1)
 	size_t			 offset;
 	const char		*help_msg;
 #define ISL_ARG_SINGLE_DASH	(1 << 0)
@@ -153,7 +152,7 @@ struct isl_args {
 	.type = isl_arg_choice,						\
 	.short_name = s,						\
 	.long_name = l,							\
-	.offset = ISL_ARG_OFFSET_NONE,					\
+	.offset = -1,							\
 	.help_msg = h,							\
 	.flags = fl,							\
 	.u = { .choice = { .choice = c, .default_value = d,		\
@@ -182,7 +181,7 @@ struct isl_args {
 #define ISL_ARG_BOOL(st,f,s,l,d,h)					\
 	ISL_ARG_BOOL_F(st,f,s,l,d,h,0)
 #define ISL_ARG_PHANTOM_BOOL_F(s,l,setter,h,fl)				\
-	_ISL_ARG_BOOL_F(ISL_ARG_OFFSET_NONE,s,l,setter,0,h,fl)
+	_ISL_ARG_BOOL_F(-1,s,l,setter,0,h,fl)
 #define ISL_ARG_PHANTOM_BOOL(s,l,setter,h)				\
 	ISL_ARG_PHANTOM_BOOL_F(s,l,setter,h,0)
 #define ISL_ARG_INT_F(st,f,s,l,a,d,h,fl)	{			\
@@ -264,7 +263,7 @@ struct isl_args {
 #define ISL_ARG_CHILD(st,f,l,c,h)					\
 	_ISL_ARG_CHILD(offsetof(st, f),l,c,h,0)
 #define ISL_ARG_GROUP_F(l,c,h,fl)					\
-	_ISL_ARG_CHILD(ISL_ARG_OFFSET_NONE,l,c,h,fl)
+	_ISL_ARG_CHILD(-1,l,c,h,fl)
 #define ISL_ARG_GROUP(l,c,h)						\
 	ISL_ARG_GROUP_F(l,c,h,0)
 #define ISL_ARG_FLAGS(st,f,s,l,c,d,h)	{				\

@@ -44,19 +44,18 @@ class MCSectionELF final : public MCSection {
 
   const MCSymbolELF *Group;
 
-  /// Used by SHF_LINK_ORDER. If non-null, the sh_link field will be set to the
-  /// section header index of the section where LinkedToSym is defined.
-  const MCSymbol *LinkedToSym;
+  /// sh_info for SHF_LINK_ORDER (can be null).
+  const MCSymbol *AssociatedSymbol;
 
 private:
   friend class MCContext;
 
   MCSectionELF(StringRef Section, unsigned type, unsigned flags, SectionKind K,
                unsigned entrySize, const MCSymbolELF *group, unsigned UniqueID,
-               MCSymbol *Begin, const MCSymbolELF *LinkedToSym)
+               MCSymbol *Begin, const MCSymbolELF *AssociatedSymbol)
       : MCSection(SV_ELF, K, Begin), SectionName(Section), Type(type),
         Flags(flags), UniqueID(UniqueID), EntrySize(entrySize), Group(group),
-        LinkedToSym(LinkedToSym) {
+        AssociatedSymbol(AssociatedSymbol) {
     if (Group)
       Group->setIsSignature();
   }
@@ -81,13 +80,11 @@ public:
   bool UseCodeAlign() const override;
   bool isVirtualSection() const override;
 
-  bool isUnique() const { return UniqueID != NonUniqueID; }
+  bool isUnique() const { return UniqueID != ~0U; }
   unsigned getUniqueID() const { return UniqueID; }
 
-  const MCSection *getLinkedToSection() const {
-    return &LinkedToSym->getSection();
-  }
-  const MCSymbol *getLinkedToSymbol() const { return LinkedToSym; }
+  const MCSection *getAssociatedSection() const { return &AssociatedSymbol->getSection(); }
+  const MCSymbol *getAssociatedSymbol() const { return AssociatedSymbol; }
 
   static bool classof(const MCSection *S) {
     return S->getVariant() == SV_ELF;

@@ -35,7 +35,7 @@ struct PointerLikeTypeTraits< ::clang::CodeGen::ConstantInitBuilderBase*> {
 
   static inline void *getAsVoidPointer(T p) { return p; }
   static inline T getFromVoidPointer(void *p) {return static_cast<T>(p);}
-  static constexpr int NumLowBitsAvailable = 2;
+  enum { NumLowBitsAvailable = 2 };
 };
 }
 
@@ -79,8 +79,10 @@ public:
     result.Data = PairTy::getFromOpaqueValue(value);
     return result;
   }
-  static constexpr int NumLowBitsAvailable =
-      llvm::PointerLikeTypeTraits<PairTy>::NumLowBitsAvailable;
+  enum {
+    NumLowBitsAvailable =
+      llvm::PointerLikeTypeTraits<PairTy>::NumLowBitsAvailable
+  };
 };
 
 }  // end namespace CodeGen
@@ -98,7 +100,7 @@ struct PointerLikeTypeTraits< ::clang::CodeGen::ConstantInitFuture> {
   static inline T getFromVoidPointer(void *p) {
     return T::getFromOpaqueValue(p);
   }
-  static constexpr int NumLowBitsAvailable = T::NumLowBitsAvailable;
+  enum { NumLowBitsAvailable = T::NumLowBitsAvailable };
 };
 
 } // end namespace llvm

@@ -9,7 +9,6 @@
 #define LLVM_MC_MCSYMBOLXCOFF_H
 
 #include "llvm/ADT/Optional.h"
-#include "llvm/ADT/StringRef.h"
 #include "llvm/BinaryFormat/XCOFF.h"
 #include "llvm/MC/MCSymbol.h"
 
@@ -47,19 +46,6 @@ public:
     assert(ContainingCsect &&
            "Trying to get containing csect but none was set.");
     return ContainingCsect;
-  }
-
-  bool hasContainingCsect() const { return ContainingCsect != nullptr; }
-
-  StringRef getUnqualifiedName() const {
-    const StringRef name = getName();
-    if (name.back() == ']') {
-      StringRef lhs, rhs;
-      std::tie(lhs, rhs) = name.rsplit('[');
-      assert(!rhs.empty() && "Invalid SMC format in XCOFF symbol.");
-      return lhs;
-    }
-    return name;
   }
 
 private:

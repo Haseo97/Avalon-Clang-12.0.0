@@ -85,17 +85,17 @@ namespace llvm {
 ///
 ///    MyNode *M = MyFoldingSet.FindNodeOrInsertPos(ID, InsertPoint);
 ///
-/// If found then M will be non-NULL, else InsertPoint will point to where it
+/// If found then M with be non-NULL, else InsertPoint will point to where it
 /// should be inserted using InsertNode.
 ///
-/// 3) If you get a NULL result from FindNodeOrInsertPos then you can insert a
-/// new node with InsertNode;
+/// 3) If you get a NULL result from FindNodeOrInsertPos then you can as a new
+/// node with FindNodeOrInsertPos;
 ///
-///    MyFoldingSet.InsertNode(M, InsertPoint);
+///    InsertNode(N, InsertPoint);
 ///
 /// 4) Finally, if you want to remove a node from the folding set call;
 ///
-///    bool WasRemoved = MyFoldingSet.RemoveNode(M);
+///    bool WasRemoved = RemoveNode(N);
 ///
 /// The result indicates whether the node existed in the folding set.
 

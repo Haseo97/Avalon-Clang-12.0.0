@@ -533,10 +533,9 @@ public:
   ConstraintManager &getConstraintManager() { return *ConstraintMgr; }
   SubEngine &getOwningEngine() { return *Eng; }
 
-  ProgramStateRef
-  removeDeadBindingsFromEnvironmentAndStore(ProgramStateRef St,
-                                            const StackFrameContext *LCtx,
-                                            SymbolReaper &SymReaper);
+  ProgramStateRef removeDeadBindings(ProgramStateRef St,
+                                    const StackFrameContext *LCtx,
+                                    SymbolReaper& SymReaper);
 
 public:
 

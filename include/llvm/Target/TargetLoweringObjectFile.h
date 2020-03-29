@@ -24,7 +24,6 @@
 namespace llvm {
 
 class GlobalValue;
-class MachineBasicBlock;
 class MachineModuleInfo;
 class Mangler;
 class MCContext;
@@ -37,6 +36,8 @@ class MCValue;
 class TargetMachine;
 
 class TargetLoweringObjectFile : public MCObjectFileInfo {
+  MCContext *Ctx = nullptr;
+
   /// Name-mangler for global names.
   Mangler *Mang = nullptr;
 
@@ -65,6 +66,7 @@ public:
   operator=(const TargetLoweringObjectFile &) = delete;
   virtual ~TargetLoweringObjectFile();
 
+  MCContext &getContext() const { return *Ctx; }
   Mangler &getMangler() const { return *Mang; }
 
   /// This method must be called before any actual lowering is done.  This
@@ -87,15 +89,6 @@ public:
                                            SectionKind Kind,
                                            const Constant *C,
                                            unsigned &Align) const;
-
-  virtual MCSection *
-  getSectionForMachineBasicBlock(const Function &F,
-                                 const MachineBasicBlock &MBB,
-                                 const TargetMachine &TM) const;
-
-  virtual MCSection *getNamedSectionForMachineBasicBlock(
-      const Function &F, const MachineBasicBlock &MBB, const TargetMachine &TM,
-      const char *Suffix) const;
 
   /// Classify the specified global variable into a set of target independent
   /// categories embodied in SectionKind.
@@ -216,27 +209,6 @@ public:
   /// If supported, return the section to use for the llvm.commandline
   /// metadata. Otherwise, return nullptr.
   virtual MCSection *getSectionForCommandLines() const {
-    return nullptr;
-  }
-
-  /// On targets that use separate function descriptor symbols, return a section
-  /// for the descriptor given its symbol. Use only with defined functions.
-  virtual MCSection *getSectionForFunctionDescriptor(const MCSymbol *S) const {
-    return nullptr;
-  }
-
-  /// On targets that support TOC entries, return a section for the entry given
-  /// the symbol it refers to.
-  /// TODO: Implement this interface for existing ELF targets.
-  virtual MCSection *getSectionForTOCEntry(const MCSymbol *S) const {
-    return nullptr;
-  }
-
-  /// On targets that associate external references with a section, return such
-  /// a section for the given external global.
-  virtual MCSection *
-  getSectionForExternalReference(const GlobalObject *GO,
-                                 const TargetMachine &TM) const {
     return nullptr;
   }
 

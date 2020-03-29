@@ -66,7 +66,7 @@ public:
                        std::unique_ptr<raw_ostream> StreamOwner);
 
   void setDwarfDebugFlags(StringRef Value) {
-    DwarfDebugFlags = std::string(Value);
+    DwarfDebugFlags = Value;
   }
 
   void BeginSourceFile(const LangOptions &LO, const Preprocessor *PP) override {

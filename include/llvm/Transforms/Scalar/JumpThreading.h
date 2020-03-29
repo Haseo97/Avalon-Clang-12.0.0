@@ -90,7 +90,6 @@ class JumpThreadingPass : public PassInfoMixin<JumpThreadingPass> {
 #endif
 
   unsigned BBDupThreshold;
-  unsigned DefaultBBDupThreshold;
 
 public:
   JumpThreadingPass(int T = -1);
@@ -117,10 +116,7 @@ public:
                                                      BasicBlock::iterator BE,
                                                      BasicBlock *NewBB,
                                                      BasicBlock *PredBB);
-  bool TryThreadEdge(BasicBlock *BB,
-                     const SmallVectorImpl<BasicBlock *> &PredBBs,
-                     BasicBlock *SuccBB);
-  void ThreadEdge(BasicBlock *BB, const SmallVectorImpl<BasicBlock *> &PredBBs,
+  bool ThreadEdge(BasicBlock *BB, const SmallVectorImpl<BasicBlock *> &PredBBs,
                   BasicBlock *SuccBB);
   bool DuplicateCondBranchOnPHIIntoPred(
       BasicBlock *BB, const SmallVectorImpl<BasicBlock *> &PredBBs);
@@ -140,11 +136,6 @@ public:
                                                RecursionSet, CxtI);
   }
 
-  Constant *EvaluateOnPredecessorEdge(BasicBlock *BB, BasicBlock *PredPredBB,
-                                      Value *cond);
-  bool MaybeThreadThroughTwoBasicBlocks(BasicBlock *BB, Value *Cond);
-  void ThreadThroughTwoBasicBlocks(BasicBlock *PredPredBB, BasicBlock *PredBB,
-                                   BasicBlock *BB, BasicBlock *SuccBB);
   bool ProcessThreadableEdges(Value *Cond, BasicBlock *BB,
                               jumpthreading::ConstantPreference Preference,
                               Instruction *CxtI = nullptr);

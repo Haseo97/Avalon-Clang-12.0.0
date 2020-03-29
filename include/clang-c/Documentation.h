@@ -181,12 +181,7 @@ enum CXCommentInlineCommandRenderKind {
    * Command argument should be rendered emphasized (typically italic
    * font).
    */
-  CXCommentInlineCommandRenderKind_Emphasized,
-
-  /**
-   * Command argument should not be rendered (since it only defines an anchor).
-   */
-  CXCommentInlineCommandRenderKind_Anchor
+  CXCommentInlineCommandRenderKind_Emphasized
 };
 
 /**

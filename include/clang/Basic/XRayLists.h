@@ -14,17 +14,13 @@
 
 #include "clang/Basic/LLVM.h"
 #include "clang/Basic/SourceLocation.h"
+#include "clang/Basic/SourceManager.h"
 #include "llvm/ADT/ArrayRef.h"
 #include "llvm/ADT/StringRef.h"
+#include "llvm/Support/SpecialCaseList.h"
 #include <memory>
 
-namespace llvm {
-class SpecialCaseList;
-}
-
 namespace clang {
-
-class SourceManager;
 
 class XRayFunctionFilter {
   std::unique_ptr<llvm::SpecialCaseList> AlwaysInstrument;
@@ -36,7 +32,6 @@ public:
   XRayFunctionFilter(ArrayRef<std::string> AlwaysInstrumentPaths,
                      ArrayRef<std::string> NeverInstrumentPaths,
                      ArrayRef<std::string> AttrListPaths, SourceManager &SM);
-  ~XRayFunctionFilter();
 
   enum class ImbueAttribute {
     NONE,

@@ -63,8 +63,7 @@ enum LLVMConstants : uint32_t {
   DWARF_VENDOR_GNU = 3,
   DWARF_VENDOR_GOOGLE = 4,
   DWARF_VENDOR_LLVM = 5,
-  DWARF_VENDOR_MIPS = 6,
-  DWARF_VENDOR_WASM = 7
+  DWARF_VENDOR_MIPS = 6
 };
 
 /// Constants that define the DWARF format as 32 or 64 bit.
@@ -470,7 +469,6 @@ StringRef ArrayOrderString(unsigned Order);
 StringRef LNStandardString(unsigned Standard);
 StringRef LNExtendedString(unsigned Encoding);
 StringRef MacinfoString(unsigned Encoding);
-StringRef MacroString(unsigned Encoding);
 StringRef RangeListEncodingString(unsigned Encoding);
 StringRef LocListEncodingString(unsigned Encoding);
 StringRef CallFrameString(unsigned Encoding, Triple::ArchType Arch);
@@ -499,7 +497,6 @@ unsigned getLanguage(StringRef LanguageString);
 unsigned getCallingConvention(StringRef LanguageString);
 unsigned getAttributeEncoding(StringRef EncodingString);
 unsigned getMacinfo(StringRef MacinfoString);
-unsigned getMacro(StringRef MacroString);
 /// @}
 
 /// \defgroup DwarfConstantsVersioning Dwarf version for constants
@@ -534,17 +531,6 @@ unsigned LanguageVendor(SourceLanguage L);
 
 Optional<unsigned> LanguageLowerBound(SourceLanguage L);
 
-/// The size of a reference determined by the DWARF 32/64-bit format.
-inline uint8_t getDwarfOffsetByteSize(DwarfFormat Format) {
-  switch (Format) {
-  case DwarfFormat::DWARF32:
-    return 4;
-  case DwarfFormat::DWARF64:
-    return 8;
-  }
-  llvm_unreachable("Invalid Format value");
-}
-
 /// A helper struct providing information about the byte size of DW_FORM
 /// values that vary in size depending on the DWARF version, address byte
 /// size, or DWARF32/DWARF64.
@@ -564,7 +550,13 @@ struct FormParams {
 
   /// The size of a reference is determined by the DWARF 32/64-bit format.
   uint8_t getDwarfOffsetByteSize() const {
-    return dwarf::getDwarfOffsetByteSize(Format);
+    switch (Format) {
+    case DwarfFormat::DWARF32:
+      return 4;
+    case DwarfFormat::DWARF64:
+      return 8;
+    }
+    llvm_unreachable("Invalid Format value");
   }
 
   explicit operator bool() const { return Version && AddrSize; }
@@ -661,11 +653,6 @@ template <> struct EnumTraits<Tag> : public std::true_type {
   static constexpr char Type[4] = "TAG";
   static constexpr StringRef (*StringFn)(unsigned) = &TagString;
 };
-
-template <> struct EnumTraits<LineNumberOps> : public std::true_type {
-  static constexpr char Type[4] = "LNS";
-  static constexpr StringRef (*StringFn)(unsigned) = &LNStandardString;
-};
 } // End of namespace dwarf
 
 /// Dwarf constants format_provider
@@ -674,7 +661,8 @@ template <> struct EnumTraits<LineNumberOps> : public std::true_type {
 /// dumping functions above, these format unknown enumerator values as
 /// DW_TYPE_unknown_1234 (e.g. DW_TAG_unknown_ffff).
 template <typename Enum>
-struct format_provider<Enum, std::enable_if_t<dwarf::EnumTraits<Enum>::value>> {
+struct format_provider<
+    Enum, typename std::enable_if<dwarf::EnumTraits<Enum>::value>::type> {
   static void format(const Enum &E, raw_ostream &OS, StringRef Style) {
     StringRef Str = dwarf::EnumTraits<Enum>::StringFn(E);
     if (Str.empty()) {

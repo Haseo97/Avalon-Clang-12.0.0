@@ -2570,19 +2570,7 @@ enum CXCursorKind {
    */
   CXCursor_OMPParallelMasterTaskLoopSimdDirective      = 284,
 
-  /** OpenMP parallel master directive.
-   */
-  CXCursor_OMPParallelMasterDirective      = 285,
-
-  /** OpenMP depobj directive.
-   */
-  CXCursor_OMPDepobjDirective             = 286,
-
-  /** OpenMP scan directive.
-   */
-  CXCursor_OMPScanDirective               = 287,
-
-  CXCursor_LastStmt = CXCursor_OMPScanDirective,
+  CXCursor_LastStmt = CXCursor_OMPParallelMasterTaskLoopSimdDirective,
 
   /**
    * Cursor that represents the translation unit itself.
@@ -3753,7 +3741,7 @@ CINDEX_LINKAGE unsigned clang_Type_getNumObjCProtocolRefs(CXType T);
 CINDEX_LINKAGE CXCursor clang_Type_getObjCProtocolDecl(CXType T, unsigned i);
 
 /**
- * Retrieve the number of type arguments associated with an ObjC object.
+ * Retreive the number of type arguments associated with an ObjC object.
  *
  * If the type is not an ObjC object, 0 is returned.
  */

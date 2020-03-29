@@ -15,6 +15,7 @@
 #ifndef LLVM_CLANG_CODEGEN_CGFUNCTIONINFO_H
 #define LLVM_CLANG_CODEGEN_CGFUNCTIONINFO_H
 
+#include "clang/AST/Attr.h"
 #include "clang/AST/CanonicalType.h"
 #include "clang/AST/CharUnits.h"
 #include "clang/AST/Decl.h"
@@ -88,7 +89,6 @@ private:
   Kind TheKind;
   bool PaddingInReg : 1;
   bool InAllocaSRet : 1;    // isInAlloca()
-  bool InAllocaIndirect : 1;// isInAlloca()
   bool IndirectByVal : 1;   // isIndirect()
   bool IndirectRealign : 1; // isIndirect()
   bool SRetAfterThis : 1;   // isIndirect()
@@ -111,8 +111,8 @@ private:
 
 public:
   ABIArgInfo(Kind K = Direct)
-      : TypeData(nullptr), PaddingType(nullptr), DirectOffset(0), TheKind(K),
-        PaddingInReg(false), InAllocaSRet(false), InAllocaIndirect(false),
+      : TypeData(nullptr), PaddingType(nullptr), DirectOffset(0),
+        TheKind(K), PaddingInReg(false), InAllocaSRet(false),
         IndirectByVal(false), IndirectRealign(false), SRetAfterThis(false),
         InReg(false), CanBeFlattened(false), SignExt(false) {}
 
@@ -186,10 +186,9 @@ public:
     AI.setInReg(true);
     return AI;
   }
-  static ABIArgInfo getInAlloca(unsigned FieldIndex, bool Indirect = false) {
+  static ABIArgInfo getInAlloca(unsigned FieldIndex) {
     auto AI = ABIArgInfo(InAlloca);
     AI.setInAllocaFieldIndex(FieldIndex);
-    AI.setInAllocaIndirect(Indirect);
     return AI;
   }
   static ABIArgInfo getExpand() {
@@ -382,15 +381,6 @@ public:
     AllocaFieldIndex = FieldIndex;
   }
 
-  unsigned getInAllocaIndirect() const {
-    assert(isInAlloca() && "Invalid kind!");
-    return InAllocaIndirect;
-  }
-  void setInAllocaIndirect(bool Indirect) {
-    assert(isInAlloca() && "Invalid kind!");
-    InAllocaIndirect = Indirect;
-  }
-
   /// Return true if this field of an inalloca struct should be returned
   /// to implement a struct return calling convention.
   bool getInAllocaSRet() const {
@@ -574,11 +564,12 @@ public:
   typedef const ArgInfo *const_arg_iterator;
   typedef ArgInfo *arg_iterator;
 
-  MutableArrayRef<ArgInfo> arguments() {
-    return MutableArrayRef<ArgInfo>(arg_begin(), NumArgs);
-  }
-  ArrayRef<ArgInfo> arguments() const {
-    return ArrayRef<ArgInfo>(arg_begin(), NumArgs);
+  typedef llvm::iterator_range<arg_iterator> arg_range;
+  typedef llvm::iterator_range<const_arg_iterator> const_arg_range;
+
+  arg_range arguments() { return arg_range(arg_begin(), arg_end()); }
+  const_arg_range arguments() const {
+    return const_arg_range(arg_begin(), arg_end());
   }
 
   const_arg_iterator arg_begin() const { return getArgsBuffer() + 1; }

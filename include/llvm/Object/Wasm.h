@@ -152,7 +152,6 @@ public:
   uint32_t getNumImportedGlobals() const { return NumImportedGlobals; }
   uint32_t getNumImportedFunctions() const { return NumImportedFunctions; }
   uint32_t getNumImportedEvents() const { return NumImportedEvents; }
-  uint32_t getNumSections() const { return Sections.size(); }
   void moveSymbolNext(DataRefImpl &Symb) const override;
 
   uint32_t getSymbolFlags(DataRefImpl Symb) const override;
@@ -169,7 +168,6 @@ public:
   uint64_t getCommonSymbolSizeImpl(DataRefImpl Symb) const override;
   Expected<SymbolRef::Type> getSymbolType(DataRefImpl Symb) const override;
   Expected<section_iterator> getSymbolSection(DataRefImpl Symb) const override;
-  uint32_t getSymbolSectionId(SymbolRef Sym) const;
 
   // Overrides from SectionRef.
   void moveSectionNext(DataRefImpl &Sec) const override;
@@ -231,7 +229,6 @@ private:
 
   const WasmSection &getWasmSection(DataRefImpl Ref) const;
   const wasm::WasmRelocation &getWasmRelocation(DataRefImpl Ref) const;
-  uint32_t getSymbolSectionIdImpl(const WasmSymbol &Symb) const;
 
   Error parseSection(WasmSection &Sec);
   Error parseCustomSection(WasmSection &Sec, ReadContext &Ctx);
@@ -283,7 +280,6 @@ private:
   uint32_t StartFunction = -1;
   bool HasLinkingSection = false;
   bool HasDylinkSection = false;
-  bool SeenCodeSection = false;
   wasm::WasmLinkingData LinkingData;
   uint32_t NumImportedGlobals = 0;
   uint32_t NumImportedFunctions = 0;

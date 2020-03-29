@@ -62,11 +62,6 @@ public:
       // Otherwise, the default basic cost is used.
       return TTI::TCC_Basic;
 
-    case Instruction::Freeze:
-      // Freeze operation is free because it should be lowered into a register
-      // use without any register copy in assembly code.
-      return TTI::TCC_Free;
-
     case Instruction::FDiv:
     case Instruction::FRem:
     case Instruction::SDiv:
@@ -156,8 +151,6 @@ public:
   }
 
   bool hasBranchDivergence() { return false; }
-
-  bool useGPUDivergenceAnalysis() { return false; }
 
   bool isSourceOfDivergence(const Value *V) { return false; }
 
@@ -279,13 +272,9 @@ public:
     return Alignment >= DataSize && isPowerOf2_32(DataSize);
   }
 
-  bool isLegalMaskedScatter(Type *DataType, MaybeAlign Alignment) {
-    return false;
-  }
+  bool isLegalMaskedScatter(Type *DataType) { return false; }
 
-  bool isLegalMaskedGather(Type *DataType, MaybeAlign Alignment) {
-    return false;
-  }
+  bool isLegalMaskedGather(Type *DataType) { return false; }
 
   bool isLegalMaskedCompressStore(Type *DataType) { return false; }
 
@@ -366,13 +355,13 @@ public:
 
   unsigned getIntImmCost(const APInt &Imm, Type *Ty) { return TTI::TCC_Basic; }
 
-  unsigned getIntImmCostInst(unsigned Opcode, unsigned Idx, const APInt &Imm,
-                             Type *Ty) {
+  unsigned getIntImmCost(unsigned Opcode, unsigned Idx, const APInt &Imm,
+                         Type *Ty) {
     return TTI::TCC_Free;
   }
 
-  unsigned getIntImmCostIntrin(Intrinsic::ID IID, unsigned Idx,
-                               const APInt &Imm, Type *Ty) {
+  unsigned getIntImmCost(Intrinsic::ID IID, unsigned Idx, const APInt &Imm,
+                         Type *Ty) {
     return TTI::TCC_Free;
   }
 
@@ -441,8 +430,7 @@ public:
                                   TTI::OperandValueKind Opd2Info,
                                   TTI::OperandValueProperties Opd1PropInfo,
                                   TTI::OperandValueProperties Opd2PropInfo,
-                                  ArrayRef<const Value *> Args,
-                                  const Instruction *CxtI = nullptr) {
+                                  ArrayRef<const Value *> Args) {
     return 1;
   }
 
@@ -481,8 +469,8 @@ public:
   }
 
   unsigned getGatherScatterOpCost(unsigned Opcode, Type *DataTy, Value *Ptr,
-                                  bool VariableMask, unsigned Alignment,
-                                  const Instruction *I = nullptr) {
+                                  bool VariableMask,
+                                  unsigned Alignment) {
     return 1;
   }
 
@@ -497,13 +485,11 @@ public:
 
   unsigned getIntrinsicInstrCost(Intrinsic::ID ID, Type *RetTy,
                                  ArrayRef<Type *> Tys, FastMathFlags FMF,
-                                 unsigned ScalarizationCostPassed,
-                                 const Instruction *I) {
+                                 unsigned ScalarizationCostPassed) {
     return 1;
   }
   unsigned getIntrinsicInstrCost(Intrinsic::ID ID, Type *RetTy,
-                                 ArrayRef<Value *> Args, FastMathFlags FMF,
-                                 unsigned VF, const Instruction *I) {
+            ArrayRef<Value *> Args, FastMathFlags FMF, unsigned VF) {
     return 1;
   }
 
@@ -543,7 +529,6 @@ public:
   }
 
   Type *getMemcpyLoopLoweringType(LLVMContext &Context, Value *Length,
-                                  unsigned SrcAddrSpace, unsigned DestAddrSpace,
                                   unsigned SrcAlign, unsigned DestAlign) const {
     return Type::getInt8Ty(Context);
   }
@@ -551,8 +536,6 @@ public:
   void getMemcpyLoopResidualLoweringType(SmallVectorImpl<Type *> &OpsOut,
                                          LLVMContext &Context,
                                          unsigned RemainingBytes,
-                                         unsigned SrcAddrSpace,
-                                         unsigned DestAddrSpace,
                                          unsigned SrcAlign,
                                          unsigned DestAlign) const {
     for (unsigned i = 0; i != RemainingBytes; ++i)
@@ -626,10 +609,6 @@ public:
 
   unsigned getGISelRematGlobalCost() const {
     return 1;
-  }
-
-  bool hasActiveVectorLength() const {
-    return false;
   }
 
 protected:
@@ -881,40 +860,38 @@ public:
     if (isa<ExtractValueInst>(U))
       return TTI::TCC_Free; // Model all ExtractValue nodes as free.
 
-    if (isa<FreezeInst>(U))
-      return TTI::TCC_Free; // Model all Freeze nodes as free.
-
     // Static alloca doesn't generate target instructions.
     if (auto *A = dyn_cast<AllocaInst>(U))
       if (A->isStaticAlloca())
         return TTI::TCC_Free;
 
-    auto *TargetTTI = static_cast<T *>(this);
-
-    if (const GEPOperator *GEP = dyn_cast<GEPOperator>(U))
-      return TargetTTI->getGEPCost(GEP->getSourceElementType(),
-                                   GEP->getPointerOperand(),
-                                   Operands.drop_front());
+    if (const GEPOperator *GEP = dyn_cast<GEPOperator>(U)) {
+      return static_cast<T *>(this)->getGEPCost(GEP->getSourceElementType(),
+                                                GEP->getPointerOperand(),
+                                                Operands.drop_front());
+    }
 
     if (auto CS = ImmutableCallSite(U)) {
       const Function *F = CS.getCalledFunction();
       if (!F) {
         // Just use the called value type.
         Type *FTy = CS.getCalledValue()->getType()->getPointerElementType();
-        return TargetTTI->getCallCost(cast<FunctionType>(FTy),
-                                      CS.arg_size(), U);
+        return static_cast<T *>(this)
+            ->getCallCost(cast<FunctionType>(FTy), CS.arg_size(), U);
       }
 
       SmallVector<const Value *, 8> Arguments(CS.arg_begin(), CS.arg_end());
-      return TargetTTI->getCallCost(F, Arguments, U);
+      return static_cast<T *>(this)->getCallCost(F, Arguments, U);
     }
 
     if (isa<SExtInst>(U) || isa<ZExtInst>(U) || isa<FPExtInst>(U))
       // The old behaviour of generally treating extensions of icmp to be free
       // has been removed. A target that needs it should override getUserCost().
-      return TargetTTI->getExtCost(cast<Instruction>(U), Operands.back());
+      return static_cast<T *>(this)->getExtCost(cast<Instruction>(U),
+                                                Operands.back());
 
-    return TargetTTI->getOperationCost(Operator::getOpcode(U), U->getType(),
+    return static_cast<T *>(this)->getOperationCost(
+        Operator::getOpcode(U), U->getType(),
         U->getNumOperands() == 1 ? U->getOperand(0)->getType() : nullptr);
   }
 

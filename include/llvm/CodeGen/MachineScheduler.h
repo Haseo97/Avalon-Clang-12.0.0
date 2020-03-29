@@ -757,16 +757,7 @@ public:
 
   unsigned getOtherResourceCount(unsigned &OtherCritIdx);
 
-  /// Release SU to make it ready. If it's not in hazard, remove it from
-  /// pending queue (if already in) and push into available queue.
-  /// Otherwise, push the SU into pending queue.
-  ///
-  /// @param SU The unit to be released.
-  /// @param ReadyCycle Until which cycle the unit is ready.
-  /// @param InPQueue Whether SU is already in pending queue.
-  /// @param Idx Position offset in pending queue (if in it).
-  void releaseNode(SUnit *SU, unsigned ReadyCycle, bool InPQueue,
-                   unsigned Idx = 0);
+  void releaseNode(SUnit *SU, unsigned ReadyCycle);
 
   void bumpCycle(unsigned NextCycle);
 
@@ -964,7 +955,7 @@ public:
     if (SU->isScheduled)
       return;
 
-    Top.releaseNode(SU, SU->TopReadyCycle, false);
+    Top.releaseNode(SU, SU->TopReadyCycle);
     TopCand.SU = nullptr;
   }
 
@@ -972,7 +963,7 @@ public:
     if (SU->isScheduled)
       return;
 
-    Bot.releaseNode(SU, SU->BotReadyCycle, false);
+    Bot.releaseNode(SU, SU->BotReadyCycle);
     BotCand.SU = nullptr;
   }
 
@@ -1052,7 +1043,7 @@ public:
   void releaseTopNode(SUnit *SU) override {
     if (SU->isScheduled)
       return;
-    Top.releaseNode(SU, SU->TopReadyCycle, false);
+    Top.releaseNode(SU, SU->TopReadyCycle);
   }
 
   // Only called for roots.

@@ -28,19 +28,17 @@ namespace XRayInstrKind {
 
 // TODO: Auto-generate these as we add more instrumentation kinds.
 enum XRayInstrOrdinal : XRayInstrMask {
-  XRIO_FunctionEntry,
-  XRIO_FunctionExit,
+  XRIO_Function,
   XRIO_Custom,
   XRIO_Typed,
   XRIO_Count
 };
 
 constexpr XRayInstrMask None = 0;
-constexpr XRayInstrMask FunctionEntry = 1U << XRIO_FunctionEntry;
-constexpr XRayInstrMask FunctionExit = 1U << XRIO_FunctionExit;
+constexpr XRayInstrMask Function = 1U << XRIO_Function;
 constexpr XRayInstrMask Custom = 1U << XRIO_Custom;
 constexpr XRayInstrMask Typed = 1U << XRIO_Typed;
-constexpr XRayInstrMask All = FunctionEntry | FunctionExit | Custom | Typed;
+constexpr XRayInstrMask All = Function | Custom | Typed;
 
 } // namespace XRayInstrKind
 
@@ -53,6 +51,7 @@ struct XRayInstrSet {
   bool hasOneOf(XRayInstrMask K) const { return Mask & K; }
 
   void set(XRayInstrMask K, bool Value) {
+    assert(llvm::isPowerOf2_32(K));
     Mask = Value ? (Mask | K) : (Mask & ~K);
   }
 

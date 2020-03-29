@@ -285,7 +285,7 @@ public:
            "Too many arguments to diagnostic!");
     DiagStorage->DiagArgumentsKind[DiagStorage->NumDiagArgs]
       = DiagnosticsEngine::ak_std_string;
-    DiagStorage->DiagArgumentsStr[DiagStorage->NumDiagArgs++] = std::string(V);
+    DiagStorage->DiagArgumentsStr[DiagStorage->NumDiagArgs++] = V;
   }
 
   void Emit(const DiagnosticBuilder &DB) const {
@@ -378,9 +378,10 @@ public:
   // so that we only match those arguments that are (statically) DeclContexts;
   // other arguments that derive from DeclContext (e.g., RecordDecls) will not
   // match.
-  template <typename T>
-  friend inline std::enable_if_t<std::is_same<T, DeclContext>::value,
-                                 const PartialDiagnostic &>
+  template<typename T>
+  friend inline
+  typename std::enable_if<std::is_same<T, DeclContext>::value,
+                          const PartialDiagnostic &>::type
   operator<<(const PartialDiagnostic &PD, T *DC) {
     PD.AddTaggedVal(reinterpret_cast<intptr_t>(DC),
                     DiagnosticsEngine::ak_declcontext);

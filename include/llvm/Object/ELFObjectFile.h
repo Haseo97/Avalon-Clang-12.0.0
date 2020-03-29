@@ -380,8 +380,7 @@ protected:
         if (Contents[0] != ARMBuildAttrs::Format_Version || Contents.size() == 1)
           return Error::success();
 
-        if (Error E = Attributes.parse(Contents, ELFT::TargetEndianness))
-          return E;
+        Attributes.Parse(Contents, ELFT::TargetEndianness == support::little);
         break;
       }
     }
@@ -1060,59 +1059,59 @@ StringRef ELFObjectFile<ELFT>::getFileFormatName() const {
   case ELF::ELFCLASS32:
     switch (EF.getHeader()->e_machine) {
     case ELF::EM_386:
-      return "elf32-i386";
+      return "ELF32-i386";
     case ELF::EM_IAMCU:
-      return "elf32-iamcu";
+      return "ELF32-iamcu";
     case ELF::EM_X86_64:
-      return "elf32-x86-64";
+      return "ELF32-x86-64";
     case ELF::EM_ARM:
-      return (IsLittleEndian ? "elf32-littlearm" : "elf32-bigarm");
+      return (IsLittleEndian ? "ELF32-arm-little" : "ELF32-arm-big");
     case ELF::EM_AVR:
-      return "elf32-avr";
+      return "ELF32-avr";
     case ELF::EM_HEXAGON:
-      return "elf32-hexagon";
+      return "ELF32-hexagon";
     case ELF::EM_LANAI:
-      return "elf32-lanai";
+      return "ELF32-lanai";
     case ELF::EM_MIPS:
-      return "elf32-mips";
+      return "ELF32-mips";
     case ELF::EM_MSP430:
-      return "elf32-msp430";
+      return "ELF32-msp430";
     case ELF::EM_PPC:
-      return "elf32-powerpc";
+      return "ELF32-ppc";
     case ELF::EM_RISCV:
-      return "elf32-littleriscv";
+      return "ELF32-riscv";
     case ELF::EM_SPARC:
     case ELF::EM_SPARC32PLUS:
-      return "elf32-sparc";
+      return "ELF32-sparc";
     case ELF::EM_AMDGPU:
-      return "elf32-amdgpu";
+      return "ELF32-amdgpu";
     default:
-      return "elf32-unknown";
+      return "ELF32-unknown";
     }
   case ELF::ELFCLASS64:
     switch (EF.getHeader()->e_machine) {
     case ELF::EM_386:
-      return "elf64-i386";
+      return "ELF64-i386";
     case ELF::EM_X86_64:
-      return "elf64-x86-64";
+      return "ELF64-x86-64";
     case ELF::EM_AARCH64:
-      return (IsLittleEndian ? "elf64-littleaarch64" : "elf64-bigaarch64");
+      return (IsLittleEndian ? "ELF64-aarch64-little" : "ELF64-aarch64-big");
     case ELF::EM_PPC64:
-      return "elf64-powerpc";
+      return "ELF64-ppc64";
     case ELF::EM_RISCV:
-      return "elf64-littleriscv";
+      return "ELF64-riscv";
     case ELF::EM_S390:
-      return "elf64-s390";
+      return "ELF64-s390";
     case ELF::EM_SPARCV9:
-      return "elf64-sparc";
+      return "ELF64-sparc";
     case ELF::EM_MIPS:
-      return "elf64-mips";
+      return "ELF64-mips";
     case ELF::EM_AMDGPU:
-      return "elf64-amdgpu";
+      return "ELF64-amdgpu";
     case ELF::EM_BPF:
-      return "elf64-bpf";
+      return "ELF64-BPF";
     default:
-      return "elf64-unknown";
+      return "ELF64-unknown";
     }
   default:
     // FIXME: Proper error handling.

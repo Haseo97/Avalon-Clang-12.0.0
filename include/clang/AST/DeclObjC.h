@@ -402,7 +402,7 @@ public:
   }
 
   /// createImplicitParams - Used to lazily create the self and cmd
-  /// implicit parameters. This must be called prior to using getSelfDecl()
+  /// implict parameters. This must be called prior to using getSelfDecl()
   /// or getCmdDecl(). The call is ignored if the implicit parameters
   /// have already been created.
   void createImplicitParams(ASTContext &Context, const ObjCInterfaceDecl *ID);
@@ -2692,7 +2692,9 @@ public:
   /// Get the name of the class associated with this interface.
   //
   // FIXME: Move to StringRef API.
-  std::string getNameAsString() const { return std::string(getName()); }
+  std::string getNameAsString() const {
+    return getName();
+  }
 
   /// Produce a name to be used for class's metadata. It comes either via
   /// class's objc_runtime_name attribute or class name.

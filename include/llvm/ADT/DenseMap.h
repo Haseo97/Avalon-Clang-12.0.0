@@ -1006,10 +1006,13 @@ public:
   }
 
   void grow(unsigned AtLeast) {
-    if (AtLeast > InlineBuckets)
+    if (AtLeast >= InlineBuckets)
       AtLeast = std::max<unsigned>(64, NextPowerOf2(AtLeast-1));
 
     if (Small) {
+      if (AtLeast < InlineBuckets)
+        return; // Nothing to do.
+
       // First move the inline buckets into a temporary storage.
       AlignedCharArrayUnion<BucketT[InlineBuckets]> TmpStorage;
       BucketT *TmpBegin = reinterpret_cast<BucketT *>(TmpStorage.buffer);
@@ -1032,13 +1035,10 @@ public:
         P->getFirst().~KeyT();
       }
 
-      // AtLeast == InlineBuckets can happen if there are many tombstones,
-      // and grow() is used to remove them. Usually we always switch to the
-      // large rep here.
-      if (AtLeast > InlineBuckets) {
-        Small = false;
-        new (getLargeRep()) LargeRep(allocateBuckets(AtLeast));
-      }
+      // Now make this map use the large rep, and move all the entries back
+      // into it.
+      Small = false;
+      new (getLargeRep()) LargeRep(allocateBuckets(AtLeast));
       this->moveFromOldBuckets(TmpBegin, TmpEnd);
       return;
     }
@@ -1194,7 +1194,7 @@ public:
   // for const iterator destinations so it doesn't end up as a user defined copy
   // constructor.
   template <bool IsConstSrc,
-            typename = std::enable_if_t<!IsConstSrc && IsConst>>
+            typename = typename std::enable_if<!IsConstSrc && IsConst>::type>
   DenseMapIterator(
       const DenseMapIterator<KeyT, ValueT, KeyInfoT, Bucket, IsConstSrc> &I)
       : DebugEpochBase::HandleBase(I), Ptr(I.Ptr), End(I.End) {}

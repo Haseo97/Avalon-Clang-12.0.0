@@ -293,7 +293,7 @@ public:
   /// \param Path A path that is modified to be an absolute path.
   /// \returns success if \a path has been made absolute, otherwise a
   ///          platform-specific error_code.
-  virtual std::error_code makeAbsolute(SmallVectorImpl<char> &Path) const;
+  std::error_code makeAbsolute(SmallVectorImpl<char> &Path) const;
 };
 
 /// Gets an \p vfs::FileSystem for the 'real' file system, as seen by
@@ -705,6 +705,16 @@ private:
   bool IsFallthrough = true;
   /// @}
 
+  /// Virtual file paths and external files could be canonicalized without "..",
+  /// "." and "./" in their paths. FIXME: some unittests currently fail on
+  /// win32 when using remove_dots and remove_leading_dotslash on paths.
+  bool UseCanonicalizedPaths =
+#ifdef _WIN32
+      false;
+#else
+      true;
+#endif
+
   RedirectingFileSystem(IntrusiveRefCntPtr<FileSystem> ExternalFS);
 
   /// Looks up the path <tt>[Start, End)</tt> in \p From, possibly
@@ -738,8 +748,6 @@ public:
   std::error_code setCurrentWorkingDirectory(const Twine &Path) override;
 
   std::error_code isLocal(const Twine &Path, bool &Result) override;
-
-  std::error_code makeAbsolute(SmallVectorImpl<char> &Path) const override;
 
   directory_iterator dir_begin(const Twine &Dir, std::error_code &EC) override;
 

@@ -41,23 +41,14 @@ class NamespaceDecl;
 /// partial_ordering, weak_ordering, and strong_ordering are collectively
 /// termed the comparison category types.
 enum class ComparisonCategoryType : unsigned char {
+  WeakEquality,
+  StrongEquality,
   PartialOrdering,
   WeakOrdering,
   StrongOrdering,
-  First = PartialOrdering,
+  First = WeakEquality,
   Last = StrongOrdering
 };
-
-/// Determine the common comparison type, as defined in C++2a
-/// [class.spaceship]p4.
-inline ComparisonCategoryType commonComparisonType(ComparisonCategoryType A,
-                                                   ComparisonCategoryType B) {
-  return A < B ? A : B;
-}
-
-/// Get the comparison category that should be used when comparing values of
-/// type \c T.
-Optional<ComparisonCategoryType> getComparisonCategoryForBuiltinCmp(QualType T);
 
 /// An enumeration representing the possible results of a three-way
 /// comparison. These values map onto instances of comparison category types
@@ -65,6 +56,8 @@ Optional<ComparisonCategoryType> getComparisonCategoryForBuiltinCmp(QualType T);
 enum class ComparisonCategoryResult : unsigned char {
   Equal,
   Equivalent,
+  Nonequivalent,
+  Nonequal,
   Less,
   Greater,
   Unordered,
@@ -132,11 +125,21 @@ public:
     return Info;
   }
 
+  /// True iff the comparison category is an equality comparison.
+  bool isEquality() const { return !isOrdered(); }
+
+  /// True iff the comparison category is a relational comparison.
+  bool isOrdered() const {
+    using CCK = ComparisonCategoryType;
+    return Kind == CCK::PartialOrdering || Kind == CCK::WeakOrdering ||
+           Kind == CCK::StrongOrdering;
+  }
+
   /// True iff the comparison is "strong". i.e. it checks equality and
   /// not equivalence.
   bool isStrong() const {
     using CCK = ComparisonCategoryType;
-    return Kind == CCK::StrongOrdering;
+    return Kind == CCK::StrongEquality || Kind == CCK::StrongOrdering;
   }
 
   /// True iff the comparison is not totally ordered.
@@ -150,18 +153,28 @@ public:
   /// weak equivalence if needed.
   ComparisonCategoryResult makeWeakResult(ComparisonCategoryResult Res) const {
     using CCR = ComparisonCategoryResult;
-    if (!isStrong() && Res == CCR::Equal)
-      return CCR::Equivalent;
+    if (!isStrong()) {
+      if (Res == CCR::Equal)
+        return CCR::Equivalent;
+      if (Res == CCR::Nonequal)
+        return CCR::Nonequivalent;
+    }
     return Res;
   }
 
   const ValueInfo *getEqualOrEquiv() const {
     return getValueInfo(makeWeakResult(ComparisonCategoryResult::Equal));
   }
+  const ValueInfo *getNonequalOrNonequiv() const {
+    assert(isEquality());
+    return getValueInfo(makeWeakResult(ComparisonCategoryResult::Nonequal));
+  }
   const ValueInfo *getLess() const {
+    assert(isOrdered());
     return getValueInfo(ComparisonCategoryResult::Less);
   }
   const ValueInfo *getGreater() const {
+    assert(isOrdered());
     return getValueInfo(ComparisonCategoryResult::Greater);
   }
   const ValueInfo *getUnordered() const {
@@ -208,6 +221,7 @@ public:
     return const_cast<ComparisonCategoryInfo *>(This.lookupInfo(Kind));
   }
 
+private:
   const ComparisonCategoryInfo *lookupInfoForType(QualType Ty) const;
 
 private:

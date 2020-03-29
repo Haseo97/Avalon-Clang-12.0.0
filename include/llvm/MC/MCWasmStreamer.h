@@ -45,30 +45,30 @@ public:
   /// @{
 
   void ChangeSection(MCSection *Section, const MCExpr *Subsection) override;
-  void emitAssemblerFlag(MCAssemblerFlag Flag) override;
-  void emitThumbFunc(MCSymbol *Func) override;
-  void emitWeakReference(MCSymbol *Alias, const MCSymbol *Symbol) override;
-  bool emitSymbolAttribute(MCSymbol *Symbol, MCSymbolAttr Attribute) override;
-  void emitSymbolDesc(MCSymbol *Symbol, unsigned DescValue) override;
-  void emitCommonSymbol(MCSymbol *Symbol, uint64_t Size,
+  void EmitAssemblerFlag(MCAssemblerFlag Flag) override;
+  void EmitThumbFunc(MCSymbol *Func) override;
+  void EmitWeakReference(MCSymbol *Alias, const MCSymbol *Symbol) override;
+  bool EmitSymbolAttribute(MCSymbol *Symbol, MCSymbolAttr Attribute) override;
+  void EmitSymbolDesc(MCSymbol *Symbol, unsigned DescValue) override;
+  void EmitCommonSymbol(MCSymbol *Symbol, uint64_t Size,
                         unsigned ByteAlignment) override;
 
   void emitELFSize(MCSymbol *Symbol, const MCExpr *Value) override;
 
-  void emitLocalCommonSymbol(MCSymbol *Symbol, uint64_t Size,
+  void EmitLocalCommonSymbol(MCSymbol *Symbol, uint64_t Size,
                              unsigned ByteAlignment) override;
 
-  void emitZerofill(MCSection *Section, MCSymbol *Symbol = nullptr,
+  void EmitZerofill(MCSection *Section, MCSymbol *Symbol = nullptr,
                     uint64_t Size = 0, unsigned ByteAlignment = 0,
                     SMLoc Loc = SMLoc()) override;
-  void emitTBSSSymbol(MCSection *Section, MCSymbol *Symbol, uint64_t Size,
+  void EmitTBSSSymbol(MCSection *Section, MCSymbol *Symbol, uint64_t Size,
                       unsigned ByteAlignment = 0) override;
-  void emitValueImpl(const MCExpr *Value, unsigned Size,
+  void EmitValueImpl(const MCExpr *Value, unsigned Size,
                      SMLoc Loc = SMLoc()) override;
 
-  void emitIdent(StringRef IdentString) override;
+  void EmitIdent(StringRef IdentString) override;
 
-  void emitValueToAlignment(unsigned, int64_t, unsigned, unsigned) override;
+  void EmitValueToAlignment(unsigned, int64_t, unsigned, unsigned) override;
 
   void FinishImpl() override;
 

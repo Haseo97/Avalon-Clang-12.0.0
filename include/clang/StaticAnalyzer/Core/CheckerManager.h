@@ -85,11 +85,6 @@ enum PointerEscapeKind {
   /// argument to a function.
   PSK_IndirectEscapeOnCall,
 
-
-  /// Escape for a new symbol that was generated into a region
-  /// that the analyzer cannot follow during a conservative call.
-  PSK_EscapeOutParameters,
-
   /// The reason for pointer escape is unknown. For example,
   /// a region containing this pointer is invalidated.
   PSK_EscapeOther
@@ -140,14 +135,14 @@ public:
   void finishedCheckerRegistration();
 
   const LangOptions &getLangOpts() const { return LangOpts; }
-  AnalyzerOptions &getAnalyzerOptions() const { return AOptions; }
-  ASTContext &getASTContext() const { return Context; }
+  AnalyzerOptions &getAnalyzerOptions() { return AOptions; }
+  ASTContext &getASTContext() { return Context; }
 
   /// Emits an error through a DiagnosticsEngine about an invalid user supplied
   /// checker option value.
   void reportInvalidCheckerOptionValue(const CheckerBase *C,
                                        StringRef OptionName,
-                                       StringRef ExpectedValueDesc) const;
+                                       StringRef ExpectedValueDesc);
 
   using CheckerRef = CheckerBase *;
   using CheckerTag = const void *;
@@ -620,7 +615,7 @@ private:
   /// Returns the checkers that have registered for callbacks of the
   /// given \p Kind.
   const std::vector<CheckObjCMessageFunc> &
-  getObjCMessageCheckers(ObjCMessageVisitKind Kind) const;
+  getObjCMessageCheckers(ObjCMessageVisitKind Kind);
 
   std::vector<CheckObjCMessageFunc> PreObjCMessageCheckers;
   std::vector<CheckObjCMessageFunc> PostObjCMessageCheckers;

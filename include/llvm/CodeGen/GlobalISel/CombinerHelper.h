@@ -19,7 +19,6 @@
 
 #include "llvm/CodeGen/LowLevelType.h"
 #include "llvm/CodeGen/Register.h"
-#include "llvm/Support/Alignment.h"
 
 namespace llvm {
 
@@ -35,18 +34,6 @@ struct PreferredTuple {
   LLT Ty;                // The result type of the extend.
   unsigned ExtendOpcode; // G_ANYEXT/G_SEXT/G_ZEXT
   MachineInstr *MI;
-};
-
-struct IndexedLoadStoreMatchInfo {
-  Register Addr;
-  Register Base;
-  Register Offset;
-  bool IsPre;
-};
-
-struct PtrAddChain {
-  int64_t Imm;
-  Register Base;
 };
 
 class CombinerHelper {
@@ -97,8 +84,6 @@ public:
   /// Combine \p MI into a pre-indexed or post-indexed load/store operation if
   /// legal and the surrounding code makes it useful.
   bool tryCombineIndexedLoadStore(MachineInstr &MI);
-  bool matchCombineIndexedLoadStore(MachineInstr &MI, IndexedLoadStoreMatchInfo &MatchInfo);
-  void applyCombineIndexedLoadStore(MachineInstr &MI, IndexedLoadStoreMatchInfo &MatchInfo);
 
   bool matchElideBrByInvertingCond(MachineInstr &MI);
   void applyElideBrByInvertingCond(MachineInstr &MI);
@@ -176,40 +161,6 @@ public:
   ///     $whatever = COPY $addr
   bool tryCombineMemCpyFamily(MachineInstr &MI, unsigned MaxLen = 0);
 
-  bool matchPtrAddImmedChain(MachineInstr &MI, PtrAddChain &MatchInfo);
-  bool applyPtrAddImmedChain(MachineInstr &MI, PtrAddChain &MatchInfo);
-
-  /// Transform a multiply by a power-of-2 value to a left shift.
-  bool matchCombineMulToShl(MachineInstr &MI, unsigned &ShiftVal);
-  bool applyCombineMulToShl(MachineInstr &MI, unsigned &ShiftVal);
-
-  /// Reduce a shift by a constant to an unmerge and a shift on a half sized
-  /// type. This will not produce a shift smaller than \p TargetShiftSize.
-  bool matchCombineShiftToUnmerge(MachineInstr &MI, unsigned TargetShiftSize,
-                                 unsigned &ShiftVal);
-  bool applyCombineShiftToUnmerge(MachineInstr &MI, const unsigned &ShiftVal);
-  bool tryCombineShiftToUnmerge(MachineInstr &MI, unsigned TargetShiftAmount);
-
-  /// Return true if any explicit use operand on \p MI is defined by a
-  /// G_IMPLICIT_DEF.
-  bool matchAnyExplicitUseIsUndef(MachineInstr &MI);
-
-  /// Return true if all register explicit use operands on \p MI are defined by
-  /// a G_IMPLICIT_DEF.
-  bool matchAllExplicitUsesAreUndef(MachineInstr &MI);
-
-  /// Return true if a G_SHUFFLE_VECTOR instruction \p MI has an undef mask.
-  bool matchUndefShuffleVectorMask(MachineInstr &MI);
-
-  /// Replace an instruction with a G_FCONSTANT with value \p C.
-  bool replaceInstWithFConstant(MachineInstr &MI, double C);
-
-  /// Replace an instruction with a G_CONSTANT with value \p C.
-  bool replaceInstWithConstant(MachineInstr &MI, int64_t C);
-
-  /// Replace an instruction with a G_IMPLICIT_DEF.
-  bool replaceInstWithUndef(MachineInstr &MI);
-
   /// Try to transform \p MI by using all of the above
   /// combine functions. Returns true if changed.
   bool tryCombine(MachineInstr &MI);
@@ -217,13 +168,13 @@ public:
 private:
   // Memcpy family optimization helpers.
   bool optimizeMemcpy(MachineInstr &MI, Register Dst, Register Src,
-                      unsigned KnownLen, Align DstAlign, Align SrcAlign,
+                      unsigned KnownLen, unsigned DstAlign, unsigned SrcAlign,
                       bool IsVolatile);
   bool optimizeMemmove(MachineInstr &MI, Register Dst, Register Src,
-                       unsigned KnownLen, Align DstAlign, Align SrcAlign,
-                       bool IsVolatile);
+                      unsigned KnownLen, unsigned DstAlign, unsigned SrcAlign,
+                      bool IsVolatile);
   bool optimizeMemset(MachineInstr &MI, Register Dst, Register Val,
-                      unsigned KnownLen, Align DstAlign, bool IsVolatile);
+                      unsigned KnownLen, unsigned DstAlign, bool IsVolatile);
 
   /// Given a non-indexed load or store instruction \p MI, find an offset that
   /// can be usefully and legally folded into it as a post-indexing operation.

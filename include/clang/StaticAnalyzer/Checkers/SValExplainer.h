@@ -15,7 +15,6 @@
 #ifndef LLVM_CLANG_STATICANALYZER_CHECKERS_SVALEXPLAINER_H
 #define LLVM_CLANG_STATICANALYZER_CHECKERS_SVALEXPLAINER_H
 
-#include "clang/AST/Attr.h"
 #include "clang/AST/DeclCXX.h"
 #include "clang/StaticAnalyzer/Core/PathSensitive/SValVisitor.h"
 

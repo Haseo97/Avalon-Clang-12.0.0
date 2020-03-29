@@ -1,8 +1,4 @@
 #ifdef GET_NEON_BUILTINS
-BUILTIN(__builtin_neon_splat_lane_v, "V8ScV8ScIii", "n")
-BUILTIN(__builtin_neon_splat_laneq_v, "V8ScV16ScIii", "n")
-BUILTIN(__builtin_neon_splatq_lane_v, "V16ScV8ScIii", "n")
-BUILTIN(__builtin_neon_splatq_laneq_v, "V16ScV16ScIii", "n")
 BUILTIN(__builtin_neon_vabd_v, "V8ScV8ScV8Sci", "n")
 BUILTIN(__builtin_neon_vabdd_f64, "ddd", "n")
 BUILTIN(__builtin_neon_vabdq_v, "V16ScV16ScV16Sci", "n")
@@ -48,10 +44,6 @@ BUILTIN(__builtin_neon_vaesimcq_v, "V16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vaesmcq_v, "V16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vbsl_v, "V8ScV8ScV8ScV8Sci", "n")
 BUILTIN(__builtin_neon_vbslq_v, "V16ScV16ScV16ScV16Sci", "n")
-BUILTIN(__builtin_neon_vcadd_rot270_v, "V8ScV8ScV8Sci", "n")
-BUILTIN(__builtin_neon_vcadd_rot90_v, "V8ScV8ScV8Sci", "n")
-BUILTIN(__builtin_neon_vcaddq_rot270_v, "V16ScV16ScV16Sci", "n")
-BUILTIN(__builtin_neon_vcaddq_rot90_v, "V16ScV16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vcage_v, "V8ScV8ScV8Sci", "n")
 BUILTIN(__builtin_neon_vcaged_f64, "UWidd", "n")
 BUILTIN(__builtin_neon_vcageq_v, "V16ScV16ScV16Sci", "n")
@@ -451,12 +443,8 @@ BUILTIN(__builtin_neon_vqdmlslh_s16, "iiss", "n")
 BUILTIN(__builtin_neon_vqdmlsls_lane_s32, "WiWiiV2iIi", "n")
 BUILTIN(__builtin_neon_vqdmlsls_laneq_s32, "WiWiiV4iIi", "n")
 BUILTIN(__builtin_neon_vqdmlsls_s32, "WiWiii", "n")
-BUILTIN(__builtin_neon_vqdmulh_lane_v, "V8ScV8ScV8ScIii", "n")
-BUILTIN(__builtin_neon_vqdmulh_laneq_v, "V8ScV8ScV16ScIii", "n")
 BUILTIN(__builtin_neon_vqdmulh_v, "V8ScV8ScV8Sci", "n")
 BUILTIN(__builtin_neon_vqdmulhh_s16, "sss", "n")
-BUILTIN(__builtin_neon_vqdmulhq_lane_v, "V16ScV16ScV8ScIii", "n")
-BUILTIN(__builtin_neon_vqdmulhq_laneq_v, "V16ScV16ScV16ScIii", "n")
 BUILTIN(__builtin_neon_vqdmulhq_v, "V16ScV16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vqdmulhs_s32, "iii", "n")
 BUILTIN(__builtin_neon_vqdmull_v, "V16ScV8ScV8Sci", "n")
@@ -479,12 +467,8 @@ BUILTIN(__builtin_neon_vqnegd_s64, "WiWi", "n")
 BUILTIN(__builtin_neon_vqnegh_s16, "ss", "n")
 BUILTIN(__builtin_neon_vqnegq_v, "V16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vqnegs_s32, "ii", "n")
-BUILTIN(__builtin_neon_vqrdmulh_lane_v, "V8ScV8ScV8ScIii", "n")
-BUILTIN(__builtin_neon_vqrdmulh_laneq_v, "V8ScV8ScV16ScIii", "n")
 BUILTIN(__builtin_neon_vqrdmulh_v, "V8ScV8ScV8Sci", "n")
 BUILTIN(__builtin_neon_vqrdmulhh_s16, "sss", "n")
-BUILTIN(__builtin_neon_vqrdmulhq_lane_v, "V16ScV16ScV8ScIii", "n")
-BUILTIN(__builtin_neon_vqrdmulhq_laneq_v, "V16ScV16ScV16ScIii", "n")
 BUILTIN(__builtin_neon_vqrdmulhq_v, "V16ScV16ScV16Sci", "n")
 BUILTIN(__builtin_neon_vqrdmulhs_s32, "iii", "n")
 BUILTIN(__builtin_neon_vqrshl_v, "V8ScV8ScV8Sci", "n")
@@ -732,10 +716,6 @@ BUILTIN(__builtin_neon_vzipq_v, "vv*V16ScV16Sci", "n")
 #endif
 
 #ifdef GET_NEON_OVERLOAD_CHECK
-case NEON::BI__builtin_neon_splat_lane_v: mask = 0xf077fULL; break;
-case NEON::BI__builtin_neon_splat_laneq_v: mask = 0xf077f00000000ULL; break;
-case NEON::BI__builtin_neon_splatq_lane_v: mask = 0xf077fULL; break;
-case NEON::BI__builtin_neon_splatq_laneq_v: mask = 0xf077f00000000ULL; break;
 case NEON::BI__builtin_neon_vabd_v: mask = 0x70707ULL; break;
 case NEON::BI__builtin_neon_vabdq_v: mask = 0x7070700000000ULL; break;
 case NEON::BI__builtin_neon_vabs_v: mask = 0x70fULL; break;
@@ -747,10 +727,6 @@ case NEON::BI__builtin_neon_vaesimcq_v: mask = 0x1000000000000ULL; break;
 case NEON::BI__builtin_neon_vaesmcq_v: mask = 0x1000000000000ULL; break;
 case NEON::BI__builtin_neon_vbsl_v: mask = 0xf077fULL; break;
 case NEON::BI__builtin_neon_vbslq_v: mask = 0xf077f00000000ULL; break;
-case NEON::BI__builtin_neon_vcadd_rot270_v: mask = 0x300ULL; break;
-case NEON::BI__builtin_neon_vcadd_rot90_v: mask = 0x300ULL; break;
-case NEON::BI__builtin_neon_vcaddq_rot270_v: mask = 0x70000000000ULL; break;
-case NEON::BI__builtin_neon_vcaddq_rot90_v: mask = 0x70000000000ULL; break;
 case NEON::BI__builtin_neon_vcage_v: mask = 0xe0000ULL; break;
 case NEON::BI__builtin_neon_vcageq_v: mask = 0xe000000000000ULL; break;
 case NEON::BI__builtin_neon_vcagt_v: mask = 0xe0000ULL; break;
@@ -775,9 +751,9 @@ case NEON::BI__builtin_neon_vclz_v: mask = 0x70007ULL; break;
 case NEON::BI__builtin_neon_vclzq_v: mask = 0x7000700000000ULL; break;
 case NEON::BI__builtin_neon_vcnt_v: mask = 0x10011ULL; break;
 case NEON::BI__builtin_neon_vcntq_v: mask = 0x1001100000000ULL; break;
-case NEON::BI__builtin_neon_vcvt_f16_f32: mask = 0x20000000000ULL; break;
+case NEON::BI__builtin_neon_vcvt_f16_f32: mask = 0x100ULL; break;
 case NEON::BI__builtin_neon_vcvt_f16_v: mask = 0x20002ULL; break;
-case NEON::BI__builtin_neon_vcvt_f32_f16: mask = 0x100ULL; break;
+case NEON::BI__builtin_neon_vcvt_f32_f16: mask = 0x20000000000ULL; break;
 case NEON::BI__builtin_neon_vcvt_f32_f64: mask = 0x200ULL; break;
 case NEON::BI__builtin_neon_vcvt_f32_v: mask = 0x40004ULL; break;
 case NEON::BI__builtin_neon_vcvt_f64_f32: mask = 0x40000000000ULL; break;
@@ -953,22 +929,14 @@ case NEON::BI__builtin_neon_vqadd_v: mask = 0xf000fULL; break;
 case NEON::BI__builtin_neon_vqaddq_v: mask = 0xf000f00000000ULL; break;
 case NEON::BI__builtin_neon_vqdmlal_v: mask = 0xc00000000ULL; break;
 case NEON::BI__builtin_neon_vqdmlsl_v: mask = 0xc00000000ULL; break;
-case NEON::BI__builtin_neon_vqdmulh_lane_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqdmulh_laneq_v: mask = 0x6ULL; break;
 case NEON::BI__builtin_neon_vqdmulh_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqdmulhq_lane_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqdmulhq_laneq_v: mask = 0x600000000ULL; break;
 case NEON::BI__builtin_neon_vqdmulhq_v: mask = 0x600000000ULL; break;
 case NEON::BI__builtin_neon_vqdmull_v: mask = 0xc00000000ULL; break;
 case NEON::BI__builtin_neon_vqmovn_v: mask = 0x70007ULL; break;
 case NEON::BI__builtin_neon_vqmovun_v: mask = 0x70000ULL; break;
 case NEON::BI__builtin_neon_vqneg_v: mask = 0xfULL; break;
 case NEON::BI__builtin_neon_vqnegq_v: mask = 0xf00000000ULL; break;
-case NEON::BI__builtin_neon_vqrdmulh_lane_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqrdmulh_laneq_v: mask = 0x6ULL; break;
 case NEON::BI__builtin_neon_vqrdmulh_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqrdmulhq_lane_v: mask = 0x6ULL; break;
-case NEON::BI__builtin_neon_vqrdmulhq_laneq_v: mask = 0x600000000ULL; break;
 case NEON::BI__builtin_neon_vqrdmulhq_v: mask = 0x600000000ULL; break;
 case NEON::BI__builtin_neon_vqrshl_v: mask = 0xf000fULL; break;
 case NEON::BI__builtin_neon_vqrshlq_v: mask = 0xf000f00000000ULL; break;
@@ -1103,10 +1071,6 @@ case NEON::BI__builtin_neon_vzipq_v: mask = 0x7033700000000ULL; break;
 #endif
 
 #ifdef GET_NEON_IMMEDIATE_CHECK
-case NEON::BI__builtin_neon_vqdmulhq_lane_v: i = 2; u = RFT(TV, false, false); break;
-case NEON::BI__builtin_neon_vqdmulh_lane_v: i = 2; u = RFT(TV, false, false); break;
-case NEON::BI__builtin_neon_vqrdmulhq_lane_v: i = 2; u = RFT(TV, false, false); break;
-case NEON::BI__builtin_neon_vqrdmulh_lane_v: i = 2; u = RFT(TV, false, false); break;
 case NEON::BI__builtin_neon_vcvtq_n_f64_v: i = 1; l = 1; u = 63; break;
 case NEON::BI__builtin_neon_vcvt_n_f64_v: i = 1; l = 1; u = 63; break;
 case NEON::BI__builtin_neon_vcvtq_n_s64_v: i = 1; l = 1; u = 63; break;
@@ -1215,10 +1179,6 @@ case NEON::BI__builtin_neon_vsetq_lane_f64: i = 2; u = 1; break;
 case NEON::BI__builtin_neon_vset_lane_f64: i = 2; u = 0; break;
 case NEON::BI__builtin_neon_vsli_n_v: i = 2; u = RFT(TV, true); break;
 case NEON::BI__builtin_neon_vsliq_n_v: i = 2; u = RFT(TV, true); break;
-case NEON::BI__builtin_neon_splat_lane_v: i = 1; u = RFT(TV, false, false); break;
-case NEON::BI__builtin_neon_splatq_lane_v: i = 1; u = RFT(TV, false, false); break;
-case NEON::BI__builtin_neon_splat_laneq_v: i = 1; u = RFT(TV, false, true); break;
-case NEON::BI__builtin_neon_splatq_laneq_v: i = 1; u = RFT(TV, false, true); break;
 case NEON::BI__builtin_neon_vsri_n_v: i = 2; l = 1; u = RFT(TV, true); break;
 case NEON::BI__builtin_neon_vsriq_n_v: i = 2; l = 1; u = RFT(TV, true); break;
 case NEON::BI__builtin_neon_vst1_lane_v: i = 2; u = RFT(TV, false, false); break;
@@ -1255,10 +1215,6 @@ case NEON::BI__builtin_neon_vgetq_lane_i32: i = 1; u = 3; break;
 case NEON::BI__builtin_neon_vgetq_lane_f32: i = 1; u = 3; break;
 case NEON::BI__builtin_neon_vget_lane_i32: i = 1; u = 1; break;
 case NEON::BI__builtin_neon_vget_lane_f32: i = 1; u = 1; break;
-case NEON::BI__builtin_neon_vqdmulhq_laneq_v: i = 2; u = RFT(TV, false, true); break;
-case NEON::BI__builtin_neon_vqdmulh_laneq_v: i = 2; u = RFT(TV, false, true); break;
-case NEON::BI__builtin_neon_vqrdmulhq_laneq_v: i = 2; u = RFT(TV, false, true); break;
-case NEON::BI__builtin_neon_vqrdmulh_laneq_v: i = 2; u = RFT(TV, false, true); break;
 case NEON::BI__builtin_neon_vqrshrn_n_v: i = 1; l = 1; u = RFT(TV, true); break;
 case NEON::BI__builtin_neon_vqrshrun_n_v: i = 1; l = 1; u = RFT(TV, true); break;
 case NEON::BI__builtin_neon_vqshluq_n_v: i = 1; u = RFT(TV, true); break;

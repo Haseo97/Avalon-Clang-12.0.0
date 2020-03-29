@@ -574,8 +574,7 @@ bool InstructionSelector::executeMatchTable(
       assert(State.MIs[InsnID] != nullptr && "Used insn before defined");
       MachineOperand &MO = State.MIs[InsnID]->getOperand(OpIdx);
       if (!MO.isReg() ||
-          &RBI.getRegBankFromRegClass(*TRI.getRegClass(RCEnum),
-                                      MRI.getType(MO.getReg())) !=
+          &RBI.getRegBankFromRegClass(*TRI.getRegClass(RCEnum)) !=
               RBI.getRegBank(MO.getReg(), MRI, TRI)) {
         if (handleReject() == RejectAndGiveUp)
           return false;
@@ -642,15 +641,10 @@ bool InstructionSelector::executeMatchTable(
                              << "), Value=" << Value << ")\n");
       assert(State.MIs[InsnID] != nullptr && "Used insn before defined");
       MachineOperand &MO = State.MIs[InsnID]->getOperand(OpIdx);
-      if (MO.isImm() && MO.getImm() == Value)
-        break;
-
-      if (MO.isCImm() && MO.getCImm()->equalsInt(Value))
-        break;
-
-      if (handleReject() == RejectAndGiveUp)
-        return false;
-
+      if (!MO.isCImm() || !MO.getCImm()->equalsInt(Value)) {
+        if (handleReject() == RejectAndGiveUp)
+          return false;
+      }
       break;
     }
 
@@ -859,25 +853,16 @@ bool InstructionSelector::executeMatchTable(
       break;
     }
 
-    case GIR_AddTempRegister:
-    case GIR_AddTempSubRegister: {
+    case GIR_AddTempRegister: {
       int64_t InsnID = MatchTable[CurrentIdx++];
       int64_t TempRegID = MatchTable[CurrentIdx++];
       uint64_t TempRegFlags = MatchTable[CurrentIdx++];
-      unsigned SubReg = 0;
-      if (MatcherOpcode == GIR_AddTempSubRegister)
-        SubReg = MatchTable[CurrentIdx++];
-
       assert(OutMIs[InsnID] && "Attempted to add to undefined instruction");
-
-      OutMIs[InsnID].addReg(State.TempRegisters[TempRegID], TempRegFlags, SubReg);
+      OutMIs[InsnID].addReg(State.TempRegisters[TempRegID], TempRegFlags);
       DEBUG_WITH_TYPE(TgtInstructionSelector::getName(),
                       dbgs() << CurrentIdx << ": GIR_AddTempRegister(OutMIs["
                              << InsnID << "], TempRegisters[" << TempRegID
-                             << "]";
-                      if (SubReg)
-                        dbgs() << '.' << TRI.getSubRegIndexName(SubReg);
-                      dbgs() << ", " << TempRegFlags << ")\n");
+                             << "], " << TempRegFlags << ")\n");
       break;
     }
 
@@ -961,27 +946,8 @@ bool InstructionSelector::executeMatchTable(
                       dbgs() << CurrentIdx << ": GIR_CustomRenderer(OutMIs["
                              << InsnID << "], MIs[" << OldInsnID << "], "
                              << RendererFnID << ")\n");
-      (ISel.*ISelInfo.CustomRenderers[RendererFnID])(
-        OutMIs[InsnID], *State.MIs[OldInsnID],
-        -1); // Not a source operand of the old instruction.
-      break;
-    }
-    case GIR_CustomOperandRenderer: {
-      int64_t InsnID = MatchTable[CurrentIdx++];
-      int64_t OldInsnID = MatchTable[CurrentIdx++];
-      int64_t OpIdx = MatchTable[CurrentIdx++];
-      int64_t RendererFnID = MatchTable[CurrentIdx++];
-      assert(OutMIs[InsnID] && "Attempted to add to undefined instruction");
-
-      DEBUG_WITH_TYPE(
-        TgtInstructionSelector::getName(),
-        dbgs() << CurrentIdx << ": GIR_CustomOperandRenderer(OutMIs["
-               << InsnID << "], MIs[" << OldInsnID << "]->getOperand("
-               << OpIdx << "), "
-        << RendererFnID << ")\n");
       (ISel.*ISelInfo.CustomRenderers[RendererFnID])(OutMIs[InsnID],
-                                                     *State.MIs[OldInsnID],
-                                                     OpIdx);
+                                                     *State.MIs[OldInsnID]);
       break;
     }
     case GIR_ConstrainOperandRC: {

@@ -95,16 +95,6 @@ class VarDecl;
       return TemplateArgumentLists.size();
     }
 
-    /// Determine how many of the \p OldDepth outermost template parameter
-    /// lists would be removed by substituting these arguments.
-    unsigned getNewDepth(unsigned OldDepth) const {
-      if (OldDepth < NumRetainedOuterLevels)
-        return OldDepth;
-      if (OldDepth < getNumLevels())
-        return NumRetainedOuterLevels;
-      return OldDepth - TemplateArgumentLists.size();
-    }
-
     /// Retrieve the template argument at a given depth and index.
     const TemplateArgument &operator()(unsigned Depth, unsigned Index) const {
       assert(NumRetainedOuterLevels <= Depth && Depth < getNumLevels());
@@ -483,21 +473,13 @@ class VarDecl;
 
 #include "clang/AST/DeclNodes.inc"
 
-    enum class RewriteKind { None, RewriteSpaceshipAsEqualEqual };
-
-    void adjustForRewrite(RewriteKind RK, FunctionDecl *Orig, QualType &T,
-                          TypeSourceInfo *&TInfo,
-                          DeclarationNameInfo &NameInfo);
-
     // A few supplemental visitor functions.
     Decl *VisitCXXMethodDecl(CXXMethodDecl *D,
                              TemplateParameterList *TemplateParams,
                              Optional<const ASTTemplateArgumentListInfo *>
-                                 ClassScopeSpecializationArgs = llvm::None,
-                             RewriteKind RK = RewriteKind::None);
+                                 ClassScopeSpecializationArgs = llvm::None);
     Decl *VisitFunctionDecl(FunctionDecl *D,
-                            TemplateParameterList *TemplateParams,
-                            RewriteKind RK = RewriteKind::None);
+                            TemplateParameterList *TemplateParams);
     Decl *VisitDecl(Decl *D);
     Decl *VisitVarDecl(VarDecl *D, bool InstantiatingVarTemplate,
                        ArrayRef<BindingDecl *> *Bindings = nullptr);
@@ -552,8 +534,6 @@ class VarDecl;
                              SmallVectorImpl<ParmVarDecl *> &Params);
     bool InitFunctionInstantiation(FunctionDecl *New, FunctionDecl *Tmpl);
     bool InitMethodInstantiation(CXXMethodDecl *New, CXXMethodDecl *Tmpl);
-
-    bool SubstDefaultedFunction(FunctionDecl *New, FunctionDecl *Tmpl);
 
     TemplateParameterList *
       SubstTemplateParams(TemplateParameterList *List);

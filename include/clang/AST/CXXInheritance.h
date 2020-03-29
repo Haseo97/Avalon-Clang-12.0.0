@@ -119,7 +119,7 @@ class CXXBasePaths {
   friend class CXXRecordDecl;
 
   /// The type from which this search originated.
-  const CXXRecordDecl *Origin = nullptr;
+  CXXRecordDecl *Origin = nullptr;
 
   /// Paths - The actual set of paths that can be taken from the
   /// derived class to the same base class.
@@ -225,8 +225,8 @@ public:
 
   /// Retrieve the type from which this base-paths search
   /// began
-  const CXXRecordDecl *getOrigin() const { return Origin; }
-  void setOrigin(const CXXRecordDecl *Rec) { Origin = Rec; }
+  CXXRecordDecl *getOrigin() const { return Origin; }
+  void setOrigin(CXXRecordDecl *Rec) { Origin = Rec; }
 
   /// Clear the base-paths results.
   void clear();
@@ -371,30 +371,6 @@ class CXXFinalOverriderMap
 /// A set of all the primary bases for a class.
 class CXXIndirectPrimaryBaseSet
   : public llvm::SmallSet<const CXXRecordDecl*, 32> {};
-
-inline bool
-inheritanceModelHasVBPtrOffsetField(MSInheritanceModel Inheritance) {
-  return Inheritance == MSInheritanceModel::Unspecified;
-}
-
-// Only member pointers to functions need a this adjustment, since it can be
-// combined with the field offset for data pointers.
-inline bool inheritanceModelHasNVOffsetField(bool IsMemberFunction,
-                                             MSInheritanceModel Inheritance) {
-  return IsMemberFunction && Inheritance >= MSInheritanceModel::Multiple;
-}
-
-inline bool
-inheritanceModelHasVBTableOffsetField(MSInheritanceModel Inheritance) {
-  return Inheritance >= MSInheritanceModel::Virtual;
-}
-
-inline bool inheritanceModelHasOnlyOneField(bool IsMemberFunction,
-                                            MSInheritanceModel Inheritance) {
-  if (IsMemberFunction)
-    return Inheritance <= MSInheritanceModel::Single;
-  return Inheritance <= MSInheritanceModel::Multiple;
-}
 
 } // namespace clang
 

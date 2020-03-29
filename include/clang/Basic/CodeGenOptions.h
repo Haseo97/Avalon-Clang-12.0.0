@@ -164,10 +164,7 @@ public:
   std::string FloatABI;
 
   /// The floating-point denormal mode to use.
-  llvm::DenormalMode FPDenormalMode = llvm::DenormalMode::getIEEE();
-
-  /// The floating-point denormal mode to use, for float.
-  llvm::DenormalMode FP32DenormalMode = llvm::DenormalMode::getIEEE();
+  llvm::DenormalMode FPDenormalMode = llvm::DenormalMode::Invalid;
 
   /// The float precision limit to use, if non-empty.
   std::string LimitFloatPrecision;
@@ -360,11 +357,6 @@ public:
 
   /// Check if CSIR profile use is on.
   bool hasProfileCSIRUse() const { return getProfileUse() == ProfileCSIRInstr; }
-
-  /// Check if type and variable info should be emitted.
-  bool hasReducedDebugInfo() const {
-    return getDebugInfo() >= codegenoptions::DebugInfoConstructor;
-  }
 };
 
 }  // end namespace clang

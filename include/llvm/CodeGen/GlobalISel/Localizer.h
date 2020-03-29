@@ -42,10 +42,6 @@ public:
   static char ID;
 
 private:
-  /// An input function to decide if the pass should run or not
-  /// on the given MachineFunction.
-  std::function<bool(const MachineFunction &)> DoNotRunPass;
-
   /// MRI contains all the register class/bank information that this
   /// pass uses and updates.
   MachineRegisterInfo *MRI;
@@ -76,13 +72,14 @@ private:
 
 public:
   Localizer();
-  Localizer(std::function<bool(const MachineFunction &)>);
 
   StringRef getPassName() const override { return "Localizer"; }
 
   MachineFunctionProperties getRequiredProperties() const override {
     return MachineFunctionProperties()
-        .set(MachineFunctionProperties::Property::IsSSA);
+        .set(MachineFunctionProperties::Property::IsSSA)
+        .set(MachineFunctionProperties::Property::Legalized)
+        .set(MachineFunctionProperties::Property::RegBankSelected);
   }
 
   void getAnalysisUsage(AnalysisUsage &AU) const override;

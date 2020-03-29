@@ -97,9 +97,6 @@ public:
   /// Returns true if this value is known to be non-negative.
   bool isNonNegative() const { return Zero.isSignBitSet(); }
 
-  /// Returns true if this value is known to be positive.
-  bool isStrictlyPositive() const { return Zero.isSignBitSet() && !One.isNullValue(); }
-
   /// Make this value negative.
   void makeNegative() {
     One.setSignBit();
@@ -110,67 +107,39 @@ public:
     Zero.setSignBit();
   }
 
-  /// Return the minimal value possible given these KnownBits.
-  APInt getMinValue() const {
-    // Assume that all bits that aren't known-ones are zeros.
-    return One;
-  }
-
-  /// Return the maximal value possible given these KnownBits.
-  APInt getMaxValue() const {
-    // Assume that all bits that aren't known-zeros are ones.
-    return ~Zero;
-  }
-
-  /// Return known bits for a truncation of the value we're tracking.
+  /// Truncate the underlying known Zero and One bits. This is equivalent
+  /// to truncating the value we're tracking.
   KnownBits trunc(unsigned BitWidth) const {
     return KnownBits(Zero.trunc(BitWidth), One.trunc(BitWidth));
   }
 
-  /// Return known bits for an "any" extension of the value we're tracking,
-  /// where we don't know anything about the extended bits.
-  KnownBits anyext(unsigned BitWidth) const {
-    return KnownBits(Zero.zext(BitWidth), One.zext(BitWidth));
-  }
-
-  /// Return known bits for a zero extension of the value we're tracking.
-  KnownBits zext(unsigned BitWidth) const {
+  /// Extends the underlying known Zero and One bits.
+  /// By setting ExtendedBitsAreKnownZero=true this will be equivalent to
+  /// zero extending the value we're tracking.
+  /// With ExtendedBitsAreKnownZero=false the extended bits are set to unknown.
+  KnownBits zext(unsigned BitWidth, bool ExtendedBitsAreKnownZero) const {
     unsigned OldBitWidth = getBitWidth();
     APInt NewZero = Zero.zext(BitWidth);
-    NewZero.setBitsFrom(OldBitWidth);
+    if (ExtendedBitsAreKnownZero)
+      NewZero.setBitsFrom(OldBitWidth);
     return KnownBits(NewZero, One.zext(BitWidth));
   }
 
-  /// Return known bits for a sign extension of the value we're tracking.
+  /// Sign extends the underlying known Zero and One bits. This is equivalent
+  /// to sign extending the value we're tracking.
   KnownBits sext(unsigned BitWidth) const {
     return KnownBits(Zero.sext(BitWidth), One.sext(BitWidth));
   }
 
-  /// Return known bits for an "any" extension or truncation of the value we're
-  /// tracking.
-  KnownBits anyextOrTrunc(unsigned BitWidth) const {
+  /// Extends or truncates the underlying known Zero and One bits. When
+  /// extending the extended bits can either be set as known zero (if
+  /// ExtendedBitsAreKnownZero=true) or as unknown (if
+  /// ExtendedBitsAreKnownZero=false).
+  KnownBits zextOrTrunc(unsigned BitWidth,
+                        bool ExtendedBitsAreKnownZero) const {
     if (BitWidth > getBitWidth())
-      return anyext(BitWidth);
-    if (BitWidth < getBitWidth())
-      return trunc(BitWidth);
-    return *this;
-  }
-
-  /// Return known bits for a zero extension or truncation of the value we're
-  /// tracking.
-  KnownBits zextOrTrunc(unsigned BitWidth) const {
-    if (BitWidth > getBitWidth())
-      return zext(BitWidth);
-    if (BitWidth < getBitWidth())
-      return trunc(BitWidth);
-    return *this;
-  }
-
-  /// Return a KnownBits with the extracted bits
-  /// [bitPosition,bitPosition+numBits).
-  KnownBits extractBits(unsigned NumBits, unsigned BitPosition) const {
-    return KnownBits(Zero.extractBits(NumBits, BitPosition),
-                     One.extractBits(NumBits, BitPosition));
+      return zext(BitWidth, ExtendedBitsAreKnownZero);
+    return KnownBits(Zero.zextOrTrunc(BitWidth), One.zextOrTrunc(BitWidth));
   }
 
   /// Returns the minimum number of trailing zero bits.

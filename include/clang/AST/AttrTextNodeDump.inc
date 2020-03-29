@@ -46,10 +46,6 @@
     const auto *SA = cast<AcquireCapabilityAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
   }
-  void VisitAcquireHandleAttr(const AcquireHandleAttr *A) {
-    const auto *SA = cast<AcquireHandleAttr>(A); (void)SA;
-    OS << " \"" << SA->getHandleType() << "\"";
-  }
   void VisitAddressSpaceAttr(const AddressSpaceAttr *A) {
     const auto *SA = cast<AddressSpaceAttr>(A); (void)SA;
     OS << " " << SA->getAddressSpace();
@@ -90,8 +86,8 @@
     OS << " " << SA->getTypeTagIdx().getSourceIndex();
     if (SA->getIsPointer()) OS << " IsPointer";
   }
-  void VisitArmBuiltinAliasAttr(const ArmBuiltinAliasAttr *A) {
-    const auto *SA = cast<ArmBuiltinAliasAttr>(A); (void)SA;
+  void VisitArmMveAliasAttr(const ArmMveAliasAttr *A) {
+    const auto *SA = cast<ArmMveAliasAttr>(A); (void)SA;
     if (SA->getBuiltinName())
       OS << " " << SA->getBuiltinName()->getName();
   }
@@ -122,14 +118,6 @@
     switch(SA->getType()) {
     case BlocksAttr::ByRef:
       OS << " ByRef";
-      break;
-    }
-  }
-  void VisitCFGuardAttr(const CFGuardAttr *A) {
-    const auto *SA = cast<CFGuardAttr>(A); (void)SA;
-    switch(SA->getGuard()) {
-    case CFGuardAttr::nocf:
-      OS << " nocf";
       break;
     }
   }
@@ -492,7 +480,14 @@
   }
   void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
     const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
-    OS << " " << SA->getTraitInfos();
+    for (const auto &Val : SA->ctxSelectorSets())
+      OS << " " << Val;
+    for (const auto &Val : SA->ctxSelectors())
+      OS << " " << Val;
+    for (const auto &Val : SA->implVendors())
+      OS << " " << Val;
+    for (const auto &Val : SA->deviceKinds())
+      OS << " " << Val;
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;
@@ -553,24 +548,9 @@
   void VisitOpenCLAccessAttr(const OpenCLAccessAttr *A) {
     OS << " " << A->getSpelling();
   }
-  void VisitOpenCLConstantAddressSpaceAttr(const OpenCLConstantAddressSpaceAttr *A) {
-    OS << " " << A->getSpelling();
-  }
-  void VisitOpenCLGenericAddressSpaceAttr(const OpenCLGenericAddressSpaceAttr *A) {
-    OS << " " << A->getSpelling();
-  }
-  void VisitOpenCLGlobalAddressSpaceAttr(const OpenCLGlobalAddressSpaceAttr *A) {
-    OS << " " << A->getSpelling();
-  }
   void VisitOpenCLIntelReqdSubGroupSizeAttr(const OpenCLIntelReqdSubGroupSizeAttr *A) {
     const auto *SA = cast<OpenCLIntelReqdSubGroupSizeAttr>(A); (void)SA;
     OS << " " << SA->getSubGroupSize();
-  }
-  void VisitOpenCLLocalAddressSpaceAttr(const OpenCLLocalAddressSpaceAttr *A) {
-    OS << " " << A->getSpelling();
-  }
-  void VisitOpenCLPrivateAddressSpaceAttr(const OpenCLPrivateAddressSpaceAttr *A) {
-    OS << " " << A->getSpelling();
   }
   void VisitOpenCLUnrollHintAttr(const OpenCLUnrollHintAttr *A) {
     const auto *SA = cast<OpenCLUnrollHintAttr>(A); (void)SA;
@@ -606,11 +586,6 @@
     const auto *SA = cast<PassObjectSizeAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
     OS << " " << SA->getType();
-  }
-  void VisitPatchableFunctionEntryAttr(const PatchableFunctionEntryAttr *A) {
-    const auto *SA = cast<PatchableFunctionEntryAttr>(A); (void)SA;
-    OS << " " << SA->getCount();
-    OS << " " << SA->getOffset();
   }
   void VisitPcsAttr(const PcsAttr *A) {
     const auto *SA = cast<PcsAttr>(A); (void)SA;
@@ -664,10 +639,6 @@
   void VisitReleaseCapabilityAttr(const ReleaseCapabilityAttr *A) {
     const auto *SA = cast<ReleaseCapabilityAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
-  }
-  void VisitReleaseHandleAttr(const ReleaseHandleAttr *A) {
-    const auto *SA = cast<ReleaseHandleAttr>(A); (void)SA;
-    OS << " \"" << SA->getHandleType() << "\"";
   }
   void VisitReqdWorkGroupSizeAttr(const ReqdWorkGroupSizeAttr *A) {
     const auto *SA = cast<ReqdWorkGroupSizeAttr>(A); (void)SA;
@@ -797,10 +768,6 @@
   void VisitUnusedAttr(const UnusedAttr *A) {
     OS << " " << A->getSpelling();
   }
-  void VisitUseHandleAttr(const UseHandleAttr *A) {
-    const auto *SA = cast<UseHandleAttr>(A); (void)SA;
-    OS << " \"" << SA->getHandleType() << "\"";
-  }
   void VisitUuidAttr(const UuidAttr *A) {
     const auto *SA = cast<UuidAttr>(A); (void)SA;
     OS << " \"" << SA->getGuid() << "\"";
@@ -831,10 +798,6 @@
   void VisitWeakRefAttr(const WeakRefAttr *A) {
     const auto *SA = cast<WeakRefAttr>(A); (void)SA;
     OS << " \"" << SA->getAliasee() << "\"";
-  }
-  void VisitWebAssemblyExportNameAttr(const WebAssemblyExportNameAttr *A) {
-    const auto *SA = cast<WebAssemblyExportNameAttr>(A); (void)SA;
-    OS << " \"" << SA->getExportName() << "\"";
   }
   void VisitWebAssemblyImportModuleAttr(const WebAssemblyImportModuleAttr *A) {
     const auto *SA = cast<WebAssemblyImportModuleAttr>(A); (void)SA;

@@ -605,7 +605,9 @@ public:
     return &I->second;
   }
 
-  void addAdditionalModuleMapFile(const Module *M, const FileEntry *ModuleMap);
+  void addAdditionalModuleMapFile(const Module *M, const FileEntry *ModuleMap) {
+    AdditionalModMaps[M].insert(ModuleMap);
+  }
 
   /// Resolve all of the unresolved exports in the given module.
   ///

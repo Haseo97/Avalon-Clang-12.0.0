@@ -31,8 +31,6 @@ public:
   llvm::Optional<std::pair<std::string, unsigned>>
   getVariableLoc(StringRef name);
 
-  llvm::DWARFContext *getContext() { return dwarf.get(); }
-
 private:
   std::unique_ptr<llvm::DWARFContext> dwarf;
   std::vector<const llvm::DWARFDebugLine::LineTable *> lineTables;

@@ -18,9 +18,6 @@
 #include <cstring>
 #include <limits>
 #include <string>
-#if __cplusplus > 201402L
-#include <string_view>
-#endif
 #include <type_traits>
 #include <utility>
 
@@ -80,8 +77,7 @@ namespace llvm {
     static constexpr size_t strLen(const char *Str) {
 #if __cplusplus > 201402L
       return std::char_traits<char>::length(Str);
-#elif __has_builtin(__builtin_strlen) || defined(__GNUC__) || \
-    (defined(_MSC_VER) && _MSC_VER >= 1916)
+#elif __has_builtin(__builtin_strlen) || defined(__GNUC__) || defined(_MSC_VER)
       return __builtin_strlen(Str);
 #else
       const char *Begin = Str;
@@ -113,12 +109,6 @@ namespace llvm {
     /// Construct a string ref from an std::string.
     /*implicit*/ StringRef(const std::string &Str)
       : Data(Str.data()), Length(Str.length()) {}
-
-#if __cplusplus > 201402L
-    /// Construct a string ref from an std::string_view.
-    /*implicit*/ constexpr StringRef(std::string_view Str)
-        : Data(Str.data()), Length(Str.size()) {}
-#endif
 
     static StringRef withNullAsEmpty(const char *data) {
       return StringRef(data ? data : "");
@@ -265,20 +255,17 @@ namespace llvm {
     /// The declaration here is extra complicated so that `stringRef = {}`
     /// and `stringRef = "abc"` continue to select the move assignment operator.
     template <typename T>
-    std::enable_if_t<std::is_same<T, std::string>::value, StringRef> &
+    typename std::enable_if<std::is_same<T, std::string>::value,
+                            StringRef>::type &
     operator=(T &&Str) = delete;
 
     /// @}
     /// @name Type Conversions
     /// @{
 
-    explicit operator std::string() const { return str(); }
-
-#if __cplusplus > 201402L
-    operator std::string_view() const {
-      return std::string_view(data(), size());
+    operator std::string() const {
+      return str();
     }
-#endif
 
     /// @}
     /// @name String Predicates
@@ -507,7 +494,7 @@ namespace llvm {
     /// this returns true to signify the error.  The string is considered
     /// erroneous if empty or if it overflows T.
     template <typename T>
-    std::enable_if_t<std::numeric_limits<T>::is_signed, bool>
+    typename std::enable_if<std::numeric_limits<T>::is_signed, bool>::type
     getAsInteger(unsigned Radix, T &Result) const {
       long long LLVal;
       if (getAsSignedInteger(*this, Radix, LLVal) ||
@@ -518,7 +505,7 @@ namespace llvm {
     }
 
     template <typename T>
-    std::enable_if_t<!std::numeric_limits<T>::is_signed, bool>
+    typename std::enable_if<!std::numeric_limits<T>::is_signed, bool>::type
     getAsInteger(unsigned Radix, T &Result) const {
       unsigned long long ULLVal;
       // The additional cast to unsigned long long is required to avoid the
@@ -541,7 +528,7 @@ namespace llvm {
     /// The portion of the string representing the discovered numeric value
     /// is removed from the beginning of the string.
     template <typename T>
-    std::enable_if_t<std::numeric_limits<T>::is_signed, bool>
+    typename std::enable_if<std::numeric_limits<T>::is_signed, bool>::type
     consumeInteger(unsigned Radix, T &Result) {
       long long LLVal;
       if (consumeSignedInteger(*this, Radix, LLVal) ||
@@ -552,7 +539,7 @@ namespace llvm {
     }
 
     template <typename T>
-    std::enable_if_t<!std::numeric_limits<T>::is_signed, bool>
+    typename std::enable_if<!std::numeric_limits<T>::is_signed, bool>::type
     consumeInteger(unsigned Radix, T &Result) {
       unsigned long long ULLVal;
       if (consumeUnsignedInteger(*this, Radix, ULLVal) ||
@@ -579,8 +566,7 @@ namespace llvm {
     ///
     /// If \p AllowInexact is false, the function will fail if the string
     /// cannot be represented exactly.  Otherwise, the function only fails
-    /// in case of an overflow or underflow, or an invalid floating point
-    /// representation.
+    /// in case of an overflow or underflow.
     bool getAsDouble(double &Result, bool AllowInexact = true) const;
 
     /// @}

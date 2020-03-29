@@ -15,7 +15,7 @@
 namespace clang {
 namespace diff {
 
-using DynTypedNode = DynTypedNode;
+using DynTypedNode = ast_type_traits::DynTypedNode;
 
 class SyntaxTree;
 class SyntaxTreeImpl;

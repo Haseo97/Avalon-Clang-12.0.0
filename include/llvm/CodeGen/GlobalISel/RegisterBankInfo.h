@@ -20,7 +20,6 @@
 #include "llvm/ADT/iterator_range.h"
 #include "llvm/CodeGen/Register.h"
 #include "llvm/Support/ErrorHandling.h"
-#include "llvm/Support/LowLevelTypeImpl.h"
 #include <cassert>
 #include <initializer_list>
 #include <memory>
@@ -544,7 +543,7 @@ public:
   const RegisterBank *
   getRegBankFromConstraints(const MachineInstr &MI, unsigned OpIdx,
                             const TargetInstrInfo &TII,
-                            const MachineRegisterInfo &MRI) const;
+                            const TargetRegisterInfo &TRI) const;
 
   /// Helper method to apply something that is like the default mapping.
   /// Basically, that means that \p OpdMapper.getMI() is left untouched
@@ -600,7 +599,7 @@ public:
   ///
   /// \todo This should be TableGen'ed.
   virtual const RegisterBank &
-  getRegBankFromRegClass(const TargetRegisterClass &RC, LLT Ty) const {
+  getRegBankFromRegClass(const TargetRegisterClass &RC) const {
     llvm_unreachable("The target must override this method");
   }
 

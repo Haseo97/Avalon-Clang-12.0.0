@@ -10,7 +10,6 @@
 #define LLVM_CLANG_TOOLING_REFACTOR_AST_SELECTION_H
 
 #include "clang/AST/ASTTypeTraits.h"
-#include "clang/AST/Stmt.h"
 #include "clang/Basic/LLVM.h"
 #include "clang/Basic/SourceLocation.h"
 #include <vector>
@@ -48,11 +47,12 @@ enum class SourceSelectionKind {
 /// actually be selected, e.g. a statement in macro whose child is in a macro
 /// argument.
 struct SelectedASTNode {
-  DynTypedNode Node;
+  ast_type_traits::DynTypedNode Node;
   SourceSelectionKind SelectionKind;
   std::vector<SelectedASTNode> Children;
 
-  SelectedASTNode(const DynTypedNode &Node, SourceSelectionKind SelectionKind)
+  SelectedASTNode(const ast_type_traits::DynTypedNode &Node,
+                  SourceSelectionKind SelectionKind)
       : Node(Node), SelectionKind(SelectionKind) {}
   SelectedASTNode(SelectedASTNode &&) = default;
   SelectedASTNode &operator=(SelectedASTNode &&) = default;

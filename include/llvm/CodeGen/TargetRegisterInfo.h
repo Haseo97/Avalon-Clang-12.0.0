@@ -40,7 +40,6 @@ class MachineInstr;
 class RegScavenger;
 class VirtRegMap;
 class LiveIntervals;
-class LiveInterval;
 
 class TargetRegisterClass {
 public:
@@ -856,7 +855,7 @@ public:
 
   /// Returns true if the live-ins should be tracked after register allocation.
   virtual bool trackLivenessAfterRegAlloc(const MachineFunction &MF) const {
-    return true;
+    return false;
   }
 
   /// True if the stack can be realigned for the target.
@@ -952,12 +951,6 @@ public:
                               const TargetRegisterClass *NewRC,
                               LiveIntervals &LIS) const
   { return true; }
-
-  /// Region split has a high compile time cost especially for large live range.
-  /// This method is used to decide whether or not \p VirtReg should
-  /// go through this expensive splitting heuristic.
-  virtual bool shouldRegionSplitForVirtReg(const MachineFunction &MF,
-                                           const LiveInterval &VirtReg) const;
 
   //===--------------------------------------------------------------------===//
   /// Debug information queries.

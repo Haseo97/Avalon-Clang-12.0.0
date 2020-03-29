@@ -677,24 +677,6 @@ class Sema;
       StdInitializerListElement = V;
     }
 
-    /// Form an "implicit" conversion sequence from nullptr_t to bool, for a
-    /// direct-initialization of a bool object from nullptr_t.
-    static ImplicitConversionSequence getNullptrToBool(QualType SourceType,
-                                                       QualType DestType,
-                                                       bool NeedLValToRVal) {
-      ImplicitConversionSequence ICS;
-      ICS.setStandard();
-      ICS.Standard.setAsIdentityConversion();
-      ICS.Standard.setFromType(SourceType);
-      if (NeedLValToRVal)
-        ICS.Standard.First = ICK_Lvalue_To_Rvalue;
-      ICS.Standard.setToType(0, SourceType);
-      ICS.Standard.Second = ICK_Boolean_Conversion;
-      ICS.Standard.setToType(1, DestType);
-      ICS.Standard.setToType(2, DestType);
-      return ICS;
-    }
-
     // The result of a comparison between implicit conversion
     // sequences. Use Sema::CompareImplicitConversionSequences to
     // actually perform the comparison.
@@ -750,9 +732,10 @@ class Sema;
     /// attribute disabled it.
     ovl_fail_enable_if,
 
-    /// This candidate constructor or conversion function is explicit but
-    /// the context doesn't permit explicit functions.
-    ovl_fail_explicit,
+    /// This candidate constructor or conversion fonction
+    /// is used implicitly but the explicit(bool) specifier
+    /// was resolved to true
+    ovl_fail_explicit_resolved,
 
     /// This candidate was not viable because its address could not be taken.
     ovl_fail_addr_not_available,
@@ -771,11 +754,7 @@ class Sema;
     /// This constructor/conversion candidate fail due to an address space
     /// mismatch between the object being constructed and the overload
     /// candidate.
-    ovl_fail_object_addrspace_mismatch,
-
-    /// This candidate was not viable because its associated constraints were
-    /// not satisfied.
-    ovl_fail_constraints_not_satisfied,
+    ovl_fail_object_addrspace_mismatch
   };
 
   /// A list of implicit conversion sequences for the arguments of an
@@ -868,8 +847,6 @@ class Sema;
       return static_cast<OverloadCandidateRewriteKind>(RewriteKind);
     }
 
-    bool isReversed() const { return getRewriteKind() & CRK_Reversed; }
-
     /// hasAmbiguousConversion - Returns whether this overload
     /// candidate requires an ambiguous conversion or not.
     bool hasAmbiguousConversion() const {
@@ -908,7 +885,7 @@ class Sema;
   private:
     friend class OverloadCandidateSet;
     OverloadCandidate()
-        : IsSurrogate(false), IsADLCandidate(CallExpr::NotADL), RewriteKind(CRK_None) {}
+        : IsADLCandidate(CallExpr::NotADL), RewriteKind(CRK_None) {}
   };
 
   /// OverloadCandidateSet - A set of overload candidates, used in C++
@@ -958,17 +935,7 @@ class Sema;
       }
 
       bool isAcceptableCandidate(const FunctionDecl *FD) {
-        if (!OriginalOperator)
-          return true;
-
-        // For an overloaded operator, we can have candidates with a different
-        // name in our unqualified lookup set. Make sure we only consider the
-        // ones we're supposed to.
-        OverloadedOperatorKind OO =
-            FD->getDeclName().getCXXOverloadedOperator();
-        return OO && (OO == OriginalOperator ||
-                      (AllowRewrittenCandidates &&
-                       OO == getRewrittenOverloadedOperator(OriginalOperator)));
+        return AllowRewrittenCandidates || !isRewrittenOperator(FD);
       }
 
       /// Determine the kind of rewrite that should be performed for this
@@ -981,14 +948,6 @@ class Sema;
         if (PO == OverloadCandidateParamOrder::Reversed)
           CRK = OverloadCandidateRewriteKind(CRK | CRK_Reversed);
         return CRK;
-      }
-
-      /// Determines whether this operator could be implemented by a function
-      /// with reversed parameter order.
-      bool isReversible() {
-        return AllowRewrittenCandidates && OriginalOperator &&
-               (getRewrittenOverloadedOperator(OriginalOperator) != OO_None ||
-                shouldAddReversed(OriginalOperator));
       }
 
       /// Determine whether we should consider looking for and adding reversed
@@ -1067,12 +1026,6 @@ class Sema;
       uintptr_t Key = reinterpret_cast<uintptr_t>(F->getCanonicalDecl());
       Key |= static_cast<uintptr_t>(PO);
       return Functions.insert(Key).second;
-    }
-
-    /// Exclude a function from being considered by overload resolution.
-    void exclude(Decl *F) {
-      isNewCandidate(F, OverloadCandidateParamOrder::Normal);
-      isNewCandidate(F, OverloadCandidateParamOrder::Reversed);
     }
 
     /// Clear out all of the candidates.

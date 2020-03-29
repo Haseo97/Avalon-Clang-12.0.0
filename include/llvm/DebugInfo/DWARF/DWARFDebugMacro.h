@@ -39,10 +39,7 @@ class DWARFDebugMacro {
     };
   };
 
-  struct MacroList {
-    SmallVector<Entry, 4> Macros;
-    uint64_t Offset;
-  };
+  using MacroList = SmallVector<Entry, 4>;
 
   /// A list of all the macro entries in the debug_macinfo section.
   std::vector<MacroList> MacroLists;

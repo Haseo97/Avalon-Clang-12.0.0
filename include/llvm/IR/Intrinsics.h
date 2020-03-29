@@ -33,17 +33,14 @@ class AttributeList;
 /// function known by LLVM. The enum values are returned by
 /// Function::getIntrinsicID().
 namespace Intrinsic {
-  // Intrinsic ID type. This is an opaque typedef to facilitate splitting up
-  // the enum into target-specific enums.
-  typedef unsigned ID;
+  enum ID : unsigned {
+    not_intrinsic = 0,   // Must be zero
 
-  enum IndependentIntrinsics : unsigned {
-    not_intrinsic = 0, // Must be zero
-
-  // Get the intrinsic enums generated from Intrinsics.td
+    // Get the intrinsic enums generated from Intrinsics.td
 #define GET_INTRINSIC_ENUM_VALUES
 #include "llvm/IR/IntrinsicEnums.inc"
 #undef GET_INTRINSIC_ENUM_VALUES
+    , num_intrinsics
   };
 
   /// Return the LLVM name for an intrinsic, such as "llvm.ppc.altivec.lvx".

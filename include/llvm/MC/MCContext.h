@@ -188,32 +188,26 @@ namespace llvm {
     /// differences between temporary and non-temporary labels (primarily on
     /// Darwin).
     bool AllowTemporaryLabels = true;
-    bool UseNamesOnTempLabels = false;
+    bool UseNamesOnTempLabels = true;
 
     /// The Compile Unit ID that we are currently processing.
     unsigned DwarfCompileUnitID = 0;
 
-    // Sections are differentiated by the quadruple (section_name, group_name,
-    // unique_id, link_to_symbol_name). Sections sharing the same quadruple are
-    // combined into one section.
     struct ELFSectionKey {
       std::string SectionName;
       StringRef GroupName;
-      StringRef LinkedToName;
       unsigned UniqueID;
 
       ELFSectionKey(StringRef SectionName, StringRef GroupName,
-                    StringRef LinkedToName, unsigned UniqueID)
-          : SectionName(SectionName), GroupName(GroupName),
-            LinkedToName(LinkedToName), UniqueID(UniqueID) {}
+                    unsigned UniqueID)
+          : SectionName(SectionName), GroupName(GroupName), UniqueID(UniqueID) {
+      }
 
       bool operator<(const ELFSectionKey &Other) const {
         if (SectionName != Other.SectionName)
           return SectionName < Other.SectionName;
         if (GroupName != Other.GroupName)
           return GroupName < Other.GroupName;
-        if (int O = LinkedToName.compare(Other.LinkedToName))
-          return O < 0;
         return UniqueID < Other.UniqueID;
       }
     };
@@ -302,7 +296,7 @@ namespace llvm {
                                        unsigned EntrySize,
                                        const MCSymbolELF *Group,
                                        unsigned UniqueID,
-                                       const MCSymbolELF *LinkedToSym);
+                                       const MCSymbolELF *Associated);
 
     /// Map of currently defined macros.
     StringMap<MCAsmMacro> MacroMap;
@@ -435,19 +429,25 @@ namespace llvm {
     MCSectionELF *getELFSection(const Twine &Section, unsigned Type,
                                 unsigned Flags, unsigned EntrySize,
                                 const Twine &Group) {
-      return getELFSection(Section, Type, Flags, EntrySize, Group,
-                           MCSection::NonUniqueID, nullptr);
+      return getELFSection(Section, Type, Flags, EntrySize, Group, ~0);
+    }
+
+    MCSectionELF *getELFSection(const Twine &Section, unsigned Type,
+                                unsigned Flags, unsigned EntrySize,
+                                const Twine &Group, unsigned UniqueID) {
+      return getELFSection(Section, Type, Flags, EntrySize, Group, UniqueID,
+                           nullptr);
     }
 
     MCSectionELF *getELFSection(const Twine &Section, unsigned Type,
                                 unsigned Flags, unsigned EntrySize,
                                 const Twine &Group, unsigned UniqueID,
-                                const MCSymbolELF *LinkedToSym);
+                                const MCSymbolELF *Associated);
 
     MCSectionELF *getELFSection(const Twine &Section, unsigned Type,
                                 unsigned Flags, unsigned EntrySize,
                                 const MCSymbolELF *Group, unsigned UniqueID,
-                                const MCSymbolELF *LinkedToSym);
+                                const MCSymbolELF *Associated);
 
     /// Get a section with the provided group identifier. This section is
     /// named by concatenating \p Prefix with '.' then \p Suffix. The \p Type
@@ -541,7 +541,7 @@ namespace llvm {
     const std::string &getMainFileName() const { return MainFileName; }
 
     /// Set the main file name and override the default.
-    void setMainFileName(StringRef S) { MainFileName = std::string(S); }
+    void setMainFileName(StringRef S) { MainFileName = S; }
 
     /// Creates an entry in the dwarf file and directory tables.
     Expected<unsigned> getDwarfFile(StringRef Directory, StringRef FileName,

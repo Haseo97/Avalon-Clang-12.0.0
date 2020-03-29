@@ -15,7 +15,6 @@
 #define LLVM_BINARYFORMAT_WASM_H
 
 #include "llvm/ADT/ArrayRef.h"
-#include "llvm/ADT/Optional.h"
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/ADT/StringRef.h"
 
@@ -132,7 +131,6 @@ struct WasmFunction {
   uint32_t CodeSectionOffset;
   uint32_t Size;
   uint32_t CodeOffset;  // start of Locals and Body
-  StringRef ExportName; // from the "export" section
   StringRef SymbolName; // from the "linking" section
   StringRef DebugName;  // from the "name" section
   uint32_t Comdat;      // from the "comdat info" section
@@ -179,12 +177,8 @@ struct WasmSymbolInfo {
   StringRef Name;
   uint8_t Kind;
   uint32_t Flags;
-  // For undefined symbols the module of the import
-  Optional<StringRef> ImportModule;
-  // For undefined symbols the name of the import
-  Optional<StringRef> ImportName;
-  // For symbols to be exported from the final module
-  Optional<StringRef> ExportName;
+  StringRef ImportModule; // For undefined symbols the module of the import
+  StringRef ImportName;   // For undefined symbols the name of the import
   union {
     // For function or global symbols, the index in function or global index
     // space.

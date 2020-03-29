@@ -17,6 +17,9 @@
 /* Define if LLVM_ENABLE_DUMP is enabled */
 /* #undef LLVM_ENABLE_DUMP */
 
+/* Define if we link Polly to the tools */
+#define LINK_POLLY_INTO_TOOLS
+
 /* Target triple LLVM will generate code for by default */
 #define LLVM_DEFAULT_TARGET_TRIPLE "x86_64-unknown-linux-gnu"
 
@@ -33,22 +36,22 @@
 #define LLVM_NATIVE_ARCH X86
 
 /* LLVM name for the native AsmParser init function, if available */
-/* #undef LLVM_NATIVE_ASMPARSER */
+#define LLVM_NATIVE_ASMPARSER LLVMInitializeX86AsmParser
 
 /* LLVM name for the native AsmPrinter init function, if available */
-/* #undef LLVM_NATIVE_ASMPRINTER */
+#define LLVM_NATIVE_ASMPRINTER LLVMInitializeX86AsmPrinter
 
 /* LLVM name for the native Disassembler init function, if available */
-/* #undef LLVM_NATIVE_DISASSEMBLER */
+#define LLVM_NATIVE_DISASSEMBLER LLVMInitializeX86Disassembler
 
 /* LLVM name for the native Target init function, if available */
-/* #undef LLVM_NATIVE_TARGET */
+#define LLVM_NATIVE_TARGET LLVMInitializeX86Target
 
 /* LLVM name for the native TargetInfo init function, if available */
-/* #undef LLVM_NATIVE_TARGETINFO */
+#define LLVM_NATIVE_TARGETINFO LLVMInitializeX86TargetInfo
 
 /* LLVM name for the native target MC init function, if available */
-/* #undef LLVM_NATIVE_TARGETMC */
+#define LLVM_NATIVE_TARGETMC LLVMInitializeX86TargetMC
 
 /* Define if this is Unixish platform */
 #define LLVM_ON_UNIX 1
@@ -63,16 +66,16 @@
 #define LLVM_USE_PERF 0
 
 /* Major version of the LLVM API */
-#define LLVM_VERSION_MAJOR 11
+#define LLVM_VERSION_MAJOR 10
 
 /* Minor version of the LLVM API */
 #define LLVM_VERSION_MINOR 0
 
 /* Patch version of the LLVM API */
-#define LLVM_VERSION_PATCH 0
+#define LLVM_VERSION_PATCH 5
 
 /* LLVM version string */
-#define LLVM_VERSION_STRING "11.0.0git"
+#define LLVM_VERSION_STRING "10.0.5git"
 
 /* Whether LLVM records statistics for use with GetStatistics(),
  * PrintStatistics() or PrintStatisticsJSON()

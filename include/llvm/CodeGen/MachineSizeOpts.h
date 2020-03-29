@@ -21,25 +21,16 @@ class ProfileSummaryInfo;
 class MachineBasicBlock;
 class MachineBlockFrequencyInfo;
 class MachineFunction;
-class MBFIWrapper;
 
 /// Returns true if machine function \p MF is suggested to be size-optimized
-/// based on the profile.
+/// base on the profile.
 bool shouldOptimizeForSize(const MachineFunction *MF, ProfileSummaryInfo *PSI,
-                           const MachineBlockFrequencyInfo *BFI,
-                           PGSOQueryType QueryType = PGSOQueryType::Other);
+                           const MachineBlockFrequencyInfo *BFI);
 /// Returns true if machine basic block \p MBB is suggested to be size-optimized
-/// based on the profile.
+/// base on the profile.
 bool shouldOptimizeForSize(const MachineBasicBlock *MBB,
                            ProfileSummaryInfo *PSI,
-                           const MachineBlockFrequencyInfo *MBFI,
-                           PGSOQueryType QueryType = PGSOQueryType::Other);
-/// Returns true if machine basic block \p MBB is suggested to be size-optimized
-/// based on the profile.
-bool shouldOptimizeForSize(const MachineBasicBlock *MBB,
-                           ProfileSummaryInfo *PSI,
-                           MBFIWrapper *MBFIWrapper,
-                           PGSOQueryType QueryType = PGSOQueryType::Other);
+                           const MachineBlockFrequencyInfo *MBFI);
 
 } // end namespace llvm
 

@@ -527,7 +527,7 @@ template <class V, class M> struct IsValidReference {
 /// As an analogue to \a isa(), check whether \c MD has an \a Value inside of
 /// type \c X.
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidPointer<X, Y>::value, bool>
+inline typename std::enable_if<detail::IsValidPointer<X, Y>::value, bool>::type
 hasa(Y &&MD) {
   assert(MD && "Null pointer sent into hasa");
   if (auto *V = dyn_cast<ConstantAsMetadata>(MD))
@@ -535,8 +535,9 @@ hasa(Y &&MD) {
   return false;
 }
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidReference<X, Y &>::value, bool>
-hasa(Y &MD) {
+inline
+    typename std::enable_if<detail::IsValidReference<X, Y &>::value, bool>::type
+    hasa(Y &MD) {
   return hasa(&MD);
 }
 
@@ -544,13 +545,14 @@ hasa(Y &MD) {
 ///
 /// As an analogue to \a cast(), extract the \a Value subclass \c X from \c MD.
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidPointer<X, Y>::value, X *>
+inline typename std::enable_if<detail::IsValidPointer<X, Y>::value, X *>::type
 extract(Y &&MD) {
   return cast<X>(cast<ConstantAsMetadata>(MD)->getValue());
 }
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidReference<X, Y &>::value, X *>
-extract(Y &MD) {
+inline
+    typename std::enable_if<detail::IsValidReference<X, Y &>::value, X *>::type
+    extract(Y &MD) {
   return extract(&MD);
 }
 
@@ -559,7 +561,7 @@ extract(Y &MD) {
 /// As an analogue to \a cast_or_null(), extract the \a Value subclass \c X
 /// from \c MD, allowing \c MD to be null.
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidPointer<X, Y>::value, X *>
+inline typename std::enable_if<detail::IsValidPointer<X, Y>::value, X *>::type
 extract_or_null(Y &&MD) {
   if (auto *V = cast_or_null<ConstantAsMetadata>(MD))
     return cast<X>(V->getValue());
@@ -572,7 +574,7 @@ extract_or_null(Y &&MD) {
 /// from \c MD, return null if \c MD doesn't contain a \a Value or if the \a
 /// Value it does contain is of the wrong subclass.
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidPointer<X, Y>::value, X *>
+inline typename std::enable_if<detail::IsValidPointer<X, Y>::value, X *>::type
 dyn_extract(Y &&MD) {
   if (auto *V = dyn_cast<ConstantAsMetadata>(MD))
     return dyn_cast<X>(V->getValue());
@@ -585,7 +587,7 @@ dyn_extract(Y &&MD) {
 /// from \c MD, return null if \c MD doesn't contain a \a Value or if the \a
 /// Value it does contain is of the wrong subclass, allowing \c MD to be null.
 template <class X, class Y>
-inline std::enable_if_t<detail::IsValidPointer<X, Y>::value, X *>
+inline typename std::enable_if<detail::IsValidPointer<X, Y>::value, X *>::type
 dyn_extract_or_null(Y &&MD) {
   if (auto *V = dyn_cast_or_null<ConstantAsMetadata>(MD))
     return dyn_cast<X>(V->getValue());
@@ -640,32 +642,26 @@ public:
 /// A collection of metadata nodes that might be associated with a
 /// memory access used by the alias-analysis infrastructure.
 struct AAMDNodes {
-  explicit AAMDNodes() = default;
-  explicit AAMDNodes(MDNode *T, MDNode *TS, MDNode *S, MDNode *N)
-      : TBAA(T), TBAAStruct(TS), Scope(S), NoAlias(N) {}
+  explicit AAMDNodes(MDNode *T = nullptr, MDNode *S = nullptr,
+                     MDNode *N = nullptr)
+      : TBAA(T), Scope(S), NoAlias(N) {}
 
   bool operator==(const AAMDNodes &A) const {
-    return TBAA == A.TBAA && TBAAStruct == A.TBAAStruct && Scope == A.Scope &&
-           NoAlias == A.NoAlias;
+    return TBAA == A.TBAA && Scope == A.Scope && NoAlias == A.NoAlias;
   }
 
   bool operator!=(const AAMDNodes &A) const { return !(*this == A); }
 
-  explicit operator bool() const {
-    return TBAA || TBAAStruct || Scope || NoAlias;
-  }
+  explicit operator bool() const { return TBAA || Scope || NoAlias; }
 
   /// The tag for type-based alias analysis.
-  MDNode *TBAA = nullptr;
-
-  /// The tag for type-based alias analysis (tbaa struct).
-  MDNode *TBAAStruct = nullptr;
+  MDNode *TBAA;
 
   /// The tag for alias scope specification (used with noalias).
-  MDNode *Scope = nullptr;
+  MDNode *Scope;
 
   /// The tag specifying the noalias scope.
-  MDNode *NoAlias = nullptr;
+  MDNode *NoAlias;
 
   /// Given two sets of AAMDNodes that apply to the same pointer,
   /// give the best AAMDNodes that are compatible with both (i.e. a set of
@@ -675,7 +671,6 @@ struct AAMDNodes {
   AAMDNodes intersect(const AAMDNodes &Other) {
     AAMDNodes Result;
     Result.TBAA = Other.TBAA == TBAA ? TBAA : nullptr;
-    Result.TBAAStruct = Other.TBAAStruct == TBAAStruct ? TBAAStruct : nullptr;
     Result.Scope = Other.Scope == Scope ? Scope : nullptr;
     Result.NoAlias = Other.NoAlias == NoAlias ? NoAlias : nullptr;
     return Result;
@@ -687,17 +682,16 @@ template<>
 struct DenseMapInfo<AAMDNodes> {
   static inline AAMDNodes getEmptyKey() {
     return AAMDNodes(DenseMapInfo<MDNode *>::getEmptyKey(),
-                     nullptr, nullptr, nullptr);
+                     nullptr, nullptr);
   }
 
   static inline AAMDNodes getTombstoneKey() {
     return AAMDNodes(DenseMapInfo<MDNode *>::getTombstoneKey(),
-                     nullptr, nullptr, nullptr);
+                     nullptr, nullptr);
   }
 
   static unsigned getHashValue(const AAMDNodes &Val) {
     return DenseMapInfo<MDNode *>::getHashValue(Val.TBAA) ^
-           DenseMapInfo<MDNode *>::getHashValue(Val.TBAAStruct) ^
            DenseMapInfo<MDNode *>::getHashValue(Val.Scope) ^
            DenseMapInfo<MDNode *>::getHashValue(Val.NoAlias);
   }
@@ -974,7 +968,7 @@ public:
   /// Try to create a uniqued version of \c N -- in place, if possible -- and
   /// return it.  If \c N cannot be uniqued, return a distinct node instead.
   template <class T>
-  static std::enable_if_t<std::is_base_of<MDNode, T>::value, T *>
+  static typename std::enable_if<std::is_base_of<MDNode, T>::value, T *>::type
   replaceWithPermanent(std::unique_ptr<T, TempMDNodeDeleter> N) {
     return cast<T>(N.release()->replaceWithPermanentImpl());
   }
@@ -986,7 +980,7 @@ public:
   ///
   /// \pre N does not self-reference.
   template <class T>
-  static std::enable_if_t<std::is_base_of<MDNode, T>::value, T *>
+  static typename std::enable_if<std::is_base_of<MDNode, T>::value, T *>::type
   replaceWithUniqued(std::unique_ptr<T, TempMDNodeDeleter> N) {
     return cast<T>(N.release()->replaceWithUniquedImpl());
   }
@@ -996,7 +990,7 @@ public:
   /// Create a distinct version of \c N -- in place, if possible -- and return
   /// it.  Takes ownership of the temporary node.
   template <class T>
-  static std::enable_if_t<std::is_base_of<MDNode, T>::value, T *>
+  static typename std::enable_if<std::is_base_of<MDNode, T>::value, T *>::type
   replaceWithDistinct(std::unique_ptr<T, TempMDNodeDeleter> N) {
     return cast<T>(N.release()->replaceWithDistinctImpl());
   }
@@ -1235,13 +1229,15 @@ public:
   template <class U>
   MDTupleTypedArrayWrapper(
       const MDTupleTypedArrayWrapper<U> &Other,
-      std::enable_if_t<std::is_convertible<U *, T *>::value> * = nullptr)
+      typename std::enable_if<std::is_convertible<U *, T *>::value>::type * =
+          nullptr)
       : N(Other.get()) {}
 
   template <class U>
   explicit MDTupleTypedArrayWrapper(
       const MDTupleTypedArrayWrapper<U> &Other,
-      std::enable_if_t<!std::is_convertible<U *, T *>::value> * = nullptr)
+      typename std::enable_if<!std::is_convertible<U *, T *>::value>::type * =
+          nullptr)
       : N(Other.get()) {}
 
   explicit operator bool() const { return get(); }

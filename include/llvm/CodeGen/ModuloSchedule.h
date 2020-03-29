@@ -290,9 +290,6 @@ class PeelingModuloScheduleExpander {
   /// but not produced (in the epilog) or produced but not available (in the
   /// prolog).
   DenseMap<MachineBasicBlock *, BitVector> AvailableStages;
-  /// When peeling the epilogue keep track of the distance between the phi
-  /// nodes and the kernel.
-  DenseMap<MachineInstr *, unsigned> PhiNodeLoopIteration;
 
   /// CanonicalMIs and BlockMIs form a bidirectional map between any of the
   /// loop kernel clones.
@@ -354,9 +351,6 @@ private:
       MI = CanonicalMIs[MI];
     return Schedule.getStage(MI);
   }
-  /// Helper function to find the right canonical register for a phi instruction
-  /// coming from a peeled out prologue.
-  Register getPhiCanonicalReg(MachineInstr* CanonicalPhi, MachineInstr* Phi);
   /// Target loop info before kernel peeling.
   std::unique_ptr<TargetInstrInfo::PipelinerLoopInfo> Info;
 };

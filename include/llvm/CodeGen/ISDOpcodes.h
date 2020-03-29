@@ -13,8 +13,6 @@
 #ifndef LLVM_CODEGEN_ISDOPCODES_H
 #define LLVM_CODEGEN_ISDOPCODES_H
 
-#include "llvm/CodeGen/ValueTypes.h"
-
 namespace llvm {
 
 /// ISD namespace - This namespace contains an enum which represents all of the
@@ -285,17 +283,6 @@ namespace ISD {
     /// bits of the first 2 operands.
     SMULFIXSAT, UMULFIXSAT,
 
-    /// RESULT = [US]DIVFIX(LHS, RHS, SCALE) - Perform fixed point division on
-    /// 2 integers with the same width and scale. SCALE represents the scale
-    /// of both operands as fixed point numbers. This SCALE parameter must be a
-    /// constant integer.
-    SDIVFIX, UDIVFIX,
-
-    /// Same as the corresponding unsaturated fixed point instructions, but the
-    /// result is clamped between the min and max values representable by the
-    /// bits of the first 2 operands.
-    SDIVFIXSAT, UDIVFIXSAT,
-
     /// Simple binary floating point operators.
     FADD, FSUB, FMUL, FDIV, FREM,
 
@@ -315,7 +302,6 @@ namespace ISD {
     STRICT_FRINT, STRICT_FNEARBYINT, STRICT_FMAXNUM, STRICT_FMINNUM,
     STRICT_FCEIL, STRICT_FFLOOR, STRICT_FROUND, STRICT_FTRUNC,
     STRICT_LROUND, STRICT_LLROUND, STRICT_LRINT, STRICT_LLRINT,
-    STRICT_FMAXIMUM, STRICT_FMINIMUM,
 
     /// STRICT_FP_TO_[US]INT - Convert a floating point value to a signed or
     /// unsigned integer. These have the same semantics as fptosi and fptoui 
@@ -323,13 +309,6 @@ namespace ISD {
     /// They are used to limit optimizations while the DAG is being optimized.
     STRICT_FP_TO_SINT,
     STRICT_FP_TO_UINT,
-
-    /// STRICT_[US]INT_TO_FP - Convert a signed or unsigned integer to
-    /// a floating point value. These have the same semantics as sitofp and
-    /// uitofp in IR.
-    /// They are used to limit optimizations while the DAG is being optimized.
-    STRICT_SINT_TO_FP,
-    STRICT_UINT_TO_FP,
 
     /// X = STRICT_FP_ROUND(Y, TRUNC) - Rounding 'Y' from a larger floating 
     /// point type down to the precision of the destination VT.  TRUNC is a 
@@ -350,12 +329,6 @@ namespace ISD {
     /// type.
     /// It is used to limit optimizations while the DAG is being optimized.
     STRICT_FP_EXTEND,
-
-    /// STRICT_FSETCC/STRICT_FSETCCS - Constrained versions of SETCC, used
-    /// for floating-point operands only.  STRICT_FSETCC performs a quiet
-    /// comparison operation, while STRICT_FSETCCS performs a signaling
-    /// comparison operation.
-    STRICT_FSETCC, STRICT_FSETCCS,
 
     /// FMA - Perform a * b + c with no intermediate rounding step.
     FMA,
@@ -609,7 +582,6 @@ namespace ISD {
     ///  1 Round to nearest
     ///  2 Round to +inf
     ///  3 Round to -inf
-    /// Result is rounding mode and chain. Input is a chain.
     FLT_ROUNDS_,
 
     /// X = FP_EXTEND(Y) - Extend a smaller FP type into a larger FP type.
@@ -639,7 +611,6 @@ namespace ISD {
     /// form a semi-softened interface for dealing with f16 (as an i16), which
     /// is often a storage-only type but has native conversions.
     FP16_TO_FP, FP_TO_FP16,
-    STRICT_FP16_TO_FP, STRICT_FP_TO_FP16,
 
     /// Perform various unary floating-point operations inspired by libm. For
     /// FPOWI, the result is undefined if if the integer operand doesn't fit
@@ -744,6 +715,9 @@ namespace ISD {
     /// with respect to other call instructions, but loads and stores may float
     /// past it.
     ANNOTATION_LABEL,
+
+    /// CATCHPAD - Represents a catchpad instruction.
+    CATCHPAD,
 
     /// CATCHRET - Represents a return from a catch block funclet. Used for
     /// MSVC compatible exception handling. Takes a chain operand and a
@@ -925,11 +899,6 @@ namespace ISD {
     /// known nonzero constant. The only operand here is the chain.
     GET_DYNAMIC_AREA_OFFSET,
 
-    /// VSCALE(IMM) - Returns the runtime scaling factor used to calculate the
-    /// number of elements within a scalable vector. IMM is a constant integer
-    /// multiplier that is applied to the runtime value.
-    VSCALE,
-
     /// Generic reduction nodes. These nodes represent horizontal vector
     /// reduction operations, producing a scalar result.
     /// The STRICT variants perform reductions in sequential order. The first
@@ -952,16 +921,11 @@ namespace ISD {
     BUILTIN_OP_END
   };
 
-  /// FIRST_TARGET_STRICTFP_OPCODE - Target-specific pre-isel operations
-  /// which cannot raise FP exceptions should be less than this value.
-  /// Those that do must not be less than this value.
-  static const int FIRST_TARGET_STRICTFP_OPCODE = BUILTIN_OP_END+400;
-
   /// FIRST_TARGET_MEMORY_OPCODE - Target-specific pre-isel operations
   /// which do not reference a specific memory location should be less than
   /// this value. Those that do must not be less than this value, and can
   /// be used with SelectionDAG::getMemIntrinsicNode.
-  static const int FIRST_TARGET_MEMORY_OPCODE = BUILTIN_OP_END+500;
+  static const int FIRST_TARGET_MEMORY_OPCODE = BUILTIN_OP_END+400;
 
   //===--------------------------------------------------------------------===//
   /// MemIndexedMode enum - This enum defines the load / store indexed
@@ -1112,17 +1076,7 @@ namespace ISD {
 
   /// Return the operation corresponding to !(X op Y), where 'op' is a valid
   /// SetCC operation.
-  CondCode getSetCCInverse(CondCode Operation, EVT Type);
-
-  namespace GlobalISel {
-    /// Return the operation corresponding to !(X op Y), where 'op' is a valid
-    /// SetCC operation. The U bit of the condition code has different meanings
-    /// between floating point and integer comparisons and LLT's don't provide
-    /// this distinction. As such we need to be told whether the comparison is
-    /// floating point or integer-like. Pointers should use integer-like
-    /// comparisons.
-    CondCode getSetCCInverse(CondCode Operation, bool isIntegerLike);
-  } // end namespace GlobalISel
+  CondCode getSetCCInverse(CondCode Operation, bool isInteger);
 
   /// Return the operation corresponding to (Y op X) when given the operation
   /// for (X op Y).
@@ -1131,12 +1085,12 @@ namespace ISD {
   /// Return the result of a logical OR between different comparisons of
   /// identical values: ((X op1 Y) | (X op2 Y)). This function returns
   /// SETCC_INVALID if it is not possible to represent the resultant comparison.
-  CondCode getSetCCOrOperation(CondCode Op1, CondCode Op2, EVT Type);
+  CondCode getSetCCOrOperation(CondCode Op1, CondCode Op2, bool isInteger);
 
   /// Return the result of a logical AND between different comparisons of
   /// identical values: ((X op1 Y) & (X op2 Y)). This function returns
   /// SETCC_INVALID if it is not possible to represent the resultant comparison.
-  CondCode getSetCCAndOperation(CondCode Op1, CondCode Op2, EVT Type);
+  CondCode getSetCCAndOperation(CondCode Op1, CondCode Op2, bool isInteger);
 
 } // end llvm::ISD namespace
 

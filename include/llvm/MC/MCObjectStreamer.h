@@ -38,8 +38,6 @@ class MCObjectStreamer : public MCStreamer {
   bool EmitEHFrame;
   bool EmitDebugFrame;
   SmallVector<MCSymbol *, 2> PendingLabels;
-  SmallVector<MCSection*, 2> PendingLabelSections;
-  unsigned CurSubsectionIdx;
   struct PendingMCFixup {
     const MCSymbol *Sym;
     MCFixup Fixup;
@@ -50,10 +48,10 @@ class MCObjectStreamer : public MCStreamer {
   SmallVector<PendingMCFixup, 2> PendingFixups;
 
   virtual void EmitInstToData(const MCInst &Inst, const MCSubtargetInfo&) = 0;
-  void emitCFIStartProcImpl(MCDwarfFrameInfo &Frame) override;
-  void emitCFIEndProcImpl(MCDwarfFrameInfo &Frame) override;
-  MCSymbol *emitCFILabel() override;
-  void emitInstructionImpl(const MCInst &Inst, const MCSubtargetInfo &STI);
+  void EmitCFIStartProcImpl(MCDwarfFrameInfo &Frame) override;
+  void EmitCFIEndProcImpl(MCDwarfFrameInfo &Frame) override;
+  MCSymbol *EmitCFILabel() override;
+  void EmitInstructionImpl(const MCInst &Inst, const MCSubtargetInfo &STI);
   void resolvePendingFixups();
 
 protected:
@@ -70,7 +68,7 @@ public:
   bool isIntegratedAssemblerRequired() const override { return true; }
 
   void EmitFrames(MCAsmBackend *MAB);
-  void emitCFISections(bool EH, bool Debug) override;
+  void EmitCFISections(bool EH, bool Debug) override;
 
   MCFragment *getCurrentFragment() const;
 
@@ -86,72 +84,67 @@ public:
   /// Optionally a \p STI can be passed in so that a new fragment is created
   /// if the Subtarget differs from the current fragment.
   MCDataFragment *getOrCreateDataFragment(const MCSubtargetInfo* STI = nullptr);
-
-  /// Get a boundary-align fragment to write into, creating a new one if the
-  /// current fragment is not a boundary-align fragment or has been used to emit
-  /// something.
-  MCBoundaryAlignFragment *getOrCreateBoundaryAlignFragment();
+  MCPaddingFragment *getOrCreatePaddingFragment();
 
 protected:
   bool changeSectionImpl(MCSection *Section, const MCExpr *Subsection);
 
-  /// Assign a label to the current Section and Subsection even though a
-  /// fragment is not yet present. Use flushPendingLabels(F) to associate
-  /// a fragment with this label.
-  void addPendingLabel(MCSymbol* label);
-
-  /// If any labels have been emitted but not assigned fragments in the current
-  /// Section and Subsection, ensure that they get assigned, either to fragment
-  /// F if possible or to a new data fragment. Optionally, one can provide an
-  /// offset \p FOffset as a symbol offset within the fragment.
+  /// If any labels have been emitted but not assigned fragments, ensure that
+  /// they get assigned, either to F if possible or to a new data fragment.
+  /// Optionally, it is also possible to provide an offset \p FOffset, which
+  /// will be used as a symbol offset within the fragment.
   void flushPendingLabels(MCFragment *F, uint64_t FOffset = 0);
 
 public:
   void visitUsedSymbol(const MCSymbol &Sym) override;
 
-  /// Create a data fragment for any pending labels across all Sections
-  /// and Subsections.
-  void flushPendingLabels();
+  /// Create a dummy fragment to assign any pending labels.
+  void flushPendingLabels() { flushPendingLabels(nullptr); }
 
   MCAssembler &getAssembler() { return *Assembler; }
   MCAssembler *getAssemblerPtr() override;
   /// \name MCStreamer Interface
   /// @{
 
-  void emitLabel(MCSymbol *Symbol, SMLoc Loc = SMLoc()) override;
-  virtual void emitLabelAtPos(MCSymbol *Symbol, SMLoc Loc, MCFragment *F,
+  void EmitLabel(MCSymbol *Symbol, SMLoc Loc = SMLoc()) override;
+  virtual void EmitLabelAtPos(MCSymbol *Symbol, SMLoc Loc, MCFragment *F,
                               uint64_t Offset);
-  void emitAssignment(MCSymbol *Symbol, const MCExpr *Value) override;
-  void emitValueImpl(const MCExpr *Value, unsigned Size,
+  void EmitAssignment(MCSymbol *Symbol, const MCExpr *Value) override;
+  void EmitValueImpl(const MCExpr *Value, unsigned Size,
                      SMLoc Loc = SMLoc()) override;
-  void emitULEB128Value(const MCExpr *Value) override;
-  void emitSLEB128Value(const MCExpr *Value) override;
-  void emitWeakReference(MCSymbol *Alias, const MCSymbol *Symbol) override;
+  void EmitULEB128Value(const MCExpr *Value) override;
+  void EmitSLEB128Value(const MCExpr *Value) override;
+  void EmitWeakReference(MCSymbol *Alias, const MCSymbol *Symbol) override;
   void ChangeSection(MCSection *Section, const MCExpr *Subsection) override;
-  void emitInstruction(const MCInst &Inst, const MCSubtargetInfo &STI) override;
+  void EmitInstruction(const MCInst &Inst, const MCSubtargetInfo &STI) override;
 
   /// Emit an instruction to a special fragment, because this instruction
   /// can change its size during relaxation.
   virtual void EmitInstToFragment(const MCInst &Inst, const MCSubtargetInfo &);
 
-  void emitBundleAlignMode(unsigned AlignPow2) override;
-  void emitBundleLock(bool AlignToEnd) override;
-  void emitBundleUnlock() override;
-  void emitBytes(StringRef Data) override;
-  void emitValueToAlignment(unsigned ByteAlignment, int64_t Value = 0,
+  void EmitBundleAlignMode(unsigned AlignPow2) override;
+  void EmitBundleLock(bool AlignToEnd) override;
+  void EmitBundleUnlock() override;
+  void EmitBytes(StringRef Data) override;
+  void EmitValueToAlignment(unsigned ByteAlignment, int64_t Value = 0,
                             unsigned ValueSize = 1,
                             unsigned MaxBytesToEmit = 0) override;
-  void emitCodeAlignment(unsigned ByteAlignment,
+  void EmitCodeAlignment(unsigned ByteAlignment,
                          unsigned MaxBytesToEmit = 0) override;
   void emitValueToOffset(const MCExpr *Offset, unsigned char Value,
                          SMLoc Loc) override;
-  void emitDwarfLocDirective(unsigned FileNo, unsigned Line, unsigned Column,
-                             unsigned Flags, unsigned Isa,
-                             unsigned Discriminator,
+  void
+  EmitCodePaddingBasicBlockStart(const MCCodePaddingContext &Context) override;
+  void
+  EmitCodePaddingBasicBlockEnd(const MCCodePaddingContext &Context) override;
+  void EmitDwarfLocDirective(unsigned FileNo, unsigned Line,
+                             unsigned Column, unsigned Flags,
+                             unsigned Isa, unsigned Discriminator,
                              StringRef FileName) override;
-  void emitDwarfAdvanceLineAddr(int64_t LineDelta, const MCSymbol *LastLabel,
-                                const MCSymbol *Label, unsigned PointerSize);
-  void emitDwarfAdvanceFrameAddr(const MCSymbol *LastLabel,
+  void EmitDwarfAdvanceLineAddr(int64_t LineDelta, const MCSymbol *LastLabel,
+                                const MCSymbol *Label,
+                                unsigned PointerSize);
+  void EmitDwarfAdvanceFrameAddr(const MCSymbol *LastLabel,
                                  const MCSymbol *Label);
   void EmitCVLocDirective(unsigned FunctionId, unsigned FileNo, unsigned Line,
                           unsigned Column, bool PrologueEnd, bool IsStmt,
@@ -169,13 +162,13 @@ public:
   void EmitCVStringTableDirective() override;
   void EmitCVFileChecksumsDirective() override;
   void EmitCVFileChecksumOffsetDirective(unsigned FileNo) override;
-  void emitDTPRel32Value(const MCExpr *Value) override;
-  void emitDTPRel64Value(const MCExpr *Value) override;
-  void emitTPRel32Value(const MCExpr *Value) override;
-  void emitTPRel64Value(const MCExpr *Value) override;
-  void emitGPRel32Value(const MCExpr *Value) override;
-  void emitGPRel64Value(const MCExpr *Value) override;
-  bool emitRelocDirective(const MCExpr &Offset, StringRef Name,
+  void EmitDTPRel32Value(const MCExpr *Value) override;
+  void EmitDTPRel64Value(const MCExpr *Value) override;
+  void EmitTPRel32Value(const MCExpr *Value) override;
+  void EmitTPRel64Value(const MCExpr *Value) override;
+  void EmitGPRel32Value(const MCExpr *Value) override;
+  void EmitGPRel64Value(const MCExpr *Value) override;
+  bool EmitRelocDirective(const MCExpr &Offset, StringRef Name,
                           const MCExpr *Expr, SMLoc Loc,
                           const MCSubtargetInfo &STI) override;
   using MCStreamer::emitFill;
@@ -183,10 +176,10 @@ public:
                 SMLoc Loc = SMLoc()) override;
   void emitFill(const MCExpr &NumValues, int64_t Size, int64_t Expr,
                 SMLoc Loc = SMLoc()) override;
-  void emitFileDirective(StringRef Filename) override;
+  void EmitFileDirective(StringRef Filename) override;
 
-  void emitAddrsig() override;
-  void emitAddrsigSym(const MCSymbol *Sym) override;
+  void EmitAddrsig() override;
+  void EmitAddrsigSym(const MCSymbol *Sym) override;
 
   void FinishImpl() override;
 
