@@ -1,0 +1,14 @@
+#ifdef GET_SVE_LLVM_INTRINSIC_MAP
+SVEMAP2(svld1_f16, 133),
+SVEMAP2(svld1_f32, 134),
+SVEMAP2(svld1_f64, 135),
+SVEMAP2(svld1_s16, 130),
+SVEMAP2(svld1_s32, 131),
+SVEMAP2(svld1_s64, 132),
+SVEMAP2(svld1_s8, 129),
+SVEMAP2(svld1_u16, 130),
+SVEMAP2(svld1_u32, 131),
+SVEMAP2(svld1_u64, 132),
+SVEMAP2(svld1_u8, 129),
+#endif
+
