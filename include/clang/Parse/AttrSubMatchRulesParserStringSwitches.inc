@@ -37,6 +37,7 @@ Optional<attr::SubjectMatchRule> isAttributeSubjectMatchSubRuleFor_variable(Stri
   return llvm::StringSwitch<Optional<attr::SubjectMatchRule>>(Name).
   Case("is_thread_local", attr::SubjectMatchRule_variable_is_thread_local).
   Case("is_global", attr::SubjectMatchRule_variable_is_global).
+  Case("is_local", attr::SubjectMatchRule_variable_is_local).
   Case("is_parameter", attr::SubjectMatchRule_variable_is_parameter).
   Default(None);
 }
@@ -80,7 +81,7 @@ const char *validAttributeSubjectMatchSubRules(attr::SubjectMatchRule Rule) {
   case attr::SubjectMatchRule_record:
   return "'unless(is_union)'";
   case attr::SubjectMatchRule_variable:
-  return "'is_thread_local', 'is_global', 'is_parameter', 'unless(is_parameter)'";
+  return "'is_thread_local', 'is_global', 'is_local', 'is_parameter', 'unless(is_parameter)'";
   case attr::SubjectMatchRule_objc_method:
   return "'is_instance'";
   default: return nullptr;

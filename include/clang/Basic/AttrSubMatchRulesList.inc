@@ -35,6 +35,7 @@ ATTR_MATCH_RULE(SubjectMatchRule_type_alias, "type_alias", 0)
 ATTR_MATCH_RULE(SubjectMatchRule_variable, "variable", 0)
 ATTR_MATCH_SUB_RULE(SubjectMatchRule_variable_is_thread_local, "variable(is_thread_local)", 0, attr::SubjectMatchRule_variable, 0)
 ATTR_MATCH_SUB_RULE(SubjectMatchRule_variable_is_global, "variable(is_global)", 0, attr::SubjectMatchRule_variable, 0)
+ATTR_MATCH_SUB_RULE(SubjectMatchRule_variable_is_local, "variable(is_local)", 0, attr::SubjectMatchRule_variable, 0)
 ATTR_MATCH_SUB_RULE(SubjectMatchRule_variable_is_parameter, "variable(is_parameter)", 0, attr::SubjectMatchRule_variable, 0)
 ATTR_MATCH_SUB_RULE(SubjectMatchRule_variable_not_is_parameter, "variable(unless(is_parameter))", 0, attr::SubjectMatchRule_variable, 1)
 #undef ATTR_MATCH_SUB_RULE

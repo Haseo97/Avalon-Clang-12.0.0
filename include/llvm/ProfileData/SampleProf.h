@@ -169,6 +169,13 @@ enum class SecNameTableFlags : uint32_t {
   SecFlagInValid = 0,
   SecFlagMD5Name = (1 << 0)
 };
+enum class SecProfSummaryFlags : uint32_t {
+  SecFlagInValid = 0,
+  /// SecFlagPartial means the profile is for common/shared code.
+  /// The common profile is usually merged from profiles collected
+  /// from running other targets.
+  SecFlagPartial = (1 << 0)
+};
 
 // Verify section specific flag is used for the correct section.
 template <class SecFlagType>
@@ -182,6 +189,9 @@ static inline void verifySecFlag(SecType Type, SecFlagType Flag) {
   switch (Type) {
   case SecNameTable:
     IsFlagLegal = std::is_same<SecNameTableFlags, SecFlagType>();
+    break;
+  case SecProfSummary:
+    IsFlagLegal = std::is_same<SecProfSummaryFlags, SecFlagType>();
     break;
   default:
     break;
@@ -434,9 +444,9 @@ public:
     if (FS != iter->second.end())
       return &FS->second;
     // If we cannot find exact match of the callee name, return the FS with
-    // the max total count. Only do this when CalleeName is not provided, 
+    // the max total count. Only do this when CalleeName is not provided,
     // i.e., only for indirect calls.
-    if (!CalleeName.empty()) 
+    if (!CalleeName.empty())
       return nullptr;
     uint64_t MaxTotalSamples = 0;
     const FunctionSamples *R = nullptr;
@@ -488,6 +498,18 @@ public:
     return CallsiteSamples;
   }
 
+  /// Return the maximum of sample counts in a function body including functions
+  /// inlined in it.
+  uint64_t getMaxCountInside() const {
+    uint64_t MaxCount = 0;
+    for (const auto &L : getBodySamples())
+      MaxCount = std::max(MaxCount, L.second.getSamples());
+    for (const auto &C : getCallsiteSamples())
+      for (const FunctionSamplesMap::value_type &F : C.second)
+        MaxCount = std::max(MaxCount, F.second.getMaxCountInside());
+    return MaxCount;
+  }
+
   /// Merge the samples in \p Other into this one.
   /// Optionally scale samples by \p Weight.
   sampleprof_error merge(const FunctionSamples &Other, uint64_t Weight = 1) {
@@ -517,15 +539,20 @@ public:
                             uint64_t Threshold) const {
     if (TotalSamples <= Threshold)
       return;
-    S.insert(getGUID(Name));
+    auto isDeclaration = [](const Function *F) {
+      return !F || F->isDeclaration();
+    };
+    if (isDeclaration(M->getFunction(getFuncName()))) {
+      // Add to the import list only when it's defined out of module.
+      S.insert(getGUID(Name));
+    }
     // Import hot CallTargets, which may not be available in IR because full
     // profile annotation cannot be done until backend compilation in ThinLTO.
     for (const auto &BS : BodySamples)
       for (const auto &TS : BS.second.getCallTargets())
         if (TS.getValue() > Threshold) {
-          const Function *Callee =
-              M->getFunction(getNameInModule(TS.getKey(), M));
-          if (!Callee || !Callee->getSubprogram())
+          const Function *Callee = M->getFunction(getFuncName(TS.getKey()));
+          if (isDeclaration(Callee))
             S.insert(getGUID(TS.getKey()));
         }
     for (const auto &CS : CallsiteSamples)
@@ -539,10 +566,8 @@ public:
   /// Return the function name.
   StringRef getName() const { return Name; }
 
-  /// Return the original function name if it exists in Module \p M.
-  StringRef getFuncNameInModule(const Module *M) const {
-    return getNameInModule(Name, M);
-  }
+  /// Return the original function name.
+  StringRef getFuncName() const { return getFuncName(Name); }
 
   /// Return the canonical name for a function, taking into account
   /// suffix elision policy attributes.
@@ -572,13 +597,14 @@ public:
     return F.getName();
   }
 
-  /// Translate \p Name into its original name in Module.
+  /// Translate \p Name into its original name.
   /// When profile doesn't use MD5, \p Name needs no translation.
   /// When profile uses MD5, \p Name in current FunctionSamples
-  /// is actually GUID of the original function name. getNameInModule will
-  /// translate \p Name in current FunctionSamples into its original name.
-  /// If the original name doesn't exist in \p M, return empty StringRef.
-  StringRef getNameInModule(StringRef Name, const Module *M) const {
+  /// is actually GUID of the original function name. getFuncName will
+  /// translate \p Name in current FunctionSamples into its original name
+  /// by looking up in the function map GUIDToFuncNameMap.
+  /// If the original name doesn't exist in the map, return empty StringRef.
+  StringRef getFuncName(StringRef Name) const {
     if (!UseMD5)
       return Name;
 

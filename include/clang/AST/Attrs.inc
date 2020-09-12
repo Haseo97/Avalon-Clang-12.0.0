@@ -212,6 +212,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -249,6 +250,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -277,6 +279,7 @@ public:
   enum Spelling {
     GNU_signal = 0,
     CXX11_gnu_signal = 1,
+    C2x_gnu_signal = 2,
   SpellingNotCalculated = 15
 
   };
@@ -548,6 +551,7 @@ public:
   enum Spelling {
     GNU_alias = 0,
     CXX11_gnu_alias = 1,
+    C2x_gnu_alias = 2,
   SpellingNotCalculated = 15
 
   };
@@ -645,9 +649,10 @@ public:
   enum Spelling {
     GNU_aligned = 0,
     CXX11_gnu_aligned = 1,
-    Declspec_align = 2,
-    Keyword_alignas = 3,
-    Keyword_Alignas = 4,
+    C2x_gnu_aligned = 2,
+    Declspec_align = 3,
+    Keyword_alignas = 4,
+    Keyword_Alignas = 5,
   SpellingNotCalculated = 15
 
   };
@@ -671,12 +676,14 @@ public:
   const char *getSpelling() const;
   Spelling getSemanticSpelling() const;
   bool isGNU() const { return getAttributeSpellingListIndex() == 0 ||
-    getAttributeSpellingListIndex() == 1; }
-  bool isC11() const { return getAttributeSpellingListIndex() == 4; }
-  bool isAlignas() const { return getAttributeSpellingListIndex() == 3 ||
-    getAttributeSpellingListIndex() == 4; }
-  bool isDeclspec() const { return getAttributeSpellingListIndex() == 2; }
+    getAttributeSpellingListIndex() == 1 ||
+    getAttributeSpellingListIndex() == 2; }
+  bool isC11() const { return getAttributeSpellingListIndex() == 5; }
+  bool isAlignas() const { return getAttributeSpellingListIndex() == 4 ||
+    getAttributeSpellingListIndex() == 5; }
+  bool isDeclspec() const { return getAttributeSpellingListIndex() == 3; }
   bool isAlignmentDependent() const;
+  bool isAlignmentErrorDependent() const;
   unsigned getAlignment(ASTContext &Ctx) const;
   bool isAlignmentExpr() const {
     return isalignmentExpr;
@@ -702,6 +709,7 @@ public:
   enum Spelling {
     GNU_alloc_align = 0,
     CXX11_gnu_alloc_align = 1,
+    C2x_gnu_alloc_align = 2,
   SpellingNotCalculated = 15
 
   };
@@ -739,6 +747,7 @@ public:
   enum Spelling {
     GNU_alloc_size = 0,
     CXX11_gnu_alloc_size = 1,
+    C2x_gnu_alloc_size = 2,
   SpellingNotCalculated = 15
 
   };
@@ -808,7 +817,8 @@ public:
   enum Spelling {
     GNU_always_inline = 0,
     CXX11_gnu_always_inline = 1,
-    Keyword_forceinline = 2,
+    C2x_gnu_always_inline = 2,
+    Keyword_forceinline = 3,
   SpellingNotCalculated = 15
 
   };
@@ -905,6 +915,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -933,6 +944,7 @@ public:
   enum Spelling {
     GNU_no_caller_saved_registers = 0,
     CXX11_gnu_no_caller_saved_registers = 1,
+    C2x_gnu_no_caller_saved_registers = 2,
   SpellingNotCalculated = 15
 
   };
@@ -961,6 +973,7 @@ public:
   enum Spelling {
     GNU_nocf_check = 0,
     CXX11_gnu_nocf_check = 1,
+    C2x_gnu_nocf_check = 2,
   SpellingNotCalculated = 15
 
   };
@@ -1153,6 +1166,7 @@ public:
   enum Spelling {
     GNU_artificial = 0,
     CXX11_gnu_artificial = 1,
+    C2x_gnu_artificial = 2,
   SpellingNotCalculated = 15
 
   };
@@ -1361,6 +1375,7 @@ public:
   enum Spelling {
     GNU_assume_aligned = 0,
     CXX11_gnu_assume_aligned = 1,
+    C2x_gnu_assume_aligned = 2,
   SpellingNotCalculated = 15
 
   };
@@ -1656,7 +1671,8 @@ public:
   enum Spelling {
     GNU_cdecl = 0,
     CXX11_gnu_cdecl = 1,
-    Keyword_cdecl = 2,
+    C2x_gnu_cdecl = 2,
+    Keyword_cdecl = 3,
   SpellingNotCalculated = 15
 
   };
@@ -2460,6 +2476,7 @@ public:
   enum Spelling {
     GNU_cleanup = 0,
     CXX11_gnu_cleanup = 1,
+    C2x_gnu_cleanup = 2,
   SpellingNotCalculated = 15
 
   };
@@ -2573,6 +2590,7 @@ public:
   enum Spelling {
     GNU_cold = 0,
     CXX11_gnu_cold = 1,
+    C2x_gnu_cold = 2,
   SpellingNotCalculated = 15
 
   };
@@ -2601,6 +2619,7 @@ public:
   enum Spelling {
     GNU_common = 0,
     CXX11_gnu_common = 1,
+    C2x_gnu_common = 2,
   SpellingNotCalculated = 15
 
   };
@@ -2629,6 +2648,7 @@ public:
   enum Spelling {
     GNU_const = 0,
     CXX11_gnu_const = 1,
+    C2x_gnu_const = 2,
   SpellingNotCalculated = 15
 
   };
@@ -2690,6 +2710,7 @@ public:
   enum Spelling {
     GNU_constructor = 0,
     CXX11_gnu_constructor = 1,
+    C2x_gnu_constructor = 2,
   SpellingNotCalculated = 15
 
   };
@@ -2857,6 +2878,7 @@ public:
     Declspec_dllexport = 0,
     GNU_dllexport = 1,
     CXX11_gnu_dllexport = 2,
+    C2x_gnu_dllexport = 3,
   SpellingNotCalculated = 15
 
   };
@@ -2907,6 +2929,7 @@ public:
     Declspec_dllimport = 0,
     GNU_dllimport = 1,
     CXX11_gnu_dllimport = 2,
+    C2x_gnu_dllimport = 3,
   SpellingNotCalculated = 15
 
   };
@@ -2969,9 +2992,10 @@ public:
   enum Spelling {
     GNU_deprecated = 0,
     CXX11_gnu_deprecated = 1,
-    Declspec_deprecated = 2,
-    CXX11_deprecated = 3,
-    C2x_deprecated = 4,
+    C2x_gnu_deprecated = 2,
+    Declspec_deprecated = 3,
+    CXX11_deprecated = 4,
+    C2x_deprecated = 5,
   SpellingNotCalculated = 15
 
   };
@@ -3032,6 +3056,7 @@ public:
   enum Spelling {
     GNU_destructor = 0,
     CXX11_gnu_destructor = 1,
+    C2x_gnu_destructor = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3440,6 +3465,7 @@ public:
     CXX11_clang_fallthrough = 2,
     GNU_fallthrough = 3,
     CXX11_gnu_fallthrough = 4,
+    C2x_gnu_fallthrough = 5,
   SpellingNotCalculated = 15
 
   };
@@ -3468,7 +3494,8 @@ public:
   enum Spelling {
     GNU_fastcall = 0,
     CXX11_gnu_fastcall = 1,
-    Keyword_fastcall = 2,
+    C2x_gnu_fastcall = 2,
+    Keyword_fastcall = 3,
   SpellingNotCalculated = 15
 
   };
@@ -3556,6 +3583,7 @@ public:
   enum Spelling {
     GNU_flatten = 0,
     CXX11_gnu_flatten = 1,
+    C2x_gnu_flatten = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3590,6 +3618,7 @@ public:
   enum Spelling {
     GNU_format = 0,
     CXX11_gnu_format = 1,
+    C2x_gnu_format = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3635,6 +3664,7 @@ public:
   enum Spelling {
     GNU_format_arg = 0,
     CXX11_gnu_format_arg = 1,
+    C2x_gnu_format_arg = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3668,6 +3698,7 @@ public:
   enum Spelling {
     GNU_gnu_inline = 0,
     CXX11_gnu_gnu_inline = 1,
+    C2x_gnu_gnu_inline = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3747,39 +3778,12 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::GuardedVar; }
 };
 
-class HIPPinnedShadowAttr : public InheritableAttr {
-public:
-  enum Spelling {
-    GNU_hip_pinned_shadow = 0,
-    Declspec_hip_pinned_shadow = 1,
-  SpellingNotCalculated = 15
-
-  };
-
-  // Factory methods
-  static HIPPinnedShadowAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static HIPPinnedShadowAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static HIPPinnedShadowAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
-  static HIPPinnedShadowAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
-
-  // Constructors
-  HIPPinnedShadowAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
-             );
-
-  HIPPinnedShadowAttr *clone(ASTContext &C) const;
-  void printPretty(raw_ostream &OS,
-                   const PrintingPolicy &Policy) const;
-  const char *getSpelling() const;
-
-
-  static bool classof(const Attr *A) { return A->getKind() == attr::HIPPinnedShadow; }
-};
-
 class HotAttr : public InheritableAttr {
 public:
   enum Spelling {
     GNU_hot = 0,
     CXX11_gnu_hot = 1,
+    C2x_gnu_hot = 2,
   SpellingNotCalculated = 15
 
   };
@@ -3909,6 +3913,7 @@ public:
   enum Spelling {
     GNU_ifunc = 0,
     CXX11_gnu_ifunc = 1,
+    C2x_gnu_ifunc = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4399,6 +4404,7 @@ public:
   enum Spelling {
     GNU_ms_abi = 0,
     CXX11_gnu_ms_abi = 1,
+    C2x_gnu_ms_abi = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4522,6 +4528,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4555,6 +4562,7 @@ public:
   enum Spelling {
     GNU_ms_struct = 0,
     CXX11_gnu_ms_struct = 1,
+    C2x_gnu_ms_struct = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4641,6 +4649,7 @@ public:
   enum Spelling {
     GNU_may_alias = 0,
     CXX11_gnu_may_alias = 1,
+    C2x_gnu_may_alias = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4669,6 +4678,7 @@ public:
   enum Spelling {
     GNU_micromips = 0,
     CXX11_gnu_micromips = 1,
+    C2x_gnu_micromips = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4762,6 +4772,7 @@ public:
   enum Spelling {
     GNU_mips16 = 0,
     CXX11_gnu_mips16 = 1,
+    C2x_gnu_mips16 = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4805,6 +4816,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -4840,8 +4852,10 @@ public:
   enum Spelling {
     GNU_long_call = 0,
     CXX11_gnu_long_call = 1,
-    GNU_far = 2,
-    CXX11_gnu_far = 3,
+    C2x_gnu_long_call = 2,
+    GNU_far = 3,
+    CXX11_gnu_far = 4,
+    C2x_gnu_far = 5,
   SpellingNotCalculated = 15
 
   };
@@ -4871,8 +4885,10 @@ public:
   enum Spelling {
     GNU_short_call = 0,
     CXX11_gnu_short_call = 1,
-    GNU_near = 2,
-    CXX11_gnu_near = 3,
+    C2x_gnu_short_call = 2,
+    GNU_near = 3,
+    CXX11_gnu_near = 4,
+    C2x_gnu_near = 5,
   SpellingNotCalculated = 15
 
   };
@@ -4904,6 +4920,7 @@ public:
   enum Spelling {
     GNU_mode = 0,
     CXX11_gnu_mode = 1,
+    C2x_gnu_mode = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5082,7 +5099,8 @@ public:
   enum Spelling {
     GNU_naked = 0,
     CXX11_gnu_naked = 1,
-    Declspec_naked = 2,
+    C2x_gnu_naked = 2,
+    Declspec_naked = 3,
   SpellingNotCalculated = 15
 
   };
@@ -5174,6 +5192,7 @@ public:
   enum Spelling {
     GNU_nocommon = 0,
     CXX11_gnu_nocommon = 1,
+    C2x_gnu_nocommon = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5202,6 +5221,7 @@ public:
   enum Spelling {
     GNU_nodebug = 0,
     CXX11_gnu_nodebug = 1,
+    C2x_gnu_nodebug = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5345,7 +5365,8 @@ public:
   enum Spelling {
     GNU_noinline = 0,
     CXX11_gnu_noinline = 1,
-    Declspec_noinline = 2,
+    C2x_gnu_noinline = 2,
+    Declspec_noinline = 3,
   SpellingNotCalculated = 15
 
   };
@@ -5374,6 +5395,7 @@ public:
   enum Spelling {
     GNU_no_instrument_function = 0,
     CXX11_gnu_no_instrument_function = 1,
+    C2x_gnu_no_instrument_function = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5397,11 +5419,41 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::NoInstrumentFunction; }
 };
 
+class NoMergeAttr : public StmtAttr {
+public:
+  enum Spelling {
+    GNU_nomerge = 0,
+    CXX11_clang_nomerge = 1,
+    C2x_clang_nomerge = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static NoMergeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoMergeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoMergeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static NoMergeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  NoMergeAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  NoMergeAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::NoMerge; }
+};
+
 class NoMicroMipsAttr : public InheritableAttr {
 public:
   enum Spelling {
     GNU_nomicromips = 0,
     CXX11_gnu_nomicromips = 1,
+    C2x_gnu_nomicromips = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5430,6 +5482,7 @@ public:
   enum Spelling {
     GNU_nomips16 = 0,
     CXX11_gnu_nomips16 = 1,
+    C2x_gnu_nomips16 = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5458,7 +5511,8 @@ public:
   enum Spelling {
     GNU_noreturn = 0,
     CXX11_gnu_noreturn = 1,
-    Declspec_noreturn = 2,
+    C2x_gnu_noreturn = 2,
+    Declspec_noreturn = 3,
   SpellingNotCalculated = 15
 
   };
@@ -5568,6 +5622,7 @@ public:
   enum Spelling {
     GNU_no_split_stack = 0,
     CXX11_gnu_no_split_stack = 1,
+    C2x_gnu_no_split_stack = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5654,7 +5709,8 @@ public:
   enum Spelling {
     GNU_nothrow = 0,
     CXX11_gnu_nothrow = 1,
-    Declspec_nothrow = 2,
+    C2x_gnu_nothrow = 2,
+    Declspec_nothrow = 3,
   SpellingNotCalculated = 15
 
   };
@@ -5707,6 +5763,7 @@ public:
   enum Spelling {
     GNU_nonnull = 0,
     CXX11_gnu_nonnull = 1,
+    C2x_gnu_nonnull = 2,
   SpellingNotCalculated = 15
 
   };
@@ -5780,6 +5837,7 @@ public:
 class OMPAllocateDeclAttr : public InheritableAttr {
 public:
   enum AllocatorTypeTy {
+    OMPNullMemAlloc,
     OMPDefaultMemAlloc,
     OMPLargeCapMemAlloc,
     OMPConstMemAlloc,
@@ -5828,29 +5886,33 @@ public:
 };
 
 class OMPCaptureKindAttr : public Attr {
-unsigned captureKind;
+unsigned captureKindVal;
 
 public:
   // Factory methods
-  static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
-  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
   // Constructors
   OMPCaptureKindAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
-              , unsigned CaptureKind
+              , unsigned CaptureKindVal
              );
 
   OMPCaptureKindAttr *clone(ASTContext &C) const;
   void printPretty(raw_ostream &OS,
                    const PrintingPolicy &Policy) const;
   const char *getSpelling() const;
-  unsigned getCaptureKind() const {
-    return captureKind;
+  unsigned getCaptureKindVal() const {
+    return captureKindVal;
   }
 
 
+    llvm::omp::Clause getCaptureKind() const {
+      return static_cast<llvm::omp::Clause>(getCaptureKindVal());
+    }
+  
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OMPCaptureKind; }
 };
@@ -7627,6 +7689,7 @@ public:
   enum Spelling {
     GNU_packed = 0,
     CXX11_gnu_packed = 1,
+    C2x_gnu_packed = 2,
   SpellingNotCalculated = 15
 
   };
@@ -7776,6 +7839,7 @@ public:
   enum Spelling {
     GNU_patchable_function_entry = 0,
     CXX11_gnu_patchable_function_entry = 1,
+    C2x_gnu_patchable_function_entry = 2,
   SpellingNotCalculated = 15
 
   };
@@ -7827,6 +7891,7 @@ public:
   enum Spelling {
     GNU_pcs = 0,
     CXX11_gnu_pcs = 1,
+    C2x_gnu_pcs = 2,
   SpellingNotCalculated = 15
 
   };
@@ -8240,6 +8305,7 @@ public:
   enum Spelling {
     GNU_pure = 0,
     CXX11_gnu_pure = 1,
+    C2x_gnu_pure = 2,
   SpellingNotCalculated = 15
 
   };
@@ -8277,6 +8343,7 @@ public:
   enum Spelling {
     GNU_interrupt = 0,
     CXX11_gnu_interrupt = 1,
+    C2x_gnu_interrupt = 2,
   SpellingNotCalculated = 15
 
   };
@@ -8314,7 +8381,8 @@ public:
   enum Spelling {
     GNU_regcall = 0,
     CXX11_gnu_regcall = 1,
-    Keyword_regcall = 2,
+    C2x_gnu_regcall = 2,
+    Keyword_regcall = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8587,6 +8655,7 @@ public:
     Declspec_restrict = 0,
     GNU_malloc = 1,
     CXX11_gnu_malloc = 2,
+    C2x_gnu_malloc = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8660,6 +8729,7 @@ public:
   enum Spelling {
     GNU_returns_nonnull = 0,
     CXX11_gnu_returns_nonnull = 1,
+    C2x_gnu_returns_nonnull = 2,
   SpellingNotCalculated = 15
 
   };
@@ -8688,6 +8758,7 @@ public:
   enum Spelling {
     GNU_returns_twice = 0,
     CXX11_gnu_returns_twice = 1,
+    C2x_gnu_returns_twice = 2,
   SpellingNotCalculated = 15
 
   };
@@ -8797,7 +8868,8 @@ public:
   enum Spelling {
     GNU_section = 0,
     CXX11_gnu_section = 1,
-    Declspec_allocate = 2,
+    C2x_gnu_section = 2,
+    Declspec_allocate = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8842,6 +8914,7 @@ public:
     Declspec_selectany = 0,
     GNU_selectany = 1,
     CXX11_gnu_selectany = 2,
+    C2x_gnu_selectany = 3,
   SpellingNotCalculated = 15
 
   };
@@ -8874,6 +8947,7 @@ public:
   enum Spelling {
     GNU_sentinel = 0,
     CXX11_gnu_sentinel = 1,
+    C2x_gnu_sentinel = 2,
   SpellingNotCalculated = 15
 
   };
@@ -9033,7 +9107,8 @@ public:
   enum Spelling {
     GNU_stdcall = 0,
     CXX11_gnu_stdcall = 1,
-    Keyword_stdcall = 2,
+    C2x_gnu_stdcall = 2,
+    Keyword_stdcall = 3,
   SpellingNotCalculated = 15
 
   };
@@ -9212,6 +9287,7 @@ public:
   enum Spelling {
     GNU_sysv_abi = 0,
     CXX11_gnu_sysv_abi = 1,
+    C2x_gnu_sysv_abi = 2,
   SpellingNotCalculated = 15
 
   };
@@ -9243,6 +9319,7 @@ public:
   enum Spelling {
     GNU_tls_model = 0,
     CXX11_gnu_tls_model = 1,
+    C2x_gnu_tls_model = 2,
   SpellingNotCalculated = 15
 
   };
@@ -9288,6 +9365,7 @@ public:
   enum Spelling {
     GNU_target = 0,
     CXX11_gnu_target = 1,
+    C2x_gnu_target = 2,
   SpellingNotCalculated = 15
 
   };
@@ -9458,7 +9536,8 @@ public:
   enum Spelling {
     GNU_thiscall = 0,
     CXX11_gnu_thiscall = 1,
-    Keyword_thiscall = 2,
+    C2x_gnu_thiscall = 2,
+    Keyword_thiscall = 3,
   SpellingNotCalculated = 15
 
   };
@@ -9508,6 +9587,7 @@ public:
   enum Spelling {
     GNU_transparent_union = 0,
     CXX11_gnu_transparent_union = 1,
+    C2x_gnu_transparent_union = 2,
   SpellingNotCalculated = 15
 
   };
@@ -9907,7 +9987,8 @@ public:
     CXX11_maybe_unused = 0,
     GNU_unused = 1,
     CXX11_gnu_unused = 2,
-    C2x_maybe_unused = 3,
+    C2x_gnu_unused = 3,
+    C2x_maybe_unused = 4,
   SpellingNotCalculated = 15
 
   };
@@ -9983,6 +10064,7 @@ public:
   enum Spelling {
     GNU_used = 0,
     CXX11_gnu_used = 1,
+    C2x_gnu_used = 2,
   SpellingNotCalculated = 15
 
   };
@@ -10010,6 +10092,8 @@ class UuidAttr : public InheritableAttr {
 unsigned guidLength;
 char *guid;
 
+MSGuidDecl * guidDecl;
+
 public:
   enum Spelling {
     Declspec_uuid = 0,
@@ -10019,12 +10103,20 @@ public:
   };
 
   // Factory methods
+  static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
   static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
   // Constructors
+  UuidAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Guid
+              , MSGuidDecl * GuidDecl
+             );
   UuidAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , llvm::StringRef Guid
              );
@@ -10044,6 +10136,10 @@ public:
     this->guid = new (C, 1) char [guidLength];
     if (!S.empty())
       std::memcpy(this->guid, S.data(), guidLength);
+  }
+
+  MSGuidDecl * getGuidDecl() const {
+    return guidDecl;
   }
 
 
@@ -10153,6 +10249,7 @@ public:
   enum Spelling {
     GNU_visibility = 0,
     CXX11_gnu_visibility = 1,
+    C2x_gnu_visibility = 2,
   SpellingNotCalculated = 15
 
   };
@@ -10188,6 +10285,7 @@ public:
   enum Spelling {
     GNU_warn_unused = 0,
     CXX11_gnu_warn_unused = 1,
+    C2x_gnu_warn_unused = 2,
   SpellingNotCalculated = 15
 
   };
@@ -10222,6 +10320,7 @@ public:
     CXX11_clang_warn_unused_result = 2,
     GNU_warn_unused_result = 3,
     CXX11_gnu_warn_unused_result = 4,
+    C2x_gnu_warn_unused_result = 5,
   SpellingNotCalculated = 15
 
   };
@@ -10273,6 +10372,7 @@ public:
   enum Spelling {
     GNU_weak = 0,
     CXX11_gnu_weak = 1,
+    C2x_gnu_weak = 2,
   SpellingNotCalculated = 15
 
   };
@@ -10333,6 +10433,7 @@ public:
   enum Spelling {
     GNU_weakref = 0,
     CXX11_gnu_weakref = 1,
+    C2x_gnu_weakref = 2,
   SpellingNotCalculated = 15
 
   };
@@ -10557,6 +10658,7 @@ public:
   enum Spelling {
     GNU_force_align_arg_pointer = 0,
     CXX11_gnu_force_align_arg_pointer = 1,
+    C2x_gnu_force_align_arg_pointer = 2,
   SpellingNotCalculated = 15
 
   };

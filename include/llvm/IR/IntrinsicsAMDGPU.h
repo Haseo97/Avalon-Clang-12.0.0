@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum AMDGCNIntrinsics : unsigned {
 // Enum values for intrinsics
-    amdgcn_alignbit = 1076,                           // llvm.amdgcn.alignbit
+    amdgcn_alignbit = 1131,                           // llvm.amdgcn.alignbit
     amdgcn_alignbyte,                          // llvm.amdgcn.alignbyte
     amdgcn_atomic_dec,                         // llvm.amdgcn.atomic.dec
     amdgcn_atomic_inc,                         // llvm.amdgcn.atomic.inc
@@ -21,6 +21,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_buffer_atomic_add,                  // llvm.amdgcn.buffer.atomic.add
     amdgcn_buffer_atomic_and,                  // llvm.amdgcn.buffer.atomic.and
     amdgcn_buffer_atomic_cmpswap,              // llvm.amdgcn.buffer.atomic.cmpswap
+    amdgcn_buffer_atomic_csub,                 // llvm.amdgcn.buffer.atomic.csub
     amdgcn_buffer_atomic_fadd,                 // llvm.amdgcn.buffer.atomic.fadd
     amdgcn_buffer_atomic_or,                   // llvm.amdgcn.buffer.atomic.or
     amdgcn_buffer_atomic_smax,                 // llvm.amdgcn.buffer.atomic.smax
@@ -83,6 +84,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_fract,                              // llvm.amdgcn.fract
     amdgcn_frexp_exp,                          // llvm.amdgcn.frexp.exp
     amdgcn_frexp_mant,                         // llvm.amdgcn.frexp.mant
+    amdgcn_global_atomic_csub,                 // llvm.amdgcn.global.atomic.csub
     amdgcn_global_atomic_fadd,                 // llvm.amdgcn.global.atomic.fadd
     amdgcn_groupstaticsize,                    // llvm.amdgcn.groupstaticsize
     amdgcn_icmp,                               // llvm.amdgcn.icmp
@@ -292,6 +294,14 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_image_load_mip_2darray,             // llvm.amdgcn.image.load.mip.2darray
     amdgcn_image_load_mip_3d,                  // llvm.amdgcn.image.load.mip.3d
     amdgcn_image_load_mip_cube,                // llvm.amdgcn.image.load.mip.cube
+    amdgcn_image_msaa_load_1d,                 // llvm.amdgcn.image.msaa.load.1d
+    amdgcn_image_msaa_load_1darray,            // llvm.amdgcn.image.msaa.load.1darray
+    amdgcn_image_msaa_load_2d,                 // llvm.amdgcn.image.msaa.load.2d
+    amdgcn_image_msaa_load_2darray,            // llvm.amdgcn.image.msaa.load.2darray
+    amdgcn_image_msaa_load_2darraymsaa,        // llvm.amdgcn.image.msaa.load.2darraymsaa
+    amdgcn_image_msaa_load_2dmsaa,             // llvm.amdgcn.image.msaa.load.2dmsaa
+    amdgcn_image_msaa_load_3d,                 // llvm.amdgcn.image.msaa.load.3d
+    amdgcn_image_msaa_load_cube,               // llvm.amdgcn.image.msaa.load.cube
     amdgcn_image_sample_1d,                    // llvm.amdgcn.image.sample.1d
     amdgcn_image_sample_1darray,               // llvm.amdgcn.image.sample.1darray
     amdgcn_image_sample_2d,                    // llvm.amdgcn.image.sample.2d
@@ -639,6 +649,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_s_memtime,                          // llvm.amdgcn.s.memtime
     amdgcn_s_sendmsg,                          // llvm.amdgcn.s.sendmsg
     amdgcn_s_sendmsghalt,                      // llvm.amdgcn.s.sendmsghalt
+    amdgcn_s_setreg,                           // llvm.amdgcn.s.setreg
     amdgcn_s_sleep,                            // llvm.amdgcn.s.sleep
     amdgcn_s_waitcnt,                          // llvm.amdgcn.s.waitcnt
     amdgcn_sad_hi_u8,                          // llvm.amdgcn.sad.hi.u8
@@ -652,6 +663,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_sffbh,                              // llvm.amdgcn.sffbh
     amdgcn_sin,                                // llvm.amdgcn.sin
     amdgcn_softwqm,                            // llvm.amdgcn.softwqm
+    amdgcn_sqrt,                               // llvm.amdgcn.sqrt
     amdgcn_struct_buffer_atomic_add,           // llvm.amdgcn.struct.buffer.atomic.add
     amdgcn_struct_buffer_atomic_and,           // llvm.amdgcn.struct.buffer.atomic.and
     amdgcn_struct_buffer_atomic_cmpswap,       // llvm.amdgcn.struct.buffer.atomic.cmpswap

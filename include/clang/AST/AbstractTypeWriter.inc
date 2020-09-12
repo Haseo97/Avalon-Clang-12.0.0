@@ -45,6 +45,8 @@ public:
       return writeDeducedTemplateSpecializationType(static_cast<const DeducedTemplateSpecializationType *>(node));
     case Type::DependentAddressSpace:
       return writeDependentAddressSpaceType(static_cast<const DependentAddressSpaceType *>(node));
+    case Type::DependentExtInt:
+      return writeDependentExtIntType(static_cast<const DependentExtIntType *>(node));
     case Type::DependentName:
       return writeDependentNameType(static_cast<const DependentNameType *>(node));
     case Type::DependentSizedExtVector:
@@ -55,6 +57,8 @@ public:
       return writeDependentVectorType(static_cast<const DependentVectorType *>(node));
     case Type::Elaborated:
       return writeElaboratedType(static_cast<const ElaboratedType *>(node));
+    case Type::ExtInt:
+      return writeExtIntType(static_cast<const ExtIntType *>(node));
     case Type::FunctionNoProto:
       return writeFunctionNoProtoType(static_cast<const FunctionNoProtoType *>(node));
     case Type::FunctionProto:
@@ -63,6 +67,10 @@ public:
       return writeInjectedClassNameType(static_cast<const InjectedClassNameType *>(node));
     case Type::MacroQualified:
       return writeMacroQualifiedType(static_cast<const MacroQualifiedType *>(node));
+    case Type::ConstantMatrix:
+      return writeConstantMatrixType(static_cast<const ConstantMatrixType *>(node));
+    case Type::DependentSizedMatrix:
+      return writeDependentSizedMatrixType(static_cast<const DependentSizedMatrixType *>(node));
     case Type::MemberPointer:
       return writeMemberPointerType(static_cast<const MemberPointerType *>(node));
     case Type::ObjCObjectPointer:
@@ -250,6 +258,13 @@ public:
     W.find("attributeLoc").writeSourceLocation(attributeLoc);
   }
 
+  void writeDependentExtIntType(const DependentExtIntType *node) {
+    bool isUnsigned = ( node->isUnsigned() );
+    W.find("isUnsigned").writeBool(isUnsigned);
+    const Expr* numBitsExpr = ( node->getNumBitsExpr() );
+    W.find("numBitsExpr").writeExprRef(numBitsExpr);
+  }
+
   void writeDependentNameType(const DependentNameType *node) {
     ElaboratedTypeKeyword keyword = ( node->getKeyword() );
     W.find("keyword").writeElaboratedTypeKeyword(keyword);
@@ -306,6 +321,13 @@ public:
     llvm::Optional<const TagDecl*> ownedTag = ( makeOptionalFromPointer(
                     const_cast<const TagDecl *>(node->getOwnedTagDecl())) );
     W.find("ownedTag").writeOptional(ownedTag);
+  }
+
+  void writeExtIntType(const ExtIntType *node) {
+    bool isUnsigned = ( node->isUnsigned() );
+    W.find("isUnsigned").writeBool(isUnsigned);
+    uint32_t numBits = ( node->getNumBits() );
+    W.find("numBits").writeUInt32(numBits);
   }
 
   void writeFunctionNoProtoType(const FunctionNoProtoType *node) {
@@ -378,6 +400,26 @@ public:
     W.find("underlyingType").writeQualType(underlyingType);
     const IdentifierInfo* macroIdentifier = ( node->getMacroIdentifier() );
     W.find("macroIdentifier").writeIdentifier(macroIdentifier);
+  }
+
+  void writeConstantMatrixType(const ConstantMatrixType *node) {
+    uint32_t numRows = ( node->getNumRows() );
+    W.find("numRows").writeUInt32(numRows);
+    uint32_t numColumns = ( node->getNumColumns() );
+    W.find("numColumns").writeUInt32(numColumns);
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+  }
+
+  void writeDependentSizedMatrixType(const DependentSizedMatrixType *node) {
+    const Expr* rows = ( node->getRowExpr() );
+    W.find("rows").writeExprRef(rows);
+    const Expr* columns = ( node->getColumnExpr() );
+    W.find("columns").writeExprRef(columns);
+    SourceLocation attributeLoc = ( node->getAttributeLoc() );
+    W.find("attributeLoc").writeSourceLocation(attributeLoc);
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
   }
 
   void writeMemberPointerType(const MemberPointerType *node) {

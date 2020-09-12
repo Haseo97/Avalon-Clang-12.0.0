@@ -420,10 +420,6 @@
   bool VisitGuardedVarAttr(GuardedVarAttr *A) {
     return true; 
   }
-  bool TraverseHIPPinnedShadowAttr(HIPPinnedShadowAttr *A);
-  bool VisitHIPPinnedShadowAttr(HIPPinnedShadowAttr *A) {
-    return true; 
-  }
   bool TraverseHotAttr(HotAttr *A);
   bool VisitHotAttr(HotAttr *A) {
     return true; 
@@ -622,6 +618,10 @@
   }
   bool TraverseNoInstrumentFunctionAttr(NoInstrumentFunctionAttr *A);
   bool VisitNoInstrumentFunctionAttr(NoInstrumentFunctionAttr *A) {
+    return true; 
+  }
+  bool TraverseNoMergeAttr(NoMergeAttr *A);
+  bool VisitNoMergeAttr(NoMergeAttr *A) {
     return true; 
   }
   bool TraverseNoMicroMipsAttr(NoMicroMipsAttr *A);
@@ -2244,15 +2244,6 @@ bool VISITORCLASS<Derived>::TraverseGuardedVarAttr(GuardedVarAttr *A) {
 }
 
 template <typename Derived>
-bool VISITORCLASS<Derived>::TraverseHIPPinnedShadowAttr(HIPPinnedShadowAttr *A) {
-  if (!getDerived().VisitAttr(A))
-    return false;
-  if (!getDerived().VisitHIPPinnedShadowAttr(A))
-    return false;
-  return true;
-}
-
-template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseHotAttr(HotAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -2713,6 +2704,15 @@ bool VISITORCLASS<Derived>::TraverseNoInstrumentFunctionAttr(NoInstrumentFunctio
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitNoInstrumentFunctionAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseNoMergeAttr(NoMergeAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitNoMergeAttr(A))
     return false;
   return true;
 }
@@ -4377,8 +4377,6 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseGuardedByAttr(cast<GuardedByAttr>(A));
     case attr::GuardedVar:
       return getDerived().TraverseGuardedVarAttr(cast<GuardedVarAttr>(A));
-    case attr::HIPPinnedShadow:
-      return getDerived().TraverseHIPPinnedShadowAttr(cast<HIPPinnedShadowAttr>(A));
     case attr::Hot:
       return getDerived().TraverseHotAttr(cast<HotAttr>(A));
     case attr::IBAction:
@@ -4479,6 +4477,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseNoInlineAttr(cast<NoInlineAttr>(A));
     case attr::NoInstrumentFunction:
       return getDerived().TraverseNoInstrumentFunctionAttr(cast<NoInstrumentFunctionAttr>(A));
+    case attr::NoMerge:
+      return getDerived().TraverseNoMergeAttr(cast<NoMergeAttr>(A));
     case attr::NoMicroMips:
       return getDerived().TraverseNoMicroMipsAttr(cast<NoMicroMipsAttr>(A));
     case attr::NoMips16:

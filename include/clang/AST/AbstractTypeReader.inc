@@ -45,6 +45,8 @@ public:
       return readDeducedTemplateSpecializationType();
     case Type::DependentAddressSpace:
       return readDependentAddressSpaceType();
+    case Type::DependentExtInt:
+      return readDependentExtIntType();
     case Type::DependentName:
       return readDependentNameType();
     case Type::DependentSizedExtVector:
@@ -55,6 +57,8 @@ public:
       return readDependentVectorType();
     case Type::Elaborated:
       return readElaboratedType();
+    case Type::ExtInt:
+      return readExtIntType();
     case Type::FunctionNoProto:
       return readFunctionNoProtoType();
     case Type::FunctionProto:
@@ -63,6 +67,10 @@ public:
       return readInjectedClassNameType();
     case Type::MacroQualified:
       return readMacroQualifiedType();
+    case Type::ConstantMatrix:
+      return readConstantMatrixType();
+    case Type::DependentSizedMatrix:
+      return readDependentSizedMatrixType();
     case Type::MemberPointer:
       return readMemberPointerType();
     case Type::ObjCObjectPointer:
@@ -289,6 +297,15 @@ public:
   
   }
 
+  QualType readDependentExtIntType() {
+    auto &ctx = R.getASTContext();
+    bool isUnsigned = R.find("isUnsigned").readBool();
+    Expr* numBitsExpr = R.find("numBitsExpr").readExprRef();
+    
+    return ctx.getDependentExtIntType(isUnsigned, numBitsExpr);
+  
+  }
+
   QualType readDependentNameType() {
     auto &ctx = R.getASTContext();
     ElaboratedTypeKeyword keyword = R.find("keyword").readElaboratedTypeKeyword();
@@ -347,6 +364,15 @@ public:
     
     return ctx.getElaboratedType(keyword, qualifier, namedType,
                                  makePointerFromOptional(ownedTag));
+  
+  }
+
+  QualType readExtIntType() {
+    auto &ctx = R.getASTContext();
+    bool isUnsigned = R.find("isUnsigned").readBool();
+    uint32_t numBits = R.find("numBits").readUInt32();
+    
+    return ctx.getExtIntType(isUnsigned, numBits);
   
   }
 
@@ -440,6 +466,27 @@ public:
     IdentifierInfo* macroIdentifier = R.find("macroIdentifier").readIdentifier();
     
     return ctx.getMacroQualifiedType(underlyingType, macroIdentifier);
+  
+  }
+
+  QualType readConstantMatrixType() {
+    auto &ctx = R.getASTContext();
+    uint32_t numRows = R.find("numRows").readUInt32();
+    uint32_t numColumns = R.find("numColumns").readUInt32();
+    QualType elementType = R.find("elementType").readQualType();
+    
+    return ctx.getConstantMatrixType(elementType, numRows, numColumns);
+  
+  }
+
+  QualType readDependentSizedMatrixType() {
+    auto &ctx = R.getASTContext();
+    Expr* rows = R.find("rows").readExprRef();
+    Expr* columns = R.find("columns").readExprRef();
+    SourceLocation attributeLoc = R.find("attributeLoc").readSourceLocation();
+    QualType elementType = R.find("elementType").readQualType();
+    
+    return ctx.getDependentSizedMatrixType(elementType, rows, columns, attributeLoc);
   
   }
 

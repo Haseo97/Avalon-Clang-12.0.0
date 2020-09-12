@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum ARMIntrinsics : unsigned {
 // Enum values for intrinsics
-    arm_cde_cx1 = 1755,                               // llvm.arm.cde.cx1
+    arm_cde_cx1 = 1822,                               // llvm.arm.cde.cx1
     arm_cde_cx1a,                              // llvm.arm.cde.cx1a
     arm_cde_cx1d,                              // llvm.arm.cde.cx1d
     arm_cde_cx1da,                             // llvm.arm.cde.cx1da
@@ -278,6 +278,10 @@ enum ARMIntrinsics : unsigned {
     arm_neon_aese,                             // llvm.arm.neon.aese
     arm_neon_aesimc,                           // llvm.arm.neon.aesimc
     arm_neon_aesmc,                            // llvm.arm.neon.aesmc
+    arm_neon_bfdot,                            // llvm.arm.neon.bfdot
+    arm_neon_bfmlalb,                          // llvm.arm.neon.bfmlalb
+    arm_neon_bfmlalt,                          // llvm.arm.neon.bfmlalt
+    arm_neon_bfmmla,                           // llvm.arm.neon.bfmmla
     arm_neon_sdot,                             // llvm.arm.neon.sdot
     arm_neon_sha1c,                            // llvm.arm.neon.sha1c
     arm_neon_sha1h,                            // llvm.arm.neon.sha1h
@@ -289,7 +293,11 @@ enum ARMIntrinsics : unsigned {
     arm_neon_sha256h2,                         // llvm.arm.neon.sha256h2
     arm_neon_sha256su0,                        // llvm.arm.neon.sha256su0
     arm_neon_sha256su1,                        // llvm.arm.neon.sha256su1
+    arm_neon_smmla,                            // llvm.arm.neon.smmla
     arm_neon_udot,                             // llvm.arm.neon.udot
+    arm_neon_ummla,                            // llvm.arm.neon.ummla
+    arm_neon_usdot,                            // llvm.arm.neon.usdot
+    arm_neon_usmmla,                           // llvm.arm.neon.usmmla
     arm_neon_vabds,                            // llvm.arm.neon.vabds
     arm_neon_vabdu,                            // llvm.arm.neon.vabdu
     arm_neon_vabs,                             // llvm.arm.neon.vabs
@@ -301,6 +309,8 @@ enum ARMIntrinsics : unsigned {
     arm_neon_vcls,                             // llvm.arm.neon.vcls
     arm_neon_vcvtas,                           // llvm.arm.neon.vcvtas
     arm_neon_vcvtau,                           // llvm.arm.neon.vcvtau
+    arm_neon_vcvtbfp2bf,                       // llvm.arm.neon.vcvtbfp2bf
+    arm_neon_vcvtfp2bf,                        // llvm.arm.neon.vcvtfp2bf
     arm_neon_vcvtfp2fxs,                       // llvm.arm.neon.vcvtfp2fxs
     arm_neon_vcvtfp2fxu,                       // llvm.arm.neon.vcvtfp2fxu
     arm_neon_vcvtfp2hf,                        // llvm.arm.neon.vcvtfp2hf

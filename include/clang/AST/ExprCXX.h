@@ -26,6 +26,7 @@
 #include "clang/AST/NestedNameSpecifier.h"
 #include "clang/AST/OperationKinds.h"
 #include "clang/AST/Stmt.h"
+#include "clang/AST/StmtCXX.h"
 #include "clang/AST/TemplateBase.h"
 #include "clang/AST/Type.h"
 #include "clang/AST/UnresolvedSet.h"
@@ -83,6 +84,7 @@ class CXXOperatorCallExpr final : public CallExpr {
   friend class ASTStmtWriter;
 
   SourceRange Range;
+  FPOptionsOverride Overrides;
 
   // CXXOperatorCallExpr has some trailing objects belonging
   // to CallExpr. See CallExpr for the details.
@@ -91,7 +93,7 @@ class CXXOperatorCallExpr final : public CallExpr {
 
   CXXOperatorCallExpr(OverloadedOperatorKind OpKind, Expr *Fn,
                       ArrayRef<Expr *> Args, QualType Ty, ExprValueKind VK,
-                      SourceLocation OperatorLoc, FPOptions FPFeatures,
+                      SourceLocation OperatorLoc, FPOptionsOverride FPFeatures,
                       ADLCallKind UsesADL);
 
   CXXOperatorCallExpr(unsigned NumArgs, EmptyShell Empty);
@@ -100,7 +102,7 @@ public:
   static CXXOperatorCallExpr *
   Create(const ASTContext &Ctx, OverloadedOperatorKind OpKind, Expr *Fn,
          ArrayRef<Expr *> Args, QualType Ty, ExprValueKind VK,
-         SourceLocation OperatorLoc, FPOptions FPFeatures,
+         SourceLocation OperatorLoc, FPOptionsOverride FPFeatures,
          ADLCallKind UsesADL = NotADL);
 
   static CXXOperatorCallExpr *CreateEmpty(const ASTContext &Ctx,
@@ -163,20 +165,10 @@ public:
     return T->getStmtClass() == CXXOperatorCallExprClass;
   }
 
-  // Set the FP contractability status of this operator. Only meaningful for
+  // Set the FPFeatures status of this operator. Only meaningful for
   // operations on floating point types.
-  void setFPFeatures(FPOptions F) {
-    CXXOperatorCallExprBits.FPFeatures = F.getInt();
-  }
-  FPOptions getFPFeatures() const {
-    return FPOptions(CXXOperatorCallExprBits.FPFeatures);
-  }
-
-  // Get the FP contractability status of this operator. Only meaningful for
-  // operations on floating point types.
-  bool isFPContractableWithinStatement() const {
-    return getFPFeatures().allowFPContractWithinStatement();
-  }
+  void setFPFeatures(FPOptionsOverride F) { Overrides = F; }
+  FPOptionsOverride getFPFeatures() const { return Overrides; }
 };
 
 /// Represents a call to a member function that
@@ -366,7 +358,8 @@ public:
 /// This abstract class is inherited by all of the classes
 /// representing "named" casts: CXXStaticCastExpr for \c static_cast,
 /// CXXDynamicCastExpr for \c dynamic_cast, CXXReinterpretCastExpr for
-/// reinterpret_cast, and CXXConstCastExpr for \c const_cast.
+/// reinterpret_cast, CXXConstCastExpr for \c const_cast and
+/// CXXAddrspaceCastExpr for addrspace_cast (in OpenCL).
 class CXXNamedCastExpr : public ExplicitCastExpr {
 private:
   // the location of the casting op
@@ -412,6 +405,7 @@ public:
     case CXXDynamicCastExprClass:
     case CXXReinterpretCastExprClass:
     case CXXConstCastExprClass:
+    case CXXAddrspaceCastExprClass:
       return true;
     default:
       return false;
@@ -566,6 +560,41 @@ public:
 
   static bool classof(const Stmt *T) {
     return T->getStmtClass() == CXXConstCastExprClass;
+  }
+};
+
+/// A C++ addrspace_cast expression (currently only enabled for OpenCL).
+///
+/// This expression node represents a cast between pointers to objects in
+/// different address spaces e.g.,
+/// \c addrspace_cast<global int*>(PtrToGenericInt).
+///
+/// A addrspace_cast can cast address space type qualifiers but does not change
+/// the underlying value.
+class CXXAddrspaceCastExpr final
+    : public CXXNamedCastExpr,
+      private llvm::TrailingObjects<CXXAddrspaceCastExpr, CXXBaseSpecifier *> {
+  CXXAddrspaceCastExpr(QualType ty, ExprValueKind VK, CastKind Kind, Expr *op,
+                       TypeSourceInfo *writtenTy, SourceLocation l,
+                       SourceLocation RParenLoc, SourceRange AngleBrackets)
+      : CXXNamedCastExpr(CXXAddrspaceCastExprClass, ty, VK, Kind, op, 0,
+                         writtenTy, l, RParenLoc, AngleBrackets) {}
+
+  explicit CXXAddrspaceCastExpr(EmptyShell Empty)
+      : CXXNamedCastExpr(CXXAddrspaceCastExprClass, Empty, 0) {}
+
+public:
+  friend class CastExpr;
+  friend TrailingObjects;
+
+  static CXXAddrspaceCastExpr *
+  Create(const ASTContext &Context, QualType T, ExprValueKind VK, CastKind Kind,
+         Expr *Op, TypeSourceInfo *WrittenTy, SourceLocation L,
+         SourceLocation RParenLoc, SourceRange AngleBrackets);
+  static CXXAddrspaceCastExpr *CreateEmpty(const ASTContext &Context);
+
+  static bool classof(const Stmt *T) {
+    return T->getStmtClass() == CXXAddrspaceCastExprClass;
   }
 };
 
@@ -778,6 +807,8 @@ public:
 ///
 /// This represents code like \c typeid(int) or \c typeid(*objPtr)
 class CXXTypeidExpr : public Expr {
+  friend class ASTStmtReader;
+
 private:
   llvm::PointerUnion<Stmt *, TypeSourceInfo *> Operand;
   SourceRange Range;
@@ -818,20 +849,9 @@ public:
     assert(isTypeOperand() && "Cannot call getTypeOperand for typeid(expr)");
     return Operand.get<TypeSourceInfo *>();
   }
-
-  void setTypeOperandSourceInfo(TypeSourceInfo *TSI) {
-    assert(isTypeOperand() && "Cannot call getTypeOperand for typeid(expr)");
-    Operand = TSI;
-  }
-
   Expr *getExprOperand() const {
     assert(!isTypeOperand() && "Cannot call getExprOperand for typeid(type)");
     return static_cast<Expr*>(Operand.get<Stmt *>());
-  }
-
-  void setExprOperand(Expr *E) {
-    assert(!isTypeOperand() && "Cannot call getExprOperand for typeid(type)");
-    Operand = E;
   }
 
   SourceLocation getBeginLoc() const LLVM_READONLY { return Range.getBegin(); }
@@ -1000,22 +1020,24 @@ public:
 ///
 /// This represents code like @c __uuidof(COMTYPE) or @c __uuidof(*comPtr)
 class CXXUuidofExpr : public Expr {
+  friend class ASTStmtReader;
+
 private:
   llvm::PointerUnion<Stmt *, TypeSourceInfo *> Operand;
-  StringRef UuidStr;
+  MSGuidDecl *Guid;
   SourceRange Range;
 
 public:
-  CXXUuidofExpr(QualType Ty, TypeSourceInfo *Operand, StringRef UuidStr,
+  CXXUuidofExpr(QualType Ty, TypeSourceInfo *Operand, MSGuidDecl *Guid,
                 SourceRange R)
       : Expr(CXXUuidofExprClass, Ty, VK_LValue, OK_Ordinary), Operand(Operand),
-        UuidStr(UuidStr), Range(R) {
+        Guid(Guid), Range(R) {
     setDependence(computeDependence(this));
   }
 
-  CXXUuidofExpr(QualType Ty, Expr *Operand, StringRef UuidStr, SourceRange R)
+  CXXUuidofExpr(QualType Ty, Expr *Operand, MSGuidDecl *Guid, SourceRange R)
       : Expr(CXXUuidofExprClass, Ty, VK_LValue, OK_Ordinary), Operand(Operand),
-        UuidStr(UuidStr), Range(R) {
+        Guid(Guid), Range(R) {
     setDependence(computeDependence(this));
   }
 
@@ -1038,24 +1060,12 @@ public:
     assert(isTypeOperand() && "Cannot call getTypeOperand for __uuidof(expr)");
     return Operand.get<TypeSourceInfo *>();
   }
-
-  void setTypeOperandSourceInfo(TypeSourceInfo *TSI) {
-    assert(isTypeOperand() && "Cannot call getTypeOperand for __uuidof(expr)");
-    Operand = TSI;
-  }
-
   Expr *getExprOperand() const {
     assert(!isTypeOperand() && "Cannot call getExprOperand for __uuidof(type)");
     return static_cast<Expr*>(Operand.get<Stmt *>());
   }
 
-  void setExprOperand(Expr *E) {
-    assert(!isTypeOperand() && "Cannot call getExprOperand for __uuidof(type)");
-    Operand = E;
-  }
-
-  void setUuidStr(StringRef US) { UuidStr = US; }
-  StringRef getUuidStr() const { return UuidStr; }
+  MSGuidDecl *getGuidDecl() const { return Guid; }
 
   SourceLocation getBeginLoc() const LLVM_READONLY { return Range.getBegin(); }
   SourceLocation getEndLoc() const LLVM_READONLY { return Range.getEnd(); }
@@ -1811,25 +1821,13 @@ Stmt **CXXConstructExpr::getTrailingArgs() {
 /// and which can never occur implicitly.
 class LambdaExpr final : public Expr,
                          private llvm::TrailingObjects<LambdaExpr, Stmt *> {
+  // LambdaExpr has some data stored in LambdaExprBits.
+
   /// The source range that covers the lambda introducer ([...]).
   SourceRange IntroducerRange;
 
   /// The source location of this lambda's capture-default ('=' or '&').
   SourceLocation CaptureDefaultLoc;
-
-  /// The number of captures.
-  unsigned NumCaptures : 16;
-
-  /// The default capture kind, which is a value of type
-  /// LambdaCaptureDefault.
-  unsigned CaptureDefault : 2;
-
-  /// Whether this lambda had an explicit parameter list vs. an
-  /// implicit (and empty) parameter list.
-  unsigned ExplicitParams : 1;
-
-  /// Whether this lambda had the result type explicitly specified.
-  unsigned ExplicitResultType : 1;
 
   /// The location of the closing brace ('}') that completes
   /// the lambda.
@@ -1844,22 +1842,17 @@ class LambdaExpr final : public Expr,
   /// Construct a lambda expression.
   LambdaExpr(QualType T, SourceRange IntroducerRange,
              LambdaCaptureDefault CaptureDefault,
-             SourceLocation CaptureDefaultLoc, ArrayRef<LambdaCapture> Captures,
-             bool ExplicitParams, bool ExplicitResultType,
-             ArrayRef<Expr *> CaptureInits, SourceLocation ClosingBrace,
-             bool ContainsUnexpandedParameterPack);
+             SourceLocation CaptureDefaultLoc, bool ExplicitParams,
+             bool ExplicitResultType, ArrayRef<Expr *> CaptureInits,
+             SourceLocation ClosingBrace, bool ContainsUnexpandedParameterPack);
 
   /// Construct an empty lambda expression.
-  LambdaExpr(EmptyShell Empty, unsigned NumCaptures)
-      : Expr(LambdaExprClass, Empty), NumCaptures(NumCaptures),
-        CaptureDefault(LCD_None), ExplicitParams(false),
-        ExplicitResultType(false) {
-    getStoredStmts()[NumCaptures] = nullptr;
-  }
+  LambdaExpr(EmptyShell Empty, unsigned NumCaptures);
 
   Stmt **getStoredStmts() { return getTrailingObjects<Stmt *>(); }
-
   Stmt *const *getStoredStmts() const { return getTrailingObjects<Stmt *>(); }
+
+  void initBodyIfNeeded() const;
 
 public:
   friend class ASTStmtReader;
@@ -1870,9 +1863,9 @@ public:
   static LambdaExpr *
   Create(const ASTContext &C, CXXRecordDecl *Class, SourceRange IntroducerRange,
          LambdaCaptureDefault CaptureDefault, SourceLocation CaptureDefaultLoc,
-         ArrayRef<LambdaCapture> Captures, bool ExplicitParams,
-         bool ExplicitResultType, ArrayRef<Expr *> CaptureInits,
-         SourceLocation ClosingBrace, bool ContainsUnexpandedParameterPack);
+         bool ExplicitParams, bool ExplicitResultType,
+         ArrayRef<Expr *> CaptureInits, SourceLocation ClosingBrace,
+         bool ContainsUnexpandedParameterPack);
 
   /// Construct a new lambda expression that will be deserialized from
   /// an external source.
@@ -1881,13 +1874,11 @@ public:
 
   /// Determine the default capture kind for this lambda.
   LambdaCaptureDefault getCaptureDefault() const {
-    return static_cast<LambdaCaptureDefault>(CaptureDefault);
+    return static_cast<LambdaCaptureDefault>(LambdaExprBits.CaptureDefault);
   }
 
   /// Retrieve the location of this lambda's capture-default, if any.
-  SourceLocation getCaptureDefaultLoc() const {
-    return CaptureDefaultLoc;
-  }
+  SourceLocation getCaptureDefaultLoc() const { return CaptureDefaultLoc; }
 
   /// Determine whether one of this lambda's captures is an init-capture.
   bool isInitCapture(const LambdaCapture *Capture) const;
@@ -1910,7 +1901,7 @@ public:
   capture_iterator capture_end() const;
 
   /// Determine the number of captures in this lambda.
-  unsigned capture_size() const { return NumCaptures; }
+  unsigned capture_size() const { return LambdaExprBits.NumCaptures; }
 
   /// Retrieve this lambda's explicit captures.
   capture_range explicit_captures() const;
@@ -1940,6 +1931,7 @@ public:
 
   /// Const iterator that walks over the capture initialization
   /// arguments.
+  /// FIXME: This interface is prone to being used incorrectly.
   using const_capture_init_iterator = Expr *const *;
 
   /// Retrieve the initialization expressions for this lambda's captures.
@@ -1967,13 +1959,13 @@ public:
   /// Retrieve the iterator pointing one past the last
   /// initialization argument for this lambda expression.
   capture_init_iterator capture_init_end() {
-    return capture_init_begin() + NumCaptures;
+    return capture_init_begin() + capture_size();
   }
 
   /// Retrieve the iterator pointing one past the last
   /// initialization argument for this lambda expression.
   const_capture_init_iterator capture_init_end() const {
-    return capture_init_begin() + NumCaptures;
+    return capture_init_begin() + capture_size();
   }
 
   /// Retrieve the source range covering the lambda introducer,
@@ -2007,8 +1999,20 @@ public:
   /// Whether this is a generic lambda.
   bool isGenericLambda() const { return getTemplateParameterList(); }
 
-  /// Retrieve the body of the lambda.
-  CompoundStmt *getBody() const;
+  /// Retrieve the body of the lambda. This will be most of the time
+  /// a \p CompoundStmt, but can also be \p CoroutineBodyStmt wrapping
+  /// a \p CompoundStmt. Note that unlike functions, lambda-expressions
+  /// cannot have a function-try-block.
+  Stmt *getBody() const;
+
+  /// Retrieve the \p CompoundStmt representing the body of the lambda.
+  /// This is a convenience function for callers who do not need
+  /// to handle node(s) which may wrap a \p CompoundStmt.
+  const CompoundStmt *getCompoundStmtBody() const;
+  CompoundStmt *getCompoundStmtBody() {
+    const auto *ConstThis = this;
+    return const_cast<CompoundStmt *>(ConstThis->getCompoundStmtBody());
+  }
 
   /// Determine whether the lambda is mutable, meaning that any
   /// captures values can be modified.
@@ -2016,10 +2020,12 @@ public:
 
   /// Determine whether this lambda has an explicit parameter
   /// list vs. an implicit (empty) parameter list.
-  bool hasExplicitParameters() const { return ExplicitParams; }
+  bool hasExplicitParameters() const { return LambdaExprBits.ExplicitParams; }
 
   /// Whether this lambda had its result type explicitly specified.
-  bool hasExplicitResultType() const { return ExplicitResultType; }
+  bool hasExplicitResultType() const {
+    return LambdaExprBits.ExplicitResultType;
+  }
 
   static bool classof(const Stmt *T) {
     return T->getStmtClass() == LambdaExprClass;
@@ -2031,15 +2037,9 @@ public:
 
   SourceLocation getEndLoc() const LLVM_READONLY { return ClosingBrace; }
 
-  child_range children() {
-    // Includes initialization exprs plus body stmt
-    return child_range(getStoredStmts(), getStoredStmts() + NumCaptures + 1);
-  }
-
-  const_child_range children() const {
-    return const_child_range(getStoredStmts(),
-                             getStoredStmts() + NumCaptures + 1);
-  }
+  /// Includes the captures and the body of the lambda.
+  child_range children();
+  const_child_range children() const;
 };
 
 /// An expression "T()" which creates a value-initialized rvalue of type
@@ -2732,6 +2732,8 @@ public:
       : Expr(ArrayTypeTraitExprClass, ty, VK_RValue, OK_Ordinary), ATT(att),
         Value(value), Dimension(dimension), Loc(loc), RParen(rparen),
         QueriedType(queried) {
+    assert(att <= ATT_Last && "invalid enum value!");
+    assert(static_cast<unsigned>(att) == ATT && "ATT overflow!");
     setDependence(computeDependence(this));
   }
 
@@ -2796,6 +2798,8 @@ public:
       : Expr(ExpressionTraitExprClass, resultType, VK_RValue, OK_Ordinary),
         ET(et), Value(value), Loc(loc), RParen(rparen),
         QueriedExpression(queried) {
+    assert(et <= ET_Last && "invalid enum value!");
+    assert(static_cast<unsigned>(et) == ET && "ET overflow!");
     setDependence(computeDependence(this));
   }
 
@@ -4804,6 +4808,8 @@ public:
       : ExplicitCastExpr(BuiltinBitCastExprClass, T, VK, CK, SrcExpr, 0,
                          DstType),
         KWLoc(KWLoc), RParenLoc(RParenLoc) {}
+  BuiltinBitCastExpr(EmptyShell Empty)
+      : ExplicitCastExpr(BuiltinBitCastExprClass, Empty, 0) {}
 
   SourceLocation getBeginLoc() const LLVM_READONLY { return KWLoc; }
   SourceLocation getEndLoc() const LLVM_READONLY { return RParenLoc; }

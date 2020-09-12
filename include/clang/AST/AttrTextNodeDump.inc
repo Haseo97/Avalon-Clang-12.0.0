@@ -419,6 +419,9 @@
   void VisitOMPAllocateDeclAttr(const OMPAllocateDeclAttr *A) {
     const auto *SA = cast<OMPAllocateDeclAttr>(A); (void)SA;
     switch(SA->getAllocatorType()) {
+    case OMPAllocateDeclAttr::OMPNullMemAlloc:
+      OS << " OMPNullMemAlloc";
+      break;
     case OMPAllocateDeclAttr::OMPDefaultMemAlloc:
       OS << " OMPDefaultMemAlloc";
       break;
@@ -450,7 +453,7 @@
   }
   void VisitOMPCaptureKindAttr(const OMPCaptureKindAttr *A) {
     const auto *SA = cast<OMPCaptureKindAttr>(A); (void)SA;
-    OS << " " << SA->getCaptureKind();
+    OS << " " << SA->getCaptureKindVal();
   }
   void VisitOMPDeclareSimdDeclAttr(const OMPDeclareSimdDeclAttr *A) {
     const auto *SA = cast<OMPDeclareSimdDeclAttr>(A); (void)SA;
@@ -804,6 +807,8 @@
   void VisitUuidAttr(const UuidAttr *A) {
     const auto *SA = cast<UuidAttr>(A); (void)SA;
     OS << " \"" << SA->getGuid() << "\"";
+    OS << " ";
+    dumpBareDeclRef(SA->getGuidDecl());
   }
   void VisitVecTypeHintAttr(const VecTypeHintAttr *A) {
     const auto *SA = cast<VecTypeHintAttr>(A); (void)SA;

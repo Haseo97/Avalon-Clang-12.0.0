@@ -509,6 +509,12 @@ ENUMCONSTANT(EnumConstant, ValueDecl)
 INDIRECTFIELD(IndirectField, ValueDecl)
 #undef INDIRECTFIELD
 
+#ifndef MSGUID
+#  define MSGUID(Type, Base) VALUE(Type, Base)
+#endif
+MSGUID(MSGuid, ValueDecl)
+#undef MSGUID
+
 #ifndef OMPDECLAREMAPPER
 #  define OMPDECLAREMAPPER(Type, Base) VALUE(Type, Base)
 #endif

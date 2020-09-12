@@ -869,6 +869,12 @@ CXXFUNCTIONALCASTEXPR(CXXFunctionalCastExpr, ExplicitCastExpr)
 #  define CXXNAMEDCASTEXPR(Type, Base) EXPLICITCASTEXPR(Type, Base)
 #endif
 ABSTRACT_STMT(CXXNAMEDCASTEXPR(CXXNamedCastExpr, ExplicitCastExpr))
+#ifndef CXXADDRSPACECASTEXPR
+#  define CXXADDRSPACECASTEXPR(Type, Base) CXXNAMEDCASTEXPR(Type, Base)
+#endif
+CXXADDRSPACECASTEXPR(CXXAddrspaceCastExpr, CXXNamedCastExpr)
+#undef CXXADDRSPACECASTEXPR
+
 #ifndef CXXCONSTCASTEXPR
 #  define CXXCONSTCASTEXPR(Type, Base) CXXNAMEDCASTEXPR(Type, Base)
 #endif
@@ -893,7 +899,7 @@ CXXREINTERPRETCASTEXPR(CXXReinterpretCastExpr, CXXNamedCastExpr)
 CXXSTATICCASTEXPR(CXXStaticCastExpr, CXXNamedCastExpr)
 #undef CXXSTATICCASTEXPR
 
-STMT_RANGE(CXXNamedCastExpr, CXXConstCastExpr, CXXStaticCastExpr)
+STMT_RANGE(CXXNamedCastExpr, CXXAddrspaceCastExpr, CXXStaticCastExpr)
 
 #undef CXXNAMEDCASTEXPR
 
@@ -1106,6 +1112,12 @@ MSPROPERTYSUBSCRIPTEXPR(MSPropertySubscriptExpr, Expr)
 #endif
 MATERIALIZETEMPORARYEXPR(MaterializeTemporaryExpr, Expr)
 #undef MATERIALIZETEMPORARYEXPR
+
+#ifndef MATRIXSUBSCRIPTEXPR
+#  define MATRIXSUBSCRIPTEXPR(Type, Base) EXPR(Type, Base)
+#endif
+MATRIXSUBSCRIPTEXPR(MatrixSubscriptExpr, Expr)
+#undef MATRIXSUBSCRIPTEXPR
 
 #ifndef MEMBEREXPR
 #  define MEMBEREXPR(Type, Base) EXPR(Type, Base)

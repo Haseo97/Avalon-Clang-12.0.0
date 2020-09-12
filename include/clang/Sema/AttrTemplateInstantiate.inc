@@ -525,10 +525,6 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<GuardedVarAttr>(At);
       return A->clone(C);
     }
-    case attr::HIPPinnedShadow: {
-      const auto *A = cast<HIPPinnedShadowAttr>(At);
-      return A->clone(C);
-    }
     case attr::Hot: {
       const auto *A = cast<HotAttr>(At);
       return A->clone(C);
@@ -744,6 +740,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::NoInstrumentFunction: {
       const auto *A = cast<NoInstrumentFunctionAttr>(At);
+      return A->clone(C);
+    }
+    case attr::NoMerge: {
+      const auto *A = cast<NoMergeAttr>(At);
       return A->clone(C);
     }
     case attr::NoMicroMips: {
@@ -1727,9 +1727,6 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::GuardedVar: {
       return nullptr;
     }
-    case attr::HIPPinnedShadow: {
-      return nullptr;
-    }
     case attr::Hot: {
       return nullptr;
     }
@@ -1878,6 +1875,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::NoInstrumentFunction: {
+      return nullptr;
+    }
+    case attr::NoMerge: {
       return nullptr;
     }
     case attr::NoMicroMips: {

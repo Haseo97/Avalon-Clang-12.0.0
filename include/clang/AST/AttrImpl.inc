@@ -488,6 +488,10 @@ void ARMInterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     OS << " [[gnu::interrupt(\"" << ARMInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt(\"" << ARMInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
+    break;
+  }
 }
 }
 
@@ -499,6 +503,8 @@ const char *ARMInterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -558,6 +564,10 @@ void AVRInterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     OS << " [[gnu::interrupt]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt]]";
+    break;
+  }
 }
 }
 
@@ -569,6 +579,8 @@ const char *AVRInterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -628,6 +640,10 @@ void AVRSignalAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::signal]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::signal]]";
+    break;
+  }
 }
 }
 
@@ -639,6 +655,8 @@ const char *AVRSignalAttr::getSpelling() const {
   case 0:
     return "signal";
   case 1:
+    return "signal";
+  case 2:
     return "signal";
   }
 }
@@ -1293,6 +1311,10 @@ void AliasAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     OS << " [[gnu::alias(\"" << getAliasee() << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::alias(\"" << getAliasee() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -1304,6 +1326,8 @@ const char *AliasAttr::getSpelling() const {
   case 0:
     return "alias";
   case 1:
+    return "alias";
+  case 2:
     return "alias";
   }
 }
@@ -1475,9 +1499,10 @@ AlignedAttr::Spelling AlignedAttr::getSemanticSpelling() const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_aligned;
     case 1: return CXX11_gnu_aligned;
-    case 2: return Declspec_align;
-    case 3: return Keyword_alignas;
-    case 4: return Keyword_Alignas;
+    case 2: return C2x_gnu_aligned;
+    case 3: return Declspec_align;
+    case 4: return Keyword_alignas;
+    case 5: return Keyword_Alignas;
   }
 }
 bool AlignedAttr::isAlignmentDependent() const {
@@ -1485,6 +1510,11 @@ bool AlignedAttr::isAlignmentDependent() const {
     return alignmentExpr && (alignmentExpr->isValueDependent() || alignmentExpr->isTypeDependent());
   else
     return alignmentType->getType()->isDependentType();
+}
+bool AlignedAttr::isAlignmentErrorDependent() const {
+  if (isalignmentExpr)
+    return alignmentExpr && alignmentExpr->containsErrors();
+  return alignmentType->getType()->containsErrors();
 }
 unsigned AlignedAttr::getAlignment(ASTContext &Ctx) const {
   assert(!isAlignmentDependent());
@@ -1549,6 +1579,26 @@ void AlignedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     break;
   }
   case 2 : {
+    OS << " [[gnu::aligned";
+    unsigned TrailingOmittedArgs = 0;
+    if (!isalignmentExpr || !alignmentExpr)
+      ++TrailingOmittedArgs;
+    OS << "";
+    if (TrailingOmittedArgs < 1)
+       OS << "(";
+    OS << "";
+    if (!(!isalignmentExpr || !alignmentExpr)) {
+      OS << "";
+    alignmentExpr->printPretty(OS, nullptr, Policy);
+    OS << "";
+    }
+    OS << "";
+    if (TrailingOmittedArgs < 1)
+       OS << ")";
+    OS << "]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(align";
     unsigned TrailingOmittedArgs = 0;
     if (!isalignmentExpr || !alignmentExpr)
@@ -1568,7 +1618,7 @@ void AlignedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << ")";
     break;
   }
-  case 3 : {
+  case 4 : {
     OS << " alignas";
     unsigned TrailingOmittedArgs = 0;
     if (!isalignmentExpr || !alignmentExpr)
@@ -1588,7 +1638,7 @@ void AlignedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << "";
     break;
   }
-  case 4 : {
+  case 5 : {
     OS << " _Alignas";
     unsigned TrailingOmittedArgs = 0;
     if (!isalignmentExpr || !alignmentExpr)
@@ -1621,10 +1671,12 @@ const char *AlignedAttr::getSpelling() const {
   case 1:
     return "aligned";
   case 2:
-    return "align";
+    return "aligned";
   case 3:
-    return "alignas";
+    return "align";
   case 4:
+    return "alignas";
+  case 5:
     return "_Alignas";
   }
 }
@@ -1688,6 +1740,10 @@ void AllocAlignAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     OS << " [[gnu::alloc_align(" << getParamIndex().getSourceIndex() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::alloc_align(" << getParamIndex().getSourceIndex() << ")]]";
+    break;
+  }
 }
 }
 
@@ -1699,6 +1755,8 @@ const char *AllocAlignAttr::getSpelling() const {
   case 0:
     return "alloc_align";
   case 1:
+    return "alloc_align";
+  case 2:
     return "alloc_align";
   }
 }
@@ -1797,6 +1855,21 @@ void AllocSizeAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::alloc_size";
+    unsigned TrailingOmittedArgs = 0;
+    if (!getNumElemsParam().isValid())
+      ++TrailingOmittedArgs;
+    OS << "(" << getElemSizeParam().getSourceIndex() << "";
+    if (1 < 2 - TrailingOmittedArgs)
+      OS << ", ";
+    OS << "";
+    if (!(!getNumElemsParam().isValid())) {
+      OS << "" << getNumElemsParam().getSourceIndex() << "";
+    }
+    OS << ")]]";
+    break;
+  }
 }
 }
 
@@ -1808,6 +1881,8 @@ const char *AllocSizeAttr::getSpelling() const {
   case 0:
     return "alloc_size";
   case 1:
+    return "alloc_size";
+  case 2:
     return "alloc_size";
   }
 }
@@ -1919,7 +1994,8 @@ AlwaysInlineAttr::Spelling AlwaysInlineAttr::getSemanticSpelling() const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_always_inline;
     case 1: return CXX11_gnu_always_inline;
-    case 2: return Keyword_forceinline;
+    case 2: return C2x_gnu_always_inline;
+    case 3: return Keyword_forceinline;
   }
 }
 AlwaysInlineAttr *AlwaysInlineAttr::clone(ASTContext &C) const {
@@ -1944,6 +2020,10 @@ void AlwaysInlineAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     break;
   }
   case 2 : {
+    OS << " [[gnu::always_inline]]";
+    break;
+  }
+  case 3 : {
     OS << " __forceinline";
     break;
   }
@@ -1960,6 +2040,8 @@ const char *AlwaysInlineAttr::getSpelling() const {
   case 1:
     return "always_inline";
   case 2:
+    return "always_inline";
+  case 3:
     return "__forceinline";
   }
 }
@@ -2165,6 +2247,10 @@ void AnyX86InterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Pol
     OS << " [[gnu::interrupt]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt]]";
+    break;
+  }
 }
 }
 
@@ -2176,6 +2262,8 @@ const char *AnyX86InterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -2235,6 +2323,10 @@ void AnyX86NoCallerSavedRegistersAttr::printPretty(raw_ostream &OS, const Printi
     OS << " [[gnu::no_caller_saved_registers]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::no_caller_saved_registers]]";
+    break;
+  }
 }
 }
 
@@ -2246,6 +2338,8 @@ const char *AnyX86NoCallerSavedRegistersAttr::getSpelling() const {
   case 0:
     return "no_caller_saved_registers";
   case 1:
+    return "no_caller_saved_registers";
+  case 2:
     return "no_caller_saved_registers";
   }
 }
@@ -2305,6 +2399,10 @@ void AnyX86NoCfCheckAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Pol
     OS << " [[gnu::nocf_check]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nocf_check]]";
+    break;
+  }
 }
 }
 
@@ -2316,6 +2414,8 @@ const char *AnyX86NoCfCheckAttr::getSpelling() const {
   case 0:
     return "nocf_check";
   case 1:
+    return "nocf_check";
+  case 2:
     return "nocf_check";
   }
 }
@@ -2762,6 +2862,10 @@ void ArtificialAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     OS << " [[gnu::artificial]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::artificial]]";
+    break;
+  }
 }
 }
 
@@ -2773,6 +2877,8 @@ const char *ArtificialAttr::getSpelling() const {
   case 0:
     return "artificial";
   case 1:
+    return "artificial";
+  case 2:
     return "artificial";
   }
 }
@@ -3260,6 +3366,10 @@ void AssumeAlignedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Polic
     OS << " [[gnu::assume_aligned(" << getAlignment() << ", " << getOffset() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::assume_aligned(" << getAlignment() << ", " << getOffset() << ")]]";
+    break;
+  }
 }
 }
 
@@ -3271,6 +3381,8 @@ const char *AssumeAlignedAttr::getSpelling() const {
   case 0:
     return "assume_aligned";
   case 1:
+    return "assume_aligned";
+  case 2:
     return "assume_aligned";
   }
 }
@@ -3690,10 +3802,14 @@ void CDeclAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     break;
   }
   case 2 : {
-    OS << " __cdecl";
+    OS << " [[gnu::cdecl]]";
     break;
   }
   case 3 : {
+    OS << " __cdecl";
+    break;
+  }
+  case 4 : {
     OS << " _cdecl";
     break;
   }
@@ -3710,8 +3826,10 @@ const char *CDeclAttr::getSpelling() const {
   case 1:
     return "cdecl";
   case 2:
-    return "__cdecl";
+    return "cdecl";
   case 3:
+    return "__cdecl";
+  case 4:
     return "_cdecl";
   }
 }
@@ -5690,6 +5808,10 @@ void CleanupAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << " [[gnu::cleanup(" << getFunctionDecl()->getNameInfo().getAsString() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::cleanup(" << getFunctionDecl()->getNameInfo().getAsString() << ")]]";
+    break;
+  }
 }
 }
 
@@ -5701,6 +5823,8 @@ const char *CleanupAttr::getSpelling() const {
   case 0:
     return "cleanup";
   case 1:
+    return "cleanup";
+  case 2:
     return "cleanup";
   }
 }
@@ -5958,6 +6082,10 @@ void ColdAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const 
     OS << " [[gnu::cold]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::cold]]";
+    break;
+  }
 }
 }
 
@@ -5969,6 +6097,8 @@ const char *ColdAttr::getSpelling() const {
   case 0:
     return "cold";
   case 1:
+    return "cold";
+  case 2:
     return "cold";
   }
 }
@@ -6028,6 +6158,10 @@ void CommonAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     OS << " [[gnu::common]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::common]]";
+    break;
+  }
 }
 }
 
@@ -6039,6 +6173,8 @@ const char *CommonAttr::getSpelling() const {
   case 0:
     return "common";
   case 1:
+    return "common";
+  case 2:
     return "common";
   }
 }
@@ -6099,10 +6235,18 @@ void ConstAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     break;
   }
   case 2 : {
-    OS << " __attribute__((__const))";
+    OS << " [[gnu::const]]";
     break;
   }
   case 3 : {
+    OS << " __attribute__((__const))";
+    break;
+  }
+  case 4 : {
+    OS << " [[gnu::__const]]";
+    break;
+  }
+  case 5 : {
     OS << " [[gnu::__const]]";
     break;
   }
@@ -6119,8 +6263,12 @@ const char *ConstAttr::getSpelling() const {
   case 1:
     return "const";
   case 2:
-    return "__const";
+    return "const";
   case 3:
+    return "__const";
+  case 4:
+    return "__const";
+  case 5:
     return "__const";
   }
 }
@@ -6273,6 +6421,10 @@ void ConstructorAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy)
     OS << " [[gnu::constructor(" << getPriority() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::constructor(" << getPriority() << ")]]";
+    break;
+  }
 }
 }
 
@@ -6284,6 +6436,8 @@ const char *ConstructorAttr::getSpelling() const {
   case 0:
     return "constructor";
   case 1:
+    return "constructor";
+  case 2:
     return "constructor";
   }
 }
@@ -6658,6 +6812,10 @@ void DLLExportAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::dllexport]]";
     break;
   }
+  case 3 : {
+    OS << " [[gnu::dllexport]]";
+    break;
+  }
 }
 }
 
@@ -6671,6 +6829,8 @@ const char *DLLExportAttr::getSpelling() const {
   case 1:
     return "dllexport";
   case 2:
+    return "dllexport";
+  case 3:
     return "dllexport";
   }
 }
@@ -6783,6 +6943,10 @@ void DLLImportAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::dllimport]]";
     break;
   }
+  case 3 : {
+    OS << " [[gnu::dllimport]]";
+    break;
+  }
 }
 }
 
@@ -6796,6 +6960,8 @@ const char *DLLImportAttr::getSpelling() const {
   case 1:
     return "dllimport";
   case 2:
+    return "dllimport";
+  case 3:
     return "dllimport";
   }
 }
@@ -6928,16 +7094,21 @@ void DeprecatedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     break;
   }
   case 2 : {
+    OS << " [[gnu::deprecated(\"" << getMessage() << "\"";
+    OS << ")]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(deprecated(\"" << getMessage() << "\"";
     OS << "))";
     break;
   }
-  case 3 : {
+  case 4 : {
     OS << " [[deprecated(\"" << getMessage() << "\"";
     OS << ")]]";
     break;
   }
-  case 4 : {
+  case 5 : {
     OS << " [[deprecated(\"" << getMessage() << "\"";
     OS << ")]]";
     break;
@@ -6959,6 +7130,8 @@ const char *DeprecatedAttr::getSpelling() const {
   case 3:
     return "deprecated";
   case 4:
+    return "deprecated";
+  case 5:
     return "deprecated";
   }
 }
@@ -7029,6 +7202,10 @@ void DestructorAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     OS << " [[gnu::destructor(" << getPriority() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::destructor(" << getPriority() << ")]]";
+    break;
+  }
 }
 }
 
@@ -7040,6 +7217,8 @@ const char *DestructorAttr::getSpelling() const {
   case 0:
     return "destructor";
   case 1:
+    return "destructor";
+  case 2:
     return "destructor";
   }
 }
@@ -7836,6 +8015,10 @@ void FallThroughAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy)
     OS << " [[gnu::fallthrough]]";
     break;
   }
+  case 5 : {
+    OS << " [[gnu::fallthrough]]";
+    break;
+  }
 }
 }
 
@@ -7853,6 +8036,8 @@ const char *FallThroughAttr::getSpelling() const {
   case 3:
     return "fallthrough";
   case 4:
+    return "fallthrough";
+  case 5:
     return "fallthrough";
   }
 }
@@ -7913,10 +8098,14 @@ void FastCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     break;
   }
   case 2 : {
-    OS << " __fastcall";
+    OS << " [[gnu::fastcall]]";
     break;
   }
   case 3 : {
+    OS << " __fastcall";
+    break;
+  }
+  case 4 : {
     OS << " _fastcall";
     break;
   }
@@ -7933,8 +8122,10 @@ const char *FastCallAttr::getSpelling() const {
   case 1:
     return "fastcall";
   case 2:
-    return "__fastcall";
+    return "fastcall";
   case 3:
+    return "__fastcall";
+  case 4:
     return "_fastcall";
   }
 }
@@ -8145,6 +8336,10 @@ void FlattenAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << " [[gnu::flatten]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::flatten]]";
+    break;
+  }
 }
 }
 
@@ -8156,6 +8351,8 @@ const char *FlattenAttr::getSpelling() const {
   case 0:
     return "flatten";
   case 1:
+    return "flatten";
+  case 2:
     return "flatten";
   }
 }
@@ -8227,6 +8424,10 @@ void FormatAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     OS << " [[gnu::format(" << (getType() ? getType()->getName() : "") << ", " << getFormatIdx() << ", " << getFirstArg() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::format(" << (getType() ? getType()->getName() : "") << ", " << getFormatIdx() << ", " << getFirstArg() << ")]]";
+    break;
+  }
 }
 }
 
@@ -8238,6 +8439,8 @@ const char *FormatAttr::getSpelling() const {
   case 0:
     return "format";
   case 1:
+    return "format";
+  case 2:
     return "format";
   }
 }
@@ -8301,6 +8504,10 @@ void FormatArgAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::format_arg(" << getFormatIdx().getSourceIndex() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::format_arg(" << getFormatIdx().getSourceIndex() << ")]]";
+    break;
+  }
 }
 }
 
@@ -8312,6 +8519,8 @@ const char *FormatArgAttr::getSpelling() const {
   case 0:
     return "format_arg";
   case 1:
+    return "format_arg";
+  case 2:
     return "format_arg";
   }
 }
@@ -8371,6 +8580,10 @@ void GNUInlineAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::gnu_inline]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::gnu_inline]]";
+    break;
+  }
 }
 }
 
@@ -8382,6 +8595,8 @@ const char *GNUInlineAttr::getSpelling() const {
   case 0:
     return "gnu_inline";
   case 1:
+    return "gnu_inline";
+  case 2:
     return "gnu_inline";
   }
 }
@@ -8525,76 +8740,6 @@ const char *GuardedVarAttr::getSpelling() const {
 }
 
 
-// HIPPinnedShadowAttr implementation
-
-HIPPinnedShadowAttr *HIPPinnedShadowAttr::CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
-  auto *A = new (Ctx) HIPPinnedShadowAttr(Ctx, CommonInfo);
-  A->setImplicit(true);
-  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-    A->setAttributeSpellingListIndex(0);
-  return A;
-}
-
-HIPPinnedShadowAttr *HIPPinnedShadowAttr::Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
-  auto *A = new (Ctx) HIPPinnedShadowAttr(Ctx, CommonInfo);
-  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
-    A->setAttributeSpellingListIndex(0);
-  return A;
-}
-
-HIPPinnedShadowAttr *HIPPinnedShadowAttr::CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-  return CreateImplicit(Ctx, I);
-}
-
-HIPPinnedShadowAttr *HIPPinnedShadowAttr::Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
-  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-  return Create(Ctx, I);
-}
-
-HIPPinnedShadowAttr::HIPPinnedShadowAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
-             )
-  : InheritableAttr(Ctx, CommonInfo, attr::HIPPinnedShadow, false, false)
-  {
-}
-
-HIPPinnedShadowAttr *HIPPinnedShadowAttr::clone(ASTContext &C) const {
-  auto *A = new (C) HIPPinnedShadowAttr(C, *this);
-  A->Inherited = Inherited;
-  A->IsPackExpansion = IsPackExpansion;
-  A->setImplicit(Implicit);
-  return A;
-}
-
-void HIPPinnedShadowAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
-  switch (getAttributeSpellingListIndex()) {
-  default:
-    llvm_unreachable("Unknown attribute spelling!");
-    break;
-  case 0 : {
-    OS << " __attribute__((hip_pinned_shadow))";
-    break;
-  }
-  case 1 : {
-    OS << " __declspec(__hip_pinned_shadow__)";
-    break;
-  }
-}
-}
-
-const char *HIPPinnedShadowAttr::getSpelling() const {
-  switch (getAttributeSpellingListIndex()) {
-  default:
-    llvm_unreachable("Unknown attribute spelling!");
-    return "(No spelling)";
-  case 0:
-    return "hip_pinned_shadow";
-  case 1:
-    return "__hip_pinned_shadow__";
-  }
-}
-
-
 // HotAttr implementation
 
 HotAttr *HotAttr::CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
@@ -8649,6 +8794,10 @@ void HotAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     OS << " [[gnu::hot]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::hot]]";
+    break;
+  }
 }
 }
 
@@ -8660,6 +8809,8 @@ const char *HotAttr::getSpelling() const {
   case 0:
     return "hot";
   case 1:
+    return "hot";
+  case 2:
     return "hot";
   }
 }
@@ -9006,6 +9157,10 @@ void IFuncAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     OS << " [[gnu::ifunc(\"" << getResolver() << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::ifunc(\"" << getResolver() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -9017,6 +9172,8 @@ const char *IFuncAttr::getSpelling() const {
   case 0:
     return "ifunc";
   case 1:
+    return "ifunc";
+  case 2:
     return "ifunc";
   }
 }
@@ -10061,6 +10218,10 @@ void MSABIAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     OS << " [[gnu::ms_abi]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::ms_abi]]";
+    break;
+  }
 }
 }
 
@@ -10072,6 +10233,8 @@ const char *MSABIAttr::getSpelling() const {
   case 0:
     return "ms_abi";
   case 1:
+    return "ms_abi";
+  case 2:
     return "ms_abi";
   }
 }
@@ -10386,6 +10549,10 @@ void MSP430InterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Pol
     OS << " [[gnu::interrupt(" << getNumber() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt(" << getNumber() << ")]]";
+    break;
+  }
 }
 }
 
@@ -10397,6 +10564,8 @@ const char *MSP430InterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -10456,6 +10625,10 @@ void MSStructAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::ms_struct]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::ms_struct]]";
+    break;
+  }
 }
 }
 
@@ -10467,6 +10640,8 @@ const char *MSStructAttr::getSpelling() const {
   case 0:
     return "ms_struct";
   case 1:
+    return "ms_struct";
+  case 2:
     return "ms_struct";
   }
 }
@@ -10632,6 +10807,10 @@ void MayAliasAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::may_alias]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::may_alias]]";
+    break;
+  }
 }
 }
 
@@ -10643,6 +10822,8 @@ const char *MayAliasAttr::getSpelling() const {
   case 0:
     return "may_alias";
   case 1:
+    return "may_alias";
+  case 2:
     return "may_alias";
   }
 }
@@ -10702,6 +10883,10 @@ void MicroMipsAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::micromips]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::micromips]]";
+    break;
+  }
 }
 }
 
@@ -10713,6 +10898,8 @@ const char *MicroMipsAttr::getSpelling() const {
   case 0:
     return "micromips";
   case 1:
+    return "micromips";
+  case 2:
     return "micromips";
   }
 }
@@ -10928,6 +11115,10 @@ void Mips16Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     OS << " [[gnu::mips16]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::mips16]]";
+    break;
+  }
 }
 }
 
@@ -10939,6 +11130,8 @@ const char *Mips16Attr::getSpelling() const {
   case 0:
     return "mips16";
   case 1:
+    return "mips16";
+  case 2:
     return "mips16";
   }
 }
@@ -11036,6 +11229,10 @@ void MipsInterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Polic
     OS << " [[gnu::interrupt(\"" << MipsInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt(\"" << MipsInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
+    break;
+  }
 }
 }
 
@@ -11047,6 +11244,8 @@ const char *MipsInterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -11088,8 +11287,10 @@ MipsLongCallAttr::Spelling MipsLongCallAttr::getSemanticSpelling() const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_long_call;
     case 1: return CXX11_gnu_long_call;
-    case 2: return GNU_far;
-    case 3: return CXX11_gnu_far;
+    case 2: return C2x_gnu_long_call;
+    case 3: return GNU_far;
+    case 4: return CXX11_gnu_far;
+    case 5: return C2x_gnu_far;
   }
 }
 MipsLongCallAttr *MipsLongCallAttr::clone(ASTContext &C) const {
@@ -11114,10 +11315,18 @@ void MipsLongCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     break;
   }
   case 2 : {
-    OS << " __attribute__((far))";
+    OS << " [[gnu::long_call]]";
     break;
   }
   case 3 : {
+    OS << " __attribute__((far))";
+    break;
+  }
+  case 4 : {
+    OS << " [[gnu::far]]";
+    break;
+  }
+  case 5 : {
     OS << " [[gnu::far]]";
     break;
   }
@@ -11134,8 +11343,12 @@ const char *MipsLongCallAttr::getSpelling() const {
   case 1:
     return "long_call";
   case 2:
-    return "far";
+    return "long_call";
   case 3:
+    return "far";
+  case 4:
+    return "far";
+  case 5:
     return "far";
   }
 }
@@ -11177,8 +11390,10 @@ MipsShortCallAttr::Spelling MipsShortCallAttr::getSemanticSpelling() const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_short_call;
     case 1: return CXX11_gnu_short_call;
-    case 2: return GNU_near;
-    case 3: return CXX11_gnu_near;
+    case 2: return C2x_gnu_short_call;
+    case 3: return GNU_near;
+    case 4: return CXX11_gnu_near;
+    case 5: return C2x_gnu_near;
   }
 }
 MipsShortCallAttr *MipsShortCallAttr::clone(ASTContext &C) const {
@@ -11203,10 +11418,18 @@ void MipsShortCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Polic
     break;
   }
   case 2 : {
-    OS << " __attribute__((near))";
+    OS << " [[gnu::short_call]]";
     break;
   }
   case 3 : {
+    OS << " __attribute__((near))";
+    break;
+  }
+  case 4 : {
+    OS << " [[gnu::near]]";
+    break;
+  }
+  case 5 : {
     OS << " [[gnu::near]]";
     break;
   }
@@ -11223,8 +11446,12 @@ const char *MipsShortCallAttr::getSpelling() const {
   case 1:
     return "short_call";
   case 2:
-    return "near";
+    return "short_call";
   case 3:
+    return "near";
+  case 4:
+    return "near";
+  case 5:
     return "near";
   }
 }
@@ -11288,6 +11515,10 @@ void ModeAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const 
     OS << " [[gnu::mode(" << (getMode() ? getMode()->getName() : "") << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::mode(" << (getMode() ? getMode()->getName() : "") << ")]]";
+    break;
+  }
 }
 }
 
@@ -11299,6 +11530,8 @@ const char *ModeAttr::getSpelling() const {
   case 0:
     return "mode";
   case 1:
+    return "mode";
+  case 2:
     return "mode";
   }
 }
@@ -11739,6 +11972,10 @@ void NakedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const
     break;
   }
   case 2 : {
+    OS << " [[gnu::naked]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(naked)";
     break;
   }
@@ -11755,6 +11992,8 @@ const char *NakedAttr::getSpelling() const {
   case 1:
     return "naked";
   case 2:
+    return "naked";
+  case 3:
     return "naked";
   }
 }
@@ -11995,6 +12234,10 @@ void NoCommonAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::nocommon]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nocommon]]";
+    break;
+  }
 }
 }
 
@@ -12006,6 +12249,8 @@ const char *NoCommonAttr::getSpelling() const {
   case 0:
     return "nocommon";
   case 1:
+    return "nocommon";
+  case 2:
     return "nocommon";
   }
 }
@@ -12065,6 +12310,10 @@ void NoDebugAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << " [[gnu::nodebug]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nodebug]]";
+    break;
+  }
 }
 }
 
@@ -12076,6 +12325,8 @@ const char *NoDebugAttr::getSpelling() const {
   case 0:
     return "nodebug";
   case 1:
+    return "nodebug";
+  case 2:
     return "nodebug";
   }
 }
@@ -12434,6 +12685,10 @@ void NoInlineAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     break;
   }
   case 2 : {
+    OS << " [[gnu::noinline]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(noinline)";
     break;
   }
@@ -12450,6 +12705,8 @@ const char *NoInlineAttr::getSpelling() const {
   case 1:
     return "noinline";
   case 2:
+    return "noinline";
+  case 3:
     return "noinline";
   }
 }
@@ -12509,6 +12766,10 @@ void NoInstrumentFunctionAttr::printPretty(raw_ostream &OS, const PrintingPolicy
     OS << " [[gnu::no_instrument_function]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::no_instrument_function]]";
+    break;
+  }
 }
 }
 
@@ -12521,6 +12782,84 @@ const char *NoInstrumentFunctionAttr::getSpelling() const {
     return "no_instrument_function";
   case 1:
     return "no_instrument_function";
+  case 2:
+    return "no_instrument_function";
+  }
+}
+
+
+// NoMergeAttr implementation
+
+NoMergeAttr *NoMergeAttr::CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) NoMergeAttr(Ctx, CommonInfo);
+  A->setImplicit(true);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+NoMergeAttr *NoMergeAttr::Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) NoMergeAttr(Ctx, CommonInfo);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+NoMergeAttr *NoMergeAttr::CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return CreateImplicit(Ctx, I);
+}
+
+NoMergeAttr *NoMergeAttr::Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return Create(Ctx, I);
+}
+
+NoMergeAttr::NoMergeAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             )
+  : StmtAttr(Ctx, CommonInfo, attr::NoMerge, false)
+  {
+}
+
+NoMergeAttr *NoMergeAttr::clone(ASTContext &C) const {
+  auto *A = new (C) NoMergeAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void NoMergeAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((nomerge))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::nomerge]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::nomerge]]";
+    break;
+  }
+}
+}
+
+const char *NoMergeAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "nomerge";
+  case 1:
+    return "nomerge";
+  case 2:
+    return "nomerge";
   }
 }
 
@@ -12579,6 +12918,10 @@ void NoMicroMipsAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy)
     OS << " [[gnu::nomicromips]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nomicromips]]";
+    break;
+  }
 }
 }
 
@@ -12590,6 +12933,8 @@ const char *NoMicroMipsAttr::getSpelling() const {
   case 0:
     return "nomicromips";
   case 1:
+    return "nomicromips";
+  case 2:
     return "nomicromips";
   }
 }
@@ -12649,6 +12994,10 @@ void NoMips16Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::nomips16]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nomips16]]";
+    break;
+  }
 }
 }
 
@@ -12660,6 +13009,8 @@ const char *NoMips16Attr::getSpelling() const {
   case 0:
     return "nomips16";
   case 1:
+    return "nomips16";
+  case 2:
     return "nomips16";
   }
 }
@@ -12720,6 +13071,10 @@ void NoReturnAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     break;
   }
   case 2 : {
+    OS << " [[gnu::noreturn]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(noreturn)";
     break;
   }
@@ -12736,6 +13091,8 @@ const char *NoReturnAttr::getSpelling() const {
   case 1:
     return "noreturn";
   case 2:
+    return "noreturn";
+  case 3:
     return "noreturn";
   }
 }
@@ -12988,6 +13345,10 @@ void NoSplitStackAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     OS << " [[gnu::no_split_stack]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::no_split_stack]]";
+    break;
+  }
 }
 }
 
@@ -12999,6 +13360,8 @@ const char *NoSplitStackAttr::getSpelling() const {
   case 0:
     return "no_split_stack";
   case 1:
+    return "no_split_stack";
+  case 2:
     return "no_split_stack";
   }
 }
@@ -13211,6 +13574,10 @@ void NoThrowAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     break;
   }
   case 2 : {
+    OS << " [[gnu::nothrow]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(nothrow)";
     break;
   }
@@ -13227,6 +13594,8 @@ const char *NoThrowAttr::getSpelling() const {
   case 1:
     return "nothrow";
   case 2:
+    return "nothrow";
+  case 3:
     return "nothrow";
   }
 }
@@ -13376,6 +13745,17 @@ void NonNullAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
   OS << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::nonnull(";
+  bool isFirst = true;
+  for (const auto &Val : args()) {
+    if (isFirst) isFirst = false;
+    else OS << ", ";
+    OS << Val.getSourceIndex();
+  }
+  OS << ")]]";
+    break;
+  }
 }
 }
 
@@ -13387,6 +13767,8 @@ const char *NonNullAttr::getSpelling() const {
   case 0:
     return "nonnull";
   case 1:
+    return "nonnull";
+  case 2:
     return "nonnull";
   }
 }
@@ -13509,6 +13891,7 @@ OMPAllocateDeclAttr::OMPAllocateDeclAttr(ASTContext &Ctx, const AttributeCommonI
 
 bool OMPAllocateDeclAttr::ConvertStrToAllocatorTypeTy(StringRef Val, AllocatorTypeTy &Out) {
   Optional<AllocatorTypeTy> R = llvm::StringSwitch<Optional<AllocatorTypeTy>>(Val)
+    .Case("omp_null_allocator", OMPAllocateDeclAttr::OMPNullMemAlloc)
     .Case("omp_default_mem_alloc", OMPAllocateDeclAttr::OMPDefaultMemAlloc)
     .Case("omp_large_cap_mem_alloc", OMPAllocateDeclAttr::OMPLargeCapMemAlloc)
     .Case("omp_const_mem_alloc", OMPAllocateDeclAttr::OMPConstMemAlloc)
@@ -13528,6 +13911,7 @@ bool OMPAllocateDeclAttr::ConvertStrToAllocatorTypeTy(StringRef Val, AllocatorTy
 
 const char *OMPAllocateDeclAttr::ConvertAllocatorTypeTyToStr(AllocatorTypeTy Val) {
   switch(Val) {
+  case OMPAllocateDeclAttr::OMPNullMemAlloc: return "omp_null_allocator";
   case OMPAllocateDeclAttr::OMPDefaultMemAlloc: return "omp_default_mem_alloc";
   case OMPAllocateDeclAttr::OMPLargeCapMemAlloc: return "omp_large_cap_mem_alloc";
   case OMPAllocateDeclAttr::OMPConstMemAlloc: return "omp_const_mem_alloc";
@@ -13560,43 +13944,43 @@ const char *OMPAllocateDeclAttr::getSpelling() const {
 
 // OMPCaptureKindAttr implementation
 
-OMPCaptureKindAttr *OMPCaptureKindAttr::CreateImplicit(ASTContext &Ctx, unsigned CaptureKind, const AttributeCommonInfo &CommonInfo) {
-  auto *A = new (Ctx) OMPCaptureKindAttr(Ctx, CommonInfo, CaptureKind);
+OMPCaptureKindAttr *OMPCaptureKindAttr::CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) OMPCaptureKindAttr(Ctx, CommonInfo, CaptureKindVal);
   A->setImplicit(true);
   if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
     A->setAttributeSpellingListIndex(0);
   return A;
 }
 
-OMPCaptureKindAttr *OMPCaptureKindAttr::Create(ASTContext &Ctx, unsigned CaptureKind, const AttributeCommonInfo &CommonInfo) {
-  auto *A = new (Ctx) OMPCaptureKindAttr(Ctx, CommonInfo, CaptureKind);
+OMPCaptureKindAttr *OMPCaptureKindAttr::Create(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) OMPCaptureKindAttr(Ctx, CommonInfo, CaptureKindVal);
   if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
     A->setAttributeSpellingListIndex(0);
   return A;
 }
 
-OMPCaptureKindAttr *OMPCaptureKindAttr::CreateImplicit(ASTContext &Ctx, unsigned CaptureKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+OMPCaptureKindAttr *OMPCaptureKindAttr::CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
   AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-  return CreateImplicit(Ctx, CaptureKind, I);
+  return CreateImplicit(Ctx, CaptureKindVal, I);
 }
 
-OMPCaptureKindAttr *OMPCaptureKindAttr::Create(ASTContext &Ctx, unsigned CaptureKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+OMPCaptureKindAttr *OMPCaptureKindAttr::Create(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
   AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-  return Create(Ctx, CaptureKind, I);
+  return Create(Ctx, CaptureKindVal, I);
 }
 
 OMPCaptureKindAttr::OMPCaptureKindAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
-              , unsigned CaptureKind
+              , unsigned CaptureKindVal
              )
   : Attr(Ctx, CommonInfo, attr::OMPCaptureKind, false)
-              , captureKind(CaptureKind)
+              , captureKindVal(CaptureKindVal)
   {
 }
 
 
 
 OMPCaptureKindAttr *OMPCaptureKindAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPCaptureKindAttr(C, *this, captureKind);
+  auto *A = new (C) OMPCaptureKindAttr(C, *this, captureKindVal);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -17990,6 +18374,10 @@ void PackedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     OS << " [[gnu::packed]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::packed]]";
+    break;
+  }
 }
 }
 
@@ -18001,6 +18389,8 @@ const char *PackedAttr::getSpelling() const {
   case 0:
     return "packed";
   case 1:
+    return "packed";
+  case 2:
     return "packed";
   }
 }
@@ -18367,6 +18757,10 @@ void PatchableFunctionEntryAttr::printPretty(raw_ostream &OS, const PrintingPoli
     OS << " [[gnu::patchable_function_entry(" << getCount() << ", " << getOffset() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::patchable_function_entry(" << getCount() << ", " << getOffset() << ")]]";
+    break;
+  }
 }
 }
 
@@ -18378,6 +18772,8 @@ const char *PatchableFunctionEntryAttr::getSpelling() const {
   case 0:
     return "patchable_function_entry";
   case 1:
+    return "patchable_function_entry";
+  case 2:
     return "patchable_function_entry";
   }
 }
@@ -18460,6 +18856,10 @@ void PcsAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     OS << " [[gnu::pcs(\"" << PcsAttr::ConvertPCSTypeToStr(getPCS()) << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::pcs(\"" << PcsAttr::ConvertPCSTypeToStr(getPCS()) << "\")]]";
+    break;
+  }
 }
 }
 
@@ -18471,6 +18871,8 @@ const char *PcsAttr::getSpelling() const {
   case 0:
     return "pcs";
   case 1:
+    return "pcs";
+  case 2:
     return "pcs";
   }
 }
@@ -19312,6 +19714,10 @@ void PureAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const 
     OS << " [[gnu::pure]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::pure]]";
+    break;
+  }
 }
 }
 
@@ -19323,6 +19729,8 @@ const char *PureAttr::getSpelling() const {
   case 0:
     return "pure";
   case 1:
+    return "pure";
+  case 2:
     return "pure";
   }
 }
@@ -19414,6 +19822,10 @@ void RISCVInterruptAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Poli
     OS << " [[gnu::interrupt(\"" << RISCVInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::interrupt(\"" << RISCVInterruptAttr::ConvertInterruptTypeToStr(getInterrupt()) << "\")]]";
+    break;
+  }
 }
 }
 
@@ -19425,6 +19837,8 @@ const char *RISCVInterruptAttr::getSpelling() const {
   case 0:
     return "interrupt";
   case 1:
+    return "interrupt";
+  case 2:
     return "interrupt";
   }
 }
@@ -19485,6 +19899,10 @@ void RegCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     break;
   }
   case 2 : {
+    OS << " [[gnu::regcall]]";
+    break;
+  }
+  case 3 : {
     OS << " __regcall";
     break;
   }
@@ -19501,6 +19919,8 @@ const char *RegCallAttr::getSpelling() const {
   case 1:
     return "regcall";
   case 2:
+    return "regcall";
+  case 3:
     return "__regcall";
   }
 }
@@ -20205,6 +20625,7 @@ RestrictAttr::Spelling RestrictAttr::getSemanticSpelling() const {
     case 0: return Declspec_restrict;
     case 1: return GNU_malloc;
     case 2: return CXX11_gnu_malloc;
+    case 3: return C2x_gnu_malloc;
   }
 }
 RestrictAttr *RestrictAttr::clone(ASTContext &C) const {
@@ -20232,6 +20653,10 @@ void RestrictAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::malloc]]";
     break;
   }
+  case 3 : {
+    OS << " [[gnu::malloc]]";
+    break;
+  }
 }
 }
 
@@ -20245,6 +20670,8 @@ const char *RestrictAttr::getSpelling() const {
   case 1:
     return "malloc";
   case 2:
+    return "malloc";
+  case 3:
     return "malloc";
   }
 }
@@ -20399,6 +20826,10 @@ void ReturnsNonNullAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Poli
     OS << " [[gnu::returns_nonnull]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::returns_nonnull]]";
+    break;
+  }
 }
 }
 
@@ -20410,6 +20841,8 @@ const char *ReturnsNonNullAttr::getSpelling() const {
   case 0:
     return "returns_nonnull";
   case 1:
+    return "returns_nonnull";
+  case 2:
     return "returns_nonnull";
   }
 }
@@ -20469,6 +20902,10 @@ void ReturnsTwiceAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy
     OS << " [[gnu::returns_twice]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::returns_twice]]";
+    break;
+  }
 }
 }
 
@@ -20480,6 +20917,8 @@ const char *ReturnsTwiceAttr::getSpelling() const {
   case 0:
     return "returns_twice";
   case 1:
+    return "returns_twice";
+  case 2:
     return "returns_twice";
   }
 }
@@ -20735,7 +21174,8 @@ SectionAttr::Spelling SectionAttr::getSemanticSpelling() const {
     default: llvm_unreachable("Unknown spelling list index");
     case 0: return GNU_section;
     case 1: return CXX11_gnu_section;
-    case 2: return Declspec_allocate;
+    case 2: return C2x_gnu_section;
+    case 3: return Declspec_allocate;
   }
 }
 
@@ -20762,6 +21202,10 @@ void SectionAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     break;
   }
   case 2 : {
+    OS << " [[gnu::section(\"" << getName() << "\")]]";
+    break;
+  }
+  case 3 : {
     OS << " __declspec(allocate(\"" << getName() << "\"))";
     break;
   }
@@ -20778,6 +21222,8 @@ const char *SectionAttr::getSpelling() const {
   case 1:
     return "section";
   case 2:
+    return "section";
+  case 3:
     return "allocate";
   }
 }
@@ -20841,6 +21287,10 @@ void SelectAnyAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) c
     OS << " [[gnu::selectany]]";
     break;
   }
+  case 3 : {
+    OS << " [[gnu::selectany]]";
+    break;
+  }
 }
 }
 
@@ -20854,6 +21304,8 @@ const char *SelectAnyAttr::getSpelling() const {
   case 1:
     return "selectany";
   case 2:
+    return "selectany";
+  case 3:
     return "selectany";
   }
 }
@@ -20929,6 +21381,10 @@ void SentinelAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::sentinel(" << getSentinel() << ", " << getNullPos() << ")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::sentinel(" << getSentinel() << ", " << getNullPos() << ")]]";
+    break;
+  }
 }
 }
 
@@ -20940,6 +21396,8 @@ const char *SentinelAttr::getSpelling() const {
   case 0:
     return "sentinel";
   case 1:
+    return "sentinel";
+  case 2:
     return "sentinel";
   }
 }
@@ -21260,10 +21718,14 @@ void StdCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     break;
   }
   case 2 : {
-    OS << " __stdcall";
+    OS << " [[gnu::stdcall]]";
     break;
   }
   case 3 : {
+    OS << " __stdcall";
+    break;
+  }
+  case 4 : {
     OS << " _stdcall";
     break;
   }
@@ -21280,8 +21742,10 @@ const char *StdCallAttr::getSpelling() const {
   case 1:
     return "stdcall";
   case 2:
-    return "__stdcall";
+    return "stdcall";
   case 3:
+    return "__stdcall";
+  case 4:
     return "_stdcall";
   }
 }
@@ -21736,6 +22200,10 @@ void SysVABIAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << " [[gnu::sysv_abi]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::sysv_abi]]";
+    break;
+  }
 }
 }
 
@@ -21747,6 +22215,8 @@ const char *SysVABIAttr::getSpelling() const {
   case 0:
     return "sysv_abi";
   case 1:
+    return "sysv_abi";
+  case 2:
     return "sysv_abi";
   }
 }
@@ -21812,6 +22282,10 @@ void TLSModelAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     OS << " [[gnu::tls_model(\"" << getModel() << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::tls_model(\"" << getModel() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -21823,6 +22297,8 @@ const char *TLSModelAttr::getSpelling() const {
   case 0:
     return "tls_model";
   case 1:
+    return "tls_model";
+  case 2:
     return "tls_model";
   }
 }
@@ -21888,6 +22364,10 @@ void TargetAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     OS << " [[gnu::target(\"" << getFeaturesStr() << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::target(\"" << getFeaturesStr() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -21899,6 +22379,8 @@ const char *TargetAttr::getSpelling() const {
   case 0:
     return "target";
   case 1:
+    return "target";
+  case 2:
     return "target";
   }
 }
@@ -22052,10 +22534,14 @@ void ThisCallAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) co
     break;
   }
   case 2 : {
-    OS << " __thiscall";
+    OS << " [[gnu::thiscall]]";
     break;
   }
   case 3 : {
+    OS << " __thiscall";
+    break;
+  }
+  case 4 : {
     OS << " _thiscall";
     break;
   }
@@ -22072,8 +22558,10 @@ const char *ThisCallAttr::getSpelling() const {
   case 1:
     return "thiscall";
   case 2:
-    return "__thiscall";
+    return "thiscall";
   case 3:
+    return "__thiscall";
+  case 4:
     return "_thiscall";
   }
 }
@@ -22197,6 +22685,10 @@ void TransparentUnionAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Po
     OS << " [[gnu::transparent_union]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::transparent_union]]";
+    break;
+  }
 }
 }
 
@@ -22208,6 +22700,8 @@ const char *TransparentUnionAttr::getSpelling() const {
   case 0:
     return "transparent_union";
   case 1:
+    return "transparent_union";
+  case 2:
     return "transparent_union";
   }
 }
@@ -23105,7 +23599,8 @@ UnusedAttr::Spelling UnusedAttr::getSemanticSpelling() const {
     case 0: return CXX11_maybe_unused;
     case 1: return GNU_unused;
     case 2: return CXX11_gnu_unused;
-    case 3: return C2x_maybe_unused;
+    case 3: return C2x_gnu_unused;
+    case 4: return C2x_maybe_unused;
   }
 }
 UnusedAttr *UnusedAttr::clone(ASTContext &C) const {
@@ -23134,6 +23629,10 @@ void UnusedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) cons
     break;
   }
   case 3 : {
+    OS << " [[gnu::unused]]";
+    break;
+  }
+  case 4 : {
     OS << " [[maybe_unused]]";
     break;
   }
@@ -23152,6 +23651,8 @@ const char *UnusedAttr::getSpelling() const {
   case 2:
     return "unused";
   case 3:
+    return "unused";
+  case 4:
     return "maybe_unused";
   }
 }
@@ -23293,6 +23794,10 @@ void UsedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const 
     OS << " [[gnu::used]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::used]]";
+    break;
+  }
 }
 }
 
@@ -23305,11 +23810,38 @@ const char *UsedAttr::getSpelling() const {
     return "used";
   case 1:
     return "used";
+  case 2:
+    return "used";
   }
 }
 
 
 // UuidAttr implementation
+
+UuidAttr *UuidAttr::CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) UuidAttr(Ctx, CommonInfo, Guid, GuidDecl);
+  A->setImplicit(true);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+UuidAttr *UuidAttr::Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo) {
+  auto *A = new (Ctx) UuidAttr(Ctx, CommonInfo, Guid, GuidDecl);
+  if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+    A->setAttributeSpellingListIndex(0);
+  return A;
+}
+
+UuidAttr *UuidAttr::CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return CreateImplicit(Ctx, Guid, GuidDecl, I);
+}
+
+UuidAttr *UuidAttr::Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+  return Create(Ctx, Guid, GuidDecl, I);
+}
 
 UuidAttr *UuidAttr::CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo) {
   auto *A = new (Ctx) UuidAttr(Ctx, CommonInfo, Guid);
@@ -23338,9 +23870,22 @@ UuidAttr *UuidAttr::Create(ASTContext &Ctx, llvm::StringRef Guid, SourceRange Ra
 
 UuidAttr::UuidAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , llvm::StringRef Guid
+              , MSGuidDecl * GuidDecl
              )
   : InheritableAttr(Ctx, CommonInfo, attr::Uuid, false, false)
               , guidLength(Guid.size()),guid(new (Ctx, 1) char[guidLength])
+              , guidDecl(GuidDecl)
+  {
+    if (!Guid.empty())
+      std::memcpy(guid, Guid.data(), guidLength);
+}
+
+UuidAttr::UuidAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Guid
+             )
+  : InheritableAttr(Ctx, CommonInfo, attr::Uuid, false, false)
+              , guidLength(Guid.size()),guid(new (Ctx, 1) char[guidLength])
+              , guidDecl()
   {
     if (!Guid.empty())
       std::memcpy(guid, Guid.data(), guidLength);
@@ -23348,8 +23893,10 @@ UuidAttr::UuidAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
 
 
 
+
+
 UuidAttr *UuidAttr::clone(ASTContext &C) const {
-  auto *A = new (C) UuidAttr(C, *this, getGuid());
+  auto *A = new (C) UuidAttr(C, *this, getGuid(), guidDecl);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -23691,6 +24238,10 @@ void VisibilityAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     OS << " [[gnu::visibility(\"" << VisibilityAttr::ConvertVisibilityTypeToStr(getVisibility()) << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::visibility(\"" << VisibilityAttr::ConvertVisibilityTypeToStr(getVisibility()) << "\")]]";
+    break;
+  }
 }
 }
 
@@ -23702,6 +24253,8 @@ const char *VisibilityAttr::getSpelling() const {
   case 0:
     return "visibility";
   case 1:
+    return "visibility";
+  case 2:
     return "visibility";
   }
 }
@@ -23761,6 +24314,10 @@ void WarnUnusedAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) 
     OS << " [[gnu::warn_unused]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::warn_unused]]";
+    break;
+  }
 }
 }
 
@@ -23772,6 +24329,8 @@ const char *WarnUnusedAttr::getSpelling() const {
   case 0:
     return "warn_unused";
   case 1:
+    return "warn_unused";
+  case 2:
     return "warn_unused";
   }
 }
@@ -23827,6 +24386,7 @@ WarnUnusedResultAttr::Spelling WarnUnusedResultAttr::getSemanticSpelling() const
     case 2: return CXX11_clang_warn_unused_result;
     case 3: return GNU_warn_unused_result;
     case 4: return CXX11_gnu_warn_unused_result;
+    case 5: return C2x_gnu_warn_unused_result;
   }
 }
 
@@ -23864,6 +24424,10 @@ void WarnUnusedResultAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Po
     OS << " [[gnu::warn_unused_result(\"" << getMessage() << "\")]]";
     break;
   }
+  case 5 : {
+    OS << " [[gnu::warn_unused_result(\"" << getMessage() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -23881,6 +24445,8 @@ const char *WarnUnusedResultAttr::getSpelling() const {
   case 3:
     return "warn_unused_result";
   case 4:
+    return "warn_unused_result";
+  case 5:
     return "warn_unused_result";
   }
 }
@@ -23940,6 +24506,10 @@ void WeakAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const 
     OS << " [[gnu::weak]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::weak]]";
+    break;
+  }
 }
 }
 
@@ -23951,6 +24521,8 @@ const char *WeakAttr::getSpelling() const {
   case 0:
     return "weak";
   case 1:
+    return "weak";
+  case 2:
     return "weak";
   }
 }
@@ -24099,6 +24671,10 @@ void WeakRefAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) con
     OS << " [[gnu::weakref(\"" << getAliasee() << "\")]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::weakref(\"" << getAliasee() << "\")]]";
+    break;
+  }
 }
 }
 
@@ -24110,6 +24686,8 @@ const char *WeakRefAttr::getSpelling() const {
   case 0:
     return "weakref";
   case 1:
+    return "weakref";
+  case 2:
     return "weakref";
   }
 }
@@ -24491,6 +25069,10 @@ void X86ForceAlignArgPointerAttr::printPretty(raw_ostream &OS, const PrintingPol
     OS << " [[gnu::force_align_arg_pointer]]";
     break;
   }
+  case 2 : {
+    OS << " [[gnu::force_align_arg_pointer]]";
+    break;
+  }
 }
 }
 
@@ -24502,6 +25084,8 @@ const char *X86ForceAlignArgPointerAttr::getSpelling() const {
   case 0:
     return "force_align_arg_pointer";
   case 1:
+    return "force_align_arg_pointer";
+  case 2:
     return "force_align_arg_pointer";
   }
 }
@@ -24897,8 +25481,6 @@ const char *Attr::getSpelling() const {
     return cast<GuardedByAttr>(this)->getSpelling();
   case attr::GuardedVar:
     return cast<GuardedVarAttr>(this)->getSpelling();
-  case attr::HIPPinnedShadow:
-    return cast<HIPPinnedShadowAttr>(this)->getSpelling();
   case attr::Hot:
     return cast<HotAttr>(this)->getSpelling();
   case attr::IBAction:
@@ -24999,6 +25581,8 @@ const char *Attr::getSpelling() const {
     return cast<NoInlineAttr>(this)->getSpelling();
   case attr::NoInstrumentFunction:
     return cast<NoInstrumentFunctionAttr>(this)->getSpelling();
+  case attr::NoMerge:
+    return cast<NoMergeAttr>(this)->getSpelling();
   case attr::NoMicroMips:
     return cast<NoMicroMipsAttr>(this)->getSpelling();
   case attr::NoMips16:
@@ -25511,8 +26095,6 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<GuardedByAttr>(this)->clone(C);
   case attr::GuardedVar:
     return cast<GuardedVarAttr>(this)->clone(C);
-  case attr::HIPPinnedShadow:
-    return cast<HIPPinnedShadowAttr>(this)->clone(C);
   case attr::Hot:
     return cast<HotAttr>(this)->clone(C);
   case attr::IBAction:
@@ -25613,6 +26195,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<NoInlineAttr>(this)->clone(C);
   case attr::NoInstrumentFunction:
     return cast<NoInstrumentFunctionAttr>(this)->clone(C);
+  case attr::NoMerge:
+    return cast<NoMergeAttr>(this)->clone(C);
   case attr::NoMicroMips:
     return cast<NoMicroMipsAttr>(this)->clone(C);
   case attr::NoMips16:
@@ -26125,8 +26709,6 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<GuardedByAttr>(this)->printPretty(OS, Policy);
   case attr::GuardedVar:
     return cast<GuardedVarAttr>(this)->printPretty(OS, Policy);
-  case attr::HIPPinnedShadow:
-    return cast<HIPPinnedShadowAttr>(this)->printPretty(OS, Policy);
   case attr::Hot:
     return cast<HotAttr>(this)->printPretty(OS, Policy);
   case attr::IBAction:
@@ -26227,6 +26809,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<NoInlineAttr>(this)->printPretty(OS, Policy);
   case attr::NoInstrumentFunction:
     return cast<NoInstrumentFunctionAttr>(this)->printPretty(OS, Policy);
+  case attr::NoMerge:
+    return cast<NoMergeAttr>(this)->printPretty(OS, Policy);
   case attr::NoMicroMips:
     return cast<NoMicroMipsAttr>(this)->printPretty(OS, Policy);
   case attr::NoMips16:

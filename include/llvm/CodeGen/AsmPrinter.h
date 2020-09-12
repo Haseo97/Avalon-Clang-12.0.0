@@ -17,8 +17,6 @@
 
 #include "llvm/ADT/MapVector.h"
 #include "llvm/ADT/SmallVector.h"
-#include "llvm/ADT/StringRef.h"
-#include "llvm/ADT/Twine.h"
 #include "llvm/CodeGen/AsmPrinterHandler.h"
 #include "llvm/CodeGen/DwarfStringPoolEntry.h"
 #include "llvm/CodeGen/MachineFunctionPass.h"
@@ -48,7 +46,6 @@ class GlobalObject;
 class GlobalValue;
 class GlobalVariable;
 class MachineBasicBlock;
-class MachineBlockFrequencyInfo;
 class MachineConstantPoolValue;
 class MachineDominatorTree;
 class MachineFunction;
@@ -69,11 +66,12 @@ class MCSymbol;
 class MCTargetOptions;
 class MDNode;
 class Module;
-class ProfileSummaryInfo;
 class raw_ostream;
 class StackMaps;
+class StringRef;
 class TargetLoweringObjectFile;
 class TargetMachine;
+class Twine;
 
 namespace remarks {
 class RemarkStreamer;
@@ -112,10 +110,6 @@ public:
   /// Optimization remark emitter.
   MachineOptimizationRemarkEmitter *ORE;
 
-  MachineBlockFrequencyInfo *MBFI;
-
-  ProfileSummaryInfo *PSI;
-
   /// The symbol for the entry in __patchable_function_entires.
   MCSymbol *CurrentPatchableFunctionEntrySym = nullptr;
 
@@ -132,6 +126,14 @@ public:
   /// default, this is equal to CurrentFnSym.
   MCSymbol *CurrentFnSymForSize = nullptr;
 
+  /// Map a basic block section ID to the begin and end symbols of that section
+  ///  which determine the section's range.
+  struct MBBSectionRange {
+    MCSymbol *BeginLabel, *EndLabel;
+  };
+
+  MapVector<unsigned, MBBSectionRange> MBBSectionRanges;
+
   /// Map global GOT equivalent MCSymbols to GlobalVariables and keep track of
   /// its number of uses by other globals.
   using GOTEquivUsePair = std::pair<const GlobalVariable *, unsigned>;
@@ -140,6 +142,10 @@ public:
 private:
   MCSymbol *CurrentFnEnd = nullptr;
   MCSymbol *CurExceptionSym = nullptr;
+
+  // The symbol used to represent the start of the current BB section of the
+  // function. This is used to calculate the size of the BB section.
+  MCSymbol *CurrentSectionBeginSym = nullptr;
 
   // The garbage collection metadata printer table.
   void *GCMetadataPrinters = nullptr; // Really a DenseMap.
@@ -282,7 +288,7 @@ public:
     const class Function *Fn;
     uint8_t Version;
 
-    void emit(int, MCStreamer *, const MCSymbol *) const;
+    void emit(int, MCStreamer *) const;
   };
 
   // All the sleds to be emitted.
@@ -661,10 +667,10 @@ public:
 
   /// This emits linkage information about \p GVSym based on \p GV, if this is
   /// supported by the target.
-  void emitLinkage(const GlobalValue *GV, MCSymbol *GVSym) const;
+  virtual void emitLinkage(const GlobalValue *GV, MCSymbol *GVSym) const;
 
   /// Return the alignment for the specified \p GV.
-  static Align getGVAlignment(const GlobalValue *GV, const DataLayout &DL,
+  static Align getGVAlignment(const GlobalObject *GV, const DataLayout &DL,
                               Align InAlign = Align(1));
 
 private:
@@ -676,6 +682,9 @@ private:
 
   /// This method emits the header for the current function.
   virtual void emitFunctionHeader();
+
+  /// This method emits a comment next to header for the current function.
+  virtual void emitFunctionHeaderComment();
 
   /// Emit a blob of inline asm to the output streamer.
   void

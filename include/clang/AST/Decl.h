@@ -2125,19 +2125,17 @@ public:
   bool isTrivialForCall() const { return FunctionDeclBits.IsTrivialForCall; }
   void setTrivialForCall(bool IT) { FunctionDeclBits.IsTrivialForCall = IT; }
 
-  /// Whether this function is defaulted per C++0x. Only valid for
-  /// special member functions.
+  /// Whether this function is defaulted. Valid for e.g.
+  /// special member functions, defaulted comparisions (not methods!).
   bool isDefaulted() const { return FunctionDeclBits.IsDefaulted; }
   void setDefaulted(bool D = true) { FunctionDeclBits.IsDefaulted = D; }
 
-  /// Whether this function is explicitly defaulted per C++0x. Only valid
-  /// for special member functions.
+  /// Whether this function is explicitly defaulted.
   bool isExplicitlyDefaulted() const {
     return FunctionDeclBits.IsExplicitlyDefaulted;
   }
 
-  /// State that this function is explicitly defaulted per C++0x. Only valid
-  /// for special member functions.
+  /// State that this function is explicitly defaulted.
   void setExplicitlyDefaulted(bool ED = true) {
     FunctionDeclBits.IsExplicitlyDefaulted = ED;
   }
@@ -2441,6 +2439,14 @@ public:
   /// parameters have default arguments (in C++).
   unsigned getMinRequiredArguments() const;
 
+  /// Determine whether this function has a single parameter, or multiple
+  /// parameters where all but the first have default arguments.
+  ///
+  /// This notion is used in the definition of copy/move constructors and
+  /// initializer list constructors. Note that, unlike getMinRequiredArguments,
+  /// parameter packs are not treated specially here.
+  bool hasOneParamOrDefaultArgs() const;
+
   /// Find the source location information for how the type of this function
   /// was written. May be absent (for example if the function was declared via
   /// a typedef) and may contain a different type from that of the function
@@ -2612,7 +2618,13 @@ public:
   /// Retrieve the function declaration from which this function could
   /// be instantiated, if it is an instantiation (rather than a non-template
   /// or a specialization, for example).
-  FunctionDecl *getTemplateInstantiationPattern() const;
+  ///
+  /// If \p ForDefinition is \c false, explicit specializations will be treated
+  /// as if they were implicit instantiations. This will then find the pattern
+  /// corresponding to non-definition portions of the declaration, such as
+  /// default arguments and the exception specification.
+  FunctionDecl *
+  getTemplateInstantiationPattern(bool ForDefinition = true) const;
 
   /// Retrieve the primary template that this function template
   /// specialization either specializes or was instantiated from.
@@ -2920,12 +2932,15 @@ public:
 
   /// Returns the parent of this field declaration, which
   /// is the struct in which this field is defined.
+  ///
+  /// Returns null if this is not a normal class/struct field declaration, e.g.
+  /// ObjCAtDefsFieldDecl, ObjCIvarDecl.
   const RecordDecl *getParent() const {
-    return cast<RecordDecl>(getDeclContext());
+    return dyn_cast<RecordDecl>(getDeclContext());
   }
 
   RecordDecl *getParent() {
-    return cast<RecordDecl>(getDeclContext());
+    return dyn_cast<RecordDecl>(getDeclContext());
   }
 
   SourceRange getSourceRange() const override LLVM_READONLY;
@@ -3961,6 +3976,11 @@ public:
     return cast_or_null<RecordDecl>(TagDecl::getDefinition());
   }
 
+  /// Returns whether this record is a union, or contains (at any nesting level)
+  /// a union member. This is used by CMSE to warn about possible information
+  /// leaks.
+  bool isOrContainsUnion() const;
+
   // Iterator access to field members. The field iterator only visits
   // the non-static data members of this class, ignoring any static
   // data members, functions, constructors, destructors, etc.
@@ -4546,7 +4566,7 @@ inline bool IsEnumDeclScoped(EnumDecl *ED) {
 /// The new name looks likes this:
 ///  <name> + OpenMPVariantManglingSeparatorStr + <mangled OpenMP context>
 static constexpr StringRef getOpenMPVariantManglingSeparatorStr() {
-  return ".ompvariant";
+  return "$ompvariant";
 }
 
 } // namespace clang

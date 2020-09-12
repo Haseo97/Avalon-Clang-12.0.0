@@ -115,6 +115,12 @@ void reportGISelFailure(MachineFunction &MF, const TargetPassConfig &TPC,
                         const char *PassName, StringRef Msg,
                         const MachineInstr &MI);
 
+/// Report an ISel warning as a missed optimization remark to the LLVMContext's
+/// diagnostic stream.
+void reportGISelWarning(MachineFunction &MF, const TargetPassConfig &TPC,
+                        MachineOptimizationRemarkEmitter &MORE,
+                        MachineOptimizationRemarkMissed &R);
+
 /// If \p VReg is defined by a G_CONSTANT fits in int64_t
 /// returns it.
 Optional<int64_t> getConstantVRegVal(Register VReg,
@@ -165,11 +171,11 @@ APFloat getAPFloatFromSize(double Val, unsigned Size);
 /// fallback.
 void getSelectionDAGFallbackAnalysisUsage(AnalysisUsage &AU);
 
-Optional<APInt> ConstantFoldBinOp(unsigned Opcode, const unsigned Op1,
-                                  const unsigned Op2,
+Optional<APInt> ConstantFoldBinOp(unsigned Opcode, const Register Op1,
+                                  const Register Op2,
                                   const MachineRegisterInfo &MRI);
 
-Optional<APInt> ConstantFoldExtOp(unsigned Opcode, const unsigned Op1,
+Optional<APInt> ConstantFoldExtOp(unsigned Opcode, const Register Op1,
                                   uint64_t Imm, const MachineRegisterInfo &MRI);
 
 /// Returns true if \p Val can be assumed to never be a NaN. If \p SNaN is true,
