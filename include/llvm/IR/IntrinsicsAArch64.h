@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum AARCH64Intrinsics : unsigned {
 // Enum values for intrinsics
-    aarch64_addg = 294,                              // llvm.aarch64.addg
+    aarch64_addg = 316,                              // llvm.aarch64.addg
     aarch64_clrex,                             // llvm.aarch64.clrex
     aarch64_cls,                               // llvm.aarch64.cls
     aarch64_cls64,                             // llvm.aarch64.cls64
@@ -48,6 +48,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_irg,                               // llvm.aarch64.irg
     aarch64_irg_sp,                            // llvm.aarch64.irg.sp
     aarch64_isb,                               // llvm.aarch64.isb
+    aarch64_ld64b,                             // llvm.aarch64.ld64b
     aarch64_ldaxp,                             // llvm.aarch64.ldaxp
     aarch64_ldaxr,                             // llvm.aarch64.ldaxr
     aarch64_ldg,                               // llvm.aarch64.ldg
@@ -218,6 +219,10 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_neon_usqadd,                       // llvm.aarch64.neon.usqadd
     aarch64_neon_vcadd_rot270,                 // llvm.aarch64.neon.vcadd.rot270
     aarch64_neon_vcadd_rot90,                  // llvm.aarch64.neon.vcadd.rot90
+    aarch64_neon_vcmla_rot0,                   // llvm.aarch64.neon.vcmla.rot0
+    aarch64_neon_vcmla_rot180,                 // llvm.aarch64.neon.vcmla.rot180
+    aarch64_neon_vcmla_rot270,                 // llvm.aarch64.neon.vcmla.rot270
+    aarch64_neon_vcmla_rot90,                  // llvm.aarch64.neon.vcmla.rot90
     aarch64_neon_vcopy_lane,                   // llvm.aarch64.neon.vcopy.lane
     aarch64_neon_vcvtfp2fxs,                   // llvm.aarch64.neon.vcvtfp2fxs
     aarch64_neon_vcvtfp2fxu,                   // llvm.aarch64.neon.vcvtfp2fxu
@@ -233,6 +238,9 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sisd_fabd,                         // llvm.aarch64.sisd.fabd
     aarch64_sisd_fcvtxn,                       // llvm.aarch64.sisd.fcvtxn
     aarch64_space,                             // llvm.aarch64.space
+    aarch64_st64b,                             // llvm.aarch64.st64b
+    aarch64_st64bv,                            // llvm.aarch64.st64bv
+    aarch64_st64bv0,                           // llvm.aarch64.st64bv0
     aarch64_stg,                               // llvm.aarch64.stg
     aarch64_stgp,                              // llvm.aarch64.stgp
     aarch64_stlxp,                             // llvm.aarch64.stlxp

@@ -153,6 +153,14 @@ constexpr auto ACCC_wait = llvm::acc::Clause::ACCC_wait;
 constexpr auto ACCC_worker = llvm::acc::Clause::ACCC_worker;
 constexpr auto ACCC_write = llvm::acc::Clause::ACCC_write;
 
+enum class DefaultValue {
+  ACC_Default_present=0,
+  ACC_Default_none=1,
+};
+
+constexpr auto ACC_Default_present = llvm::acc::DefaultValue::ACC_Default_present;
+constexpr auto ACC_Default_none = llvm::acc::DefaultValue::ACC_Default_none;
+
 // Enumeration helper functions
 Directive getOpenACCDirectiveKind(llvm::StringRef Str);
 
@@ -164,6 +172,9 @@ llvm::StringRef getOpenACCClauseName(Clause C);
 
 /// Return true if \p C is a valid clause for \p D in version \p Version.
 bool isAllowedClauseForDirective(Directive D, Clause C, unsigned Version);
+
+DefaultValue getDefaultValue(StringRef);
+llvm::StringRef getOpenACCDefaultValueName(DefaultValue);
 
 } // namespace acc
 } // namespace llvm

@@ -138,6 +138,13 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::AlignNatural: {
+    const auto *SA = cast<AlignNaturalAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::AlignValue: {
     const auto *SA = cast<AlignValueAttr>(A);
     Record.push_back(A->isImplicit());
@@ -201,6 +208,9 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     Record.AddString(SA->getAnnotation());
+    Record.push_back(SA->args_size());
+    for (auto &Val : SA->args())
+      Record.AddStmt(Val);
     break;
   }
   case attr::AnyX86Interrupt: {
@@ -310,6 +320,14 @@ Record.push_back(SA->getInterrupt());
     Record.AddStmt(SA->getOffset());
     break;
   }
+  case attr::Assumption: {
+    const auto *SA = cast<AssumptionAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getAssumption());
+    break;
+  }
   case attr::Availability: {
     const auto *SA = cast<AvailabilityAttr>(A);
     Record.push_back(SA->isInherited());
@@ -339,6 +357,14 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
 Record.push_back(SA->getType());
+    break;
+  }
+  case attr::Builtin: {
+    const auto *SA = cast<BuiltinAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.push_back(SA->getID());
     break;
   }
   case attr::C11NoReturn: {
@@ -515,6 +541,11 @@ Record.push_back(SA->getGuard());
     Record.push_back(SA->encoding_size());
     for (auto &Val : SA->encoding())
       Record.push_back(Val);
+    break;
+  }
+  case attr::CalledOnce: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
     break;
   }
   case attr::Capability: {
@@ -712,6 +743,22 @@ Record.push_back(SA->getDiagnosticType());
     Record.AddString(SA->getMessage());
     break;
   }
+  case attr::EnforceTCB: {
+    const auto *SA = cast<EnforceTCBAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getTCBName());
+    break;
+  }
+  case attr::EnforceTCBLeaf: {
+    const auto *SA = cast<EnforceTCBLeafAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getTCBName());
+    break;
+  }
   case attr::EnumExtensibility: {
     const auto *SA = cast<EnumExtensibilityAttr>(A);
     Record.push_back(SA->isInherited());
@@ -821,6 +868,13 @@ Record.push_back(SA->getExtensibility());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::HIPManaged: {
+    const auto *SA = cast<HIPManagedAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::Hot: {
     const auto *SA = cast<HotAttr>(A);
     Record.push_back(SA->isInherited());
@@ -901,9 +955,21 @@ Record.push_back(SA->getExtensibility());
     Record.push_back(SA->getVersion());
     break;
   }
+  case attr::Leaf: {
+    const auto *SA = cast<LeafAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::LifetimeBound: {
     const auto *SA = cast<LifetimeBoundAttr>(A);
     Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::Likely: {
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     break;
@@ -1086,6 +1152,14 @@ Record.push_back(SA->getInterrupt());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::NSErrorDomain: {
+    const auto *SA = cast<NSErrorDomainAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddDeclRef(SA->getErrorDomain());
+    break;
+  }
   case attr::NSReturnsAutoreleased: {
     const auto *SA = cast<NSReturnsAutoreleasedAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1183,6 +1257,8 @@ Record.push_back(SA->getInterrupt());
     break;
   }
   case attr::NoMerge: {
+    const auto *SA = cast<NoMergeAttr>(A);
+    Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     break;
@@ -1333,6 +1409,7 @@ Record.push_back(SA->getBranchState());
     Record.push_back(A->isPackExpansion());
 Record.push_back(SA->getMapType());
 Record.push_back(SA->getDevType());
+    Record.push_back(SA->getLevel());
     break;
   }
   case attr::OMPDeclareVariant: {
@@ -1516,6 +1593,11 @@ Record.push_back(SA->getFamily());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::ObjCNonRuntimeProtocol: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::ObjCOwnership: {
     const auto *SA = cast<ObjCOwnershipAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1594,6 +1676,16 @@ Record.push_back(SA->getFamily());
     break;
   }
   case attr::OpenCLGlobalAddressSpace: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::OpenCLGlobalDeviceAddressSpace: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::OpenCLGlobalHostAddressSpace: {
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     break;
@@ -1762,6 +1854,14 @@ Record.push_back(SA->getPCS());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     Record.AddString(SA->getName());
+    break;
+  }
+  case attr::PreferredName: {
+    const auto *SA = cast<PreferredNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddTypeSourceInfo(SA->getTypedefTypeLoc());
     break;
   }
   case attr::PreserveAll: {
@@ -1980,6 +2080,13 @@ Record.push_back(SA->getNewState());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::StrictFP: {
+    const auto *SA = cast<StrictFPAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::Suppress: {
     const auto *SA = cast<SuppressAttr>(A);
     Record.push_back(A->isImplicit());
@@ -1987,6 +2094,46 @@ Record.push_back(SA->getNewState());
     Record.push_back(SA->diagnosticIdentifiers_size());
     for (auto &Val : SA->diagnosticIdentifiers())
       Record.AddString(Val);
+    break;
+  }
+  case attr::SwiftAsync: {
+    const auto *SA = cast<SwiftAsyncAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+Record.push_back(SA->getKind());
+    Record.push_back(SA->getCompletionHandlerIndex().serialize());
+    break;
+  }
+  case attr::SwiftAsyncName: {
+    const auto *SA = cast<SwiftAsyncNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getName());
+    break;
+  }
+  case attr::SwiftAttr: {
+    const auto *SA = cast<SwiftAttrAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getAttribute());
+    break;
+  }
+  case attr::SwiftBridge: {
+    const auto *SA = cast<SwiftBridgeAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getSwiftType());
+    break;
+  }
+  case attr::SwiftBridgedTypedef: {
+    const auto *SA = cast<SwiftBridgedTypedefAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
     break;
   }
   case attr::SwiftCall: {
@@ -2003,6 +2150,14 @@ Record.push_back(SA->getNewState());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::SwiftError: {
+    const auto *SA = cast<SwiftErrorAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+Record.push_back(SA->getConvention());
+    break;
+  }
   case attr::SwiftErrorResult: {
     const auto *SA = cast<SwiftErrorResultAttr>(A);
     Record.push_back(SA->isInherited());
@@ -2012,6 +2167,34 @@ Record.push_back(SA->getNewState());
   }
   case attr::SwiftIndirectResult: {
     const auto *SA = cast<SwiftIndirectResultAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::SwiftName: {
+    const auto *SA = cast<SwiftNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    Record.AddString(SA->getName());
+    break;
+  }
+  case attr::SwiftNewType: {
+    const auto *SA = cast<SwiftNewTypeAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+Record.push_back(SA->getNewtypeKind());
+    break;
+  }
+  case attr::SwiftObjCMembers: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::SwiftPrivate: {
+    const auto *SA = cast<SwiftPrivateAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
@@ -2100,6 +2283,11 @@ Record.push_back(SA->getTestState());
     Record.push_back(A->isPackExpansion());
     break;
   }
+  case attr::TypeNullableResult: {
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
   case attr::TypeTagForDatatype: {
     const auto *SA = cast<TypeTagForDatatypeAttr>(A);
     Record.push_back(SA->isInherited());
@@ -2136,6 +2324,11 @@ Record.push_back(SA->getImplicitReason());
   case attr::Uninitialized: {
     const auto *SA = cast<UninitializedAttr>(A);
     Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.push_back(A->isPackExpansion());
+    break;
+  }
+  case attr::Unlikely: {
     Record.push_back(A->isImplicit());
     Record.push_back(A->isPackExpansion());
     break;

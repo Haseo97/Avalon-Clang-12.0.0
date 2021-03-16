@@ -128,7 +128,7 @@ CHECKER("alpha.cplusplus.IteratorModeling", IteratorModeling, "Models iterators 
 CHECKER("alpha.cplusplus.IteratorRange", IteratorRangeChecker, "Check for iterators used outside their valid ranges", "https://clang-analyzer.llvm.org/alpha_checks.html#alpha.cplusplus.IteratorRange", false)
 CHECKER("alpha.osx.cocoa.IvarInvalidationModeling", IvarInvalidationModeling, "Gathers information for annotation driven invalidation checking for classes that contains a method annotated with 'objc_instance_variable_invalidator'", "", true)
 CHECKER("alpha.llvm.Conventions", LLVMConventionsChecker, "Check code for LLVM codebase conventions", "https://clang-analyzer.llvm.org/alpha_checks.html#alpha.llvm.Conventions", false)
-CHECKER("debug.DumpLiveStmts", LiveStatementsDumper, "Print results of live statement analysis", "", true)
+CHECKER("debug.DumpLiveExprs", LiveExpressionsDumper, "Print results of live expression analysis", "", true)
 CHECKER("debug.DumpLiveVars", LiveVariablesDumper, "Print results of live variable analysis", "", true)
 CHECKER("osx.MIG", MIGChecker, "Find violations of the Mach Interface Generator calling convention", "", false)
 CHECKER("optin.mpi.MPI-Checker", MPIChecker, "Checks MPI code", "https://clang-analyzer.llvm.org/available_checks.html#optin.mpi.MPI-Checker", false)
@@ -215,6 +215,8 @@ CHECKER("debug.DumpTraversal", TraversalDumper, "Print branch conditions as they
 CHECKER("apiModeling.TrustNonnull", TrustNonnullChecker, "Trust that returns from framework methods annotated with _Nonnull are not null", "", true)
 CHECKER("security.insecureAPI.UncheckedReturn", UncheckedReturn, "Warn on uses of functions whose return values must be always checked", "https://clang-analyzer.llvm.org/available_checks.html#security.insecureAPI.UncheckedReturn", false)
 CHECKER("alpha.webkit.UncountedCallArgsChecker", UncountedCallArgsChecker, "Check uncounted call arguments.", "https://clang-analyzer.llvm.org/available_checks.html#alpha.webkit.UncountedCallArgsChecker", false)
+CHECKER("webkit.UncountedLambdaCapturesChecker", UncountedLambdaCapturesChecker, "Check uncounted lambda captures.", "https://clang-analyzer.llvm.org/available_checks.html#webkit.UncountedLambdaCapturesChecker", false)
+CHECKER("alpha.webkit.UncountedLocalVarsChecker", UncountedLocalVarsChecker, "Check uncounted local variables.", "https://clang-analyzer.llvm.org/available_checks.html#alpha.webkit.UncountedLocalVarsChecker", false)
 CHECKER("core.uninitialized.Branch", UndefBranchChecker, "Check for uninitialized values used as branch conditions", "https://clang-analyzer.llvm.org/available_checks.html#core.uninitialized.Branch", false)
 CHECKER("core.uninitialized.CapturedBlockVariable", UndefCapturedBlockVarChecker, "Check for blocks that capture uninitialized values", "", false)
 CHECKER("core.UndefinedBinaryOperatorResult", UndefResultChecker, "Check for undefined results of binary operators", "https://clang-analyzer.llvm.org/available_checks.html#core.UndefinedBinaryOperatorResult", false)
@@ -313,7 +315,9 @@ CHECKER_DEPENDENCY("security.insecureAPI.vfork", "security.insecureAPI.SecurityS
 #endif // GET_CHECKER_DEPENDENCIES
 
 #ifdef GET_CHECKER_WEAK_DEPENDENCIES
+CHECKER_WEAK_DEPENDENCY("alpha.unix.StdCLibraryFunctionArgs", "core.CallAndMessage")
 CHECKER_WEAK_DEPENDENCY("alpha.unix.StdCLibraryFunctionArgs", "core.NonNullParamChecker")
+CHECKER_WEAK_DEPENDENCY("alpha.unix.StdCLibraryFunctionArgs", "alpha.unix.Stream")
 
 #endif // GET_CHECKER_WEAK_DEPENDENCIES
 

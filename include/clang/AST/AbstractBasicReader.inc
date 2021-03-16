@@ -23,6 +23,20 @@ struct ReadDispatcher<llvm::APSInt> {
   }
 };
 template <>
+struct ReadDispatcher<APValue> {
+  template <class BasicReader, class... Args>
+  static APValue read(BasicReader &R, Args &&... args) {
+    return R.readAPValue(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct ReadDispatcher<APValue::ValueKind> {
+  template <class BasicReader, class... Args>
+  static APValue::ValueKind read(BasicReader &R, Args &&... args) {
+    return R.readAPValueKind(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct ReadDispatcher<ArrayType::ArraySizeModifier> {
   template <class BasicReader, class... Args>
   static ArrayType::ArraySizeModifier read(BasicReader &R, Args &&... args) {
@@ -128,6 +142,13 @@ struct ReadDispatcher<FunctionProtoType::ExtParameterInfo> {
   }
 };
 template <>
+struct ReadDispatcher<llvm::FixedPointSemantics> {
+  template <class BasicReader, class... Args>
+  static llvm::FixedPointSemantics read(BasicReader &R, Args &&... args) {
+    return R.readFixedPointSemantics(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct ReadDispatcher<FunctionDecl*> {
   template <class BasicReader, class... Args>
   static FunctionDecl* read(BasicReader &R, Args &&... args) {
@@ -139,6 +160,20 @@ struct ReadDispatcher<IdentifierInfo*> {
   template <class BasicReader, class... Args>
   static IdentifierInfo* read(BasicReader &R, Args &&... args) {
     return R.readIdentifier(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct ReadDispatcher<APValue::LValuePathEntry> {
+  template <class BasicReader, class... Args>
+  static APValue::LValuePathEntry read(BasicReader &R, Args &&... args) {
+    return R.readLValuePathEntry(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct ReadDispatcher<APValue::LValuePathSerializationHelper> {
+  template <class BasicReader, class... Args>
+  static APValue::LValuePathSerializationHelper read(BasicReader &R, Args &&... args) {
+    return R.readLValuePathSerializationHelper(std::forward<Args>(args)...);
   }
 };
 template <>
@@ -482,6 +517,217 @@ protected:
 public:
   ASTContext &getASTContext() { return C; }
   Impl &asImpl() { return static_cast<Impl&>(*this); }
+  APValue readAPValue() {
+    auto &ctx = asImpl().getASTContext();
+    auto &&subR = asImpl().readObject();
+    APValue::ValueKind kind = subR.find("kind").readAPValueKind();
+    switch (kind) {
+    case APValue::None: {
+     return APValue(); 
+    }
+
+    case APValue::FixedPoint: {
+    llvm::FixedPointSemantics semantics = subR.find("semantics").readFixedPointSemantics();
+    llvm::APSInt value = subR.find("value").readAPSInt();
+    
+    return APValue(llvm::APFixedPoint(std::move(value), semantics));
+  
+    }
+
+    case APValue::ComplexInt: {
+    llvm::APSInt real = subR.find("real").readAPSInt();
+    llvm::APSInt imag = subR.find("imag").readAPSInt();
+     return APValue(real, imag); 
+    }
+
+    case APValue::ComplexFloat: {
+    uint32_t semantics = subR.find("semantics").readUInt32();
+    llvm::APInt real = subR.find("real").readAPInt();
+    llvm::APInt imag = subR.find("imag").readAPInt();
+    
+    const llvm::fltSemantics &sema = llvm::APFloatBase::EnumToSemantics(
+        static_cast<llvm::APFloatBase::Semantics>(semantics));
+    return APValue(llvm::APFloat(sema, real),
+                   llvm::APFloat(sema, imag));
+  
+    }
+
+    case APValue::Vector: {
+    llvm::SmallVector<APValue, 8> elements_buffer_0;
+    llvm::ArrayRef<APValue> elements = subR.find("elements").template readArray<APValue>(elements_buffer_0);
+    
+    APValue result;
+    result.MakeVector();
+    unsigned length = elements.size();
+    (void)result.setVectorUninit(length);
+    for (unsigned i = 0; i < length; i++)
+      result.getVectorElt(i) = elements[i];
+    return result;
+  
+    }
+
+    case APValue::Indeterminate: {
+     return APValue::IndeterminateValue(); 
+    }
+
+    case APValue::Array: {
+    uint32_t totalLength = subR.find("totalLength").readUInt32();
+    bool hasFiller = subR.find("hasFiller").readBool();
+    llvm::SmallVector<APValue, 8> elements_buffer_0;
+    llvm::ArrayRef<APValue> elements = subR.find("elements").template readArray<APValue>(elements_buffer_0);
+    
+    APValue result;
+    unsigned initLength = elements.size() - (hasFiller ? 1 : 0);
+    result.MakeArray(initLength, totalLength);
+    for (unsigned i = 0; i < initLength; ++i)
+      result.getArrayInitializedElt(i) = elements[i];
+    if (hasFiller)
+      result.getArrayFiller() = elements.back();
+    return result;
+  
+    }
+
+    case APValue::Struct: {
+    llvm::SmallVector<APValue, 8> bases_buffer_0;
+    llvm::ArrayRef<APValue> bases = subR.find("bases").template readArray<APValue>(bases_buffer_0);
+    llvm::SmallVector<APValue, 8> fields_buffer_0;
+    llvm::ArrayRef<APValue> fields = subR.find("fields").template readArray<APValue>(fields_buffer_0);
+    
+    APValue result;
+    result.MakeStruct(bases.size(), fields.size());
+    for (unsigned i = 0; i < bases.size(); ++i)
+      result.getStructBase(i) = bases[i];
+    for (unsigned i = 0; i < fields.size(); ++i)
+      result.getStructField(i) = fields[i];
+    return result;
+  
+    }
+
+    case APValue::Union: {
+    Decl* fieldDecl = subR.find("fieldDecl").readDeclRef();
+    APValue value = subR.find("value").readAPValue();
+    
+    return APValue(cast<clang::FieldDecl>(fieldDecl), std::move(value));
+  
+    }
+
+    case APValue::AddrLabelDiff: {
+    Stmt* lhs = subR.find("lhs").readStmtRef();
+    Stmt* rhs = subR.find("rhs").readStmtRef();
+    
+    return APValue(cast<AddrLabelExpr>(lhs), cast<AddrLabelExpr>(rhs));
+  
+    }
+
+    case APValue::Int: {
+    llvm::APSInt value = subR.find("value").readAPSInt();
+     return APValue(value); 
+    }
+
+    case APValue::MemberPointer: {
+    bool isDerived = subR.find("isDerived").readBool();
+    ValueDecl* member = subR.find("member").readValueDeclRef();
+    llvm::SmallVector<CXXRecordDecl*, 8> memberPath_buffer_0;
+    llvm::ArrayRef<CXXRecordDecl*> memberPath = subR.find("memberPath").template readArray<CXXRecordDecl*>(memberPath_buffer_0);
+    
+    APValue result;
+    unsigned pathSize = memberPath.size();
+    const CXXRecordDecl **pathArray =
+        result.setMemberPointerUninit(member, isDerived, pathSize).data();
+    for (unsigned i = 0; i < pathSize; ++i)
+      pathArray[i] = memberPath[i]->getCanonicalDecl();
+    return result;
+  
+    }
+
+    case APValue::LValue: {
+    bool hasLValuePath = subR.find("hasLValuePath").readBool();
+    bool isLValueOnePastTheEnd = subR.find("isLValueOnePastTheEnd").readBool();
+    bool isExpr = subR.find("isExpr").readBool();
+    bool isTypeInfo = subR.find("isTypeInfo").readBool();
+    bool hasBase = subR.find("hasBase").readBool();
+    bool isNullPtr = subR.find("isNullPtr").readBool();
+    llvm::Optional<QualType> typeInfo;
+    if ( hasBase && isTypeInfo ) {
+      typeInfo.emplace(subR.find("typeInfo").readQualType());
+    }
+    llvm::Optional<QualType> type;
+    if ( hasBase && isTypeInfo ) {
+      type.emplace(subR.find("type").readQualType());
+    }
+    llvm::Optional<uint32_t> callIndex;
+    if ( hasBase && !isTypeInfo ) {
+      callIndex.emplace(subR.find("callIndex").readUInt32());
+    }
+    llvm::Optional<uint32_t> version;
+    if ( hasBase && !isTypeInfo ) {
+      version.emplace(subR.find("version").readUInt32());
+    }
+    llvm::Optional<Stmt*> stmt;
+    if ( hasBase && !isTypeInfo && isExpr ) {
+      stmt.emplace(subR.find("stmt").readStmtRef());
+    }
+    llvm::Optional<Decl*> decl;
+    if ( hasBase && !isTypeInfo && !isExpr ) {
+      decl.emplace(subR.find("decl").readDeclRef());
+    }
+    uint32_t offsetQuantity = subR.find("offsetQuantity").readUInt32();
+    llvm::SmallVector<APValue::LValuePathEntry, 8> lvaluePath_buffer_0;
+    llvm::Optional<APValue::LValuePathSerializationHelper> lvaluePath;
+    if ( hasLValuePath ) {
+      lvaluePath.emplace(subR.find("lvaluePath").readLValuePathSerializationHelper(lvaluePath_buffer_0));
+    }
+    
+    (void)ctx;
+    APValue::LValueBase base;
+    QualType elemTy;
+    if (hasBase) {
+      if (isTypeInfo) {
+        base = APValue::LValueBase::getTypeInfo(
+            TypeInfoLValue(typeInfo.getValue().getTypePtr()), type.getValue());
+        elemTy = base.getTypeInfoType();
+      } else if (isExpr) {
+        base = APValue::LValueBase(cast<Expr>(stmt.getValue()),
+                                   callIndex.getValue(), version.getValue());
+        elemTy = base.get<const Expr *>()->getType();
+      } else {
+        base = APValue::LValueBase(cast<ValueDecl>(decl.getValue()),
+                                   callIndex.getValue(), version.getValue());
+        elemTy = base.get<const ValueDecl *>()->getType();
+      }
+    }
+    CharUnits offset = CharUnits::fromQuantity(offsetQuantity);
+    APValue result;
+    result.MakeLValue();
+    if (!hasLValuePath) {
+      result.setLValue(base, offset, APValue::NoLValuePath{}, isNullPtr);
+      return result;
+    }
+    auto pathLength = lvaluePath->Path.size();
+    APValue::LValuePathEntry *path = result.setLValueUninit(
+        base, offset, pathLength, isLValueOnePastTheEnd, isNullPtr).data();
+    assert(lvaluePath->getType() == elemTy && "Unexpected type reference!");
+    llvm::copy(lvaluePath->Path, path);
+    return result;
+  
+    }
+
+    case APValue::Float: {
+    llvm::APInt value = subR.find("value").readAPInt();
+    uint32_t semantics = subR.find("semantics").readUInt32();
+    
+    const llvm::fltSemantics &floatSema = llvm::APFloatBase::EnumToSemantics(
+        static_cast<llvm::APFloatBase::Semantics>(semantics));
+    return APValue(llvm::APFloat(floatSema, value));
+  
+    }
+
+    }
+    llvm_unreachable("bad APValue::ValueKind");
+  }
+  APValue::ValueKind readAPValueKind() {
+    return asImpl().template readEnum<APValue::ValueKind>();
+  }
   ArrayType::ArraySizeModifier readArraySizeModifier() {
     return asImpl().template readEnum<ArrayType::ArraySizeModifier>();
   }
@@ -508,11 +754,38 @@ public:
     auto &&subR = asImpl().readObject();
     DeclarationName::NameKind kind = subR.find("kind").readDeclarationNameKind();
     switch (kind) {
+    case DeclarationName::CXXLiteralOperatorName: {
+    IdentifierInfo* identifier = subR.find("identifier").readIdentifier();
+    
+    return ctx.DeclarationNames.getCXXLiteralOperatorName(identifier);
+  
+    }
+
+    case DeclarationName::CXXUsingDirective: {
+    
+    return DeclarationName::getUsingDirectiveName();
+  
+    }
+
     case DeclarationName::Identifier: {
     IdentifierInfo* identifier = subR.find("identifier").readIdentifier();
     
     return DeclarationName(identifier);
   
+    }
+
+    case DeclarationName::ObjCZeroArgSelector: {
+    Selector selector = subR.find("selector").readSelector();
+    
+      return DeclarationName(selector);
+    
+    }
+
+    case DeclarationName::ObjCOneArgSelector: {
+    Selector selector = subR.find("selector").readSelector();
+    
+      return DeclarationName(selector);
+    
     }
 
     case DeclarationName::ObjCMultiArgSelector: {
@@ -558,33 +831,6 @@ public:
     
     return ctx.DeclarationNames.getCXXOperatorName(operatorKind);
   
-    }
-
-    case DeclarationName::CXXLiteralOperatorName: {
-    IdentifierInfo* identifier = subR.find("identifier").readIdentifier();
-    
-    return ctx.DeclarationNames.getCXXLiteralOperatorName(identifier);
-  
-    }
-
-    case DeclarationName::CXXUsingDirective: {
-    
-    return DeclarationName::getUsingDirectiveName();
-  
-    }
-
-    case DeclarationName::ObjCZeroArgSelector: {
-    Selector selector = subR.find("selector").readSelector();
-    
-      return DeclarationName(selector);
-    
-    }
-
-    case DeclarationName::ObjCOneArgSelector: {
-    Selector selector = subR.find("selector").readSelector();
-    
-      return DeclarationName(selector);
-    
     }
 
     }

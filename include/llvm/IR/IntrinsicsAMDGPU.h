@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum AMDGCNIntrinsics : unsigned {
 // Enum values for intrinsics
-    amdgcn_alignbit = 1131,                           // llvm.amdgcn.alignbit
+    amdgcn_alignbit = 1161,                           // llvm.amdgcn.alignbit
     amdgcn_alignbyte,                          // llvm.amdgcn.alignbyte
     amdgcn_atomic_dec,                         // llvm.amdgcn.atomic.dec
     amdgcn_atomic_inc,                         // llvm.amdgcn.atomic.inc
@@ -73,11 +73,13 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_ds_swizzle,                         // llvm.amdgcn.ds.swizzle
     amdgcn_else,                               // llvm.amdgcn.else
     amdgcn_end_cf,                             // llvm.amdgcn.end.cf
+    amdgcn_endpgm,                             // llvm.amdgcn.endpgm
     amdgcn_exp,                                // llvm.amdgcn.exp
     amdgcn_exp_compr,                          // llvm.amdgcn.exp.compr
     amdgcn_fcmp,                               // llvm.amdgcn.fcmp
     amdgcn_fdiv_fast,                          // llvm.amdgcn.fdiv.fast
     amdgcn_fdot2,                              // llvm.amdgcn.fdot2
+    amdgcn_fma_legacy,                         // llvm.amdgcn.fma.legacy
     amdgcn_fmad_ftz,                           // llvm.amdgcn.fmad.ftz
     amdgcn_fmed3,                              // llvm.amdgcn.fmed3
     amdgcn_fmul_legacy,                        // llvm.amdgcn.fmul.legacy
@@ -194,6 +196,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_image_atomic_xor_2dmsaa,            // llvm.amdgcn.image.atomic.xor.2dmsaa
     amdgcn_image_atomic_xor_3d,                // llvm.amdgcn.image.atomic.xor.3d
     amdgcn_image_atomic_xor_cube,              // llvm.amdgcn.image.atomic.xor.cube
+    amdgcn_image_bvh_intersect_ray,            // llvm.amdgcn.image.bvh.intersect.ray
     amdgcn_image_gather4_2d,                   // llvm.amdgcn.image.gather4.2d
     amdgcn_image_gather4_2darray,              // llvm.amdgcn.image.gather4.2darray
     amdgcn_image_gather4_b_2d,                 // llvm.amdgcn.image.gather4.b.2d
@@ -611,6 +614,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_raw_buffer_atomic_and,              // llvm.amdgcn.raw.buffer.atomic.and
     amdgcn_raw_buffer_atomic_cmpswap,          // llvm.amdgcn.raw.buffer.atomic.cmpswap
     amdgcn_raw_buffer_atomic_dec,              // llvm.amdgcn.raw.buffer.atomic.dec
+    amdgcn_raw_buffer_atomic_fadd,             // llvm.amdgcn.raw.buffer.atomic.fadd
     amdgcn_raw_buffer_atomic_inc,              // llvm.amdgcn.raw.buffer.atomic.inc
     amdgcn_raw_buffer_atomic_or,               // llvm.amdgcn.raw.buffer.atomic.or
     amdgcn_raw_buffer_atomic_smax,             // llvm.amdgcn.raw.buffer.atomic.smax
@@ -668,6 +672,7 @@ enum AMDGCNIntrinsics : unsigned {
     amdgcn_struct_buffer_atomic_and,           // llvm.amdgcn.struct.buffer.atomic.and
     amdgcn_struct_buffer_atomic_cmpswap,       // llvm.amdgcn.struct.buffer.atomic.cmpswap
     amdgcn_struct_buffer_atomic_dec,           // llvm.amdgcn.struct.buffer.atomic.dec
+    amdgcn_struct_buffer_atomic_fadd,          // llvm.amdgcn.struct.buffer.atomic.fadd
     amdgcn_struct_buffer_atomic_inc,           // llvm.amdgcn.struct.buffer.atomic.inc
     amdgcn_struct_buffer_atomic_or,            // llvm.amdgcn.struct.buffer.atomic.or
     amdgcn_struct_buffer_atomic_smax,          // llvm.amdgcn.struct.buffer.atomic.smax

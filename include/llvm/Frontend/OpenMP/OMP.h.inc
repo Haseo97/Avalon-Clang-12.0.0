@@ -11,8 +11,10 @@ LLVM_ENABLE_BITMASK_ENUMS_IN_NAMESPACE();
 
 enum class Directive {
   OMPD_allocate,
+  OMPD_assumes,
   OMPD_atomic,
   OMPD_barrier,
+  OMPD_begin_assumes,
   OMPD_begin_declare_variant,
   OMPD_cancel,
   OMPD_cancellation_point,
@@ -31,6 +33,7 @@ enum class Directive {
   OMPD_distribute_simd,
   OMPD_do,
   OMPD_do_simd,
+  OMPD_end_assumes,
   OMPD_end_declare_target,
   OMPD_end_declare_variant,
   OMPD_end_do,
@@ -97,11 +100,13 @@ enum class Directive {
   OMPD_workshare,
 };
 
-static constexpr std::size_t Directive_enumSize = 85;
+static constexpr std::size_t Directive_enumSize = 88;
 
 constexpr auto OMPD_allocate = llvm::omp::Directive::OMPD_allocate;
+constexpr auto OMPD_assumes = llvm::omp::Directive::OMPD_assumes;
 constexpr auto OMPD_atomic = llvm::omp::Directive::OMPD_atomic;
 constexpr auto OMPD_barrier = llvm::omp::Directive::OMPD_barrier;
+constexpr auto OMPD_begin_assumes = llvm::omp::Directive::OMPD_begin_assumes;
 constexpr auto OMPD_begin_declare_variant = llvm::omp::Directive::OMPD_begin_declare_variant;
 constexpr auto OMPD_cancel = llvm::omp::Directive::OMPD_cancel;
 constexpr auto OMPD_cancellation_point = llvm::omp::Directive::OMPD_cancellation_point;
@@ -120,6 +125,7 @@ constexpr auto OMPD_distribute_parallel_for_simd = llvm::omp::Directive::OMPD_di
 constexpr auto OMPD_distribute_simd = llvm::omp::Directive::OMPD_distribute_simd;
 constexpr auto OMPD_do = llvm::omp::Directive::OMPD_do;
 constexpr auto OMPD_do_simd = llvm::omp::Directive::OMPD_do_simd;
+constexpr auto OMPD_end_assumes = llvm::omp::Directive::OMPD_end_assumes;
 constexpr auto OMPD_end_declare_target = llvm::omp::Directive::OMPD_end_declare_target;
 constexpr auto OMPD_end_declare_variant = llvm::omp::Directive::OMPD_end_declare_variant;
 constexpr auto OMPD_end_do = llvm::omp::Directive::OMPD_end_do;
@@ -345,6 +351,42 @@ constexpr auto OMPC_use_device_ptr = llvm::omp::Clause::OMPC_use_device_ptr;
 constexpr auto OMPC_uses_allocators = llvm::omp::Clause::OMPC_uses_allocators;
 constexpr auto OMPC_write = llvm::omp::Clause::OMPC_write;
 
+enum class OrderKind {
+  OMP_ORDER_concurrent=2,
+};
+
+constexpr auto OMP_ORDER_concurrent = llvm::omp::OrderKind::OMP_ORDER_concurrent;
+
+enum class ProcBindKind {
+  OMP_PROC_BIND_master=2,
+  OMP_PROC_BIND_close=3,
+  OMP_PROC_BIND_spread=4,
+  OMP_PROC_BIND_default=5,
+  OMP_PROC_BIND_unknown=6,
+};
+
+constexpr auto OMP_PROC_BIND_master = llvm::omp::ProcBindKind::OMP_PROC_BIND_master;
+constexpr auto OMP_PROC_BIND_close = llvm::omp::ProcBindKind::OMP_PROC_BIND_close;
+constexpr auto OMP_PROC_BIND_spread = llvm::omp::ProcBindKind::OMP_PROC_BIND_spread;
+constexpr auto OMP_PROC_BIND_default = llvm::omp::ProcBindKind::OMP_PROC_BIND_default;
+constexpr auto OMP_PROC_BIND_unknown = llvm::omp::ProcBindKind::OMP_PROC_BIND_unknown;
+
+enum class ScheduleKind {
+  OMP_SCHEDULE_Static=2,
+  OMP_SCHEDULE_Dynamic=3,
+  OMP_SCHEDULE_Guided=4,
+  OMP_SCHEDULE_Auto=5,
+  OMP_SCHEDULE_Runtime=6,
+  OMP_SCHEDULE_Default=7,
+};
+
+constexpr auto OMP_SCHEDULE_Static = llvm::omp::ScheduleKind::OMP_SCHEDULE_Static;
+constexpr auto OMP_SCHEDULE_Dynamic = llvm::omp::ScheduleKind::OMP_SCHEDULE_Dynamic;
+constexpr auto OMP_SCHEDULE_Guided = llvm::omp::ScheduleKind::OMP_SCHEDULE_Guided;
+constexpr auto OMP_SCHEDULE_Auto = llvm::omp::ScheduleKind::OMP_SCHEDULE_Auto;
+constexpr auto OMP_SCHEDULE_Runtime = llvm::omp::ScheduleKind::OMP_SCHEDULE_Runtime;
+constexpr auto OMP_SCHEDULE_Default = llvm::omp::ScheduleKind::OMP_SCHEDULE_Default;
+
 // Enumeration helper functions
 Directive getOpenMPDirectiveKind(llvm::StringRef Str);
 
@@ -356,6 +398,13 @@ llvm::StringRef getOpenMPClauseName(Clause C);
 
 /// Return true if \p C is a valid clause for \p D in version \p Version.
 bool isAllowedClauseForDirective(Directive D, Clause C, unsigned Version);
+
+OrderKind getOrderKind(StringRef);
+llvm::StringRef getOpenMPOrderKindName(OrderKind);
+ProcBindKind getProcBindKind(StringRef);
+llvm::StringRef getOpenMPProcBindKindName(ProcBindKind);
+ScheduleKind getScheduleKind(StringRef);
+llvm::StringRef getOpenMPScheduleKindName(ScheduleKind);
 
 } // namespace omp
 } // namespace llvm

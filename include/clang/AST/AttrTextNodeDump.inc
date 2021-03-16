@@ -104,6 +104,10 @@
     const auto *SA = cast<AssertCapabilityAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
   }
+  void VisitAssumptionAttr(const AssumptionAttr *A) {
+    const auto *SA = cast<AssumptionAttr>(A); (void)SA;
+    OS << " \"" << SA->getAssumption() << "\"";
+  }
   void VisitAvailabilityAttr(const AvailabilityAttr *A) {
     const auto *SA = cast<AvailabilityAttr>(A); (void)SA;
     if (SA->getPlatform())
@@ -124,6 +128,10 @@
       OS << " ByRef";
       break;
     }
+  }
+  void VisitBuiltinAttr(const BuiltinAttr *A) {
+    const auto *SA = cast<BuiltinAttr>(A); (void)SA;
+    OS << " " << SA->getID();
   }
   void VisitCFGuardAttr(const CFGuardAttr *A) {
     const auto *SA = cast<CFGuardAttr>(A); (void)SA;
@@ -227,6 +235,14 @@
     const auto *SA = cast<EnableIfAttr>(A); (void)SA;
     OS << " \"" << SA->getMessage() << "\"";
   }
+  void VisitEnforceTCBAttr(const EnforceTCBAttr *A) {
+    const auto *SA = cast<EnforceTCBAttr>(A); (void)SA;
+    OS << " \"" << SA->getTCBName() << "\"";
+  }
+  void VisitEnforceTCBLeafAttr(const EnforceTCBLeafAttr *A) {
+    const auto *SA = cast<EnforceTCBLeafAttr>(A); (void)SA;
+    OS << " \"" << SA->getTCBName() << "\"";
+  }
   void VisitEnumExtensibilityAttr(const EnumExtensibilityAttr *A) {
     const auto *SA = cast<EnumExtensibilityAttr>(A); (void)SA;
     switch(SA->getExtensibility()) {
@@ -329,6 +345,12 @@
     case LoopHintAttr::Numeric:
       OS << " Numeric";
       break;
+    case LoopHintAttr::FixedWidth:
+      OS << " FixedWidth";
+      break;
+    case LoopHintAttr::ScalableWidth:
+      OS << " ScalableWidth";
+      break;
     case LoopHintAttr::AssumeSafety:
       OS << " AssumeSafety";
       break;
@@ -400,6 +422,11 @@
     const auto *SA = cast<ModeAttr>(A); (void)SA;
     if (SA->getMode())
       OS << " " << SA->getMode()->getName();
+  }
+  void VisitNSErrorDomainAttr(const NSErrorDomainAttr *A) {
+    const auto *SA = cast<NSErrorDomainAttr>(A); (void)SA;
+    OS << " ";
+    dumpBareDeclRef(SA->getErrorDomain());
   }
   void VisitNoBuiltinAttr(const NoBuiltinAttr *A) {
     const auto *SA = cast<NoBuiltinAttr>(A); (void)SA;
@@ -492,6 +519,7 @@
       OS << " DT_Any";
       break;
     }
+    OS << " " << SA->getLevel();
   }
   void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
     const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
@@ -650,6 +678,10 @@
     const auto *SA = cast<PragmaClangTextSectionAttr>(A); (void)SA;
     OS << " \"" << SA->getName() << "\"";
   }
+  void VisitPreferredNameAttr(const PreferredNameAttr *A) {
+    const auto *SA = cast<PreferredNameAttr>(A); (void)SA;
+    OS << " " << SA->getTypedefType().getAsString();
+  }
   void VisitRISCVInterruptAttr(const RISCVInterruptAttr *A) {
     const auto *SA = cast<RISCVInterruptAttr>(A); (void)SA;
     switch(SA->getInterrupt()) {
@@ -727,6 +759,70 @@
     const auto *SA = cast<SuppressAttr>(A); (void)SA;
     for (const auto &Val : SA->diagnosticIdentifiers())
       OS << " " << Val;
+  }
+  void VisitSwiftAsyncAttr(const SwiftAsyncAttr *A) {
+    const auto *SA = cast<SwiftAsyncAttr>(A); (void)SA;
+    switch(SA->getKind()) {
+    case SwiftAsyncAttr::None:
+      OS << " None";
+      break;
+    case SwiftAsyncAttr::SwiftPrivate:
+      OS << " SwiftPrivate";
+      break;
+    case SwiftAsyncAttr::NotSwiftPrivate:
+      OS << " NotSwiftPrivate";
+      break;
+    }
+    if (SA->getCompletionHandlerIndex().isValid())
+      OS << " " << SA->getCompletionHandlerIndex().getSourceIndex();
+  }
+  void VisitSwiftAsyncNameAttr(const SwiftAsyncNameAttr *A) {
+    const auto *SA = cast<SwiftAsyncNameAttr>(A); (void)SA;
+    OS << " \"" << SA->getName() << "\"";
+  }
+  void VisitSwiftAttrAttr(const SwiftAttrAttr *A) {
+    const auto *SA = cast<SwiftAttrAttr>(A); (void)SA;
+    OS << " \"" << SA->getAttribute() << "\"";
+  }
+  void VisitSwiftBridgeAttr(const SwiftBridgeAttr *A) {
+    const auto *SA = cast<SwiftBridgeAttr>(A); (void)SA;
+    OS << " \"" << SA->getSwiftType() << "\"";
+  }
+  void VisitSwiftErrorAttr(const SwiftErrorAttr *A) {
+    const auto *SA = cast<SwiftErrorAttr>(A); (void)SA;
+    switch(SA->getConvention()) {
+    case SwiftErrorAttr::None:
+      OS << " None";
+      break;
+    case SwiftErrorAttr::NonNullError:
+      OS << " NonNullError";
+      break;
+    case SwiftErrorAttr::NullResult:
+      OS << " NullResult";
+      break;
+    case SwiftErrorAttr::ZeroResult:
+      OS << " ZeroResult";
+      break;
+    case SwiftErrorAttr::NonZeroResult:
+      OS << " NonZeroResult";
+      break;
+    }
+  }
+  void VisitSwiftNameAttr(const SwiftNameAttr *A) {
+    const auto *SA = cast<SwiftNameAttr>(A); (void)SA;
+    OS << " \"" << SA->getName() << "\"";
+  }
+  void VisitSwiftNewTypeAttr(const SwiftNewTypeAttr *A) {
+    const auto *SA = cast<SwiftNewTypeAttr>(A); (void)SA;
+    OS << " " << A->getSpelling();
+    switch(SA->getNewtypeKind()) {
+    case SwiftNewTypeAttr::NK_Struct:
+      OS << " NK_Struct";
+      break;
+    case SwiftNewTypeAttr::NK_Enum:
+      OS << " NK_Enum";
+      break;
+    }
   }
   void VisitTLSModelAttr(const TLSModelAttr *A) {
     const auto *SA = cast<TLSModelAttr>(A); (void)SA;

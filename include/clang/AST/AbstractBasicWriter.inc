@@ -23,6 +23,20 @@ struct WriteDispatcher<llvm::APSInt> {
   }
 };
 template <>
+struct WriteDispatcher<APValue> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeAPValue(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct WriteDispatcher<APValue::ValueKind> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeAPValueKind(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct WriteDispatcher<ArrayType::ArraySizeModifier> {
   template <class BasicWriter, class... Args>
   static void write(BasicWriter &W, Args &&... args) {
@@ -156,6 +170,13 @@ struct WriteDispatcher<FunctionProtoType::ExtParameterInfo> {
   }
 };
 template <>
+struct WriteDispatcher<llvm::FixedPointSemantics> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeFixedPointSemantics(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct WriteDispatcher<FunctionDecl*> {
   template <class BasicWriter, class... Args>
   static void write(BasicWriter &W, Args &&... args) {
@@ -181,6 +202,20 @@ struct WriteDispatcher<const IdentifierInfo*> {
   template <class BasicWriter, class... Args>
   static void write(BasicWriter &W, Args &&... args) {
     return W.writeIdentifier(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct WriteDispatcher<APValue::LValuePathEntry> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeLValuePathEntry(std::forward<Args>(args)...);
+  }
+};
+template <>
+struct WriteDispatcher<APValue::LValuePathSerializationHelper> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeLValuePathSerializationHelper(std::forward<Args>(args)...);
   }
 };
 template <>
@@ -697,10 +732,221 @@ struct PackOptionalValue<const ValueDecl*> {
 
 template <class Impl>
 class BasicWriterBase {
+  ASTContext &C;
 protected:
-  BasicWriterBase() {}
+  BasicWriterBase(ASTContext &ctx) : C(ctx) {}
 public:
+  ASTContext &getASTContext() { return C; }
   Impl &asImpl() { return static_cast<Impl&>(*this); }
+  void writeAPValue(const APValue & node) {
+    auto &&subW = asImpl().writeObject();
+    APValue::ValueKind kind = (node.getKind());
+    subW.find("kind").writeAPValueKind(kind);
+    switch (kind) {
+    case APValue::None: {
+    return;
+    }
+
+    case APValue::FixedPoint: {
+    llvm::FixedPointSemantics semantics = ( node.getFixedPoint().getSemantics() );
+    subW.find("semantics").writeFixedPointSemantics(semantics);
+    llvm::APSInt value = ( node.getFixedPoint().getValue() );
+    subW.find("value").writeAPSInt(value);
+    return;
+    }
+
+    case APValue::ComplexInt: {
+    llvm::APSInt real = ( node.getComplexIntReal() );
+    subW.find("real").writeAPSInt(real);
+    llvm::APSInt imag = ( node.getComplexIntImag() );
+    subW.find("imag").writeAPSInt(imag);
+    return;
+    }
+
+    case APValue::ComplexFloat: {
+    
+    auto sema = llvm::APFloatBase::SemanticsToEnum(
+        node.getComplexFloatReal().getSemantics());
+    assert(sema == llvm::APFloatBase::SemanticsToEnum(
+        node.getComplexFloatImag().getSemantics()));
+  
+    uint32_t semantics = ( static_cast<uint32_t>(sema) );
+    subW.find("semantics").writeUInt32(semantics);
+    llvm::APInt real = ( node.getComplexFloatReal().bitcastToAPInt() );
+    subW.find("real").writeAPInt(real);
+    llvm::APInt imag = ( node.getComplexFloatImag().bitcastToAPInt() );
+    subW.find("imag").writeAPInt(imag);
+    return;
+    }
+
+    case APValue::Vector: {
+    
+    SmallVector<APValue, 4> buffer;
+    unsigned len = node.getVectorLength();
+    for (unsigned i = 0; i < len; ++i)
+      buffer.push_back(node.getVectorElt(i));
+  
+    llvm::ArrayRef<APValue> elements = ( buffer );
+    subW.find("elements").writeArray(elements);
+    return;
+    }
+
+    case APValue::Indeterminate: {
+    return;
+    }
+
+    case APValue::Array: {
+    
+    SmallVector<APValue, 4> buffer{};
+    unsigned initLength = node.getArrayInitializedElts();
+    for (unsigned i = 0; i < initLength; ++i)
+      buffer.push_back(node.getArrayInitializedElt(i));
+    if (node.hasArrayFiller())
+      buffer.push_back(node.getArrayFiller());
+  
+    uint32_t totalLength = ( node.getArraySize() );
+    subW.find("totalLength").writeUInt32(totalLength);
+    bool hasFiller = ( node.hasArrayFiller() );
+    subW.find("hasFiller").writeBool(hasFiller);
+    llvm::ArrayRef<APValue> elements = ( buffer );
+    subW.find("elements").writeArray(elements);
+    return;
+    }
+
+    case APValue::Struct: {
+    
+    SmallVector<APValue, 4> structBases;
+    unsigned numBases = node.getStructNumBases();
+    for (unsigned i = 0; i < numBases; ++i)
+      structBases.push_back(node.getStructBase(i));
+    SmallVector<APValue, 4> structFields;
+    unsigned numFields = node.getStructNumFields();
+    for (unsigned i = 0; i < numFields; ++i)
+      structFields.push_back(node.getStructField(i));
+  
+    llvm::ArrayRef<APValue> bases = ( structBases );
+    subW.find("bases").writeArray(bases);
+    llvm::ArrayRef<APValue> fields = ( structFields );
+    subW.find("fields").writeArray(fields);
+    return;
+    }
+
+    case APValue::Union: {
+    const Decl* fieldDecl = ( node.getUnionField() );
+    subW.find("fieldDecl").writeDeclRef(fieldDecl);
+    APValue value = ( node.getUnionValue() );
+    subW.find("value").writeAPValue(value);
+    return;
+    }
+
+    case APValue::AddrLabelDiff: {
+    const Stmt* lhs = ( const_cast<AddrLabelExpr *>(node.getAddrLabelDiffLHS()) );
+    subW.find("lhs").writeStmtRef(lhs);
+    const Stmt* rhs = ( const_cast<AddrLabelExpr *>(node.getAddrLabelDiffRHS()) );
+    subW.find("rhs").writeStmtRef(rhs);
+    return;
+    }
+
+    case APValue::Int: {
+    llvm::APSInt value = ( node.getInt() );
+    subW.find("value").writeAPSInt(value);
+    return;
+    }
+
+    case APValue::MemberPointer: {
+    bool isDerived = ( node.isMemberPointerToDerivedMember() );
+    subW.find("isDerived").writeBool(isDerived);
+    const ValueDecl* member = ( node.getMemberPointerDecl() );
+    subW.find("member").writeValueDeclRef(member);
+    llvm::ArrayRef<const CXXRecordDecl*> memberPath = ( node.getMemberPointerPath() );
+    subW.find("memberPath").writeArray(memberPath);
+    return;
+    }
+
+    case APValue::LValue: {
+    
+    auto lvalueBase = node.getLValueBase();
+    const Expr *expr =
+        lvalueBase ? lvalueBase.dyn_cast<const Expr *>() : nullptr;
+    bool lvalueBaseIsExpr = (bool) expr;
+    bool lvalueBaseIsTypeInfo = lvalueBase.is<TypeInfoLValue>();
+    QualType elemTy;
+    if (lvalueBase) {
+      if (lvalueBaseIsTypeInfo) {
+        elemTy = lvalueBase.getTypeInfoType();
+      } else if (lvalueBaseIsExpr) {
+        elemTy = expr->getType();
+      } else {
+        elemTy = lvalueBase.get<const ValueDecl *>()->getType();
+      }
+    }
+  
+    bool hasLValuePath = ( node.hasLValuePath() );
+    subW.find("hasLValuePath").writeBool(hasLValuePath);
+    bool isLValueOnePastTheEnd = ( node.isLValueOnePastTheEnd() );
+    subW.find("isLValueOnePastTheEnd").writeBool(isLValueOnePastTheEnd);
+    bool isExpr = ( lvalueBaseIsExpr );
+    subW.find("isExpr").writeBool(isExpr);
+    bool isTypeInfo = ( lvalueBaseIsTypeInfo );
+    subW.find("isTypeInfo").writeBool(isTypeInfo);
+    bool hasBase = ( static_cast<bool>(lvalueBase) );
+    subW.find("hasBase").writeBool(hasBase);
+    bool isNullPtr = ( node.isNullPointer() );
+    subW.find("isNullPtr").writeBool(isNullPtr);
+    if ( hasBase && isTypeInfo ) {
+    QualType typeInfo = (
+      QualType(node.getLValueBase().get<TypeInfoLValue>().getType(), 0)
+    );
+    subW.find("typeInfo").writeQualType(typeInfo);
+    }
+    if ( hasBase && isTypeInfo ) {
+    QualType type = ( node.getLValueBase().getTypeInfoType() );
+    subW.find("type").writeQualType(type);
+    }
+    if ( hasBase && !isTypeInfo ) {
+    uint32_t callIndex = ( node.getLValueBase().getCallIndex() );
+    subW.find("callIndex").writeUInt32(callIndex);
+    }
+    if ( hasBase && !isTypeInfo ) {
+    uint32_t version = ( node.getLValueBase().getVersion() );
+    subW.find("version").writeUInt32(version);
+    }
+    if ( hasBase && !isTypeInfo && isExpr ) {
+    const Stmt* stmt = ( const_cast<Expr *>(expr) );
+    subW.find("stmt").writeStmtRef(stmt);
+    }
+    if ( hasBase && !isTypeInfo && !isExpr ) {
+    const Decl* decl = ( lvalueBase.get<const ValueDecl *>() );
+    subW.find("decl").writeDeclRef(decl);
+    }
+    uint32_t offsetQuantity = ( node.getLValueOffset().getQuantity() );
+    subW.find("offsetQuantity").writeUInt32(offsetQuantity);
+    if ( hasLValuePath ) {
+    APValue::LValuePathSerializationHelper lvaluePath = (
+      APValue::LValuePathSerializationHelper(node.getLValuePath(), elemTy)
+    );
+    subW.find("lvaluePath").writeLValuePathSerializationHelper(lvaluePath);
+    }
+    return;
+    }
+
+    case APValue::Float: {
+    llvm::APInt value = ( node.getFloat().bitcastToAPInt() );
+    subW.find("value").writeAPInt(value);
+    uint32_t semantics = (
+      static_cast<uint32_t>(
+        llvm::APFloatBase::SemanticsToEnum(node.getFloat().getSemantics()))
+    );
+    subW.find("semantics").writeUInt32(semantics);
+    return;
+    }
+
+    }
+    llvm_unreachable("bad APValue::ValueKind");
+  }
+  void writeAPValueKind(APValue::ValueKind value) {
+    asImpl().writeEnum(value);
+  }
   void writeArraySizeModifier(ArrayType::ArraySizeModifier value) {
     asImpl().writeEnum(value);
   }
@@ -727,9 +973,31 @@ public:
     DeclarationName::NameKind kind = (node.getNameKind());
     subW.find("kind").writeDeclarationNameKind(kind);
     switch (kind) {
+    case DeclarationName::CXXLiteralOperatorName: {
+    const IdentifierInfo* identifier = ( node.getCXXLiteralIdentifier() );
+    subW.find("identifier").writeIdentifier(identifier);
+    return;
+    }
+
+    case DeclarationName::CXXUsingDirective: {
+    return;
+    }
+
     case DeclarationName::Identifier: {
     const IdentifierInfo* identifier = ( node.getAsIdentifierInfo() );
     subW.find("identifier").writeIdentifier(identifier);
+    return;
+    }
+
+    case DeclarationName::ObjCZeroArgSelector: {
+    Selector selector = ( node.getObjCSelector() );
+    subW.find("selector").writeSelector(selector);
+    return;
+    }
+
+    case DeclarationName::ObjCOneArgSelector: {
+    Selector selector = ( node.getObjCSelector() );
+    subW.find("selector").writeSelector(selector);
     return;
     }
 
@@ -766,28 +1034,6 @@ public:
     case DeclarationName::CXXOperatorName: {
     OverloadedOperatorKind operatorKind = ( node.getCXXOverloadedOperator() );
     subW.find("operatorKind").writeOverloadedOperatorKind(operatorKind);
-    return;
-    }
-
-    case DeclarationName::CXXLiteralOperatorName: {
-    const IdentifierInfo* identifier = ( node.getCXXLiteralIdentifier() );
-    subW.find("identifier").writeIdentifier(identifier);
-    return;
-    }
-
-    case DeclarationName::CXXUsingDirective: {
-    return;
-    }
-
-    case DeclarationName::ObjCZeroArgSelector: {
-    Selector selector = ( node.getObjCSelector() );
-    subW.find("selector").writeSelector(selector);
-    return;
-    }
-
-    case DeclarationName::ObjCOneArgSelector: {
-    Selector selector = ( node.getObjCSelector() );
-    subW.find("selector").writeSelector(selector);
     return;
     }
 

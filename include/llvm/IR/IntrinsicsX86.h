@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum X86Intrinsics : unsigned {
 // Enum values for intrinsics
-    x86_3dnow_pavgusb = 6812,                         // llvm.x86.3dnow.pavgusb
+    x86_3dnow_pavgusb = 8661,                         // llvm.x86.3dnow.pavgusb
     x86_3dnow_pf2id,                           // llvm.x86.3dnow.pf2id
     x86_3dnow_pfacc,                           // llvm.x86.3dnow.pfacc
     x86_3dnow_pfadd,                           // llvm.x86.3dnow.pfadd
@@ -39,6 +39,14 @@ enum X86Intrinsics : unsigned {
     x86_3dnowa_pswapd,                         // llvm.x86.3dnowa.pswapd
     x86_addcarry_32,                           // llvm.x86.addcarry.32
     x86_addcarry_64,                           // llvm.x86.addcarry.64
+    x86_aesdec128kl,                           // llvm.x86.aesdec128kl
+    x86_aesdec256kl,                           // llvm.x86.aesdec256kl
+    x86_aesdecwide128kl,                       // llvm.x86.aesdecwide128kl
+    x86_aesdecwide256kl,                       // llvm.x86.aesdecwide256kl
+    x86_aesenc128kl,                           // llvm.x86.aesenc128kl
+    x86_aesenc256kl,                           // llvm.x86.aesenc256kl
+    x86_aesencwide128kl,                       // llvm.x86.aesencwide128kl
+    x86_aesencwide256kl,                       // llvm.x86.aesencwide256kl
     x86_aesni_aesdec,                          // llvm.x86.aesni.aesdec
     x86_aesni_aesdec_256,                      // llvm.x86.aesni.aesdec.256
     x86_aesni_aesdec_512,                      // llvm.x86.aesni.aesdec.512
@@ -194,12 +202,6 @@ enum X86Intrinsics : unsigned {
     x86_avx512_broadcastmw_128,                // llvm.x86.avx512.broadcastmw.128
     x86_avx512_broadcastmw_256,                // llvm.x86.avx512.broadcastmw.256
     x86_avx512_broadcastmw_512,                // llvm.x86.avx512.broadcastmw.512
-    x86_avx512_cmp_pd_128,                     // llvm.x86.avx512.cmp.pd.128
-    x86_avx512_cmp_pd_256,                     // llvm.x86.avx512.cmp.pd.256
-    x86_avx512_cmp_pd_512,                     // llvm.x86.avx512.cmp.pd.512
-    x86_avx512_cmp_ps_128,                     // llvm.x86.avx512.cmp.ps.128
-    x86_avx512_cmp_ps_256,                     // llvm.x86.avx512.cmp.ps.256
-    x86_avx512_cmp_ps_512,                     // llvm.x86.avx512.cmp.ps.512
     x86_avx512_conflict_d_128,                 // llvm.x86.avx512.conflict.d.128
     x86_avx512_conflict_d_256,                 // llvm.x86.avx512.conflict.d.256
     x86_avx512_conflict_d_512,                 // llvm.x86.avx512.conflict.d.512
@@ -275,6 +277,12 @@ enum X86Intrinsics : unsigned {
     x86_avx512_ktestz_w,                       // llvm.x86.avx512.ktestz.w
     x86_avx512_mask_add_sd_round,              // llvm.x86.avx512.mask.add.sd.round
     x86_avx512_mask_add_ss_round,              // llvm.x86.avx512.mask.add.ss.round
+    x86_avx512_mask_cmp_pd_128,                // llvm.x86.avx512.mask.cmp.pd.128
+    x86_avx512_mask_cmp_pd_256,                // llvm.x86.avx512.mask.cmp.pd.256
+    x86_avx512_mask_cmp_pd_512,                // llvm.x86.avx512.mask.cmp.pd.512
+    x86_avx512_mask_cmp_ps_128,                // llvm.x86.avx512.mask.cmp.ps.128
+    x86_avx512_mask_cmp_ps_256,                // llvm.x86.avx512.mask.cmp.ps.256
+    x86_avx512_mask_cmp_ps_512,                // llvm.x86.avx512.mask.cmp.ps.512
     x86_avx512_mask_cmp_sd,                    // llvm.x86.avx512.mask.cmp.sd
     x86_avx512_mask_cmp_ss,                    // llvm.x86.avx512.mask.cmp.ss
     x86_avx512_mask_compress,                  // llvm.x86.avx512.mask.compress
@@ -784,10 +792,13 @@ enum X86Intrinsics : unsigned {
     x86_cldemote,                              // llvm.x86.cldemote
     x86_clflushopt,                            // llvm.x86.clflushopt
     x86_clrssbsy,                              // llvm.x86.clrssbsy
+    x86_clui,                                  // llvm.x86.clui
     x86_clwb,                                  // llvm.x86.clwb
     x86_clzero,                                // llvm.x86.clzero
     x86_directstore32,                         // llvm.x86.directstore32
     x86_directstore64,                         // llvm.x86.directstore64
+    x86_encodekey128,                          // llvm.x86.encodekey128
+    x86_encodekey256,                          // llvm.x86.encodekey256
     x86_enqcmd,                                // llvm.x86.enqcmd
     x86_enqcmds,                               // llvm.x86.enqcmds
     x86_flags_read_u32,                        // llvm.x86.flags.read.u32
@@ -808,6 +819,7 @@ enum X86Intrinsics : unsigned {
     x86_invpcid,                               // llvm.x86.invpcid
     x86_ldtilecfg,                             // llvm.x86.ldtilecfg
     x86_llwpcb,                                // llvm.x86.llwpcb
+    x86_loadiwkey,                             // llvm.x86.loadiwkey
     x86_lwpins32,                              // llvm.x86.lwpins32
     x86_lwpins64,                              // llvm.x86.lwpins64
     x86_lwpval32,                              // llvm.x86.lwpval32
@@ -913,6 +925,7 @@ enum X86Intrinsics : unsigned {
     x86_seh_ehguard,                           // llvm.x86.seh.ehguard
     x86_seh_ehregnode,                         // llvm.x86.seh.ehregnode
     x86_seh_lsda,                              // llvm.x86.seh.lsda
+    x86_senduipi,                              // llvm.x86.senduipi
     x86_serialize,                             // llvm.x86.serialize
     x86_setssbsy,                              // llvm.x86.setssbsy
     x86_sha1msg1,                              // llvm.x86.sha1msg1
@@ -1095,20 +1108,26 @@ enum X86Intrinsics : unsigned {
     x86_ssse3_psign_w,                         // llvm.x86.ssse3.psign.w
     x86_ssse3_psign_w_128,                     // llvm.x86.ssse3.psign.w.128
     x86_sttilecfg,                             // llvm.x86.sttilecfg
+    x86_stui,                                  // llvm.x86.stui
     x86_subborrow_32,                          // llvm.x86.subborrow.32
     x86_subborrow_64,                          // llvm.x86.subborrow.64
     x86_tbm_bextri_u32,                        // llvm.x86.tbm.bextri.u32
     x86_tbm_bextri_u64,                        // llvm.x86.tbm.bextri.u64
     x86_tdpbf16ps,                             // llvm.x86.tdpbf16ps
     x86_tdpbssd,                               // llvm.x86.tdpbssd
+    x86_tdpbssd_internal,                      // llvm.x86.tdpbssd.internal
     x86_tdpbsud,                               // llvm.x86.tdpbsud
     x86_tdpbusd,                               // llvm.x86.tdpbusd
     x86_tdpbuud,                               // llvm.x86.tdpbuud
+    x86_testui,                                // llvm.x86.testui
     x86_tileloadd64,                           // llvm.x86.tileloadd64
+    x86_tileloadd64_internal,                  // llvm.x86.tileloadd64.internal
     x86_tileloaddt164,                         // llvm.x86.tileloaddt164
     x86_tilerelease,                           // llvm.x86.tilerelease
     x86_tilestored64,                          // llvm.x86.tilestored64
+    x86_tilestored64_internal,                 // llvm.x86.tilestored64.internal
     x86_tilezero,                              // llvm.x86.tilezero
+    x86_tilezero_internal,                     // llvm.x86.tilezero.internal
     x86_tpause,                                // llvm.x86.tpause
     x86_umonitor,                              // llvm.x86.umonitor
     x86_umwait,                                // llvm.x86.umwait

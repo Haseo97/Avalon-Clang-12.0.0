@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum NVVMIntrinsics : unsigned {
 // Enum values for intrinsics
-    nvvm_add_rm_d = 4738,                             // llvm.nvvm.add.rm.d
+    nvvm_add_rm_d = 4776,                             // llvm.nvvm.add.rm.d
     nvvm_add_rm_f,                             // llvm.nvvm.add.rm.f
     nvvm_add_rm_ftz_f,                         // llvm.nvvm.add.rm.ftz.f
     nvvm_add_rn_d,                             // llvm.nvvm.add.rn.d

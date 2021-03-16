@@ -40,6 +40,11 @@
     if (SA->isAlignmentExpr())
       Visit(SA->getAlignmentExpr());
   }
+  void VisitAnnotateAttr(const AnnotateAttr *A) {
+    const auto *SA = cast<AnnotateAttr>(A); (void)SA;
+    for (AnnotateAttr::args_iterator I = SA->args_begin(), E = SA->args_end(); I != E; ++I)
+      Visit(*I);
+  }
   void VisitAssertCapabilityAttr(const AssertCapabilityAttr *A) {
     const auto *SA = cast<AssertCapabilityAttr>(A); (void)SA;
     for (AssertCapabilityAttr::args_iterator I = SA->args_begin(), E = SA->args_end(); I != E; ++I)

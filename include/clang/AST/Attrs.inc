@@ -21,7 +21,7 @@ public:
 
   // Factory methods
   static AArch64VectorPcsAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AArch64VectorPcsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AArch64VectorPcsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AArch64VectorPcsAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AArch64VectorPcsAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -53,7 +53,7 @@ public:
 
   // Factory methods
   static AMDGPUFlatWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AMDGPUFlatWorkGroupSizeAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AMDGPUFlatWorkGroupSizeAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo);
   static AMDGPUFlatWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AMDGPUFlatWorkGroupSizeAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -93,7 +93,7 @@ public:
 
   // Factory methods
   static AMDGPUNumSGPRAttr *CreateImplicit(ASTContext &Ctx, unsigned NumSGPR, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AMDGPUNumSGPRAttr *Create(ASTContext &Ctx, unsigned NumSGPR, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AMDGPUNumSGPRAttr *Create(ASTContext &Ctx, unsigned NumSGPR, const AttributeCommonInfo &CommonInfo);
   static AMDGPUNumSGPRAttr *CreateImplicit(ASTContext &Ctx, unsigned NumSGPR, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AMDGPUNumSGPRAttr *Create(ASTContext &Ctx, unsigned NumSGPR, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -128,7 +128,7 @@ public:
 
   // Factory methods
   static AMDGPUNumVGPRAttr *CreateImplicit(ASTContext &Ctx, unsigned NumVGPR, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AMDGPUNumVGPRAttr *Create(ASTContext &Ctx, unsigned NumVGPR, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AMDGPUNumVGPRAttr *Create(ASTContext &Ctx, unsigned NumVGPR, const AttributeCommonInfo &CommonInfo);
   static AMDGPUNumVGPRAttr *CreateImplicit(ASTContext &Ctx, unsigned NumVGPR, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AMDGPUNumVGPRAttr *Create(ASTContext &Ctx, unsigned NumVGPR, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -165,7 +165,7 @@ public:
 
   // Factory methods
   static AMDGPUWavesPerEUAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AMDGPUWavesPerEUAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AMDGPUWavesPerEUAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, const AttributeCommonInfo &CommonInfo);
   static AMDGPUWavesPerEUAttr *CreateImplicit(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AMDGPUWavesPerEUAttr *Create(ASTContext &Ctx, Expr * Min, Expr * Max, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -219,7 +219,7 @@ public:
 
   // Factory methods
   static ARMInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ARMInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ARMInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo);
   static ARMInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ARMInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -257,7 +257,7 @@ public:
 
   // Factory methods
   static AVRInterruptAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AVRInterruptAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AVRInterruptAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AVRInterruptAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AVRInterruptAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -286,7 +286,7 @@ public:
 
   // Factory methods
   static AVRSignalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AVRSignalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AVRSignalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AVRSignalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AVRSignalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -317,7 +317,7 @@ public:
 
   // Factory methods
   static AbiTagAttr *CreateImplicit(ASTContext &Ctx, StringRef *Tags, unsigned TagsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AbiTagAttr *Create(ASTContext &Ctx, StringRef *Tags, unsigned TagsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AbiTagAttr *Create(ASTContext &Ctx, StringRef *Tags, unsigned TagsSize, const AttributeCommonInfo &CommonInfo);
   static AbiTagAttr *CreateImplicit(ASTContext &Ctx, StringRef *Tags, unsigned TagsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AbiTagAttr *Create(ASTContext &Ctx, StringRef *Tags, unsigned TagsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -362,7 +362,7 @@ public:
 
   // Factory methods
   static AcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AcquireCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static AcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AcquireCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -408,7 +408,7 @@ public:
 
   // Factory methods
   static AcquireHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AcquireHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AcquireHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo);
   static AcquireHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AcquireHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -446,7 +446,7 @@ class AcquiredAfterAttr : public InheritableAttr {
 public:
   // Factory methods
   static AcquiredAfterAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AcquiredAfterAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AcquiredAfterAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AcquiredAfterAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AcquiredAfterAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -480,7 +480,7 @@ class AcquiredBeforeAttr : public InheritableAttr {
 public:
   // Factory methods
   static AcquiredBeforeAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AcquiredBeforeAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AcquiredBeforeAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AcquiredBeforeAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AcquiredBeforeAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -521,7 +521,7 @@ public:
 
   // Factory methods
   static AddressSpaceAttr *CreateImplicit(ASTContext &Ctx, int AddressSpace, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AddressSpaceAttr *Create(ASTContext &Ctx, int AddressSpace, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AddressSpaceAttr *Create(ASTContext &Ctx, int AddressSpace, const AttributeCommonInfo &CommonInfo);
   static AddressSpaceAttr *CreateImplicit(ASTContext &Ctx, int AddressSpace, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AddressSpaceAttr *Create(ASTContext &Ctx, int AddressSpace, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -558,7 +558,7 @@ public:
 
   // Factory methods
   static AliasAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AliasAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AliasAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo);
   static AliasAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Aliasee, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AliasAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -593,7 +593,7 @@ class AlignMac68kAttr : public InheritableAttr {
 public:
   // Factory methods
   static AlignMac68kAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AlignMac68kAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlignMac68kAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AlignMac68kAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AlignMac68kAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -610,13 +610,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::AlignMac68k; }
 };
 
+class AlignNaturalAttr : public InheritableAttr {
+public:
+  // Factory methods
+  static AlignNaturalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlignNaturalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static AlignNaturalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static AlignNaturalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  AlignNaturalAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  AlignNaturalAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::AlignNatural; }
+};
+
 class AlignValueAttr : public Attr {
 Expr * alignment;
 
 public:
   // Factory methods
   static AlignValueAttr *CreateImplicit(ASTContext &Ctx, Expr * Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AlignValueAttr *Create(ASTContext &Ctx, Expr * Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlignValueAttr *Create(ASTContext &Ctx, Expr * Alignment, const AttributeCommonInfo &CommonInfo);
   static AlignValueAttr *CreateImplicit(ASTContext &Ctx, Expr * Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AlignValueAttr *Create(ASTContext &Ctx, Expr * Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -659,7 +680,7 @@ public:
 
   // Factory methods
   static AlignedAttr *CreateImplicit(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AlignedAttr *Create(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlignedAttr *Create(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, const AttributeCommonInfo &CommonInfo);
   static AlignedAttr *CreateImplicit(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AlignedAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static AlignedAttr *Create(ASTContext &Ctx, bool IsAlignmentExpr, void *Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AlignedAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -716,7 +737,7 @@ public:
 
   // Factory methods
   static AllocAlignAttr *CreateImplicit(ASTContext &Ctx, ParamIdx ParamIndex, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AllocAlignAttr *Create(ASTContext &Ctx, ParamIdx ParamIndex, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AllocAlignAttr *Create(ASTContext &Ctx, ParamIdx ParamIndex, const AttributeCommonInfo &CommonInfo);
   static AllocAlignAttr *CreateImplicit(ASTContext &Ctx, ParamIdx ParamIndex, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AllocAlignAttr *Create(ASTContext &Ctx, ParamIdx ParamIndex, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -754,7 +775,7 @@ public:
 
   // Factory methods
   static AllocSizeAttr *CreateImplicit(ASTContext &Ctx, ParamIdx ElemSizeParam, ParamIdx NumElemsParam, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AllocSizeAttr *Create(ASTContext &Ctx, ParamIdx ElemSizeParam, ParamIdx NumElemsParam, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AllocSizeAttr *Create(ASTContext &Ctx, ParamIdx ElemSizeParam, ParamIdx NumElemsParam, const AttributeCommonInfo &CommonInfo);
   static AllocSizeAttr *CreateImplicit(ASTContext &Ctx, ParamIdx ElemSizeParam, ParamIdx NumElemsParam, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AllocSizeAttr *Create(ASTContext &Ctx, ParamIdx ElemSizeParam, ParamIdx NumElemsParam, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -795,7 +816,7 @@ public:
 
   // Factory methods
   static AlwaysDestroyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AlwaysDestroyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlwaysDestroyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AlwaysDestroyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AlwaysDestroyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -825,7 +846,7 @@ public:
 
   // Factory methods
   static AlwaysInlineAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AlwaysInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AlwaysInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AlwaysInlineAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AlwaysInlineAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static AlwaysInlineAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AlwaysInlineAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -847,7 +868,7 @@ class AnalyzerNoReturnAttr : public InheritableAttr {
 public:
   // Factory methods
   static AnalyzerNoReturnAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnalyzerNoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AnalyzerNoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AnalyzerNoReturnAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AnalyzerNoReturnAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -868,6 +889,9 @@ class AnnotateAttr : public InheritableParamAttr {
 unsigned annotationLength;
 char *annotation;
 
+  unsigned args_Size;
+  Expr * *args_;
+
 public:
   enum Spelling {
     GNU_annotate = 0,
@@ -878,12 +902,16 @@ public:
   };
 
   // Factory methods
-  static AnnotateAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Annotation, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnnotateAttr *Create(ASTContext &Ctx, llvm::StringRef Annotation, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnnotateAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Annotation, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
-  static AnnotateAttr *Create(ASTContext &Ctx, llvm::StringRef Annotation, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static AnnotateAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Annotation, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AnnotateAttr *Create(ASTContext &Ctx, llvm::StringRef Annotation, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
+  static AnnotateAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Annotation, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static AnnotateAttr *Create(ASTContext &Ctx, llvm::StringRef Annotation, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
   // Constructors
+  AnnotateAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Annotation
+              , Expr * *Args, unsigned ArgsSize
+             );
   AnnotateAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , llvm::StringRef Annotation
              );
@@ -905,7 +933,23 @@ public:
       std::memcpy(this->annotation, S.data(), annotationLength);
   }
 
+  typedef Expr ** args_iterator;
+  args_iterator args_begin() const { return args_; }
+  args_iterator args_end() const { return args_ + args_Size; }
+  unsigned args_size() const { return args_Size; }
+  llvm::iterator_range<args_iterator> args() const { return llvm::make_range(args_begin(), args_end()); }
 
+
+
+  static AnnotateAttr *Create(ASTContext &Ctx, llvm::StringRef Annotation, \
+              const AttributeCommonInfo &CommonInfo) {
+    return AnnotateAttr::Create(Ctx, Annotation, nullptr, 0, CommonInfo);
+  }
+  static AnnotateAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Annotation, \
+              const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    return AnnotateAttr::CreateImplicit(Ctx, Annotation, nullptr, 0, CommonInfo);
+  }
+  
 
   static bool classof(const Attr *A) { return A->getKind() == attr::Annotate; }
 };
@@ -922,7 +966,7 @@ public:
 
   // Factory methods
   static AnyX86InterruptAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnyX86InterruptAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AnyX86InterruptAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AnyX86InterruptAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AnyX86InterruptAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -951,7 +995,7 @@ public:
 
   // Factory methods
   static AnyX86NoCallerSavedRegistersAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnyX86NoCallerSavedRegistersAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AnyX86NoCallerSavedRegistersAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AnyX86NoCallerSavedRegistersAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AnyX86NoCallerSavedRegistersAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -980,7 +1024,7 @@ public:
 
   // Factory methods
   static AnyX86NoCfCheckAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AnyX86NoCfCheckAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AnyX86NoCfCheckAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static AnyX86NoCfCheckAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AnyX86NoCfCheckAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1009,7 +1053,7 @@ public:
 
   // Factory methods
   static ArcWeakrefUnavailableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArcWeakrefUnavailableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArcWeakrefUnavailableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ArcWeakrefUnavailableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ArcWeakrefUnavailableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1049,11 +1093,11 @@ public:
 
   // Factory methods
   static ArgumentWithTypeTagAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, const AttributeCommonInfo &CommonInfo);
   static ArgumentWithTypeTagAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ArgumentWithTypeTagAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, bool IsPointer, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ArgumentWithTypeTagAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static ArgumentWithTypeTagAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, const AttributeCommonInfo &CommonInfo);
   static ArgumentWithTypeTagAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ArgumentWithTypeTagAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static ArgumentWithTypeTagAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, ParamIdx ArgumentIdx, ParamIdx TypeTagIdx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ArgumentWithTypeTagAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -1110,7 +1154,7 @@ public:
 
   // Factory methods
   static ArmBuiltinAliasAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BuiltinName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArmBuiltinAliasAttr *Create(ASTContext &Ctx, IdentifierInfo * BuiltinName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArmBuiltinAliasAttr *Create(ASTContext &Ctx, IdentifierInfo * BuiltinName, const AttributeCommonInfo &CommonInfo);
   static ArmBuiltinAliasAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BuiltinName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ArmBuiltinAliasAttr *Create(ASTContext &Ctx, IdentifierInfo * BuiltinName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1144,7 +1188,7 @@ public:
 
   // Factory methods
   static ArmMveStrictPolymorphismAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArmMveStrictPolymorphismAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArmMveStrictPolymorphismAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ArmMveStrictPolymorphismAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ArmMveStrictPolymorphismAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1173,7 +1217,7 @@ public:
 
   // Factory methods
   static ArtificialAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ArtificialAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ArtificialAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ArtificialAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ArtificialAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1205,11 +1249,11 @@ public:
 
   // Factory methods
   static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, const AttributeCommonInfo &CommonInfo);
   static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, bool IsLiteralLabel, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, const AttributeCommonInfo &CommonInfo);
   static AsmLabelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Label, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AsmLabelAttr *Create(ASTContext &Ctx, llvm::StringRef Label, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1268,7 +1312,7 @@ public:
 
   // Factory methods
   static AssertCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AssertCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AssertCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AssertCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AssertCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static AssertCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, AssertCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -1305,7 +1349,7 @@ class AssertExclusiveLockAttr : public InheritableAttr {
 public:
   // Factory methods
   static AssertExclusiveLockAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AssertExclusiveLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AssertExclusiveLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AssertExclusiveLockAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AssertExclusiveLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1339,7 +1383,7 @@ class AssertSharedLockAttr : public InheritableAttr {
 public:
   // Factory methods
   static AssertSharedLockAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AssertSharedLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AssertSharedLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static AssertSharedLockAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AssertSharedLockAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1382,7 +1426,7 @@ public:
 
   // Factory methods
   static AssumeAlignedAttr *CreateImplicit(ASTContext &Ctx, Expr * Alignment, Expr * Offset, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AssumeAlignedAttr *Create(ASTContext &Ctx, Expr * Alignment, Expr * Offset, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AssumeAlignedAttr *Create(ASTContext &Ctx, Expr * Alignment, Expr * Offset, const AttributeCommonInfo &CommonInfo);
   static AssumeAlignedAttr *CreateImplicit(ASTContext &Ctx, Expr * Alignment, Expr * Offset, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AssumeAlignedAttr *Create(ASTContext &Ctx, Expr * Alignment, Expr * Offset, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1410,6 +1454,52 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::AssumeAligned; }
+};
+
+class AssumptionAttr : public InheritableAttr {
+unsigned assumptionLength;
+char *assumption;
+
+public:
+  enum Spelling {
+    GNU_assume = 0,
+    CXX11_clang_assume = 1,
+    C2x_clang_assume = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static AssumptionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Assumption, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AssumptionAttr *Create(ASTContext &Ctx, llvm::StringRef Assumption, const AttributeCommonInfo &CommonInfo);
+  static AssumptionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Assumption, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static AssumptionAttr *Create(ASTContext &Ctx, llvm::StringRef Assumption, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  AssumptionAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Assumption
+             );
+
+  AssumptionAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getAssumption() const {
+    return llvm::StringRef(assumption, assumptionLength);
+  }
+  unsigned getAssumptionLength() const {
+    return assumptionLength;
+  }
+  void setAssumption(ASTContext &C, llvm::StringRef S) {
+    assumptionLength = S.size();
+    this->assumption = new (C, 1) char [assumptionLength];
+    if (!S.empty())
+      std::memcpy(this->assumption, S.data(), assumptionLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Assumption; }
 };
 
 class AvailabilityAttr : public InheritableAttr {
@@ -1447,7 +1537,7 @@ public:
 
   // Factory methods
   static AvailabilityAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Platform, VersionTuple Introduced, VersionTuple Deprecated, VersionTuple Obsoleted, bool Unavailable, llvm::StringRef Message, bool Strict, llvm::StringRef Replacement, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static AvailabilityAttr *Create(ASTContext &Ctx, IdentifierInfo * Platform, VersionTuple Introduced, VersionTuple Deprecated, VersionTuple Obsoleted, bool Unavailable, llvm::StringRef Message, bool Strict, llvm::StringRef Replacement, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static AvailabilityAttr *Create(ASTContext &Ctx, IdentifierInfo * Platform, VersionTuple Introduced, VersionTuple Deprecated, VersionTuple Obsoleted, bool Unavailable, llvm::StringRef Message, bool Strict, llvm::StringRef Replacement, int Priority, const AttributeCommonInfo &CommonInfo);
   static AvailabilityAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Platform, VersionTuple Introduced, VersionTuple Deprecated, VersionTuple Obsoleted, bool Unavailable, llvm::StringRef Message, bool Strict, llvm::StringRef Replacement, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static AvailabilityAttr *Create(ASTContext &Ctx, IdentifierInfo * Platform, VersionTuple Introduced, VersionTuple Deprecated, VersionTuple Obsoleted, bool Unavailable, llvm::StringRef Message, bool Strict, llvm::StringRef Replacement, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1555,6 +1645,7 @@ static llvm::StringRef getPlatformNameSourceSpelling(llvm::StringRef Platform) {
              .Case("macos_app_extension", "macOSApplicationExtension")
              .Case("tvos_app_extension", "tvOSApplicationExtension")
              .Case("watchos_app_extension", "watchOSApplicationExtension")
+             .Case("zos", "z/OS")
              .Default(Platform);
 }
 static llvm::StringRef canonicalizePlatformName(llvm::StringRef Platform) {
@@ -1585,7 +1676,7 @@ public:
 
   // Factory methods
   static BPFPreserveAccessIndexAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static BPFPreserveAccessIndexAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static BPFPreserveAccessIndexAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static BPFPreserveAccessIndexAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static BPFPreserveAccessIndexAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1621,7 +1712,7 @@ public:
 
   // Factory methods
   static BlocksAttr *CreateImplicit(ASTContext &Ctx, BlockType Type, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static BlocksAttr *Create(ASTContext &Ctx, BlockType Type, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static BlocksAttr *Create(ASTContext &Ctx, BlockType Type, const AttributeCommonInfo &CommonInfo);
   static BlocksAttr *CreateImplicit(ASTContext &Ctx, BlockType Type, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static BlocksAttr *Create(ASTContext &Ctx, BlockType Type, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1645,11 +1736,39 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::Blocks; }
 };
 
+class BuiltinAttr : public InheritableAttr {
+unsigned iD;
+
+public:
+  // Factory methods
+  static BuiltinAttr *CreateImplicit(ASTContext &Ctx, unsigned ID, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static BuiltinAttr *Create(ASTContext &Ctx, unsigned ID, const AttributeCommonInfo &CommonInfo);
+  static BuiltinAttr *CreateImplicit(ASTContext &Ctx, unsigned ID, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static BuiltinAttr *Create(ASTContext &Ctx, unsigned ID, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  BuiltinAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , unsigned ID
+             );
+
+  BuiltinAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  unsigned getID() const {
+    return iD;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Builtin; }
+};
+
 class C11NoReturnAttr : public InheritableAttr {
 public:
   // Factory methods
   static C11NoReturnAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static C11NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static C11NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static C11NoReturnAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static C11NoReturnAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1679,7 +1798,7 @@ public:
 
   // Factory methods
   static CDeclAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CDeclAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CDeclAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CDeclAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CDeclAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1708,7 +1827,7 @@ public:
 
   // Factory methods
   static CFAuditedTransferAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFAuditedTransferAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFAuditedTransferAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFAuditedTransferAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFAuditedTransferAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1737,7 +1856,7 @@ public:
 
   // Factory methods
   static CFConsumedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFConsumedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFConsumedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1765,7 +1884,7 @@ private:
 public:
   // Factory methods
   static CFGuardAttr *CreateImplicit(ASTContext &Ctx, GuardArg Guard, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFGuardAttr *Create(ASTContext &Ctx, GuardArg Guard, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFGuardAttr *Create(ASTContext &Ctx, GuardArg Guard, const AttributeCommonInfo &CommonInfo);
   static CFGuardAttr *CreateImplicit(ASTContext &Ctx, GuardArg Guard, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFGuardAttr *Create(ASTContext &Ctx, GuardArg Guard, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1801,7 +1920,7 @@ public:
 
   // Factory methods
   static CFICanonicalJumpTableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFICanonicalJumpTableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFICanonicalJumpTableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFICanonicalJumpTableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFICanonicalJumpTableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1830,7 +1949,7 @@ public:
 
   // Factory methods
   static CFReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFReturnsNotRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1859,7 +1978,7 @@ public:
 
   // Factory methods
   static CFReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFReturnsRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1888,7 +2007,7 @@ public:
 
   // Factory methods
   static CFUnknownTransferAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CFUnknownTransferAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CFUnknownTransferAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CFUnknownTransferAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CFUnknownTransferAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1921,7 +2040,7 @@ public:
 
   // Factory methods
   static CPUDispatchAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CPUDispatchAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CPUDispatchAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo);
   static CPUDispatchAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CPUDispatchAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -1964,7 +2083,7 @@ public:
 
   // Factory methods
   static CPUSpecificAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CPUSpecificAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CPUSpecificAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, const AttributeCommonInfo &CommonInfo);
   static CPUSpecificAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CPUSpecificAttr *Create(ASTContext &Ctx, IdentifierInfo * *Cpus, unsigned CpusSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2006,7 +2125,7 @@ public:
 
   // Factory methods
   static CUDAConstantAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDAConstantAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDAConstantAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDAConstantAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDAConstantAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2034,7 +2153,7 @@ public:
 
   // Factory methods
   static CUDADeviceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDADeviceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDADeviceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDADeviceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDADeviceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2062,7 +2181,7 @@ public:
 
   // Factory methods
   static CUDADeviceBuiltinSurfaceTypeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDADeviceBuiltinSurfaceTypeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDADeviceBuiltinSurfaceTypeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDADeviceBuiltinSurfaceTypeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDADeviceBuiltinSurfaceTypeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2090,7 +2209,7 @@ public:
 
   // Factory methods
   static CUDADeviceBuiltinTextureTypeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDADeviceBuiltinTextureTypeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDADeviceBuiltinTextureTypeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDADeviceBuiltinTextureTypeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDADeviceBuiltinTextureTypeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2118,7 +2237,7 @@ public:
 
   // Factory methods
   static CUDAGlobalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDAGlobalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDAGlobalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDAGlobalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDAGlobalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2146,7 +2265,7 @@ public:
 
   // Factory methods
   static CUDAHostAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDAHostAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDAHostAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDAHostAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDAHostAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2167,7 +2286,7 @@ class CUDAInvalidTargetAttr : public InheritableAttr {
 public:
   // Factory methods
   static CUDAInvalidTargetAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDAInvalidTargetAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDAInvalidTargetAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDAInvalidTargetAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDAInvalidTargetAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2199,7 +2318,7 @@ public:
 
   // Factory methods
   static CUDALaunchBoundsAttr *CreateImplicit(ASTContext &Ctx, Expr * MaxThreads, Expr * MinBlocks, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDALaunchBoundsAttr *Create(ASTContext &Ctx, Expr * MaxThreads, Expr * MinBlocks, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDALaunchBoundsAttr *Create(ASTContext &Ctx, Expr * MaxThreads, Expr * MinBlocks, const AttributeCommonInfo &CommonInfo);
   static CUDALaunchBoundsAttr *CreateImplicit(ASTContext &Ctx, Expr * MaxThreads, Expr * MinBlocks, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDALaunchBoundsAttr *Create(ASTContext &Ctx, Expr * MaxThreads, Expr * MinBlocks, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2240,7 +2359,7 @@ public:
 
   // Factory methods
   static CUDASharedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CUDASharedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CUDASharedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CUDASharedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CUDASharedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2261,7 +2380,7 @@ class CXX11NoReturnAttr : public InheritableAttr {
 public:
   // Factory methods
   static CXX11NoReturnAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CXX11NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CXX11NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CXX11NoReturnAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CXX11NoReturnAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2299,7 +2418,7 @@ public:
 
   // Factory methods
   static CallableWhenAttr *CreateImplicit(ASTContext &Ctx, ConsumedState *CallableStates, unsigned CallableStatesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CallableWhenAttr *Create(ASTContext &Ctx, ConsumedState *CallableStates, unsigned CallableStatesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CallableWhenAttr *Create(ASTContext &Ctx, ConsumedState *CallableStates, unsigned CallableStatesSize, const AttributeCommonInfo &CommonInfo);
   static CallableWhenAttr *CreateImplicit(ASTContext &Ctx, ConsumedState *CallableStates, unsigned CallableStatesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CallableWhenAttr *Create(ASTContext &Ctx, ConsumedState *CallableStates, unsigned CallableStatesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2343,7 +2462,7 @@ public:
 
   // Factory methods
   static CallbackAttr *CreateImplicit(ASTContext &Ctx, int *Encoding, unsigned EncodingSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CallbackAttr *Create(ASTContext &Ctx, int *Encoding, unsigned EncodingSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CallbackAttr *Create(ASTContext &Ctx, int *Encoding, unsigned EncodingSize, const AttributeCommonInfo &CommonInfo);
   static CallbackAttr *CreateImplicit(ASTContext &Ctx, int *Encoding, unsigned EncodingSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CallbackAttr *Create(ASTContext &Ctx, int *Encoding, unsigned EncodingSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2370,6 +2489,35 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::Callback; }
 };
 
+class CalledOnceAttr : public Attr {
+public:
+  enum Spelling {
+    GNU_called_once = 0,
+    CXX11_clang_called_once = 1,
+    C2x_clang_called_once = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static CalledOnceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CalledOnceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static CalledOnceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static CalledOnceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  CalledOnceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  CalledOnceAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::CalledOnce; }
+};
+
 class CapabilityAttr : public InheritableAttr {
 unsigned nameLength;
 char *name;
@@ -2386,7 +2534,7 @@ public:
 
   // Factory methods
   static CapabilityAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CapabilityAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CapabilityAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static CapabilityAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax, CapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static CapabilityAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax, CapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -2424,7 +2572,7 @@ class CapturedRecordAttr : public InheritableAttr {
 public:
   // Factory methods
   static CapturedRecordAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CapturedRecordAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CapturedRecordAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CapturedRecordAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CapturedRecordAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2452,7 +2600,7 @@ public:
 
   // Factory methods
   static CarriesDependencyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CarriesDependencyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CarriesDependencyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CarriesDependencyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CarriesDependencyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2483,7 +2631,7 @@ public:
 
   // Factory methods
   static CleanupAttr *CreateImplicit(ASTContext &Ctx, FunctionDecl * FunctionDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CleanupAttr *Create(ASTContext &Ctx, FunctionDecl * FunctionDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CleanupAttr *Create(ASTContext &Ctx, FunctionDecl * FunctionDecl, const AttributeCommonInfo &CommonInfo);
   static CleanupAttr *CreateImplicit(ASTContext &Ctx, FunctionDecl * FunctionDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CleanupAttr *Create(ASTContext &Ctx, FunctionDecl * FunctionDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2509,7 +2657,7 @@ class CmseNSCallAttr : public TypeAttr {
 public:
   // Factory methods
   static CmseNSCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CmseNSCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CmseNSCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CmseNSCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CmseNSCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2530,7 +2678,7 @@ class CmseNSEntryAttr : public InheritableAttr {
 public:
   // Factory methods
   static CmseNSEntryAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CmseNSEntryAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CmseNSEntryAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CmseNSEntryAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CmseNSEntryAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2554,7 +2702,7 @@ char *name;
 public:
   // Factory methods
   static CodeSegAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CodeSegAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CodeSegAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static CodeSegAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CodeSegAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2597,7 +2745,7 @@ public:
 
   // Factory methods
   static ColdAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ColdAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ColdAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ColdAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ColdAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2626,7 +2774,7 @@ public:
 
   // Factory methods
   static CommonAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static CommonAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static CommonAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static CommonAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static CommonAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2655,7 +2803,7 @@ public:
 
   // Factory methods
   static ConstAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConstAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConstAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ConstAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConstAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2684,7 +2832,7 @@ public:
 
   // Factory methods
   static ConstInitAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConstInitAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConstInitAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ConstInitAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ConstInitAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static ConstInitAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ConstInitAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -2717,7 +2865,7 @@ public:
 
   // Factory methods
   static ConstructorAttr *CreateImplicit(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConstructorAttr *Create(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConstructorAttr *Create(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo);
   static ConstructorAttr *CreateImplicit(ASTContext &Ctx, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConstructorAttr *Create(ASTContext &Ctx, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2763,7 +2911,7 @@ public:
 
   // Factory methods
   static ConsumableAttr *CreateImplicit(ASTContext &Ctx, ConsumedState DefaultState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConsumableAttr *Create(ASTContext &Ctx, ConsumedState DefaultState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConsumableAttr *Create(ASTContext &Ctx, ConsumedState DefaultState, const AttributeCommonInfo &CommonInfo);
   static ConsumableAttr *CreateImplicit(ASTContext &Ctx, ConsumedState DefaultState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConsumableAttr *Create(ASTContext &Ctx, ConsumedState DefaultState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2798,7 +2946,7 @@ public:
 
   // Factory methods
   static ConsumableAutoCastAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConsumableAutoCastAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConsumableAutoCastAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ConsumableAutoCastAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConsumableAutoCastAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2826,7 +2974,7 @@ public:
 
   // Factory methods
   static ConsumableSetOnReadAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConsumableSetOnReadAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConsumableSetOnReadAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ConsumableSetOnReadAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConsumableSetOnReadAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2855,7 +3003,7 @@ public:
 
   // Factory methods
   static ConvergentAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ConvergentAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ConvergentAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ConvergentAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ConvergentAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2885,7 +3033,7 @@ public:
 
   // Factory methods
   static DLLExportAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DLLExportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DLLExportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static DLLExportAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DLLExportAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2906,7 +3054,7 @@ class DLLExportStaticLocalAttr : public InheritableAttr {
 public:
   // Factory methods
   static DLLExportStaticLocalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DLLExportStaticLocalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DLLExportStaticLocalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static DLLExportStaticLocalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DLLExportStaticLocalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2936,7 +3084,7 @@ public:
 
   // Factory methods
   static DLLImportAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DLLImportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DLLImportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static DLLImportAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DLLImportAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -2964,7 +3112,7 @@ class DLLImportStaticLocalAttr : public InheritableAttr {
 public:
   // Factory methods
   static DLLImportStaticLocalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DLLImportStaticLocalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DLLImportStaticLocalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static DLLImportStaticLocalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DLLImportStaticLocalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3002,7 +3150,7 @@ public:
 
   // Factory methods
   static DeprecatedAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, llvm::StringRef Replacement, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DeprecatedAttr *Create(ASTContext &Ctx, llvm::StringRef Message, llvm::StringRef Replacement, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DeprecatedAttr *Create(ASTContext &Ctx, llvm::StringRef Message, llvm::StringRef Replacement, const AttributeCommonInfo &CommonInfo);
   static DeprecatedAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, llvm::StringRef Replacement, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DeprecatedAttr *Create(ASTContext &Ctx, llvm::StringRef Message, llvm::StringRef Replacement, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3063,7 +3211,7 @@ public:
 
   // Factory methods
   static DestructorAttr *CreateImplicit(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DestructorAttr *Create(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DestructorAttr *Create(ASTContext &Ctx, int Priority, const AttributeCommonInfo &CommonInfo);
   static DestructorAttr *CreateImplicit(ASTContext &Ctx, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DestructorAttr *Create(ASTContext &Ctx, int Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3110,11 +3258,11 @@ NamedDecl * parent;
 public:
   // Factory methods
   static DiagnoseIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, bool ArgDependent, NamedDecl * Parent, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, bool ArgDependent, NamedDecl * Parent, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, bool ArgDependent, NamedDecl * Parent, const AttributeCommonInfo &CommonInfo);
   static DiagnoseIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, bool ArgDependent, NamedDecl * Parent, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, bool ArgDependent, NamedDecl * Parent, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DiagnoseIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, const AttributeCommonInfo &CommonInfo);
   static DiagnoseIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DiagnoseIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, DiagnosticType DiagnosticType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3187,7 +3335,7 @@ public:
 
   // Factory methods
   static DisableTailCallsAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static DisableTailCallsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static DisableTailCallsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static DisableTailCallsAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static DisableTailCallsAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3208,7 +3356,7 @@ class EmptyBasesAttr : public InheritableAttr {
 public:
   // Factory methods
   static EmptyBasesAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static EmptyBasesAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static EmptyBasesAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static EmptyBasesAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static EmptyBasesAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3234,7 +3382,7 @@ char *message;
 public:
   // Factory methods
   static EnableIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static EnableIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static EnableIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo);
   static EnableIfAttr *CreateImplicit(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static EnableIfAttr *Create(ASTContext &Ctx, Expr * Cond, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3270,6 +3418,98 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::EnableIf; }
 };
 
+class EnforceTCBAttr : public InheritableAttr {
+unsigned tCBNameLength;
+char *tCBName;
+
+public:
+  enum Spelling {
+    GNU_enforce_tcb = 0,
+    CXX11_clang_enforce_tcb = 1,
+    C2x_clang_enforce_tcb = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static EnforceTCBAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef TCBName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static EnforceTCBAttr *Create(ASTContext &Ctx, llvm::StringRef TCBName, const AttributeCommonInfo &CommonInfo);
+  static EnforceTCBAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef TCBName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static EnforceTCBAttr *Create(ASTContext &Ctx, llvm::StringRef TCBName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  EnforceTCBAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef TCBName
+             );
+
+  EnforceTCBAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getTCBName() const {
+    return llvm::StringRef(tCBName, tCBNameLength);
+  }
+  unsigned getTCBNameLength() const {
+    return tCBNameLength;
+  }
+  void setTCBName(ASTContext &C, llvm::StringRef S) {
+    tCBNameLength = S.size();
+    this->tCBName = new (C, 1) char [tCBNameLength];
+    if (!S.empty())
+      std::memcpy(this->tCBName, S.data(), tCBNameLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::EnforceTCB; }
+};
+
+class EnforceTCBLeafAttr : public InheritableAttr {
+unsigned tCBNameLength;
+char *tCBName;
+
+public:
+  enum Spelling {
+    GNU_enforce_tcb_leaf = 0,
+    CXX11_clang_enforce_tcb_leaf = 1,
+    C2x_clang_enforce_tcb_leaf = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static EnforceTCBLeafAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef TCBName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static EnforceTCBLeafAttr *Create(ASTContext &Ctx, llvm::StringRef TCBName, const AttributeCommonInfo &CommonInfo);
+  static EnforceTCBLeafAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef TCBName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static EnforceTCBLeafAttr *Create(ASTContext &Ctx, llvm::StringRef TCBName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  EnforceTCBLeafAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef TCBName
+             );
+
+  EnforceTCBLeafAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getTCBName() const {
+    return llvm::StringRef(tCBName, tCBNameLength);
+  }
+  unsigned getTCBNameLength() const {
+    return tCBNameLength;
+  }
+  void setTCBName(ASTContext &C, llvm::StringRef S) {
+    tCBNameLength = S.size();
+    this->tCBName = new (C, 1) char [tCBNameLength];
+    if (!S.empty())
+      std::memcpy(this->tCBName, S.data(), tCBNameLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::EnforceTCBLeaf; }
+};
+
 class EnumExtensibilityAttr : public InheritableAttr {
 public:
   enum Kind {
@@ -3290,7 +3530,7 @@ public:
 
   // Factory methods
   static EnumExtensibilityAttr *CreateImplicit(ASTContext &Ctx, Kind Extensibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static EnumExtensibilityAttr *Create(ASTContext &Ctx, Kind Extensibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static EnumExtensibilityAttr *Create(ASTContext &Ctx, Kind Extensibility, const AttributeCommonInfo &CommonInfo);
   static EnumExtensibilityAttr *CreateImplicit(ASTContext &Ctx, Kind Extensibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static EnumExtensibilityAttr *Create(ASTContext &Ctx, Kind Extensibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3326,7 +3566,7 @@ public:
 
   // Factory methods
   static ExcludeFromExplicitInstantiationAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ExcludeFromExplicitInstantiationAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ExcludeFromExplicitInstantiationAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ExcludeFromExplicitInstantiationAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ExcludeFromExplicitInstantiationAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3352,7 +3592,7 @@ Expr * successValue;
 public:
   // Factory methods
   static ExclusiveTrylockFunctionAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ExclusiveTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ExclusiveTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static ExclusiveTrylockFunctionAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ExclusiveTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3405,7 +3645,7 @@ public:
 
   // Factory methods
   static ExternalSourceSymbolAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Language, llvm::StringRef DefinedIn, bool GeneratedDeclaration, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ExternalSourceSymbolAttr *Create(ASTContext &Ctx, llvm::StringRef Language, llvm::StringRef DefinedIn, bool GeneratedDeclaration, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ExternalSourceSymbolAttr *Create(ASTContext &Ctx, llvm::StringRef Language, llvm::StringRef DefinedIn, bool GeneratedDeclaration, const AttributeCommonInfo &CommonInfo);
   static ExternalSourceSymbolAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Language, llvm::StringRef DefinedIn, bool GeneratedDeclaration, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ExternalSourceSymbolAttr *Create(ASTContext &Ctx, llvm::StringRef Language, llvm::StringRef DefinedIn, bool GeneratedDeclaration, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3472,7 +3712,7 @@ public:
 
   // Factory methods
   static FallThroughAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FallThroughAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FallThroughAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static FallThroughAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FallThroughAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3502,7 +3742,7 @@ public:
 
   // Factory methods
   static FastCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FastCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FastCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static FastCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FastCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3530,7 +3770,7 @@ public:
 
   // Factory methods
   static FinalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FinalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FinalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static FinalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, FinalAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static FinalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, FinalAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -3561,7 +3801,7 @@ public:
 
   // Factory methods
   static FlagEnumAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FlagEnumAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FlagEnumAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static FlagEnumAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FlagEnumAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3590,7 +3830,7 @@ public:
 
   // Factory methods
   static FlattenAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FlattenAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FlattenAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static FlattenAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FlattenAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3625,7 +3865,7 @@ public:
 
   // Factory methods
   static FormatAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Type, int FormatIdx, int FirstArg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FormatAttr *Create(ASTContext &Ctx, IdentifierInfo * Type, int FormatIdx, int FirstArg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FormatAttr *Create(ASTContext &Ctx, IdentifierInfo * Type, int FormatIdx, int FirstArg, const AttributeCommonInfo &CommonInfo);
   static FormatAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Type, int FormatIdx, int FirstArg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FormatAttr *Create(ASTContext &Ctx, IdentifierInfo * Type, int FormatIdx, int FirstArg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3671,7 +3911,7 @@ public:
 
   // Factory methods
   static FormatArgAttr *CreateImplicit(ASTContext &Ctx, ParamIdx FormatIdx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static FormatArgAttr *Create(ASTContext &Ctx, ParamIdx FormatIdx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static FormatArgAttr *Create(ASTContext &Ctx, ParamIdx FormatIdx, const AttributeCommonInfo &CommonInfo);
   static FormatArgAttr *CreateImplicit(ASTContext &Ctx, ParamIdx FormatIdx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static FormatArgAttr *Create(ASTContext &Ctx, ParamIdx FormatIdx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3705,7 +3945,7 @@ public:
 
   // Factory methods
   static GNUInlineAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static GNUInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static GNUInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static GNUInlineAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static GNUInlineAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3728,7 +3968,7 @@ Expr * arg;
 public:
   // Factory methods
   static GuardedByAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static GuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static GuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo);
   static GuardedByAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static GuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3761,7 +4001,7 @@ public:
 
   // Factory methods
   static GuardedVarAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static GuardedVarAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static GuardedVarAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static GuardedVarAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static GuardedVarAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3778,6 +4018,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::GuardedVar; }
 };
 
+class HIPManagedAttr : public InheritableAttr {
+public:
+  enum Spelling {
+    GNU_managed = 0,
+    Declspec_managed = 1,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static HIPManagedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static HIPManagedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static HIPManagedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static HIPManagedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  HIPManagedAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  HIPManagedAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::HIPManaged; }
+};
+
 class HotAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -3790,7 +4058,7 @@ public:
 
   // Factory methods
   static HotAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static HotAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static HotAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static HotAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static HotAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3819,7 +4087,7 @@ public:
 
   // Factory methods
   static IBActionAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static IBActionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static IBActionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static IBActionAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static IBActionAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3848,7 +4116,7 @@ public:
 
   // Factory methods
   static IBOutletAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static IBOutletAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static IBOutletAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static IBOutletAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static IBOutletAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3879,7 +4147,7 @@ public:
 
   // Factory methods
   static IBOutletCollectionAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * Interface, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static IBOutletCollectionAttr *Create(ASTContext &Ctx, TypeSourceInfo * Interface, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static IBOutletCollectionAttr *Create(ASTContext &Ctx, TypeSourceInfo * Interface, const AttributeCommonInfo &CommonInfo);
   static IBOutletCollectionAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * Interface, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static IBOutletCollectionAttr *Create(ASTContext &Ctx, TypeSourceInfo * Interface, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3920,7 +4188,7 @@ public:
 
   // Factory methods
   static IFuncAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Resolver, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static IFuncAttr *Create(ASTContext &Ctx, llvm::StringRef Resolver, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static IFuncAttr *Create(ASTContext &Ctx, llvm::StringRef Resolver, const AttributeCommonInfo &CommonInfo);
   static IFuncAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Resolver, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static IFuncAttr *Create(ASTContext &Ctx, llvm::StringRef Resolver, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3964,7 +4232,7 @@ public:
 
   // Factory methods
   static InitPriorityAttr *CreateImplicit(ASTContext &Ctx, unsigned Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static InitPriorityAttr *Create(ASTContext &Ctx, unsigned Priority, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static InitPriorityAttr *Create(ASTContext &Ctx, unsigned Priority, const AttributeCommonInfo &CommonInfo);
   static InitPriorityAttr *CreateImplicit(ASTContext &Ctx, unsigned Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static InitPriorityAttr *Create(ASTContext &Ctx, unsigned Priority, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -3993,7 +4261,7 @@ char *section;
 public:
   // Factory methods
   static InitSegAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Section, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static InitSegAttr *Create(ASTContext &Ctx, llvm::StringRef Section, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static InitSegAttr *Create(ASTContext &Ctx, llvm::StringRef Section, const AttributeCommonInfo &CommonInfo);
   static InitSegAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Section, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static InitSegAttr *Create(ASTContext &Ctx, llvm::StringRef Section, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4039,7 +4307,7 @@ public:
 
   // Factory methods
   static IntelOclBiccAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static IntelOclBiccAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static IntelOclBiccAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static IntelOclBiccAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static IntelOclBiccAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4068,7 +4336,7 @@ public:
 
   // Factory methods
   static InternalLinkageAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static InternalLinkageAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static InternalLinkageAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static InternalLinkageAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static InternalLinkageAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4097,7 +4365,7 @@ public:
 
   // Factory methods
   static LTOVisibilityPublicAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LTOVisibilityPublicAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LTOVisibilityPublicAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static LTOVisibilityPublicAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LTOVisibilityPublicAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4120,7 +4388,7 @@ unsigned version;
 public:
   // Factory methods
   static LayoutVersionAttr *CreateImplicit(ASTContext &Ctx, unsigned Version, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LayoutVersionAttr *Create(ASTContext &Ctx, unsigned Version, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LayoutVersionAttr *Create(ASTContext &Ctx, unsigned Version, const AttributeCommonInfo &CommonInfo);
   static LayoutVersionAttr *CreateImplicit(ASTContext &Ctx, unsigned Version, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LayoutVersionAttr *Create(ASTContext &Ctx, unsigned Version, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4142,6 +4410,35 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::LayoutVersion; }
 };
 
+class LeafAttr : public InheritableAttr {
+public:
+  enum Spelling {
+    GNU_leaf = 0,
+    CXX11_gnu_leaf = 1,
+    C2x_gnu_leaf = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static LeafAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LeafAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static LeafAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static LeafAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  LeafAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  LeafAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Leaf; }
+};
+
 class LifetimeBoundAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -4153,7 +4450,7 @@ public:
 
   // Factory methods
   static LifetimeBoundAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LifetimeBoundAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LifetimeBoundAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static LifetimeBoundAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LifetimeBoundAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4170,6 +4467,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::LifetimeBound; }
 };
 
+class LikelyAttr : public StmtAttr {
+public:
+  enum Spelling {
+    CXX11_likely = 0,
+    C2x_clang_likely = 1,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static LikelyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LikelyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static LikelyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static LikelyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  LikelyAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  LikelyAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Likely; }
+};
+
 class LoaderUninitializedAttr : public Attr {
 public:
   enum Spelling {
@@ -4182,7 +4507,7 @@ public:
 
   // Factory methods
   static LoaderUninitializedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LoaderUninitializedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LoaderUninitializedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static LoaderUninitializedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LoaderUninitializedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4205,7 +4530,7 @@ Expr * arg;
 public:
   // Factory methods
   static LockReturnedAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LockReturnedAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LockReturnedAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo);
   static LockReturnedAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LockReturnedAttr *Create(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4234,7 +4559,7 @@ class LocksExcludedAttr : public InheritableAttr {
 public:
   // Factory methods
   static LocksExcludedAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LocksExcludedAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LocksExcludedAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static LocksExcludedAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static LocksExcludedAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4285,6 +4610,8 @@ public:
     Enable,
     Disable,
     Numeric,
+    FixedWidth,
+    ScalableWidth,
     AssumeSafety,
     Full
   };
@@ -4306,7 +4633,7 @@ public:
 
   // Factory methods
   static LoopHintAttr *CreateImplicit(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static LoopHintAttr *Create(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static LoopHintAttr *Create(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, const AttributeCommonInfo &CommonInfo);
   static LoopHintAttr *CreateImplicit(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, SourceRange Range, AttributeCommonInfo::Syntax Syntax, LoopHintAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static LoopHintAttr *Create(ASTContext &Ctx, OptionType Option, LoopHintState State, Expr * Value, SourceRange Range, AttributeCommonInfo::Syntax Syntax, LoopHintAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -4382,7 +4709,7 @@ public:
 
   // Factory methods
   static MIGServerRoutineAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MIGServerRoutineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MIGServerRoutineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MIGServerRoutineAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MIGServerRoutineAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4411,7 +4738,7 @@ public:
 
   // Factory methods
   static MSABIAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MSABIAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSABIAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4432,7 +4759,7 @@ class MSAllocatorAttr : public InheritableAttr {
 public:
   // Factory methods
   static MSAllocatorAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSAllocatorAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSAllocatorAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MSAllocatorAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSAllocatorAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4464,11 +4791,11 @@ public:
 
   // Factory methods
   static MSInheritanceAttr *CreateImplicit(ASTContext &Ctx, bool BestCase, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSInheritanceAttr *Create(ASTContext &Ctx, bool BestCase, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSInheritanceAttr *Create(ASTContext &Ctx, bool BestCase, const AttributeCommonInfo &CommonInfo);
   static MSInheritanceAttr *CreateImplicit(ASTContext &Ctx, bool BestCase, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MSInheritanceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static MSInheritanceAttr *Create(ASTContext &Ctx, bool BestCase, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MSInheritanceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static MSInheritanceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSInheritanceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSInheritanceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MSInheritanceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MSInheritanceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static MSInheritanceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MSInheritanceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -4504,7 +4831,7 @@ class MSNoVTableAttr : public InheritableAttr {
 public:
   // Factory methods
   static MSNoVTableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSNoVTableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSNoVTableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MSNoVTableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSNoVTableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4535,7 +4862,7 @@ public:
 
   // Factory methods
   static MSP430InterruptAttr *CreateImplicit(ASTContext &Ctx, unsigned Number, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSP430InterruptAttr *Create(ASTContext &Ctx, unsigned Number, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSP430InterruptAttr *Create(ASTContext &Ctx, unsigned Number, const AttributeCommonInfo &CommonInfo);
   static MSP430InterruptAttr *CreateImplicit(ASTContext &Ctx, unsigned Number, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSP430InterruptAttr *Create(ASTContext &Ctx, unsigned Number, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4569,7 +4896,7 @@ public:
 
   // Factory methods
   static MSStructAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSStructAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSStructAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MSStructAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSStructAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4592,7 +4919,7 @@ unsigned vdm;
 public:
   // Factory methods
   static MSVtorDispAttr *CreateImplicit(ASTContext &Ctx, unsigned Vdm, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MSVtorDispAttr *Create(ASTContext &Ctx, unsigned Vdm, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MSVtorDispAttr *Create(ASTContext &Ctx, unsigned Vdm, const AttributeCommonInfo &CommonInfo);
   static MSVtorDispAttr *CreateImplicit(ASTContext &Ctx, unsigned Vdm, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MSVtorDispAttr *Create(ASTContext &Ctx, unsigned Vdm, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4622,7 +4949,7 @@ unsigned alignment;
 public:
   // Factory methods
   static MaxFieldAlignmentAttr *CreateImplicit(ASTContext &Ctx, unsigned Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MaxFieldAlignmentAttr *Create(ASTContext &Ctx, unsigned Alignment, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MaxFieldAlignmentAttr *Create(ASTContext &Ctx, unsigned Alignment, const AttributeCommonInfo &CommonInfo);
   static MaxFieldAlignmentAttr *CreateImplicit(ASTContext &Ctx, unsigned Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MaxFieldAlignmentAttr *Create(ASTContext &Ctx, unsigned Alignment, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4656,7 +4983,7 @@ public:
 
   // Factory methods
   static MayAliasAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MayAliasAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MayAliasAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MayAliasAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MayAliasAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4685,7 +5012,7 @@ public:
 
   // Factory methods
   static MicroMipsAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MicroMipsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MicroMipsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MicroMipsAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MicroMipsAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4714,7 +5041,7 @@ public:
 
   // Factory methods
   static MinSizeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MinSizeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MinSizeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MinSizeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MinSizeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4745,7 +5072,7 @@ public:
 
   // Factory methods
   static MinVectorWidthAttr *CreateImplicit(ASTContext &Ctx, unsigned VectorWidth, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MinVectorWidthAttr *Create(ASTContext &Ctx, unsigned VectorWidth, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MinVectorWidthAttr *Create(ASTContext &Ctx, unsigned VectorWidth, const AttributeCommonInfo &CommonInfo);
   static MinVectorWidthAttr *CreateImplicit(ASTContext &Ctx, unsigned VectorWidth, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MinVectorWidthAttr *Create(ASTContext &Ctx, unsigned VectorWidth, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4779,7 +5106,7 @@ public:
 
   // Factory methods
   static Mips16Attr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static Mips16Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static Mips16Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static Mips16Attr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static Mips16Attr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4823,7 +5150,7 @@ public:
 
   // Factory methods
   static MipsInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MipsInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MipsInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo);
   static MipsInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static MipsInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4862,7 +5189,7 @@ public:
 
   // Factory methods
   static MipsLongCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MipsLongCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MipsLongCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MipsLongCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MipsLongCallAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static MipsLongCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MipsLongCallAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -4895,7 +5222,7 @@ public:
 
   // Factory methods
   static MipsShortCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static MipsShortCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static MipsShortCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static MipsShortCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MipsShortCallAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static MipsShortCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, MipsShortCallAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -4927,7 +5254,7 @@ public:
 
   // Factory methods
   static ModeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Mode, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ModeAttr *Create(ASTContext &Ctx, IdentifierInfo * Mode, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ModeAttr *Create(ASTContext &Ctx, IdentifierInfo * Mode, const AttributeCommonInfo &CommonInfo);
   static ModeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Mode, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ModeAttr *Create(ASTContext &Ctx, IdentifierInfo * Mode, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4961,7 +5288,7 @@ public:
 
   // Factory methods
   static NSConsumedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NSConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NSConsumedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NSConsumedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -4990,7 +5317,7 @@ public:
 
   // Factory methods
   static NSConsumesSelfAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NSConsumesSelfAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSConsumesSelfAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NSConsumesSelfAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NSConsumesSelfAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5007,6 +5334,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::NSConsumesSelf; }
 };
 
+class NSErrorDomainAttr : public InheritableAttr {
+VarDecl * errorDomain;
+
+public:
+  // Factory methods
+  static NSErrorDomainAttr *CreateImplicit(ASTContext &Ctx, VarDecl * ErrorDomain, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSErrorDomainAttr *Create(ASTContext &Ctx, VarDecl * ErrorDomain, const AttributeCommonInfo &CommonInfo);
+  static NSErrorDomainAttr *CreateImplicit(ASTContext &Ctx, VarDecl * ErrorDomain, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static NSErrorDomainAttr *Create(ASTContext &Ctx, VarDecl * ErrorDomain, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  NSErrorDomainAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , VarDecl * ErrorDomain
+             );
+
+  NSErrorDomainAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  VarDecl * getErrorDomain() const {
+    return errorDomain;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::NSErrorDomain; }
+};
+
 class NSReturnsAutoreleasedAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -5019,7 +5374,7 @@ public:
 
   // Factory methods
   static NSReturnsAutoreleasedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NSReturnsAutoreleasedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSReturnsAutoreleasedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NSReturnsAutoreleasedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NSReturnsAutoreleasedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5048,7 +5403,7 @@ public:
 
   // Factory methods
   static NSReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NSReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NSReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NSReturnsNotRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5077,7 +5432,7 @@ public:
 
   // Factory methods
   static NSReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NSReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NSReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NSReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NSReturnsRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5107,7 +5462,7 @@ public:
 
   // Factory methods
   static NakedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NakedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NakedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NakedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NakedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5128,7 +5483,7 @@ class NoAliasAttr : public InheritableAttr {
 public:
   // Factory methods
   static NoAliasAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoAliasAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoAliasAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoAliasAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoAliasAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5160,7 +5515,7 @@ public:
 
   // Factory methods
   static NoBuiltinAttr *CreateImplicit(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoBuiltinAttr *Create(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoBuiltinAttr *Create(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, const AttributeCommonInfo &CommonInfo);
   static NoBuiltinAttr *CreateImplicit(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoBuiltinAttr *Create(ASTContext &Ctx, StringRef *BuiltinNames, unsigned BuiltinNamesSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5199,7 +5554,7 @@ public:
 
   // Factory methods
   static NoCommonAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoCommonAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoCommonAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoCommonAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoCommonAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5228,7 +5583,7 @@ public:
 
   // Factory methods
   static NoDebugAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoDebugAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoDebugAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoDebugAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoDebugAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5257,7 +5612,7 @@ public:
 
   // Factory methods
   static NoDerefAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoDerefAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoDerefAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoDerefAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoDerefAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5285,7 +5640,7 @@ public:
 
   // Factory methods
   static NoDestroyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoDestroyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoDestroyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoDestroyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoDestroyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5314,7 +5669,7 @@ public:
 
   // Factory methods
   static NoDuplicateAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoDuplicateAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoDuplicateAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoDuplicateAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoDuplicateAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5343,7 +5698,7 @@ public:
 
   // Factory methods
   static NoEscapeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoEscapeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoEscapeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoEscapeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoEscapeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5373,7 +5728,7 @@ public:
 
   // Factory methods
   static NoInlineAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoInlineAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoInlineAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoInlineAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5402,7 +5757,7 @@ public:
 
   // Factory methods
   static NoInstrumentFunctionAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoInstrumentFunctionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoInstrumentFunctionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoInstrumentFunctionAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoInstrumentFunctionAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5419,7 +5774,7 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::NoInstrumentFunction; }
 };
 
-class NoMergeAttr : public StmtAttr {
+class NoMergeAttr : public DeclOrStmtAttr {
 public:
   enum Spelling {
     GNU_nomerge = 0,
@@ -5431,7 +5786,7 @@ public:
 
   // Factory methods
   static NoMergeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoMergeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoMergeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoMergeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoMergeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5460,7 +5815,7 @@ public:
 
   // Factory methods
   static NoMicroMipsAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoMicroMipsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoMicroMipsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoMicroMipsAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoMicroMipsAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5489,7 +5844,7 @@ public:
 
   // Factory methods
   static NoMips16Attr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoMips16Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoMips16Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoMips16Attr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoMips16Attr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5519,7 +5874,7 @@ public:
 
   // Factory methods
   static NoReturnAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoReturnAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoReturnAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5551,7 +5906,7 @@ public:
 
   // Factory methods
   static NoSanitizeAttr *CreateImplicit(ASTContext &Ctx, StringRef *Sanitizers, unsigned SanitizersSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoSanitizeAttr *Create(ASTContext &Ctx, StringRef *Sanitizers, unsigned SanitizersSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoSanitizeAttr *Create(ASTContext &Ctx, StringRef *Sanitizers, unsigned SanitizersSize, const AttributeCommonInfo &CommonInfo);
   static NoSanitizeAttr *CreateImplicit(ASTContext &Ctx, StringRef *Sanitizers, unsigned SanitizersSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoSanitizeAttr *Create(ASTContext &Ctx, StringRef *Sanitizers, unsigned SanitizersSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5600,7 +5955,7 @@ public:
 
   // Factory methods
   static NoSpeculativeLoadHardeningAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoSpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoSpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoSpeculativeLoadHardeningAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoSpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5629,7 +5984,7 @@ public:
 
   // Factory methods
   static NoSplitStackAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoSplitStackAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoSplitStackAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoSplitStackAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoSplitStackAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5658,7 +6013,7 @@ public:
 
   // Factory methods
   static NoStackProtectorAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoStackProtectorAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoStackProtectorAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoStackProtectorAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoStackProtectorAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5687,7 +6042,7 @@ public:
 
   // Factory methods
   static NoThreadSafetyAnalysisAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoThreadSafetyAnalysisAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoThreadSafetyAnalysisAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoThreadSafetyAnalysisAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoThreadSafetyAnalysisAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5717,7 +6072,7 @@ public:
 
   // Factory methods
   static NoThrowAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoThrowAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoThrowAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoThrowAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoThrowAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5738,7 +6093,7 @@ class NoUniqueAddressAttr : public InheritableAttr {
 public:
   // Factory methods
   static NoUniqueAddressAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NoUniqueAddressAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NoUniqueAddressAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NoUniqueAddressAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NoUniqueAddressAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5770,7 +6125,7 @@ public:
 
   // Factory methods
   static NonNullAttr *CreateImplicit(ASTContext &Ctx, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NonNullAttr *Create(ASTContext &Ctx, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NonNullAttr *Create(ASTContext &Ctx, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static NonNullAttr *CreateImplicit(ASTContext &Ctx, ParamIdx *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NonNullAttr *Create(ASTContext &Ctx, ParamIdx *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5817,7 +6172,7 @@ public:
 
   // Factory methods
   static NotTailCalledAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static NotTailCalledAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static NotTailCalledAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static NotTailCalledAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static NotTailCalledAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5856,7 +6211,7 @@ Expr * allocator;
 public:
   // Factory methods
   static OMPAllocateDeclAttr *CreateImplicit(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPAllocateDeclAttr *Create(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPAllocateDeclAttr *Create(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, const AttributeCommonInfo &CommonInfo);
   static OMPAllocateDeclAttr *CreateImplicit(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPAllocateDeclAttr *Create(ASTContext &Ctx, AllocatorTypeTy AllocatorType, Expr * Allocator, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5891,7 +6246,7 @@ unsigned captureKindVal;
 public:
   // Factory methods
   static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKindVal, const AttributeCommonInfo &CommonInfo);
   static OMPCaptureKindAttr *CreateImplicit(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPCaptureKindAttr *Create(ASTContext &Ctx, unsigned CaptureKindVal, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5921,7 +6276,7 @@ class OMPCaptureNoInitAttr : public InheritableAttr {
 public:
   // Factory methods
   static OMPCaptureNoInitAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPCaptureNoInitAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPCaptureNoInitAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OMPCaptureNoInitAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPCaptureNoInitAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -5971,7 +6326,7 @@ Expr * simdlen;
 public:
   // Factory methods
   static OMPDeclareSimdDeclAttr *CreateImplicit(ASTContext &Ctx, BranchStateTy BranchState, Expr * Simdlen, Expr * *Uniforms, unsigned UniformsSize, Expr * *Aligneds, unsigned AlignedsSize, Expr * *Alignments, unsigned AlignmentsSize, Expr * *Linears, unsigned LinearsSize, unsigned *Modifiers, unsigned ModifiersSize, Expr * *Steps, unsigned StepsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPDeclareSimdDeclAttr *Create(ASTContext &Ctx, BranchStateTy BranchState, Expr * Simdlen, Expr * *Uniforms, unsigned UniformsSize, Expr * *Aligneds, unsigned AlignedsSize, Expr * *Alignments, unsigned AlignmentsSize, Expr * *Linears, unsigned LinearsSize, unsigned *Modifiers, unsigned ModifiersSize, Expr * *Steps, unsigned StepsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPDeclareSimdDeclAttr *Create(ASTContext &Ctx, BranchStateTy BranchState, Expr * Simdlen, Expr * *Uniforms, unsigned UniformsSize, Expr * *Aligneds, unsigned AlignedsSize, Expr * *Alignments, unsigned AlignmentsSize, Expr * *Linears, unsigned LinearsSize, unsigned *Modifiers, unsigned ModifiersSize, Expr * *Steps, unsigned StepsSize, const AttributeCommonInfo &CommonInfo);
   static OMPDeclareSimdDeclAttr *CreateImplicit(ASTContext &Ctx, BranchStateTy BranchState, Expr * Simdlen, Expr * *Uniforms, unsigned UniformsSize, Expr * *Aligneds, unsigned AlignedsSize, Expr * *Alignments, unsigned AlignmentsSize, Expr * *Linears, unsigned LinearsSize, unsigned *Modifiers, unsigned ModifiersSize, Expr * *Steps, unsigned StepsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPDeclareSimdDeclAttr *Create(ASTContext &Ctx, BranchStateTy BranchState, Expr * Simdlen, Expr * *Uniforms, unsigned UniformsSize, Expr * *Aligneds, unsigned AlignedsSize, Expr * *Alignments, unsigned AlignmentsSize, Expr * *Linears, unsigned LinearsSize, unsigned *Modifiers, unsigned ModifiersSize, Expr * *Steps, unsigned StepsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6073,17 +6428,20 @@ public:
 private:
   DevTypeTy devType;
 
+unsigned level;
+
 public:
   // Factory methods
-  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPDeclareTargetDeclAttr *Create(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
-  static OMPDeclareTargetDeclAttr *Create(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, unsigned Level, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPDeclareTargetDeclAttr *Create(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, unsigned Level, const AttributeCommonInfo &CommonInfo);
+  static OMPDeclareTargetDeclAttr *CreateImplicit(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, unsigned Level, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OMPDeclareTargetDeclAttr *Create(ASTContext &Ctx, MapTypeTy MapType, DevTypeTy DevType, unsigned Level, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
   // Constructors
   OMPDeclareTargetDeclAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , MapTypeTy MapType
               , DevTypeTy DevType
+              , unsigned Level
              );
 
   OMPDeclareTargetDeclAttr *clone(ASTContext &C) const;
@@ -6102,11 +6460,16 @@ public:
 
   static bool ConvertStrToDevTypeTy(StringRef Val, DevTypeTy &Out);
   static const char *ConvertDevTypeTyToStr(DevTypeTy Val);
+  unsigned getLevel() const {
+    return level;
+  }
+
 
     void printPrettyPragma(raw_ostream &OS, const PrintingPolicy &Policy) const;
     static llvm::Optional<MapTypeTy>
     isDeclareTargetDeclaration(const ValueDecl *VD);
     static llvm::Optional<DevTypeTy> getDeviceType(const ValueDecl *VD);
+    static llvm::Optional<SourceLocation> getLocation(const ValueDecl *VD);
   
 
   static bool classof(const Attr *A) { return A->getKind() == attr::OMPDeclareTargetDecl; }
@@ -6120,7 +6483,7 @@ OMPTraitInfo * traitInfos;
 public:
   // Factory methods
   static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo * TraitInfos, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo * TraitInfos, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo * TraitInfos, const AttributeCommonInfo &CommonInfo);
   static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo * TraitInfos, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, OMPTraitInfo * TraitInfos, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6157,7 +6520,7 @@ Expr * ref;
 public:
   // Factory methods
   static OMPReferencedVarAttr *CreateImplicit(ASTContext &Ctx, Expr * Ref, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPReferencedVarAttr *Create(ASTContext &Ctx, Expr * Ref, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPReferencedVarAttr *Create(ASTContext &Ctx, Expr * Ref, const AttributeCommonInfo &CommonInfo);
   static OMPReferencedVarAttr *CreateImplicit(ASTContext &Ctx, Expr * Ref, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPReferencedVarAttr *Create(ASTContext &Ctx, Expr * Ref, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6183,7 +6546,7 @@ class OMPThreadPrivateDeclAttr : public InheritableAttr {
 public:
   // Factory methods
   static OMPThreadPrivateDeclAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OMPThreadPrivateDeclAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OMPThreadPrivateDeclAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OMPThreadPrivateDeclAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OMPThreadPrivateDeclAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6212,7 +6575,7 @@ public:
 
   // Factory methods
   static OSConsumedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSConsumedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSConsumedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSConsumedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6241,7 +6604,7 @@ public:
 
   // Factory methods
   static OSConsumesThisAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSConsumesThisAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSConsumesThisAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSConsumesThisAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSConsumesThisAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6270,7 +6633,7 @@ public:
 
   // Factory methods
   static OSReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSReturnsNotRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSReturnsNotRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSReturnsNotRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6299,7 +6662,7 @@ public:
 
   // Factory methods
   static OSReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSReturnsRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSReturnsRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSReturnsRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6328,7 +6691,7 @@ public:
 
   // Factory methods
   static OSReturnsRetainedOnNonZeroAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSReturnsRetainedOnNonZeroAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSReturnsRetainedOnNonZeroAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSReturnsRetainedOnNonZeroAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSReturnsRetainedOnNonZeroAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6357,7 +6720,7 @@ public:
 
   // Factory methods
   static OSReturnsRetainedOnZeroAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OSReturnsRetainedOnZeroAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OSReturnsRetainedOnZeroAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OSReturnsRetainedOnZeroAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OSReturnsRetainedOnZeroAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6386,7 +6749,7 @@ public:
 
   // Factory methods
   static ObjCBoxableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCBoxableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCBoxableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCBoxableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCBoxableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6417,7 +6780,7 @@ public:
 
   // Factory methods
   static ObjCBridgeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCBridgeAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCBridgeAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo);
   static ObjCBridgeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BridgedType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCBridgeAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6453,7 +6816,7 @@ public:
 
   // Factory methods
   static ObjCBridgeMutableAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCBridgeMutableAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCBridgeMutableAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, const AttributeCommonInfo &CommonInfo);
   static ObjCBridgeMutableAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * BridgedType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCBridgeMutableAttr *Create(ASTContext &Ctx, IdentifierInfo * BridgedType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6493,7 +6856,7 @@ public:
 
   // Factory methods
   static ObjCBridgeRelatedAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * RelatedClass, IdentifierInfo * ClassMethod, IdentifierInfo * InstanceMethod, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCBridgeRelatedAttr *Create(ASTContext &Ctx, IdentifierInfo * RelatedClass, IdentifierInfo * ClassMethod, IdentifierInfo * InstanceMethod, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCBridgeRelatedAttr *Create(ASTContext &Ctx, IdentifierInfo * RelatedClass, IdentifierInfo * ClassMethod, IdentifierInfo * InstanceMethod, const AttributeCommonInfo &CommonInfo);
   static ObjCBridgeRelatedAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * RelatedClass, IdentifierInfo * ClassMethod, IdentifierInfo * InstanceMethod, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCBridgeRelatedAttr *Create(ASTContext &Ctx, IdentifierInfo * RelatedClass, IdentifierInfo * ClassMethod, IdentifierInfo * InstanceMethod, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6537,7 +6900,7 @@ public:
 
   // Factory methods
   static ObjCClassStubAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCClassStubAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCClassStubAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCClassStubAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCClassStubAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6566,7 +6929,7 @@ public:
 
   // Factory methods
   static ObjCDesignatedInitializerAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCDesignatedInitializerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCDesignatedInitializerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCDesignatedInitializerAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCDesignatedInitializerAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6595,7 +6958,7 @@ public:
 
   // Factory methods
   static ObjCDirectAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCDirectAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCDirectAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCDirectAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCDirectAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6624,7 +6987,7 @@ public:
 
   // Factory methods
   static ObjCDirectMembersAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCDirectMembersAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCDirectMembersAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCDirectMembersAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCDirectMembersAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6653,7 +7016,7 @@ public:
 
   // Factory methods
   static ObjCExceptionAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCExceptionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCExceptionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCExceptionAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCExceptionAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6682,7 +7045,7 @@ public:
 
   // Factory methods
   static ObjCExplicitProtocolImplAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCExplicitProtocolImplAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCExplicitProtocolImplAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCExplicitProtocolImplAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCExplicitProtocolImplAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6711,7 +7074,7 @@ public:
 
   // Factory methods
   static ObjCExternallyRetainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCExternallyRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCExternallyRetainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCExternallyRetainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCExternallyRetainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6742,7 +7105,7 @@ public:
 
   // Factory methods
   static ObjCGCAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCGCAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCGCAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo);
   static ObjCGCAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Kind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCGCAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6776,7 +7139,7 @@ public:
 
   // Factory methods
   static ObjCIndependentClassAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCIndependentClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCIndependentClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCIndependentClassAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCIndependentClassAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6797,7 +7160,7 @@ class ObjCInertUnsafeUnretainedAttr : public TypeAttr {
 public:
   // Factory methods
   static ObjCInertUnsafeUnretainedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCInertUnsafeUnretainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCInertUnsafeUnretainedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCInertUnsafeUnretainedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCInertUnsafeUnretainedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6818,7 +7181,7 @@ class ObjCKindOfAttr : public TypeAttr {
 public:
   // Factory methods
   static ObjCKindOfAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCKindOfAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCKindOfAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCKindOfAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCKindOfAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6859,7 +7222,7 @@ public:
 
   // Factory methods
   static ObjCMethodFamilyAttr *CreateImplicit(ASTContext &Ctx, FamilyKind Family, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCMethodFamilyAttr *Create(ASTContext &Ctx, FamilyKind Family, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCMethodFamilyAttr *Create(ASTContext &Ctx, FamilyKind Family, const AttributeCommonInfo &CommonInfo);
   static ObjCMethodFamilyAttr *CreateImplicit(ASTContext &Ctx, FamilyKind Family, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCMethodFamilyAttr *Create(ASTContext &Ctx, FamilyKind Family, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6895,7 +7258,7 @@ public:
 
   // Factory methods
   static ObjCNSObjectAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCNSObjectAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCNSObjectAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCNSObjectAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCNSObjectAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6924,7 +7287,7 @@ public:
 
   // Factory methods
   static ObjCNonLazyClassAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCNonLazyClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCNonLazyClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCNonLazyClassAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCNonLazyClassAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6941,6 +7304,35 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::ObjCNonLazyClass; }
 };
 
+class ObjCNonRuntimeProtocolAttr : public Attr {
+public:
+  enum Spelling {
+    GNU_objc_non_runtime_protocol = 0,
+    CXX11_clang_objc_non_runtime_protocol = 1,
+    C2x_clang_objc_non_runtime_protocol = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static ObjCNonRuntimeProtocolAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCNonRuntimeProtocolAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static ObjCNonRuntimeProtocolAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static ObjCNonRuntimeProtocolAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  ObjCNonRuntimeProtocolAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  ObjCNonRuntimeProtocolAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ObjCNonRuntimeProtocol; }
+};
+
 class ObjCOwnershipAttr : public InheritableAttr {
 IdentifierInfo * kind;
 
@@ -6955,7 +7347,7 @@ public:
 
   // Factory methods
   static ObjCOwnershipAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCOwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCOwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, const AttributeCommonInfo &CommonInfo);
   static ObjCOwnershipAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Kind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCOwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Kind, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -6989,7 +7381,7 @@ public:
 
   // Factory methods
   static ObjCPreciseLifetimeAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCPreciseLifetimeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCPreciseLifetimeAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCPreciseLifetimeAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCPreciseLifetimeAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7018,7 +7410,7 @@ public:
 
   // Factory methods
   static ObjCRequiresPropertyDefsAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCRequiresPropertyDefsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCRequiresPropertyDefsAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCRequiresPropertyDefsAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCRequiresPropertyDefsAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7047,7 +7439,7 @@ public:
 
   // Factory methods
   static ObjCRequiresSuperAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCRequiresSuperAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCRequiresSuperAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCRequiresSuperAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCRequiresSuperAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7076,7 +7468,7 @@ public:
 
   // Factory methods
   static ObjCReturnsInnerPointerAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCReturnsInnerPointerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCReturnsInnerPointerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCReturnsInnerPointerAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCReturnsInnerPointerAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7105,7 +7497,7 @@ public:
 
   // Factory methods
   static ObjCRootClassAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCRootClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCRootClassAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCRootClassAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCRootClassAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7137,7 +7529,7 @@ public:
 
   // Factory methods
   static ObjCRuntimeNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef MetadataName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCRuntimeNameAttr *Create(ASTContext &Ctx, llvm::StringRef MetadataName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCRuntimeNameAttr *Create(ASTContext &Ctx, llvm::StringRef MetadataName, const AttributeCommonInfo &CommonInfo);
   static ObjCRuntimeNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef MetadataName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCRuntimeNameAttr *Create(ASTContext &Ctx, llvm::StringRef MetadataName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7180,7 +7572,7 @@ public:
 
   // Factory methods
   static ObjCRuntimeVisibleAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCRuntimeVisibleAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCRuntimeVisibleAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCRuntimeVisibleAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCRuntimeVisibleAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7209,7 +7601,7 @@ public:
 
   // Factory methods
   static ObjCSubclassingRestrictedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ObjCSubclassingRestrictedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ObjCSubclassingRestrictedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ObjCSubclassingRestrictedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ObjCSubclassingRestrictedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7238,7 +7630,7 @@ public:
 
   // Factory methods
   static OpenCLAccessAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLAccessAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLAccessAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLAccessAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLAccessAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLAccessAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLAccessAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7275,7 +7667,7 @@ public:
 
   // Factory methods
   static OpenCLConstantAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLConstantAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLConstantAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLConstantAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLConstantAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7306,7 +7698,7 @@ public:
 
   // Factory methods
   static OpenCLGenericAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLGenericAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGenericAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLGenericAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGenericAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7337,7 +7729,7 @@ public:
 
   // Factory methods
   static OpenCLGlobalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLGlobalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGlobalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLGlobalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLGlobalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7355,13 +7747,71 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLGlobalAddressSpace; }
 };
 
+class OpenCLGlobalDeviceAddressSpaceAttr : public TypeAttr {
+public:
+  enum Spelling {
+    GNU_opencl_global_device = 0,
+    CXX11_clang_opencl_global_device = 1,
+    C2x_clang_opencl_global_device = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static OpenCLGlobalDeviceAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLGlobalDeviceAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static OpenCLGlobalDeviceAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OpenCLGlobalDeviceAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  OpenCLGlobalDeviceAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  OpenCLGlobalDeviceAddressSpaceAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLGlobalDeviceAddressSpace; }
+};
+
+class OpenCLGlobalHostAddressSpaceAttr : public TypeAttr {
+public:
+  enum Spelling {
+    GNU_opencl_global_host = 0,
+    CXX11_clang_opencl_global_host = 1,
+    C2x_clang_opencl_global_host = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static OpenCLGlobalHostAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLGlobalHostAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static OpenCLGlobalHostAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static OpenCLGlobalHostAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  OpenCLGlobalHostAddressSpaceAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  OpenCLGlobalHostAddressSpaceAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::OpenCLGlobalHostAddressSpace; }
+};
+
 class OpenCLIntelReqdSubGroupSizeAttr : public InheritableAttr {
 unsigned subGroupSize;
 
 public:
   // Factory methods
   static OpenCLIntelReqdSubGroupSizeAttr *CreateImplicit(ASTContext &Ctx, unsigned SubGroupSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLIntelReqdSubGroupSizeAttr *Create(ASTContext &Ctx, unsigned SubGroupSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLIntelReqdSubGroupSizeAttr *Create(ASTContext &Ctx, unsigned SubGroupSize, const AttributeCommonInfo &CommonInfo);
   static OpenCLIntelReqdSubGroupSizeAttr *CreateImplicit(ASTContext &Ctx, unsigned SubGroupSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OpenCLIntelReqdSubGroupSizeAttr *Create(ASTContext &Ctx, unsigned SubGroupSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7393,7 +7843,7 @@ public:
 
   // Factory methods
   static OpenCLKernelAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLKernelAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OpenCLKernelAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7423,7 +7873,7 @@ public:
 
   // Factory methods
   static OpenCLLocalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLLocalAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLLocalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLLocalAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLLocalAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7454,7 +7904,7 @@ public:
 
   // Factory methods
   static OpenCLPrivateAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OpenCLPrivateAddressSpaceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLPrivateAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OpenCLPrivateAddressSpaceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OpenCLPrivateAddressSpaceAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7478,7 +7928,7 @@ unsigned unrollHint;
 public:
   // Factory methods
   static OpenCLUnrollHintAttr *CreateImplicit(ASTContext &Ctx, unsigned UnrollHint, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OpenCLUnrollHintAttr *Create(ASTContext &Ctx, unsigned UnrollHint, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OpenCLUnrollHintAttr *Create(ASTContext &Ctx, unsigned UnrollHint, const AttributeCommonInfo &CommonInfo);
   static OpenCLUnrollHintAttr *CreateImplicit(ASTContext &Ctx, unsigned UnrollHint, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OpenCLUnrollHintAttr *Create(ASTContext &Ctx, unsigned UnrollHint, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7512,7 +7962,7 @@ public:
 
   // Factory methods
   static OptimizeNoneAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OptimizeNoneAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OptimizeNoneAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OptimizeNoneAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OptimizeNoneAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7541,7 +7991,7 @@ public:
 
   // Factory methods
   static OverloadableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OverloadableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OverloadableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OverloadableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OverloadableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7562,7 +8012,7 @@ class OverrideAttr : public InheritableAttr {
 public:
   // Factory methods
   static OverrideAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OverrideAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OverrideAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static OverrideAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OverrideAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7585,7 +8035,7 @@ TypeSourceInfo * derefType;
 public:
   // Factory methods
   static OwnerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OwnerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OwnerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo);
   static OwnerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static OwnerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7634,7 +8084,7 @@ public:
 
   // Factory methods
   static OwnershipAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static OwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static OwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static OwnershipAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OwnershipAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static OwnershipAttr *Create(ASTContext &Ctx, IdentifierInfo * Module, ParamIdx *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, OwnershipAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7696,7 +8146,7 @@ public:
 
   // Factory methods
   static PackedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PackedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PackedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PackedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PackedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7733,7 +8183,7 @@ public:
 
   // Factory methods
   static ParamTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState ParamState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ParamTypestateAttr *Create(ASTContext &Ctx, ConsumedState ParamState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ParamTypestateAttr *Create(ASTContext &Ctx, ConsumedState ParamState, const AttributeCommonInfo &CommonInfo);
   static ParamTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState ParamState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ParamTypestateAttr *Create(ASTContext &Ctx, ConsumedState ParamState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7770,7 +8220,7 @@ public:
 
   // Factory methods
   static PascalAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PascalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PascalAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PascalAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PascalAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7804,7 +8254,7 @@ public:
 
   // Factory methods
   static PassObjectSizeAttr *CreateImplicit(ASTContext &Ctx, int Type, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PassObjectSizeAttr *Create(ASTContext &Ctx, int Type, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PassObjectSizeAttr *Create(ASTContext &Ctx, int Type, const AttributeCommonInfo &CommonInfo);
   static PassObjectSizeAttr *CreateImplicit(ASTContext &Ctx, int Type, SourceRange Range, AttributeCommonInfo::Syntax Syntax, PassObjectSizeAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static PassObjectSizeAttr *Create(ASTContext &Ctx, int Type, SourceRange Range, AttributeCommonInfo::Syntax Syntax, PassObjectSizeAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -7846,7 +8296,7 @@ public:
 
   // Factory methods
   static PatchableFunctionEntryAttr *CreateImplicit(ASTContext &Ctx, unsigned Count, int Offset, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PatchableFunctionEntryAttr *Create(ASTContext &Ctx, unsigned Count, int Offset, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PatchableFunctionEntryAttr *Create(ASTContext &Ctx, unsigned Count, int Offset, const AttributeCommonInfo &CommonInfo);
   static PatchableFunctionEntryAttr *CreateImplicit(ASTContext &Ctx, unsigned Count, int Offset, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PatchableFunctionEntryAttr *Create(ASTContext &Ctx, unsigned Count, int Offset, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7898,7 +8348,7 @@ public:
 
   // Factory methods
   static PcsAttr *CreateImplicit(ASTContext &Ctx, PCSType PCS, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PcsAttr *Create(ASTContext &Ctx, PCSType PCS, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PcsAttr *Create(ASTContext &Ctx, PCSType PCS, const AttributeCommonInfo &CommonInfo);
   static PcsAttr *CreateImplicit(ASTContext &Ctx, PCSType PCS, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PcsAttr *Create(ASTContext &Ctx, PCSType PCS, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7928,7 +8378,7 @@ TypeSourceInfo * derefType;
 public:
   // Factory methods
   static PointerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PointerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PointerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, const AttributeCommonInfo &CommonInfo);
   static PointerAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PointerAttr *Create(ASTContext &Ctx, TypeSourceInfo * DerefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7961,7 +8411,7 @@ char *name;
 public:
   // Factory methods
   static PragmaClangBSSSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PragmaClangBSSSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PragmaClangBSSSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static PragmaClangBSSSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PragmaClangBSSSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -7999,7 +8449,7 @@ char *name;
 public:
   // Factory methods
   static PragmaClangDataSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PragmaClangDataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PragmaClangDataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static PragmaClangDataSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PragmaClangDataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8037,7 +8487,7 @@ char *name;
 public:
   // Factory methods
   static PragmaClangRelroSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PragmaClangRelroSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PragmaClangRelroSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static PragmaClangRelroSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PragmaClangRelroSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8075,7 +8525,7 @@ char *name;
 public:
   // Factory methods
   static PragmaClangRodataSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PragmaClangRodataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PragmaClangRodataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static PragmaClangRodataSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PragmaClangRodataSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8113,7 +8563,7 @@ char *name;
 public:
   // Factory methods
   static PragmaClangTextSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PragmaClangTextSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PragmaClangTextSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static PragmaClangTextSectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PragmaClangTextSectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8144,6 +8594,43 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::PragmaClangTextSection; }
 };
 
+class PreferredNameAttr : public InheritableAttr {
+TypeSourceInfo * typedefType;
+
+public:
+  enum Spelling {
+    GNU_preferred_name = 0,
+    CXX11_clang_preferred_name = 1,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static PreferredNameAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * TypedefType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PreferredNameAttr *Create(ASTContext &Ctx, TypeSourceInfo * TypedefType, const AttributeCommonInfo &CommonInfo);
+  static PreferredNameAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * TypedefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static PreferredNameAttr *Create(ASTContext &Ctx, TypeSourceInfo * TypedefType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  PreferredNameAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , TypeSourceInfo * TypedefType
+             );
+
+  PreferredNameAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  QualType getTypedefType() const {
+    return typedefType->getType();
+  }  TypeSourceInfo * getTypedefTypeLoc() const {
+    return typedefType;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::PreferredName; }
+};
+
 class PreserveAllAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -8156,7 +8643,7 @@ public:
 
   // Factory methods
   static PreserveAllAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PreserveAllAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PreserveAllAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PreserveAllAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PreserveAllAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8185,7 +8672,7 @@ public:
 
   // Factory methods
   static PreserveMostAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PreserveMostAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PreserveMostAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PreserveMostAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PreserveMostAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8208,7 +8695,7 @@ Expr * arg;
 public:
   // Factory methods
   static PtGuardedByAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PtGuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PtGuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, const AttributeCommonInfo &CommonInfo);
   static PtGuardedByAttr *CreateImplicit(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PtGuardedByAttr *Create(ASTContext &Ctx, Expr * Arg, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8241,7 +8728,7 @@ public:
 
   // Factory methods
   static PtGuardedVarAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PtGuardedVarAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PtGuardedVarAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PtGuardedVarAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PtGuardedVarAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8262,7 +8749,7 @@ class Ptr32Attr : public TypeAttr {
 public:
   // Factory methods
   static Ptr32Attr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static Ptr32Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static Ptr32Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static Ptr32Attr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static Ptr32Attr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8283,7 +8770,7 @@ class Ptr64Attr : public TypeAttr {
 public:
   // Factory methods
   static Ptr64Attr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static Ptr64Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static Ptr64Attr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static Ptr64Attr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static Ptr64Attr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8312,7 +8799,7 @@ public:
 
   // Factory methods
   static PureAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static PureAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static PureAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static PureAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static PureAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8350,7 +8837,7 @@ public:
 
   // Factory methods
   static RISCVInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static RISCVInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static RISCVInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, const AttributeCommonInfo &CommonInfo);
   static RISCVInterruptAttr *CreateImplicit(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static RISCVInterruptAttr *Create(ASTContext &Ctx, InterruptType Interrupt, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8389,7 +8876,7 @@ public:
 
   // Factory methods
   static RegCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static RegCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static RegCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static RegCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static RegCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8417,7 +8904,7 @@ public:
 
   // Factory methods
   static ReinitializesAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReinitializesAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReinitializesAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ReinitializesAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReinitializesAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8454,7 +8941,7 @@ public:
 
   // Factory methods
   static ReleaseCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReleaseCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReleaseCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static ReleaseCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ReleaseCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static ReleaseCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, ReleaseCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -8503,7 +8990,7 @@ public:
 
   // Factory methods
   static ReleaseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReleaseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReleaseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo);
   static ReleaseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReleaseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8538,7 +9025,7 @@ class RenderScriptKernelAttr : public Attr {
 public:
   // Factory methods
   static RenderScriptKernelAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static RenderScriptKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static RenderScriptKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static RenderScriptKernelAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static RenderScriptKernelAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8565,7 +9052,7 @@ unsigned zDim;
 public:
   // Factory methods
   static ReqdWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReqdWorkGroupSizeAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReqdWorkGroupSizeAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo);
   static ReqdWorkGroupSizeAttr *CreateImplicit(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReqdWorkGroupSizeAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8617,7 +9104,7 @@ public:
 
   // Factory methods
   static RequiresCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static RequiresCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static RequiresCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static RequiresCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, RequiresCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static RequiresCapabilityAttr *Create(ASTContext &Ctx, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, RequiresCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -8662,7 +9149,7 @@ public:
 
   // Factory methods
   static RestrictAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static RestrictAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static RestrictAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static RestrictAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, RestrictAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static RestrictAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, RestrictAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -8700,7 +9187,7 @@ public:
 
   // Factory methods
   static ReturnTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState State, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReturnTypestateAttr *Create(ASTContext &Ctx, ConsumedState State, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReturnTypestateAttr *Create(ASTContext &Ctx, ConsumedState State, const AttributeCommonInfo &CommonInfo);
   static ReturnTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState State, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReturnTypestateAttr *Create(ASTContext &Ctx, ConsumedState State, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8736,7 +9223,7 @@ public:
 
   // Factory methods
   static ReturnsNonNullAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReturnsNonNullAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReturnsNonNullAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ReturnsNonNullAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReturnsNonNullAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8765,7 +9252,7 @@ public:
 
   // Factory methods
   static ReturnsTwiceAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ReturnsTwiceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ReturnsTwiceAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ReturnsTwiceAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ReturnsTwiceAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8786,7 +9273,7 @@ class SPtrAttr : public TypeAttr {
 public:
   // Factory methods
   static SPtrAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SPtrAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SPtrAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SPtrAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SPtrAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8815,7 +9302,7 @@ public:
 
   // Factory methods
   static SYCLKernelAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SYCLKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SYCLKernelAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SYCLKernelAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SYCLKernelAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8843,7 +9330,7 @@ public:
 
   // Factory methods
   static ScopedLockableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ScopedLockableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ScopedLockableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ScopedLockableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ScopedLockableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8876,7 +9363,7 @@ public:
 
   // Factory methods
   static SectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
   static SectionAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax, SectionAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static SectionAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax, SectionAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -8921,7 +9408,7 @@ public:
 
   // Factory methods
   static SelectAnyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SelectAnyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SelectAnyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SelectAnyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SelectAnyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -8954,7 +9441,7 @@ public:
 
   // Factory methods
   static SentinelAttr *CreateImplicit(ASTContext &Ctx, int Sentinel, int NullPos, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SentinelAttr *Create(ASTContext &Ctx, int Sentinel, int NullPos, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SentinelAttr *Create(ASTContext &Ctx, int Sentinel, int NullPos, const AttributeCommonInfo &CommonInfo);
   static SentinelAttr *CreateImplicit(ASTContext &Ctx, int Sentinel, int NullPos, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SentinelAttr *Create(ASTContext &Ctx, int Sentinel, int NullPos, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9007,7 +9494,7 @@ public:
 
   // Factory methods
   static SetTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState NewState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SetTypestateAttr *Create(ASTContext &Ctx, ConsumedState NewState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SetTypestateAttr *Create(ASTContext &Ctx, ConsumedState NewState, const AttributeCommonInfo &CommonInfo);
   static SetTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState NewState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SetTypestateAttr *Create(ASTContext &Ctx, ConsumedState NewState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9040,7 +9527,7 @@ Expr * successValue;
 public:
   // Factory methods
   static SharedTrylockFunctionAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SharedTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SharedTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static SharedTrylockFunctionAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SharedTrylockFunctionAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9085,7 +9572,7 @@ public:
 
   // Factory methods
   static SpeculativeLoadHardeningAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SpeculativeLoadHardeningAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SpeculativeLoadHardeningAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9115,7 +9602,7 @@ public:
 
   // Factory methods
   static StdCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static StdCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static StdCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static StdCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static StdCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9132,6 +9619,27 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::StdCall; }
 };
 
+class StrictFPAttr : public InheritableAttr {
+public:
+  // Factory methods
+  static StrictFPAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static StrictFPAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static StrictFPAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static StrictFPAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  StrictFPAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  StrictFPAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::StrictFP; }
+};
+
 class SuppressAttr : public StmtAttr {
   unsigned diagnosticIdentifiers_Size;
   StringRef *diagnosticIdentifiers_;
@@ -9139,7 +9647,7 @@ class SuppressAttr : public StmtAttr {
 public:
   // Factory methods
   static SuppressAttr *CreateImplicit(ASTContext &Ctx, StringRef *DiagnosticIdentifiers, unsigned DiagnosticIdentifiersSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SuppressAttr *Create(ASTContext &Ctx, StringRef *DiagnosticIdentifiers, unsigned DiagnosticIdentifiersSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SuppressAttr *Create(ASTContext &Ctx, StringRef *DiagnosticIdentifiers, unsigned DiagnosticIdentifiersSize, const AttributeCommonInfo &CommonInfo);
   static SuppressAttr *CreateImplicit(ASTContext &Ctx, StringRef *DiagnosticIdentifiers, unsigned DiagnosticIdentifiersSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SuppressAttr *Create(ASTContext &Ctx, StringRef *DiagnosticIdentifiers, unsigned DiagnosticIdentifiersSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9166,6 +9674,196 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::Suppress; }
 };
 
+class SwiftAsyncAttr : public InheritableAttr {
+public:
+  enum Kind {
+    None,
+    SwiftPrivate,
+    NotSwiftPrivate
+  };
+private:
+  Kind kind;
+
+ParamIdx completionHandlerIndex;
+
+public:
+  enum Spelling {
+    GNU_swift_async = 0,
+    CXX11_clang_swift_async = 1,
+    C2x_clang_swift_async = 2,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static SwiftAsyncAttr *CreateImplicit(ASTContext &Ctx, Kind Kind, ParamIdx CompletionHandlerIndex, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftAsyncAttr *Create(ASTContext &Ctx, Kind Kind, ParamIdx CompletionHandlerIndex, const AttributeCommonInfo &CommonInfo);
+  static SwiftAsyncAttr *CreateImplicit(ASTContext &Ctx, Kind Kind, ParamIdx CompletionHandlerIndex, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftAsyncAttr *Create(ASTContext &Ctx, Kind Kind, ParamIdx CompletionHandlerIndex, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftAsyncAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , Kind Kind
+              , ParamIdx CompletionHandlerIndex
+             );
+  SwiftAsyncAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , Kind Kind
+             );
+
+  SwiftAsyncAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  Kind getKind() const {
+    return kind;
+  }
+
+  static bool ConvertStrToKind(StringRef Val, Kind &Out);
+  static const char *ConvertKindToStr(Kind Val);
+  ParamIdx getCompletionHandlerIndex() const {
+    return completionHandlerIndex;
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftAsync; }
+};
+
+class SwiftAsyncNameAttr : public InheritableAttr {
+unsigned nameLength;
+char *name;
+
+public:
+  // Factory methods
+  static SwiftAsyncNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftAsyncNameAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
+  static SwiftAsyncNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftAsyncNameAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftAsyncNameAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Name
+             );
+
+  SwiftAsyncNameAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getName() const {
+    return llvm::StringRef(name, nameLength);
+  }
+  unsigned getNameLength() const {
+    return nameLength;
+  }
+  void setName(ASTContext &C, llvm::StringRef S) {
+    nameLength = S.size();
+    this->name = new (C, 1) char [nameLength];
+    if (!S.empty())
+      std::memcpy(this->name, S.data(), nameLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftAsyncName; }
+};
+
+class SwiftAttrAttr : public InheritableAttr {
+unsigned attributeLength;
+char *attribute;
+
+public:
+  // Factory methods
+  static SwiftAttrAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Attribute, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftAttrAttr *Create(ASTContext &Ctx, llvm::StringRef Attribute, const AttributeCommonInfo &CommonInfo);
+  static SwiftAttrAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Attribute, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftAttrAttr *Create(ASTContext &Ctx, llvm::StringRef Attribute, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftAttrAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Attribute
+             );
+
+  SwiftAttrAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getAttribute() const {
+    return llvm::StringRef(attribute, attributeLength);
+  }
+  unsigned getAttributeLength() const {
+    return attributeLength;
+  }
+  void setAttribute(ASTContext &C, llvm::StringRef S) {
+    attributeLength = S.size();
+    this->attribute = new (C, 1) char [attributeLength];
+    if (!S.empty())
+      std::memcpy(this->attribute, S.data(), attributeLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftAttr; }
+};
+
+class SwiftBridgeAttr : public InheritableAttr {
+unsigned swiftTypeLength;
+char *swiftType;
+
+public:
+  // Factory methods
+  static SwiftBridgeAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef SwiftType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftBridgeAttr *Create(ASTContext &Ctx, llvm::StringRef SwiftType, const AttributeCommonInfo &CommonInfo);
+  static SwiftBridgeAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef SwiftType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftBridgeAttr *Create(ASTContext &Ctx, llvm::StringRef SwiftType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftBridgeAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef SwiftType
+             );
+
+  SwiftBridgeAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getSwiftType() const {
+    return llvm::StringRef(swiftType, swiftTypeLength);
+  }
+  unsigned getSwiftTypeLength() const {
+    return swiftTypeLength;
+  }
+  void setSwiftType(ASTContext &C, llvm::StringRef S) {
+    swiftTypeLength = S.size();
+    this->swiftType = new (C, 1) char [swiftTypeLength];
+    if (!S.empty())
+      std::memcpy(this->swiftType, S.data(), swiftTypeLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftBridge; }
+};
+
+class SwiftBridgedTypedefAttr : public InheritableAttr {
+public:
+  // Factory methods
+  static SwiftBridgedTypedefAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftBridgedTypedefAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static SwiftBridgedTypedefAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftBridgedTypedefAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftBridgedTypedefAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  SwiftBridgedTypedefAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftBridgedTypedef; }
+};
+
 class SwiftCallAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -9178,7 +9876,7 @@ public:
 
   // Factory methods
   static SwiftCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SwiftCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SwiftCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SwiftCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9207,7 +9905,7 @@ public:
 
   // Factory methods
   static SwiftContextAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SwiftContextAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftContextAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SwiftContextAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SwiftContextAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9224,6 +9922,45 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::SwiftContext; }
 };
 
+class SwiftErrorAttr : public InheritableAttr {
+public:
+  enum ConventionKind {
+    None,
+    NonNullError,
+    NullResult,
+    ZeroResult,
+    NonZeroResult
+  };
+private:
+  ConventionKind convention;
+
+public:
+  // Factory methods
+  static SwiftErrorAttr *CreateImplicit(ASTContext &Ctx, ConventionKind Convention, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftErrorAttr *Create(ASTContext &Ctx, ConventionKind Convention, const AttributeCommonInfo &CommonInfo);
+  static SwiftErrorAttr *CreateImplicit(ASTContext &Ctx, ConventionKind Convention, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftErrorAttr *Create(ASTContext &Ctx, ConventionKind Convention, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftErrorAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , ConventionKind Convention
+             );
+
+  SwiftErrorAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  ConventionKind getConvention() const {
+    return convention;
+  }
+
+  static bool ConvertStrToConventionKind(StringRef Val, ConventionKind &Out);
+  static const char *ConvertConventionKindToStr(ConventionKind Val);
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftError; }
+};
+
 class SwiftErrorResultAttr : public ParameterABIAttr {
 public:
   enum Spelling {
@@ -9236,7 +9973,7 @@ public:
 
   // Factory methods
   static SwiftErrorResultAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SwiftErrorResultAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftErrorResultAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SwiftErrorResultAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SwiftErrorResultAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9265,7 +10002,7 @@ public:
 
   // Factory methods
   static SwiftIndirectResultAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SwiftIndirectResultAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftIndirectResultAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SwiftIndirectResultAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SwiftIndirectResultAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9282,6 +10019,130 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::SwiftIndirectResult; }
 };
 
+class SwiftNameAttr : public InheritableAttr {
+unsigned nameLength;
+char *name;
+
+public:
+  // Factory methods
+  static SwiftNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftNameAttr *Create(ASTContext &Ctx, llvm::StringRef Name, const AttributeCommonInfo &CommonInfo);
+  static SwiftNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftNameAttr *Create(ASTContext &Ctx, llvm::StringRef Name, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftNameAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef Name
+             );
+
+  SwiftNameAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getName() const {
+    return llvm::StringRef(name, nameLength);
+  }
+  unsigned getNameLength() const {
+    return nameLength;
+  }
+  void setName(ASTContext &C, llvm::StringRef S) {
+    nameLength = S.size();
+    this->name = new (C, 1) char [nameLength];
+    if (!S.empty())
+      std::memcpy(this->name, S.data(), nameLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftName; }
+};
+
+class SwiftNewTypeAttr : public InheritableAttr {
+public:
+  enum NewtypeKind {
+    NK_Struct,
+    NK_Enum
+  };
+private:
+  NewtypeKind newtypeKind;
+
+public:
+  enum Spelling {
+    GNU_swift_newtype = 0,
+    GNU_swift_wrapper = 1,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static SwiftNewTypeAttr *CreateImplicit(ASTContext &Ctx, NewtypeKind NewtypeKind, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftNewTypeAttr *Create(ASTContext &Ctx, NewtypeKind NewtypeKind, const AttributeCommonInfo &CommonInfo);
+  static SwiftNewTypeAttr *CreateImplicit(ASTContext &Ctx, NewtypeKind NewtypeKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax, SwiftNewTypeAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
+  static SwiftNewTypeAttr *Create(ASTContext &Ctx, NewtypeKind NewtypeKind, SourceRange Range, AttributeCommonInfo::Syntax Syntax, SwiftNewTypeAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
+
+  // Constructors
+  SwiftNewTypeAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , NewtypeKind NewtypeKind
+             );
+
+  SwiftNewTypeAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  Spelling getSemanticSpelling() const;
+  NewtypeKind getNewtypeKind() const {
+    return newtypeKind;
+  }
+
+  static bool ConvertStrToNewtypeKind(StringRef Val, NewtypeKind &Out);
+  static const char *ConvertNewtypeKindToStr(NewtypeKind Val);
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftNewType; }
+};
+
+class SwiftObjCMembersAttr : public Attr {
+public:
+  // Factory methods
+  static SwiftObjCMembersAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftObjCMembersAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static SwiftObjCMembersAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftObjCMembersAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftObjCMembersAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  SwiftObjCMembersAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftObjCMembers; }
+};
+
+class SwiftPrivateAttr : public InheritableAttr {
+public:
+  // Factory methods
+  static SwiftPrivateAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SwiftPrivateAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static SwiftPrivateAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static SwiftPrivateAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  SwiftPrivateAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  SwiftPrivateAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::SwiftPrivate; }
+};
+
 class SysVABIAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -9294,7 +10155,7 @@ public:
 
   // Factory methods
   static SysVABIAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static SysVABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static SysVABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static SysVABIAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static SysVABIAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9326,7 +10187,7 @@ public:
 
   // Factory methods
   static TLSModelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Model, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TLSModelAttr *Create(ASTContext &Ctx, llvm::StringRef Model, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TLSModelAttr *Create(ASTContext &Ctx, llvm::StringRef Model, const AttributeCommonInfo &CommonInfo);
   static TLSModelAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Model, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TLSModelAttr *Create(ASTContext &Ctx, llvm::StringRef Model, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9372,7 +10233,7 @@ public:
 
   // Factory methods
   static TargetAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef FeaturesStr, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TargetAttr *Create(ASTContext &Ctx, llvm::StringRef FeaturesStr, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TargetAttr *Create(ASTContext &Ctx, llvm::StringRef FeaturesStr, const AttributeCommonInfo &CommonInfo);
   static TargetAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef FeaturesStr, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TargetAttr *Create(ASTContext &Ctx, llvm::StringRef FeaturesStr, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9458,11 +10319,10 @@ public:
         // accepting it weirdly.
         Feature = Feature.trim();
 
-        // We don't support cpu tuning this way currently.
         // TODO: Support the fpmath option. It will require checking
         // overall feature validity for the function with the rest of the
         // attributes on the function.
-        if (Feature.startswith("fpmath=") || Feature.startswith("tune="))
+        if (Feature.startswith("fpmath="))
           continue;
 
         if (Feature.startswith("branch-protection=")) {
@@ -9476,6 +10336,11 @@ public:
             Ret.DuplicateArchitecture = true;
           else
             Ret.Architecture = Feature.split("=").second.trim();
+        } else if (Feature.startswith("tune=")) {
+          if (!Ret.Tune.empty())
+            Ret.DuplicateTune = true;
+          else
+            Ret.Tune = Feature.split("=").second.trim();
         } else if (Feature.startswith("no-"))
           Ret.Features.push_back("-" + Feature.split("-").second.str());
         else
@@ -9507,7 +10372,7 @@ public:
 
   // Factory methods
   static TestTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState TestState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TestTypestateAttr *Create(ASTContext &Ctx, ConsumedState TestState, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TestTypestateAttr *Create(ASTContext &Ctx, ConsumedState TestState, const AttributeCommonInfo &CommonInfo);
   static TestTypestateAttr *CreateImplicit(ASTContext &Ctx, ConsumedState TestState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TestTypestateAttr *Create(ASTContext &Ctx, ConsumedState TestState, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9544,7 +10409,7 @@ public:
 
   // Factory methods
   static ThisCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ThisCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ThisCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ThisCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ThisCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9565,7 +10430,7 @@ class ThreadAttr : public Attr {
 public:
   // Factory methods
   static ThreadAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static ThreadAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static ThreadAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static ThreadAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static ThreadAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9594,7 +10459,7 @@ public:
 
   // Factory methods
   static TransparentUnionAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TransparentUnionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TransparentUnionAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static TransparentUnionAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TransparentUnionAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9622,7 +10487,7 @@ public:
 
   // Factory methods
   static TrivialABIAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TrivialABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TrivialABIAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static TrivialABIAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TrivialABIAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9657,7 +10522,7 @@ public:
 
   // Factory methods
   static TryAcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TryAcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TryAcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, const AttributeCommonInfo &CommonInfo);
   static TryAcquireCapabilityAttr *CreateImplicit(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, TryAcquireCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static TryAcquireCapabilityAttr *Create(ASTContext &Ctx, Expr * SuccessValue, Expr * *Args, unsigned ArgsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax, TryAcquireCapabilityAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -9697,7 +10562,7 @@ class TypeNonNullAttr : public TypeAttr {
 public:
   // Factory methods
   static TypeNonNullAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TypeNonNullAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeNonNullAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static TypeNonNullAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TypeNonNullAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9718,7 +10583,7 @@ class TypeNullUnspecifiedAttr : public TypeAttr {
 public:
   // Factory methods
   static TypeNullUnspecifiedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TypeNullUnspecifiedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeNullUnspecifiedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static TypeNullUnspecifiedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TypeNullUnspecifiedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9739,7 +10604,7 @@ class TypeNullableAttr : public TypeAttr {
 public:
   // Factory methods
   static TypeNullableAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TypeNullableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeNullableAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static TypeNullableAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TypeNullableAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9754,6 +10619,27 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::TypeNullable; }
+};
+
+class TypeNullableResultAttr : public TypeAttr {
+public:
+  // Factory methods
+  static TypeNullableResultAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeNullableResultAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static TypeNullableResultAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static TypeNullableResultAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  TypeNullableResultAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  TypeNullableResultAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::TypeNullableResult; }
 };
 
 class TypeTagForDatatypeAttr : public InheritableAttr {
@@ -9776,7 +10662,7 @@ public:
 
   // Factory methods
   static TypeTagForDatatypeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, TypeSourceInfo * MatchingCType, bool LayoutCompatible, bool MustBeNull, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TypeTagForDatatypeAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, TypeSourceInfo * MatchingCType, bool LayoutCompatible, bool MustBeNull, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeTagForDatatypeAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, TypeSourceInfo * MatchingCType, bool LayoutCompatible, bool MustBeNull, const AttributeCommonInfo &CommonInfo);
   static TypeTagForDatatypeAttr *CreateImplicit(ASTContext &Ctx, IdentifierInfo * ArgumentKind, TypeSourceInfo * MatchingCType, bool LayoutCompatible, bool MustBeNull, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TypeTagForDatatypeAttr *Create(ASTContext &Ctx, IdentifierInfo * ArgumentKind, TypeSourceInfo * MatchingCType, bool LayoutCompatible, bool MustBeNull, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9836,7 +10722,7 @@ public:
 
   // Factory methods
   static TypeVisibilityAttr *CreateImplicit(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static TypeVisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static TypeVisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo);
   static TypeVisibilityAttr *CreateImplicit(ASTContext &Ctx, VisibilityType Visibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static TypeVisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9864,7 +10750,7 @@ class UPtrAttr : public TypeAttr {
 public:
   // Factory methods
   static UPtrAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UPtrAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UPtrAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static UPtrAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UPtrAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9908,11 +10794,11 @@ public:
 
   // Factory methods
   static UnavailableAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, ImplicitReason ImplicitReason, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, ImplicitReason ImplicitReason, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, ImplicitReason ImplicitReason, const AttributeCommonInfo &CommonInfo);
   static UnavailableAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, ImplicitReason ImplicitReason, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, ImplicitReason ImplicitReason, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UnavailableAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo);
   static UnavailableAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UnavailableAttr *Create(ASTContext &Ctx, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9964,7 +10850,7 @@ public:
 
   // Factory methods
   static UninitializedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UninitializedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UninitializedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static UninitializedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UninitializedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -9981,6 +10867,34 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::Uninitialized; }
 };
 
+class UnlikelyAttr : public StmtAttr {
+public:
+  enum Spelling {
+    CXX11_unlikely = 0,
+    C2x_clang_unlikely = 1,
+  SpellingNotCalculated = 15
+
+  };
+
+  // Factory methods
+  static UnlikelyAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UnlikelyAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
+  static UnlikelyAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+  static UnlikelyAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
+
+  // Constructors
+  UnlikelyAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+             );
+
+  UnlikelyAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::Unlikely; }
+};
+
 class UnusedAttr : public InheritableAttr {
 public:
   enum Spelling {
@@ -9995,7 +10909,7 @@ public:
 
   // Factory methods
   static UnusedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UnusedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UnusedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static UnusedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, UnusedAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static UnusedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, UnusedAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -10028,7 +10942,7 @@ public:
 
   // Factory methods
   static UseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo);
   static UseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10071,7 +10985,7 @@ public:
 
   // Factory methods
   static UsedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UsedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UsedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static UsedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UsedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10104,11 +11018,11 @@ public:
 
   // Factory methods
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, const AttributeCommonInfo &CommonInfo);
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, MSGuidDecl * GuidDecl, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, const AttributeCommonInfo &CommonInfo);
   static UuidAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Guid, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static UuidAttr *Create(ASTContext &Ctx, llvm::StringRef Guid, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10158,7 +11072,7 @@ public:
 
   // Factory methods
   static VecReturnAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static VecReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static VecReturnAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static VecReturnAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static VecReturnAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10181,7 +11095,7 @@ TypeSourceInfo * typeHint;
 public:
   // Factory methods
   static VecTypeHintAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * TypeHint, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static VecTypeHintAttr *Create(ASTContext &Ctx, TypeSourceInfo * TypeHint, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static VecTypeHintAttr *Create(ASTContext &Ctx, TypeSourceInfo * TypeHint, const AttributeCommonInfo &CommonInfo);
   static VecTypeHintAttr *CreateImplicit(ASTContext &Ctx, TypeSourceInfo * TypeHint, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static VecTypeHintAttr *Create(ASTContext &Ctx, TypeSourceInfo * TypeHint, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10218,7 +11132,7 @@ public:
 
   // Factory methods
   static VectorCallAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static VectorCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static VectorCallAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static VectorCallAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static VectorCallAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10256,7 +11170,7 @@ public:
 
   // Factory methods
   static VisibilityAttr *CreateImplicit(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static VisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static VisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, const AttributeCommonInfo &CommonInfo);
   static VisibilityAttr *CreateImplicit(ASTContext &Ctx, VisibilityType Visibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static VisibilityAttr *Create(ASTContext &Ctx, VisibilityType Visibility, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10292,7 +11206,7 @@ public:
 
   // Factory methods
   static WarnUnusedAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WarnUnusedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WarnUnusedAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static WarnUnusedAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WarnUnusedAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10327,7 +11241,7 @@ public:
 
   // Factory methods
   static WarnUnusedResultAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WarnUnusedResultAttr *Create(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WarnUnusedResultAttr *Create(ASTContext &Ctx, llvm::StringRef Message, const AttributeCommonInfo &CommonInfo);
   static WarnUnusedResultAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax, WarnUnusedResultAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static WarnUnusedResultAttr *Create(ASTContext &Ctx, llvm::StringRef Message, SourceRange Range, AttributeCommonInfo::Syntax Syntax, WarnUnusedResultAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -10379,7 +11293,7 @@ public:
 
   // Factory methods
   static WeakAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WeakAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WeakAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static WeakAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WeakAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10408,7 +11322,7 @@ public:
 
   // Factory methods
   static WeakImportAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WeakImportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WeakImportAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static WeakImportAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WeakImportAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10440,7 +11354,7 @@ public:
 
   // Factory methods
   static WeakRefAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WeakRefAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WeakRefAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, const AttributeCommonInfo &CommonInfo);
   static WeakRefAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef Aliasee, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WeakRefAttr *Create(ASTContext &Ctx, llvm::StringRef Aliasee, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10488,7 +11402,7 @@ public:
 
   // Factory methods
   static WebAssemblyExportNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ExportName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WebAssemblyExportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ExportName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WebAssemblyExportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ExportName, const AttributeCommonInfo &CommonInfo);
   static WebAssemblyExportNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ExportName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WebAssemblyExportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ExportName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10534,7 +11448,7 @@ public:
 
   // Factory methods
   static WebAssemblyImportModuleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ImportModule, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WebAssemblyImportModuleAttr *Create(ASTContext &Ctx, llvm::StringRef ImportModule, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WebAssemblyImportModuleAttr *Create(ASTContext &Ctx, llvm::StringRef ImportModule, const AttributeCommonInfo &CommonInfo);
   static WebAssemblyImportModuleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ImportModule, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WebAssemblyImportModuleAttr *Create(ASTContext &Ctx, llvm::StringRef ImportModule, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10580,7 +11494,7 @@ public:
 
   // Factory methods
   static WebAssemblyImportNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ImportName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WebAssemblyImportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ImportName, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WebAssemblyImportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ImportName, const AttributeCommonInfo &CommonInfo);
   static WebAssemblyImportNameAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef ImportName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WebAssemblyImportNameAttr *Create(ASTContext &Ctx, llvm::StringRef ImportName, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10621,7 +11535,7 @@ unsigned zDim;
 public:
   // Factory methods
   static WorkGroupSizeHintAttr *CreateImplicit(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static WorkGroupSizeHintAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static WorkGroupSizeHintAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, const AttributeCommonInfo &CommonInfo);
   static WorkGroupSizeHintAttr *CreateImplicit(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static WorkGroupSizeHintAttr *Create(ASTContext &Ctx, unsigned XDim, unsigned YDim, unsigned ZDim, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10665,7 +11579,7 @@ public:
 
   // Factory methods
   static X86ForceAlignArgPointerAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static X86ForceAlignArgPointerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static X86ForceAlignArgPointerAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static X86ForceAlignArgPointerAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static X86ForceAlignArgPointerAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 
@@ -10697,7 +11611,7 @@ public:
 
   // Factory methods
   static XRayInstrumentAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static XRayInstrumentAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static XRayInstrumentAttr *Create(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo);
   static XRayInstrumentAttr *CreateImplicit(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, XRayInstrumentAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
   static XRayInstrumentAttr *Create(ASTContext &Ctx, SourceRange Range, AttributeCommonInfo::Syntax Syntax, XRayInstrumentAttr::Spelling S = static_cast<Spelling>(SpellingNotCalculated));
 
@@ -10735,7 +11649,7 @@ public:
 
   // Factory methods
   static XRayLogArgsAttr *CreateImplicit(ASTContext &Ctx, unsigned ArgumentCount, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
-  static XRayLogArgsAttr *Create(ASTContext &Ctx, unsigned ArgumentCount, const AttributeCommonInfo &CommonInfo = {SourceRange{}});
+  static XRayLogArgsAttr *Create(ASTContext &Ctx, unsigned ArgumentCount, const AttributeCommonInfo &CommonInfo);
   static XRayLogArgsAttr *CreateImplicit(ASTContext &Ctx, unsigned ArgumentCount, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
   static XRayLogArgsAttr *Create(ASTContext &Ctx, unsigned ArgumentCount, SourceRange Range, AttributeCommonInfo::Syntax Syntax);
 

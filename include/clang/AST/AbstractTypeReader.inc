@@ -234,6 +234,10 @@ public:
       case BuiltinType::ID: return ctx.SINGLETON_ID;
 #include "clang/Basic/AArch64SVEACLETypes.def"
 
+#define PPC_VECTOR_TYPE(NAME, ID, SIZE) \
+      case BuiltinType::ID: return ctx.ID##Ty;
+#include "clang/Basic/PPCTypes.def"
+
 #define BUILTIN_TYPE(ID, SINGLETON_ID) \
       case BuiltinType::ID: return ctx.SINGLETON_ID;
 #include "clang/AST/BuiltinTypes.def"
@@ -545,7 +549,8 @@ public:
     QualType pattern = R.find("pattern").readQualType();
     llvm::Optional<uint32_t> numExpansions = R.find("numExpansions").template readOptional<uint32_t>();
     
-    return ctx.getPackExpansionType(pattern, numExpansions);
+    return ctx.getPackExpansionType(pattern, numExpansions,
+                                    /*ExpectPackInType*/false);
   
   }
 
